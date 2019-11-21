@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'backend.api',
     'rest_framework',
+    'djoser',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,32 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'api.User'
+
+REST_FRAMEWORK = {
+    # Authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'LOGOUT_ON_PASSWORD_CHANGE': False,
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SERIALIZERS': {'user_create': 'backend.api.serializers.ApiUserRegistrationSerializer'},
+}
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'deviation.squad@gmail.com'
+EMAIL_HOST_PASSWORD = 'K@pelusz1337!'
+EMAIL_PORT = 587
+
+
+SWAGGER_SETTINGS = {
+   'DEFAULT_INFO': 'import.path.to.urls.api_info',
+}
