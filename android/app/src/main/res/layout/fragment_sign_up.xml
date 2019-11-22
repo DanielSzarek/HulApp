@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/formScrollView"
+            android:fillViewport="true"
+            android:layout_marginBottom="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/signUpButton">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/signUpTitleTextView"
+                    android:text="Rejestracja"
+                    android:textSize="48sp"
+                    android:fontFamily="sans-serif-light" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/emailInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/emailEditText"
+                        android:hint="Email"
+                        android:text="@={viewModel.userEmail}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/passwordInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/passwordEditText"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.userPassword}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/retypedPasswordInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/retypedPasswordEditText"
+                        android:hint="Retype password"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.retypedUserPassword}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nameInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/nameEditText"
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.userName}"
+                        android:hint="Imię" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/surnameInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/surnameEditText"
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.userSurname}"
+                        android:hint="Nazwisko" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cityInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cityEditText"
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.userCity}"
+                        android:hint="Miasto" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/countryInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginTop="@dimen/default_margin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/countryEditText"
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.userCountry}"
+                        android:hint="Nazwisko" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_marginTop="@dimen/default_margin"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signUpButton"
+            android:text="Sign up"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

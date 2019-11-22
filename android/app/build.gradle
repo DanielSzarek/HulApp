@@ -1,0 +1,183 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "pl.kamilszustak.hulapp"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat-resources:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    // ConstraintLayout
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+
+    // Core
+    def core_version = '1.2.0-rc01'
+    implementation "androidx.core:core:$core_version"
+    implementation "androidx.core:core-ktx:$core_version"
+
+    // Activity
+    def activity_version = '1.1.0-rc2'
+    implementation "androidx.activity:activity:$activity_version"
+    implementation "androidx.activity:activity-ktx:$activity_version"
+
+    // Fragment
+    def fragment_version = '1.2.0-rc02'
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.fragment:fragment:$fragment_version"
+
+    // PreferenceFragment
+    def preference_version = '1.1.0'
+    implementation "androidx.preference:preference:$preference_version"
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
+    // Android Jetpack Navigation
+    def navigation_version = '2.2.0-rc02'
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    // Android Jetpack Security
+    implementation 'androidx.security:security-crypto:1.0.0-alpha02'
+
+    // Android Jetpack Lifecycle
+    def lifecycle_version = '2.2.0-rc02'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Anko
+    def anko_version = '0.10.8'
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-design:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // AndroidX Legacy
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Room
+    def room_version = "2.2.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // CWAC-SafeRoom
+    implementation 'com.commonsware.cwac:saferoom.x:1.2.1'
+
+    // Retrofit
+    def retrofit_version = '2.6.2'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // OkHttp
+    def ok_http_version = '4.2.2'
+    implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
+
+    // RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // EasyPermissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
+    // Bcrypt
+    implementation 'at.favre.lib:bcrypt:0.9.0'
+
+    // JJWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    //JAXB API
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+    // Dagger
+    def dagger_version = '2.25.2'
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // RecyclerView Animators
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+
+    // MockK
+    testImplementation "io.mockk:mockk:1.9.3"
+
+    // KotlinTest
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+
+    // Moshi
+    def moshi_version = '1.9.2'
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
+    // Material Dialogs
+    def material_dialogs_version = '3.1.1'
+    implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
+    implementation "com.afollestad.material-dialogs:input:$material_dialogs_version"
+    implementation "com.afollestad.material-dialogs:datetime:$material_dialogs_version"
+    implementation "com.afollestad.material-dialogs:lifecycle:$material_dialogs_version"
+
+    // ShimmerLayout
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    // Glide
+    def glide_version = '4.10.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    // TimeIt
+    implementation 'com.github.yashovardhan99:TimeIt:1.2.0'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

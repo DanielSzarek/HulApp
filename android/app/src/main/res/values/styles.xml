@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="android:topLeftRadius">@dimen/default_radius</item>
+        <item name="android:topRightRadius">@dimen/default_radius</item>
+        <item name="android:bottomLeftRadius">@dimen/default_radius</item>
+        <item name="android:bottomRightRadius">@dimen/default_radius</item>
+    </style>
+
+    <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/default_radius</item>
+        <item name="cardElevation">@dimen/default_elevation</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
