@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">HulApp</string>
+    <string name="database_name">hulapp_database</string>
+    <string name="shared_preferences_is_user_logged_in">shared_preferences_is_user_logged_in</string>
+    <string name="shared_preferences_name">hulapp_shared_preferences</string>
+    <string name="shared_preferences_logged_in_user_id">shared_preferences_current_user_id</string>
+
+    <string name="ok">OK</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="cancel">Anuluj</string>
+    <string name="close">Zamknij</string>
+    <string name="open">Otwórz</string>
+    <string name="retry">Powtórz</string>
+
+    <string name="password_reset_info">Aby zresetować swoje hasło wpisz adres email, który został podany podczas rejestracji w HulApp. W ciągu kilku minut zostanie na niego wysłany link, który przekieruje Cię do strony resetu hasła.</string>
+    <string name="password_reset_title">Hasło zresetowane</string>
+    <string name="password_reset_message">Hasło zostało zresetowane. Na podany adres email otrzymasz link do resetu hasła.</string>
+
+    <string name="user_signed_up_title">Utworzono konto</string>
+    <string name="user_signed_up_message">Twoje konto zostało utworzono. Na podany adres email został wysłany link aktywujący. Kliknij go, by móc zalogować się do HulApp.</string>
+</resources>
