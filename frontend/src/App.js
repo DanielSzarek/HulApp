@@ -4,6 +4,7 @@ import './App.css';
 import LoggingForm from './LoggingForm';
 import Registration from './Registration';
 import {  Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import AccountActivation from './AccountActivation';
 
 class App extends React.Component {
   render(){
@@ -26,6 +27,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/logging" component={LoggingForm}/>
             <Route path="/registration" component={Registration}/>
+            <Route path="/activate/:uid/:token" component={AccountActivation}/> 
           </Switch>
         </BrowserRouter>
 
