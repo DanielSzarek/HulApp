@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.logrej {
+  position: absolute;
+    top: 50%;
+    left: 43%;
+}
+
+.form-container-to-log-in-button {
+  position: absolute;
+    top: 35%;
+    left: 45%;
+}
+
+.form-container-to-log-in {
+  position: absolute;
+    top: 25%;
+    left: 35%;
+}
+
+.form-container-to-register-button {
+  position: absolute;
+    top: 35%;
+    left: 45%;
+}
+
+.form-container-to-register {
+  position: absolute;
+    top: 25%;
+    left: 10%;
+}
+
+.input-in-form {
+  width: 30%;
+}
