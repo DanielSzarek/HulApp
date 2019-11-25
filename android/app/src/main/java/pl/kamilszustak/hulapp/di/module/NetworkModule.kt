@@ -6,7 +6,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.kamilszustak.hulapp.network.BASE_URL
-import pl.kamilszustak.hulapp.network.BaseService
+import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -50,6 +50,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseService(retrofit: Retrofit): BaseService =
+    fun provideApiService(retrofit: Retrofit): ApiService =
         retrofit.create()
 }

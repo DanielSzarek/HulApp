@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.network.BaseService
+import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.util.getApplicationComponent
 import pl.kamilszustak.hulapp.util.isInternetConnected
 import pl.kamilszustak.hulapp.util.isValidEmail
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class SignUpViewModel(application: Application) : BaseViewModel(application) {
 
     @Inject
-    protected lateinit var baseService: BaseService
+    protected lateinit var apiService: ApiService
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -101,7 +101,7 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
                 _isSigningUpInProgress.setValue(true)
             }
 
-            val response = baseService.signUp(user)
+            val response = apiService.signUp(user)
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {

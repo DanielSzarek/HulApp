@@ -49,7 +49,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/emailEditText"
                         android:hint="Email"
-                        android:text="@={viewModel.userEmail}"/>
+                        android:text="@={viewModel.userEmail}"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,6 +68,7 @@
                         android:id="@+id/passwordEditText"
                         android:hint="Password"
                         android:inputType="textPassword"
+                        android:maxLines="1"
                         android:text="@={viewModel.userPassword}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +86,7 @@
                         android:id="@+id/retypedPasswordEditText"
                         android:hint="Retype password"
                         android:inputType="textPassword"
+                        android:maxLines="1"
                         android:text="@={viewModel.retypedUserPassword}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +103,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/nameEditText"
                         android:inputType="textPersonName"
+                        android:maxLines="1"
                         android:text="@={viewModel.userName}"
                         android:hint="Imię" />
 
@@ -116,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/surnameEditText"
                         android:inputType="textPersonName"
+                        android:maxLines="1"
                         android:text="@={viewModel.userSurname}"
                         android:hint="Nazwisko" />
 
@@ -132,7 +138,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cityEditText"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:text="@={viewModel.userCity}"
                         android:hint="Miasto" />
 
@@ -149,9 +156,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/countryEditText"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:text="@={viewModel.userCountry}"
-                        android:hint="Nazwisko" />
+                        android:hint="Kraj" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

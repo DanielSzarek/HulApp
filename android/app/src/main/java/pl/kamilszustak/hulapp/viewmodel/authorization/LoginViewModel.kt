@@ -6,7 +6,7 @@ import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
-import pl.kamilszustak.hulapp.network.BaseService
+import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.util.getApplicationComponent
 import pl.kamilszustak.hulapp.util.isInternetConnected
 import pl.kamilszustak.hulapp.util.isValidEmail
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class LoginViewModel(application: Application) : BaseViewModel(application) {
 
     @Inject
-    protected lateinit var baseService: BaseService
+    protected lateinit var apiService: ApiService
 
     @Inject
     protected lateinit var settingsRepository: SettingsRepository
