@@ -10,6 +10,7 @@ import pl.kamilszustak.hulapp.di.module.DatabaseModule
 import pl.kamilszustak.hulapp.di.module.NetworkModule
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
 import pl.kamilszustak.hulapp.viewmodel.authorization.LoginViewModel
+import pl.kamilszustak.hulapp.viewmodel.authorization.PasswordResetViewModel
 import pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel
 import javax.inject.Singleton
 
@@ -26,6 +27,8 @@ interface ApplicationComponent : AndroidInjector<BaseApplication> {
     fun inject(signUpViewModel: SignUpViewModel)
 
     fun inject(loginViewModel: LoginViewModel)
+
+    fun inject(passwordResetViewModel: PasswordResetViewModel)
 
     @Component.Builder
     interface Builder {

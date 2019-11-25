@@ -38,7 +38,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/emailEditText"
                     android:text="@={viewModel.userEmail}"
-                    android:hint="Email" />
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="1"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
