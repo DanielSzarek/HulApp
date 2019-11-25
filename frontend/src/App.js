@@ -1,10 +1,10 @@
 import React from 'react';
 //import {button} from 'react-bootstrap';
-import './App.css';
-import LoggingForm from './LoggingForm';
-import Registration from './Registration';
+import './Styles/App.css';
+import LoggingForm from './User/AlternativeLoggingForm';
+import Registration from './User/Registration';
 import {  Link, BrowserRouter, Switch, Route } from 'react-router-dom';
-import AccountActivation from './AccountActivation';
+import AccountActivation from './User/AccountActivation';
 
 class App extends React.Component {
   render(){
