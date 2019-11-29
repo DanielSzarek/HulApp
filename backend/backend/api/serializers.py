@@ -3,35 +3,31 @@ from .models import User, Province, Country, City
 from djoser.serializers import UserCreateSerializer
 
 
-class ProvinceSerializer(serializers.ModelSerializer):
+class CountrySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Province
+        model = Country
         fields = ['id', 'name']
 
 
-class CountrySerializer(serializers.ModelSerializer):
-    id_province = serializers.PrimaryKeyRelatedField(read_only=True)
+class ProvinceSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Country
-        fields = ['id', 'id_province', 'name']
-
-
-class CitySerializer(serializers.ModelSerializer):
-    id_country = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    class Meta:
-        model = City
+        model = Province
         fields = ['id', 'id_country', 'name']
 
 
+class CitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = City
+        fields = ['id', 'name', 'id_province']
+
+
 class ApiUserRegistrationSerializer(UserCreateSerializer):
-    id_country = serializers.PrimaryKeyRelatedField(read_only=True)
-    id_city = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ['id', 'id_country', 'id_city' 'username', 'email', 'first_name', 'last_name', 'password']
+        fields = ['id', 'email', 'username', 'password', 'first_name', 'last_name', 'country', 'city']
 
 
 # class UserSerializer(serializers.ModelSerializer):
