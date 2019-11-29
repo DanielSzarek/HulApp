@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'drf_yasg',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "wjuuznnz",
+        'USER': 'wjuuznnz',
+        'PASSWORD': 'eFfEtC1CpIaQd_KcgG2EzU6t1rUz82OY',
+        'HOST': 'rogue.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
 
@@ -154,3 +159,5 @@ EMAIL_PORT = 587
 SWAGGER_SETTINGS = {
    'DEFAULT_INFO': 'import.path.to.urls.api_info',
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
