@@ -62,6 +62,8 @@ class LoggingForm extends React.Component{
 
     render(){
         return(
+     <div className="offset-md-4 col-12 col-md-4">
+
             <div className="logging-container">
 
             <img src={logo} alt={"logo"}/>
@@ -88,6 +90,7 @@ class LoggingForm extends React.Component{
                 Załóż konto
               </button>
             </Link>
+            </div>
             </div>
         );
     }  
