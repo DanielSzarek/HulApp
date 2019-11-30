@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../Styles/App.css';
+import '../Styles/Login.css';
+import {Link} from 'react-router-dom';
+import logo from '../Images/logo.png';
 
 class LoggingForm extends React.Component{
 
@@ -59,24 +62,32 @@ class LoggingForm extends React.Component{
 
     render(){
         return(
-            <div>
-            <center>
-                <form class="input-in-form" onSubmit={this.handleSubmit}>
+            <div className="logging-container">
+
+            <img src={logo} alt={"logo"}/>
+         
+                <form className="input-in-form" onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label >Email</Form.Label>
-                        <Form.Control name="email" type="email" placeholder="Enter email" onChange={this.handleChange} />
+                        <Form.Control name="email" type="email"  onChange={this.handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Hasło</Form.Label>
-                        <Form.Control name="password" type="password" placeholder="Password" onChange={this.handleChange} />
+                        <Form.Control name="password" type="password"  onChange={this.handleChange} required/>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Potwierdź
-                    </Button>
+                    <button type="submit" className="button-login btn-red">
+                        Zaloguj
+                    </button>
                 </form>
-            </center>
+           
 
             <div className="result">{ this.state.message }</div>
+
+             <Link to="/registration">
+              <button  type="button" className="button-login" >
+                Załóż konto
+              </button>
+            </Link>
             </div>
         );
     }  
