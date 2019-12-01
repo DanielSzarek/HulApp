@@ -5,6 +5,8 @@ import '../Styles/Login.css';
 import {Link} from 'react-router-dom';
 import logo from '../Images/logo.png';
 
+import AuthService from './AuthService';
+
 class LoggingForm extends React.Component{
 
     constructor(props) {
@@ -17,38 +19,48 @@ class LoggingForm extends React.Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.Auth = new AuthService();
       }
 
       handleSubmit = (event) => {
         event.preventDefault();
          console.log("email "+this.state.email)
          //walidacja
-         fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
+        //  fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         email: this.state.email,
+        //         password: this.state.password
+        //     })
+        //     })
+
+        this.Auth.login(this.state.email,this.state.password)
+            .then(res =>{
+               this.props.history.replace('/profile-edit');
             })
-            })
-            .then((response) => {
-                if(response.status === 200 ){
-                    console.log("SUCCESSS")
-                    this.setState({message: "Jesteś zalogowany "});
-                    return response.json();     
-                }
-                else if(response.status === 401){
-                    console.log("UNAUTHORIZED")
-                    this.setState({message: "Brak autoryzacji"});
-                }
-                else{
-                    console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "Something went wrong. Response status: "+response.status });
-                }
-            })
+            // .catch(err =>{
+            //     alert(err);
+            // })
+            // .then((response) => {
+            //     if(response.status === 200 ){
+            //         console.log("SUCCESSS")
+            //         this.setState({message: "Jesteś zalogowany "});
+            //         return response.json();     
+            //     }
+            //     else if(response.status === 401){
+            //         console.log("UNAUTHORIZED")
+            //         this.setState({message: "Brak autoryzacji"});
+            //     }
+            //     else{
+            //         console.log("SOMETHING WENT WRONG")
+            //         this.setState({ message: "Something went wrong. Response status: "+response.status });
+            //     }
+            // })
             .catch((error) => {
                 this.setState({message: "ERROR " + error});
             });
@@ -59,6 +71,11 @@ class LoggingForm extends React.Component{
             [event.target.name]: event.target.value
         });
     }
+
+componentWillMount(){
+    if(this.Auth.loggedIn())
+        this.props.history.replace('/profile-edit');
+}
 
     render(){
         return(
