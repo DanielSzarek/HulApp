@@ -24,23 +24,6 @@ code {
     left: 45%;
 }
 
-.form-container-to-log-in {
-  position: absolute;
-    top: 25%;
-    left: 35%;
-}
-
-.form-container-to-register-button {
-  position: absolute;
-    top: 35%;
-    left: 45%;
-}
-
-.form-container-to-register {
-  position: absolute;
-    top: 25%;
-    left: 10%;
-}
 
 .input-in-form {
   margin-bottom: 10px;
@@ -60,10 +43,16 @@ code {
   width: 100%;
   background-color: #000;
   padding: 10px;
+  border: none;
+  /* margin-bottom: 20px; */
+
+
 }
 
 .btn-red {
   background-color: red;
+  border: none;
+
 }
 
 .form-group {
