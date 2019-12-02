@@ -150,7 +150,7 @@ dependencies {
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 
     // Moshi
     def moshi_version = '1.9.2'

@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">HulApp</string>
     <string name="database_name">hulapp_database</string>
+
+    <!-- SettingsRepository -->
     <string name="shared_preferences_is_user_logged_in">shared_preferences_is_user_logged_in</string>
-    <string name="shared_preferences_name">hulapp_shared_preferences</string>
-    <string name="shared_preferences_logged_in_user_id">shared_preferences_current_user_id</string>
+
+    <!-- JwtTokenRepository -->
+    <string name="shared_preferences_jwt_access_token">shared_preferences_jwt_access_token</string>
+    <string name="shared_preferences_jwt_refresh_token">shared_preferences_jwt_refresh_token</string>
+    <string name="shared_preferences_jwt_token_expiration_date_timestamp">shared_preferences_jwt_token_expiration_date_timestamp</string>
+
+    <!-- UserDetailsRepository -->
+    <string name="shared_preferences_user_email">shared_preferences_user_email</string>
+    <string name="shared_preferences_user_password">shared_preferences_user_password</string>
+    <string name="shared_preferences_user_id">shared_preferences_user_id</string>
 
     <string name="ok">OK</string>
     <string name="yes">Tak</string>

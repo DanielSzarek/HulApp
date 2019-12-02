@@ -1,5 +1,7 @@
 package pl.kamilszustak.hulapp.util
 
-import android.util.Patterns
-
-fun String.isValidEmail(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
+fun CharSequence.containsAny(list: List<CharSequence>): Boolean {
+    return list.any {
+        this.contains(it)
+    }
+}
