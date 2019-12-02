@@ -5,13 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.common.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
+import pl.kamilszustak.hulapp.data.form.Email
+import pl.kamilszustak.hulapp.data.form.Password
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.util.getApplicationComponent
-import pl.kamilszustak.hulapp.util.isInternetConnected
-import pl.kamilszustak.hulapp.util.isValidEmail
+import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.util.withMainContext
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
 import timber.log.Timber
@@ -21,6 +22,9 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
 
     @Inject
     protected lateinit var apiService: ApiService
+
+    @Inject
+    protected lateinit var validator: FormValidator
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -58,10 +62,8 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
         val city = userCity.value
         val country = userCountry.value
 
-        if (!this.isInternetConnected()) {
+        if (!isInternetConnected())
             _signUpError.value = "Brak połączenia z Internetem"
-            return
-        }
 
         if (
             email.isNullOrBlank() ||
@@ -76,9 +78,16 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
             return
         }
 
-        if (!email.isValidEmail()) {
+        val userEmail = Email(email)
+
+        if (!validator.validate(userEmail)) {
             _signUpError.value = "Nieprawidłowy format adresu email"
             return
+        }
+
+        val userPassword = Password(password)
+        if (!validator.validate(userPassword)) {
+            _signUpError.value = "Nieprawidłowy format hasła"
         }
 
         if (password != retypedPassword) {
@@ -101,7 +110,14 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
                 _isSigningUpInProgress.setValue(true)
             }
 
-            val response = apiService.signUp(user)
+            val response = try {
+                apiService.signUp(user)
+            } catch (exception: NoInternetConnectionException) {
+                exception.printStackTrace()
+                _signUpError.value = "Brak połączenia z Internetem"
+                return@launch
+            }
+
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {

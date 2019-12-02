@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.common.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
+import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequest
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.util.*
+import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
 import javax.inject.Inject
 
@@ -17,6 +19,9 @@ class PasswordResetViewModel(application: Application) : BaseViewModel(applicati
 
     @Inject
     protected lateinit var apiService: ApiService
+
+    @Inject
+    protected lateinit var validator: FormValidator
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -36,17 +41,17 @@ class PasswordResetViewModel(application: Application) : BaseViewModel(applicati
     fun resetPassword() {
         val email = userEmail.value
 
-        if (!this.isInternetConnected()) {
+        if (!isInternetConnected())
             _resetError.value = "Brak połączenia z Internetem"
-            return
-        }
 
         if (email.isNullOrBlank()) {
             _resetError.value = "Nie wpisano adresu email"
             return
         }
 
-        if (!email.isValidEmail()) {
+        val userEmail = Email(email)
+
+        if (!validator.validate(userEmail)) {
             _resetError.value = "Nieprawidłowy format adresu email"
             return
         }
@@ -55,8 +60,12 @@ class PasswordResetViewModel(application: Application) : BaseViewModel(applicati
             _resetInProgress.setValue(true)
 
             val request = PasswordResetRequest(email)
-            val response = withIoContext {
+            val response = try {
                 apiService.resetPassword(request)
+            } catch (exception: NoInternetConnectionException) {
+                exception.printStackTrace()
+                _resetError.value = "Brak połączenia z Internetem"
+                return@launch
             }
 
             if (response.isSuccessful) {

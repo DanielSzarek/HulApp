@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentLoginBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.viewmodel.authorization.LoginViewModel
+import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -64,11 +66,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.userLoggedIn.observe(this) {
-
+        viewModel.loginCompleted.observe(this) {
+            toast("Logowanie zakończowe sukcesem")
         }
 
         viewModel.isLoggingInProgress.observe(this) {
+            Timber.i(it.toString())
             if (it) {
                 loginButton.isEnabled = false
                 progressBar.show()

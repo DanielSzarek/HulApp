@@ -26,6 +26,12 @@
                 android:id="@+id/appLogoImageView"
                 android:src="@drawable/hulapp_logo" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logowanie"
+                android:textAppearance="?textAppearanceHeadline4"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +46,7 @@
                     android:text="@={viewModel.userEmail}"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:maxLength="1"/>
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -56,7 +62,8 @@
                     android:id="@+id/passwordEditText"
                     android:hint="Hasło"
                     android:text="@={viewModel.userPassword}"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -72,7 +79,7 @@
                     android:id="@+id/resetPasswordButton"
                     android:text="Zresetuj hasło"
                     android:textSize="12sp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/OutlinedMaterialButtonStyle"
                     android:layout_marginEnd="@dimen/default_half_margin"
                     android:layout_weight="1"/>
 
@@ -82,7 +89,7 @@
                     android:id="@+id/signUpButton"
                     android:text="Utwórz konto"
                     android:textSize="12sp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/OutlinedMaterialButtonStyle"
                     android:layout_marginStart="@dimen/default_half_margin"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -91,7 +98,10 @@
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zaloguj" />
+                android:text="Zaloguj"
+                android:textSize="24sp"
+                android:padding="@dimen/default_half_padding"
+                style="@style/MaterialButtonStyle" />
 
             <androidx.core.widget.ContentLoadingProgressBar
                 android:layout_width="match_parent"

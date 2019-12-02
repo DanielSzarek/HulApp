@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class PasswordResetRequest(
-    @Json(name = "email")
-    val email: String
+class RefreshJwtResponse(
+    @Json(name = "access")
+    val accessToken: String
 )
