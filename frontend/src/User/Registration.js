@@ -1,4 +1,10 @@
 import React from 'react';
+import logo from '../Images/logo.png';
+import { Form, Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import '../Styles/App.css';
+import '../Styles/Registration.css';
+
 
 class Registration extends React.Component{
 
@@ -14,11 +20,12 @@ class Registration extends React.Component{
                 city: '',
                 message: ''
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
       }
 
     handleSubmit = (event) => {
         event.preventDefault();
-       // alert("tutaj 2");
          console.log("email "+this.state.email)
          //walidacja
          fetch('http://hulapp.pythonanywhere.com/api/users', {
@@ -51,6 +58,12 @@ class Registration extends React.Component{
             });
     };
 
+     handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
     checkPassword = (value) => {
         if (value && value !== this.state.password.value) {
           alert("The passwords don't match");
@@ -60,70 +73,47 @@ class Registration extends React.Component{
       };
     render(){
         return(
-            <div>
-            <form onSubmit={this.handleSubmit}>
-                <input 
-                    type="text" 
-                    placeholder="E-mail"
-                    maxLength="254"
-                    value={this.state.email}
-                    onChange={event => this.setState({ email: event.target.value })}
-                    required/>
-                <input 
-                    type="password" 
-                    placeholder="Hasło" 
-                    minLength="5"
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.password}
-                    onChange={event => this.setState({ password: event.target.value })}
-                    required />
-                <input 
-                    type="password" 
-                    placeholder="Powtórz hasło" 
-                    minLength="5"
-                    style={{marginLeft: "26px"}}  
-                    value={this.state.repeatedPassword}
-                    onChange={event => this.setState({ repeatedPassword: event.target.value })}
-                    onBlur={event => this.checkPassword(event.target.value,this.state.password)}
-                    required />
-                <input 
-                    type="text" 
-                    placeholder="Imię" 
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.name}
-                    onChange={event => this.setState({ name: event.target.value })}
-                    required />
-                <input 
-                    type="text" 
-                    placeholder="Nazwisko" 
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.surname}
-                    onChange={event => this.setState({ surname: event.target.value })}
-                    required />
+         
+    <div className="offset-md-4 col-12 col-md-4">
+            <div className="registration-container">
+                <img src={logo} alt={"logo"}/>
+         
+                <form className="input-in-form" onSubmit={this.handleSubmit}>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label >Email:</Form.Label>
+                        <Form.Control name="email" type="email"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Hasło:</Form.Label>
+                        <Form.Control name="password" type="password"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formRepeatedPassword">
+                        <Form.Label>Powtórz hasło:</Form.Label>
+                        <Form.Control name="repeatedPassword" type="password"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicName">
+                        <Form.Label>Imię:</Form.Label>
+                        <Form.Control name="name" type="text"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicSurname">
+                        <Form.Label>Nazwisko:</Form.Label>
+                        <Form.Control name="surname" type="text"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicCity">
+                        <Form.Label>Miasto:</Form.Label>
+                        <Form.Control name="city" type="text"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicCountry">
+                        <Form.Label>Kraj:</Form.Label>
+                        <Form.Control name="country" type="text"  onChange={this.handleChange} required/>
+                    </Form.Group>
+                    <button type="submit" className="button-login btn-red">
+                        Zarejestruj
+                    </button>
+                </form>
 
-                <input 
-                    type="text" 
-                    placeholder="Miasto" 
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.city}
-                    onChange={event => this.setState({ city: event.target.value })}
-                    required />
-
-                <input 
-                    type="text" 
-                    placeholder="Kraj" 
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.country}
-                    onChange={event => this.setState({ country: event.target.value })}
-                    required /> 
-                
-                <div className="form-container-to-register-button">
-                    <button  type="submit" className="btn btn-primary active btn-lg" style={{marginLeft: "26px"}} onClick={this.validate}>
-                        Dodaj mnie!
-                </button>
-                </div>
-            </form>
-            <div className="result">{ this.state.message }</div>
+                    <div className="result">{ this.state.message }</div>
+                </div>            
             </div>
         );
     }

@@ -7,12 +7,22 @@
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundMode">outline</item>
-        <item name="boxBackgroundColor">@android:color/transparent</item>
-        <item name="android:topLeftRadius">@dimen/default_radius</item>
-        <item name="android:topRightRadius">@dimen/default_radius</item>
-        <item name="android:bottomLeftRadius">@dimen/default_radius</item>
-        <item name="android:bottomRightRadius">@dimen/default_radius</item>
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxBackgroundColor">@color/colorForm</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/default_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/default_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/default_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/default_radius</item>
+    </style>
+
+    <style name="MaterialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/default_radius</item>
+    </style>
+
+    <style name="OutlinedMaterialButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">@dimen/default_radius</item>
     </style>
 
     <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">
