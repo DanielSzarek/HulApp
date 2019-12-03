@@ -18,9 +18,13 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
 
 
-class CountryListView(generics.ListCreateAPIView):
+class CountryListView(generics.ListAPIView):
     serializer_class = CountrySerializer
-    queryset = Country.objects.all()
+
+    def get_queryset(self):
+        country = self.kwargs['country']
+        country = country[0].upper() + country[1:]
+        return Country.objects.filter(name__contains=country)
 
 
 class CountryDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -46,6 +50,7 @@ class CityListView(generics.ListAPIView):
 
     def get_queryset(self):
         city = self.kwargs['city']
+        city = city[0].upper() + city[1:]
         return City.objects.filter(name__contains=city)
 
 
