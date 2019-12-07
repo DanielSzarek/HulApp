@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.dialog
+package pl.kamilszustak.hulapp.ui.view.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import kotlinx.android.synthetic.main.bottom_sheet_city_choice.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.view.authorization.adapter.CityItem
-import pl.kamilszustak.hulapp.viewmodel.dialog.CityChoiceViewModel
+import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CityItem
+import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
+import pl.kamilszustak.hulapp.util.set
 
 class CityChoiceBottomSheet : BottomSheetDialogFragment() {
 
@@ -34,7 +37,7 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
 
     var listener: ClickListener<CityItem>? = null
 
-    private lateinit var itemAdapter: ItemAdapter<CityItem>
+    private lateinit var modelAdapter: ModelAdapter<City, CityItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,8 +66,10 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initializeRecyclerView() {
-        itemAdapter = ItemAdapter()
-        val fastAdapter = FastAdapter.with(itemAdapter)
+        modelAdapter = ModelAdapter {
+            CityItem(it)
+        }
+        val fastAdapter = FastAdapter.with(modelAdapter)
         fastAdapter.onClickListener = listener
         citiesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -84,12 +89,9 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
         }
 
         viewModel.cities.observe(this) {
-            val items = arrayListOf<CityItem>()
-            for (city in it) {
-                items.add(CityItem(city))
-            }
-
-            itemAdapter.set(items)
+            FastAdapterDiffUtil.set(modelAdapter, it)
         }
     }
+
+
 }

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.viewmodel.dialog.CityChoiceViewModel" />
+            type="pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel" />
     </data>
 
     <LinearLayout

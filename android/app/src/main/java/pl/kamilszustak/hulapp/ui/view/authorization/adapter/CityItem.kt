@@ -1,16 +1,14 @@
-package pl.kamilszustak.hulapp.view.authorization.adapter
+package pl.kamilszustak.hulapp.ui.view.authorization.adapter
 
 import android.view.View
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.AbstractItem
+import com.mikepenz.fastadapter.items.ModelAbstractItem
 import kotlinx.android.synthetic.main.layout_cities_list_item.view.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.City
 
-class CityItem(
-    val city: City
-) : AbstractItem<CityItem.ViewHolder>() {
+class CityItem(city: City) : ModelAbstractItem<City, CityItem.ViewHolder>(city) {
 
     override val type: Int
         get() = R.id.fastadapter_city_item_id
@@ -25,7 +23,7 @@ class CityItem(
         private val cityNameTextView: TextView = view.cityNameTextView
 
         override fun bindView(item: CityItem, payloads: MutableList<Any>) {
-            cityNameTextView.text = item.city.name
+            cityNameTextView.text = item.model.name
         }
 
         override fun unbindView(item: CityItem) {

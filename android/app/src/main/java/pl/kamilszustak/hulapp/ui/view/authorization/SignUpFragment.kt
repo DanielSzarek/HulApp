@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.authorization
+package pl.kamilszustak.hulapp.ui.view.authorization
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,11 +16,11 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.view.authorization.adapter.CityItem
-import pl.kamilszustak.hulapp.view.authorization.adapter.CountryItem
-import pl.kamilszustak.hulapp.view.dialog.CityChoiceBottomSheet
-import pl.kamilszustak.hulapp.view.dialog.CountryChoiceBottomSheet
-import pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel
+import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CityItem
+import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.ui.view.dialog.CityChoiceBottomSheet
+import pl.kamilszustak.hulapp.ui.view.dialog.CountryChoiceBottomSheet
+import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
@@ -69,7 +69,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     item: CityItem,
                     position: Int
                 ): Boolean {
-                    cityNameEditText.setText(item.city.name)
+                    cityNameEditText.setText(item.model.name)
                     cityChoiceBottomSheet.dismiss()
 
                     return true
@@ -94,7 +94,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     item: CountryItem,
                     position: Int
                 ): Boolean {
-                    countryNameEditText.setText(item.country.name)
+                    countryNameEditText.setText(item.model.name)
                     countryChoiceBottomSheet.dismiss()
 
                     return true

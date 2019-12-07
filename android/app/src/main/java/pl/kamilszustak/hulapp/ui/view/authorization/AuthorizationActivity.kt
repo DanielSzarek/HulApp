@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.authorization
+package pl.kamilszustak.hulapp.ui.view.authorization
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

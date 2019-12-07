@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.authorization
+package pl.kamilszustak.hulapp.ui.view.authorization
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import pl.kamilszustak.hulapp.databinding.FragmentPasswordResetBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.util.navigateUp
-import pl.kamilszustak.hulapp.viewmodel.authorization.PasswordResetViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
 
 class PasswordResetFragment : Fragment(R.layout.fragment_password_reset) {
 

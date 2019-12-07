@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.viewmodel.authorization
+package pl.kamilszustak.hulapp.ui.viewmodel.authorization
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -14,7 +14,7 @@ import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.util.withMainContext
-import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 

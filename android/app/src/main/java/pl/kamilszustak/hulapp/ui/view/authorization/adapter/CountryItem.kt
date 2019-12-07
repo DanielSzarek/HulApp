@@ -1,16 +1,15 @@
-package pl.kamilszustak.hulapp.view.authorization.adapter
+package pl.kamilszustak.hulapp.ui.view.authorization.adapter
 
 import android.view.View
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
+import com.mikepenz.fastadapter.items.ModelAbstractItem
 import kotlinx.android.synthetic.main.layout_countries_list_item.view.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.Country
 
-class CountryItem(
-    val country: Country
-) : AbstractItem<CountryItem.ViewHolder>() {
+class CountryItem(country: Country) : ModelAbstractItem<Country, CountryItem.ViewHolder>(country) {
 
     override val type: Int
         get() = R.id.fastadapter_country_item_id
@@ -26,7 +25,7 @@ class CountryItem(
         private val countryNameTextView: TextView = view.countryNameTextView
 
         override fun bindView(item: CountryItem, payloads: MutableList<Any>) {
-            countryNameTextView.text = item.country.name
+            countryNameTextView.text = item.model.name
         }
 
         override fun unbindView(item: CountryItem) {

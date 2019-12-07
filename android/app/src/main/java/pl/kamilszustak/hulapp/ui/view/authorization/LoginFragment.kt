@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.authorization
+package pl.kamilszustak.hulapp.ui.view.authorization
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentLoginBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.util.navigateTo
-import pl.kamilszustak.hulapp.viewmodel.authorization.LoginViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel
 import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_login) {

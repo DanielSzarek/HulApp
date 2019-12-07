@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.dialog
+package pl.kamilszustak.hulapp.ui.view.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,16 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import kotlinx.android.synthetic.main.bottom_sheet_country_choice.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.view.authorization.adapter.CountryItem
-import pl.kamilszustak.hulapp.viewmodel.dialog.CountryChoiceViewModel
-import timber.log.Timber
+import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
+import pl.kamilszustak.hulapp.util.set
 
-class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
+class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
@@ -35,7 +37,7 @@ class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
 
     var listener: ClickListener<CountryItem>? = null
 
-    private lateinit var itemAdapter: ItemAdapter<CountryItem>
+    private lateinit var modelAdapter: ModelAdapter<Country, CountryItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,8 +66,10 @@ class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun initializeRecyclerView() {
-        itemAdapter = ItemAdapter()
-        val fastAdapter = FastAdapter.with(itemAdapter)
+        modelAdapter = ModelAdapter {
+            CountryItem(it)
+        }
+        val fastAdapter = FastAdapter.with(modelAdapter)
         fastAdapter.onClickListener = listener
         countriesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -85,13 +89,7 @@ class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
         }
 
         viewModel.countries.observe(this) {
-            Timber.i(it.toString())
-            val items = arrayListOf<CountryItem>()
-            for (country in it) {
-                items.add(CountryItem(country))
-            }
-
-            itemAdapter.set(items)
+            FastAdapterDiffUtil.set(modelAdapter, it)
         }
     }
 }
