@@ -1,6 +1,6 @@
 package pl.kamilszustak.hulapp.network
 
-import pl.kamilszustak.hulapp.common.annotation.Authorization
+import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.User
@@ -24,7 +24,7 @@ interface ApiService {
     suspend fun signUp(@Body user: User): Response<User>
 
     @GET("/auth/users/me")
-    @Authorization
+    @Authorize
     suspend fun login(): Response<User>
 
     @POST("/auth/users/reset_password/")
