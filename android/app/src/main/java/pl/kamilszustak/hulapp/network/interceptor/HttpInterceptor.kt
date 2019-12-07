@@ -1,6 +1,5 @@
 package pl.kamilszustak.hulapp.network.interceptor
 
-import android.app.Application
 import okhttp3.Interceptor
 import okhttp3.Response
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
@@ -14,7 +13,7 @@ class HttpInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
-        if (originalRequest.needAuthorization()) {
+        if (!originalRequest.needAuthorization()) {
             val request = originalRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .method(originalRequest.method, originalRequest.body)

@@ -16,14 +16,14 @@ class CountryItem(
         get() = R.id.fastadapter_country_item_id
 
     override val layoutRes: Int
-        get() =  R.layout.layout_countries_list_item
+        get() = R.layout.layout_countries_list_item
 
     override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
 
-    class ViewHolder(view: View): FastAdapter.ViewHolder<CountryItem>(view) {
+    class ViewHolder(view: View) : FastAdapter.ViewHolder<CountryItem>(view) {
 
-        val countryNameTextView: TextView = view.countryNameTextView
+        private val countryNameTextView: TextView = view.countryNameTextView
 
         override fun bindView(item: CountryItem, payloads: MutableList<Any>) {
             countryNameTextView.text = item.country.name

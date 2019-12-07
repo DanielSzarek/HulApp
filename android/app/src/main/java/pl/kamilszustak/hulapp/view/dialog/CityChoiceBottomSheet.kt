@@ -12,43 +12,42 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import kotlinx.android.synthetic.main.bottom_sheet_country_choice.*
+import kotlinx.android.synthetic.main.bottom_sheet_city_choice.*
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
+import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.view.authorization.adapter.CountryItem
-import pl.kamilszustak.hulapp.viewmodel.dialog.CountryChoiceViewModel
-import timber.log.Timber
+import pl.kamilszustak.hulapp.view.authorization.adapter.CityItem
+import pl.kamilszustak.hulapp.viewmodel.dialog.CityChoiceViewModel
 
-class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
+class CityChoiceBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
-        const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
+        const val tag: String = "CITY_CHOICE_BOTTOM_SHEET"
 
-        fun getInstance(): CountryChoiceBottomSheet =
-            CountryChoiceBottomSheet()
+        fun getInstance(): CityChoiceBottomSheet =
+            CityChoiceBottomSheet()
     }
 
-    private val viewModel: CountryChoiceViewModel by viewModels {
+    private val viewModel: CityChoiceViewModel by viewModels {
         getAndroidViewModelFactory()
     }
 
-    var listener: ClickListener<CountryItem>? = null
+    var listener: ClickListener<CityItem>? = null
 
-    private lateinit var itemAdapter: ItemAdapter<CountryItem>
+    private lateinit var itemAdapter: ItemAdapter<CityItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<BottomSheetCountryChoiceBinding>(
+        val dataBinding = DataBindingUtil.inflate<BottomSheetCityChoiceBinding>(
             inflater,
-            R.layout.bottom_sheet_country_choice,
+            R.layout.bottom_sheet_city_choice,
             container,
             false
         ).apply {
-            this.viewModel = this@CountryChoiceBottomSheet.viewModel
+            this.viewModel = this@CityChoiceBottomSheet.viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -67,7 +66,7 @@ class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
         itemAdapter = ItemAdapter()
         val fastAdapter = FastAdapter.with(itemAdapter)
         fastAdapter.onClickListener = listener
-        countriesRecyclerView.apply {
+        citiesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = fastAdapter
         }
@@ -80,15 +79,14 @@ class CountryChoiceBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.countryName.observe(this) {
-            viewModel.loadCountriesByName(it)
+        viewModel.cityName.observe(this) {
+            viewModel.loadCitiesByName(it)
         }
 
-        viewModel.countries.observe(this) {
-            Timber.i(it.toString())
-            val items = arrayListOf<CountryItem>()
-            for (country in it) {
-                items.add(CountryItem(country))
+        viewModel.cities.observe(this) {
+            val items = arrayListOf<CityItem>()
+            for (city in it) {
+                items.add(CityItem(city))
             }
 
             itemAdapter.set(items)

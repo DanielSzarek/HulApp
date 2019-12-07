@@ -16,13 +16,16 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
+import pl.kamilszustak.hulapp.view.authorization.adapter.CityItem
 import pl.kamilszustak.hulapp.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.view.dialog.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.view.dialog.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private lateinit var countryChoiceBottomSheet: CountryChoiceBottomSheet
+    private lateinit var cityChoiceBottomSheet: CityChoiceBottomSheet
 
     private val viewModel: SignUpViewModel by viewModels {
         getAndroidViewModelFactory()
@@ -58,6 +61,31 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             viewModel.signUp()
         }
 
+        cityNameEditText.setOnClickListener {
+            val listener = object : ClickListener<CityItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<CityItem>,
+                    item: CityItem,
+                    position: Int
+                ): Boolean {
+                    cityNameEditText.setText(item.city.name)
+                    cityChoiceBottomSheet.dismiss()
+
+                    return true
+                }
+            }
+
+            cityChoiceBottomSheet = CityChoiceBottomSheet.getInstance().apply {
+                this.listener = listener
+            }
+
+            cityChoiceBottomSheet.show(
+                childFragmentManager,
+                CityChoiceBottomSheet.tag
+            )
+        }
+
         countryNameEditText.setOnClickListener {
             val listener = object : ClickListener<CountryItem> {
                 override fun invoke(
@@ -73,7 +101,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 }
             }
 
-            countryChoiceBottomSheet = CountryChoiceBottomSheet(listener)
+            countryChoiceBottomSheet = CountryChoiceBottomSheet.getInstance().apply {
+                this.listener = listener
+            }
 
             countryChoiceBottomSheet.show(
                 childFragmentManager,

@@ -137,11 +137,12 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cityEditText"
+                        android:id="@+id/cityNameEditText"
                         android:inputType="textCapWords"
                         android:maxLines="1"
                         android:text="@={viewModel.userCity}"
-                        android:hint="Miasto" />
+                        android:hint="Miasto"
+                        android:focusable="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
