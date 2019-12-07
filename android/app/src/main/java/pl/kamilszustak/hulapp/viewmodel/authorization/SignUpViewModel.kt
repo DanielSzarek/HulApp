@@ -12,7 +12,7 @@ import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.form.Password
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.util.withMainContext
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
 import timber.log.Timber

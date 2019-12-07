@@ -12,9 +12,5 @@ import kotlinx.android.parcel.Parcelize
 data class Country(
     @ColumnInfo(name = "name")
     @Json(name = "name")
-    var name: String,
-
-    @ColumnInfo(name = "code")
-    @Json(name = "code")
-    var code: String
+    var name: String
 ) : DatabaseEntity()

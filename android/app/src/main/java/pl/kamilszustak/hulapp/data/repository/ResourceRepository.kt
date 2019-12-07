@@ -5,13 +5,17 @@ import pl.kamilszustak.hulapp.common.data.Resource
 
 interface ResourceRepository<T> {
 
-    suspend fun insert(item: T)
+    suspend fun insert(item: T) {
+    }
 
-    suspend fun insertAll(items: List<T>)
+    suspend fun insertAll(items: List<T>) {
+    }
 
-    suspend fun update(item: T)
+    suspend fun update(item: T) {
+    }
 
-    suspend fun delete(item: T)
+    suspend fun delete(item: T) {
+    }
 
     fun getAll(): Flow<Resource<List<T>>>
 

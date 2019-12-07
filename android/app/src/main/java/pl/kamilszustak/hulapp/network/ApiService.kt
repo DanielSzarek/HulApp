@@ -1,5 +1,8 @@
 package pl.kamilszustak.hulapp.network
 
+import pl.kamilszustak.hulapp.common.annotation.Authorization
+import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.*
 import retrofit2.Call
@@ -7,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -20,8 +24,28 @@ interface ApiService {
     suspend fun signUp(@Body user: User): Response<User>
 
     @GET("/auth/users/me")
+    @Authorization
     suspend fun login(): Response<User>
 
     @POST("/auth/users/reset_password/")
     suspend fun resetPassword(@Body passwordResetRequest: PasswordResetRequest): Response<Unit>
+
+    @GET("/api/countries/")
+    suspend fun getAllCountries(): Response<List<Country>>
+
+    @GET("/api/countries/{id}")
+    suspend fun getCountryById(@Path("id") id: Long): Response<Country>
+
+    @GET("/api/countries/{name}")
+    suspend fun getCountriesByName(@Path("name") name: String): Response<List<Country>>
+
+    @GET("/api/cities")
+    suspend fun getAllCities(): Response<List<City>>
+
+    @GET("/api/cities/{id}")
+    suspend fun getCityById(@Path("id") id: Long): Response<City>
+
+    @GET("/api/cities/{name}")
+    suspend fun getCitiesByName(@Path("name") name: String): Response<List<City>>
+
 }

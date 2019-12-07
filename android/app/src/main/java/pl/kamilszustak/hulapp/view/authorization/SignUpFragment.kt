@@ -8,15 +8,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import com.mikepenz.fastadapter.ClickListener
+import com.mikepenz.fastadapter.IAdapter
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
+import pl.kamilszustak.hulapp.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.view.dialog.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+
+    private lateinit var countryChoiceBottomSheet: CountryChoiceBottomSheet
 
     private val viewModel: SignUpViewModel by viewModels {
         getAndroidViewModelFactory()
@@ -50,6 +56,29 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun setListeners() {
         signUpButton.setOnClickListener {
             viewModel.signUp()
+        }
+
+        countryNameEditText.setOnClickListener {
+            val listener = object : ClickListener<CountryItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<CountryItem>,
+                    item: CountryItem,
+                    position: Int
+                ): Boolean {
+                    countryNameEditText.setText(item.country.name)
+                    countryChoiceBottomSheet.dismiss()
+
+                    return true
+                }
+            }
+
+            countryChoiceBottomSheet = CountryChoiceBottomSheet(listener)
+
+            countryChoiceBottomSheet.show(
+                childFragmentManager,
+                CountryChoiceBottomSheet.tag
+            )
         }
     }
 

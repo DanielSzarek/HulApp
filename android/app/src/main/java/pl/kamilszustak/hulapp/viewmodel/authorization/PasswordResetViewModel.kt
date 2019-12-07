@@ -11,7 +11,7 @@ import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequest
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
 import javax.inject.Inject
 

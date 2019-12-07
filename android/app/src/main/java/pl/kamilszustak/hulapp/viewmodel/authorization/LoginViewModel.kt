@@ -13,7 +13,7 @@ import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
-import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.util.withMainContext
 import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
