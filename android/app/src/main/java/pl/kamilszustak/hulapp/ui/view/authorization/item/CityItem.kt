@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.view.authorization.adapter
+package pl.kamilszustak.hulapp.ui.view.authorization.item
 
 import android.view.View
 import android.widget.TextView

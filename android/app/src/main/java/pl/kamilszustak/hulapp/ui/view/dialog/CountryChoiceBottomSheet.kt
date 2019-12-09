@@ -18,7 +18,7 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.ui.view.authorization.item.CountryItem
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.util.set
 
@@ -60,6 +60,7 @@ class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        retainInstance = true
         initializeRecyclerView()
         setListeners()
         observeViewModel()
@@ -90,6 +91,13 @@ class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
 
         viewModel.countries.observe(this) {
             FastAdapterDiffUtil.set(modelAdapter, it)
+        }
+
+        viewModel.areCountriesLoading.observe(this) {
+            if (it)
+                progressBar.show()
+            else
+                progressBar.hide()
         }
     }
 }

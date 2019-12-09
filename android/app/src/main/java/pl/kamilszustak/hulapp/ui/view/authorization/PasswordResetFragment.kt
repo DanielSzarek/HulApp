@@ -14,7 +14,6 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPasswordResetBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
 
 class PasswordResetFragment : Fragment(R.layout.fragment_password_reset) {
@@ -75,7 +74,6 @@ class PasswordResetFragment : Fragment(R.layout.fragment_password_reset) {
                 message(R.string.password_reset_message)
                 positiveButton(R.string.ok) {
                     it.dismiss()
-                    navigateUp()
                 }
             }
         }

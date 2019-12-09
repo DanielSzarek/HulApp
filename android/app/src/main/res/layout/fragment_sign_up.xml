@@ -142,7 +142,7 @@
                         android:id="@+id/cityNameEditText"
                         android:inputType="textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userCity}"
+                        android:text="@{viewModel.userCity.name}"
                         android:hint="Miasto"
                         android:focusable="false" />
 
@@ -161,7 +161,7 @@
                         android:id="@+id/countryNameEditText"
                         android:inputType="textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userCountry}"
+                        android:text="@{viewModel.userCountry.name}"
                         android:hint="Kraj"
                         android:focusable="false" />
 

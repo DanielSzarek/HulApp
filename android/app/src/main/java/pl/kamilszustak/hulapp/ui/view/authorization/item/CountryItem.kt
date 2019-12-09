@@ -1,9 +1,8 @@
-package pl.kamilszustak.hulapp.ui.view.authorization.adapter
+package pl.kamilszustak.hulapp.ui.view.authorization.item
 
 import android.view.View
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.items.ModelAbstractItem
 import kotlinx.android.synthetic.main.layout_countries_list_item.view.*
 import pl.kamilszustak.hulapp.R

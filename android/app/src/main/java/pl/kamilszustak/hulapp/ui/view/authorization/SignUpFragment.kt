@@ -16,11 +16,12 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CityItem
-import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CountryItem
+import pl.kamilszustak.hulapp.ui.view.authorization.item.CityItem
+import pl.kamilszustak.hulapp.ui.view.authorization.item.CountryItem
 import pl.kamilszustak.hulapp.ui.view.dialog.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.view.dialog.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
+import timber.log.Timber
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
@@ -52,8 +53,48 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Timber.i("onViewCreated()")
+        initializeBottomSheets()
         setListeners()
         observeViewModel()
+    }
+
+    private fun initializeBottomSheets() {
+        val onCityClickListener = object : ClickListener<CityItem> {
+            override fun invoke(
+                v: View?,
+                adapter: IAdapter<CityItem>,
+                item: CityItem,
+                position: Int
+            ): Boolean {
+                viewModel.onCityChoosen(item.model)
+                cityChoiceBottomSheet.dismiss()
+
+                return true
+            }
+        }
+
+        cityChoiceBottomSheet = CityChoiceBottomSheet.getInstance().apply {
+            this.listener = onCityClickListener
+        }
+
+        val onCountryClickListener = object : ClickListener<CountryItem> {
+            override fun invoke(
+                v: View?,
+                adapter: IAdapter<CountryItem>,
+                item: CountryItem,
+                position: Int
+            ): Boolean {
+                viewModel.onCountryChoosen(item.model)
+                countryChoiceBottomSheet.dismiss()
+
+                return true
+            }
+        }
+
+        countryChoiceBottomSheet = CountryChoiceBottomSheet.getInstance().apply {
+            this.listener = onCountryClickListener
+        }
     }
 
     private fun setListeners() {
@@ -62,24 +103,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
 
         cityNameEditText.setOnClickListener {
-            val listener = object : ClickListener<CityItem> {
-                override fun invoke(
-                    v: View?,
-                    adapter: IAdapter<CityItem>,
-                    item: CityItem,
-                    position: Int
-                ): Boolean {
-                    cityNameEditText.setText(item.model.name)
-                    cityChoiceBottomSheet.dismiss()
-
-                    return true
-                }
-            }
-
-            cityChoiceBottomSheet = CityChoiceBottomSheet.getInstance().apply {
-                this.listener = listener
-            }
-
             cityChoiceBottomSheet.show(
                 childFragmentManager,
                 CityChoiceBottomSheet.tag
@@ -87,24 +110,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
 
         countryNameEditText.setOnClickListener {
-            val listener = object : ClickListener<CountryItem> {
-                override fun invoke(
-                    v: View?,
-                    adapter: IAdapter<CountryItem>,
-                    item: CountryItem,
-                    position: Int
-                ): Boolean {
-                    countryNameEditText.setText(item.model.name)
-                    countryChoiceBottomSheet.dismiss()
-
-                    return true
-                }
-            }
-
-            countryChoiceBottomSheet = CountryChoiceBottomSheet.getInstance().apply {
-                this.listener = listener
-            }
-
             countryChoiceBottomSheet.show(
                 childFragmentManager,
                 CountryChoiceBottomSheet.tag

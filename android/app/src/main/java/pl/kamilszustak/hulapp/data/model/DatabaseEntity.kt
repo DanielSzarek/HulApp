@@ -10,7 +10,7 @@ abstract class DatabaseEntity : Parcelable {
 
     @PrimaryKey(autoGenerate = false)
     @Json(name = "id")
-    var id: Int = 0
+    var id: Long = 0
 
     @ColumnInfo(name = "created_at")
     @Transient

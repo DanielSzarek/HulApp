@@ -18,7 +18,7 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.ui.view.authorization.adapter.CityItem
+import pl.kamilszustak.hulapp.ui.view.authorization.item.CityItem
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
 import pl.kamilszustak.hulapp.util.set
 
@@ -60,6 +60,7 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        retainInstance = true
         initializeRecyclerView()
         setListeners()
         observeViewModel()
@@ -91,7 +92,12 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
         viewModel.cities.observe(this) {
             FastAdapterDiffUtil.set(modelAdapter, it)
         }
+
+        viewModel.areCitiesLoading.observe(this) {
+            if (it)
+                progressBar.show()
+            else
+                progressBar.hide()
+        }
     }
-
-
 }

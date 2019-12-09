@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4b9dd5bd8c2d97637a19f8b2a7f46410",
+    "identityHash": "1cc4e467e2bbdd31ae10363723b9c3ff",
     "entities": [
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `username` TEXT NOT NULL, `password` TEXT, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `city` TEXT, `country` TEXT, `id` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `username` TEXT NOT NULL, `password` TEXT, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `city_id` INTEGER, `country_id` INTEGER, `id` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`city_id`) REFERENCES `cities`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`country_id`) REFERENCES `countries`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
         "fields": [
           {
             "fieldPath": "email",
@@ -39,15 +39,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "city",
-            "columnName": "city",
-            "affinity": "TEXT",
+            "fieldPath": "cityId",
+            "columnName": "city_id",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "country",
-            "columnName": "country",
-            "affinity": "TEXT",
+            "fieldPath": "countryId",
+            "columnName": "country_id",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -76,7 +76,30 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "cities",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "city_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "countries",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "country_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "cities",
@@ -158,7 +181,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4b9dd5bd8c2d97637a19f8b2a7f46410')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1cc4e467e2bbdd31ae10363723b9c3ff')"
     ]
   }
 }
