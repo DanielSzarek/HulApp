@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.viewmodel.authorization.LoginViewModel" />
+            type="pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel" />
     </data>
 
     <ScrollView
@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/passwordInputLayout"
                 style="@style/TextInputLayoutStyle"
+                app:passwordToggleEnabled="true"
                 android:layout_marginTop="@dimen/default_margin">
 
                 <com.google.android.material.textfield.TextInputEditText

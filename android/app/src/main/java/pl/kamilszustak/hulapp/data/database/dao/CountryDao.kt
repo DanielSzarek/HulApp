@@ -24,4 +24,11 @@ interface CountryDao {
 
     @Query("SELECT * FROM countries WHERE id = :id")
     fun getById(id: Long): Flow<Country>
+
+    @Query(
+        "SELECT * FROM countries WHERE name LIKE :name || '%'" +
+                "OR name LIKE '% ' || :name || '%'" +
+                "OR name LIKE '%-' || :name || '%'"
+    )
+    fun getByName(name: String): Flow<List<Country>>
 }

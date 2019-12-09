@@ -26,13 +26,16 @@ fun Fragment.navigateTo(directions: NavDirections, extras: Navigator.Extras) {
     this.findNavController().navigate(directions, extras)
 }
 
-fun Fragment.navigateTo(destinationId: Int, args: Bundle, options: NavOptions, extras: Navigator.Extras) {
+fun Fragment.navigateTo(
+    destinationId: Int,
+    args: Bundle,
+    options: NavOptions,
+    extras: Navigator.Extras
+) {
     this.findNavController().navigate(destinationId, args, options, extras)
 }
 
-fun Fragment.navigateUp() {
-    this.findNavController().navigateUp()
-}
+fun Fragment.navigateUp(): Boolean = this.findNavController().navigateUp()
 
 inline fun Fragment.dialog(crossinline block: MaterialDialog.() -> Unit): MaterialDialog {
     return MaterialDialog(requireContext()).show {

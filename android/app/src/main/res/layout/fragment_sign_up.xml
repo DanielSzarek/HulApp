@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel" />
+            type="pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/passwordInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:passwordToggleEnabled="true"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -78,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/retypedPasswordInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:passwordToggleEnabled="true"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -137,11 +139,12 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cityEditText"
+                        android:id="@+id/cityNameEditText"
                         android:inputType="textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userCity}"
-                        android:hint="Miasto" />
+                        android:text="@{viewModel.userCity.name}"
+                        android:hint="Miasto"
+                        android:focusable="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,11 +158,12 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/countryEditText"
+                        android:id="@+id/countryNameEditText"
                         android:inputType="textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userCountry}"
-                        android:hint="Kraj" />
+                        android:text="@{viewModel.userCountry.name}"
+                        android:hint="Kraj"
+                        android:focusable="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

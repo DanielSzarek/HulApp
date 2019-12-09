@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.viewmodel.authorization
+package pl.kamilszustak.hulapp.ui.viewmodel.authorization
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -11,8 +11,8 @@ import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequest
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
-import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 class PasswordResetViewModel(application: Application) : BaseViewModel(application) {

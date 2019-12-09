@@ -2,11 +2,28 @@ package pl.kamilszustak.hulapp.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "users")
+@Entity(
+    tableName = "users",
+    foreignKeys = [
+        ForeignKey(
+            entity = City::class,
+            parentColumns = ["id"],
+            childColumns = ["city_id"],
+            onDelete = ForeignKey.SET_NULL
+        ),
+        ForeignKey(
+            entity = Country::class,
+            parentColumns = ["id"],
+            childColumns = ["country_id"],
+            onDelete = ForeignKey.SET_NULL
+        )
+    ]
+)
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class User(
@@ -30,11 +47,11 @@ data class User(
     @Json(name = "last_name")
     var surname: String,
 
-    @ColumnInfo(name = "city")
+    @ColumnInfo(name = "city_id")
     @Json(name = "city")
-    var city: String?,
+    var cityId: Long?,
 
-    @ColumnInfo(name = "country")
+    @ColumnInfo(name = "country_id")
     @Json(name = "country")
-    var country: String?
+    var countryId: Long?
 ) : DatabaseEntity()

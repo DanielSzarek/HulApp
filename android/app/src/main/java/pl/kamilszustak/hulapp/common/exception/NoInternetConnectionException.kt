@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.exception
+package pl.kamilszustak.hulapp.common.exception
 
 class NoInternetConnectionException : Exception {
 

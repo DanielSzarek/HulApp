@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.viewmodel.authorization
+package pl.kamilszustak.hulapp.ui.viewmodel.authorization
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -12,9 +12,11 @@ import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.form.Password
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
+import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.util.withMainContext
-import pl.kamilszustak.hulapp.viewmodel.BaseViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,9 +38,9 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
 
     val userSurname: UniqueLiveData<String> = UniqueLiveData()
 
-    val userCity: UniqueLiveData<String> = UniqueLiveData()
+    val userCity: UniqueLiveData<City> = UniqueLiveData()
 
-    val userCountry: UniqueLiveData<String> = UniqueLiveData()
+    val userCountry: UniqueLiveData<Country> = UniqueLiveData()
 
     private val _userSignedUp: SingleLiveEvent<Unit> = SingleLiveEvent()
     val userSignedUp: LiveData<Unit> = _userSignedUp
@@ -51,6 +53,14 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
 
     init {
         getApplicationComponent().inject(this)
+    }
+
+    fun onCityChoosen(city: City) {
+        userCity.setValue(city)
+    }
+
+    fun onCountryChoosen(country: Country) {
+        userCountry.setValue(country)
     }
 
     fun signUp() {
@@ -71,8 +81,8 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
             retypedPassword.isNullOrBlank() ||
             name.isNullOrBlank() ||
             surname.isNullOrBlank() ||
-            city.isNullOrBlank() ||
-            country.isNullOrBlank()
+            city == null ||
+            country == null
         ) {
             _signUpError.value = "Wymagane pola nie mogą być puste"
             return
@@ -88,6 +98,7 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
         val userPassword = Password(password)
         if (!validator.validate(userPassword)) {
             _signUpError.value = "Nieprawidłowy format hasła"
+            return
         }
 
         if (password != retypedPassword) {
@@ -101,8 +112,8 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
             password,
             name,
             surname,
-            city,
-            country
+            city.id,
+            country.id
         )
 
         viewModelScope.launch(Dispatchers.IO) {

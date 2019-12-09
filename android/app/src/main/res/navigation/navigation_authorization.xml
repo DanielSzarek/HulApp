@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="pl.kamilszustak.hulapp.view.authorization.LoginFragment"
-        android:label="LoginFragment">
+        android:name="pl.kamilszustak.hulapp.ui.view.authorization.LoginFragment"
+        android:label="Logowanie">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
@@ -26,10 +26,10 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="pl.kamilszustak.hulapp.view.authorization.SignUpFragment"
-        android:label="SignUpFragment" />
+        android:name="pl.kamilszustak.hulapp.ui.view.authorization.SignUpFragment"
+        android:label="Rejestracja" />
     <fragment
         android:id="@+id/passwordResetFragment"
-        android:name="pl.kamilszustak.hulapp.view.authorization.PasswordResetFragment"
-        android:label="PasswordResetFragment" />
+        android:name="pl.kamilszustak.hulapp.ui.view.authorization.PasswordResetFragment"
+        android:label="Reset hasła" />
 </navigation>

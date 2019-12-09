@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.view.authorization
+package pl.kamilszustak.hulapp.ui.view.authorization
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +8,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_sign_up.*
+import kotlinx.android.synthetic.main.fragment_password_reset.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
+import pl.kamilszustak.hulapp.databinding.FragmentPasswordResetBinding
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
-import pl.kamilszustak.hulapp.viewmodel.authorization.SignUpViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
 
-class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+class PasswordResetFragment : Fragment(R.layout.fragment_password_reset) {
 
-    private val viewModel: SignUpViewModel by viewModels {
+    private val viewModel: PasswordResetViewModel by viewModels {
         getAndroidViewModelFactory()
     }
 
@@ -27,13 +27,13 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentSignUpBinding>(
+        val dataBinding = DataBindingUtil.inflate<FragmentPasswordResetBinding>(
             inflater,
-            R.layout.fragment_sign_up,
+            R.layout.fragment_password_reset,
             container,
             false
         ).apply {
-            this.viewModel = this@SignUpFragment.viewModel
+            this.viewModel = this@PasswordResetFragment.viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -48,30 +48,30 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun setListeners() {
-        signUpButton.setOnClickListener {
-            viewModel.signUp()
+        resetPasswordButton.setOnClickListener {
+            viewModel.resetPassword()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.isSigningUpInProgress.observe(this) {
+        viewModel.resetError.observe(this) {
+            view?.snackbar(it)
+        }
+
+        viewModel.resetInProgress.observe(this) {
             if (it) {
-                signUpButton.isEnabled = false
+                resetPasswordButton.isEnabled = false
                 progressBar.show()
             } else {
-                signUpButton.isEnabled = true
+                resetPasswordButton.isEnabled = true
                 progressBar.hide()
             }
         }
 
-        viewModel.signUpError.observe(this) {
-            view?.snackbar(it)
-        }
-
-        viewModel.userSignedUp.observe(this) {
+        viewModel.resetCompleted.observe(this) {
             dialog {
-                title(R.string.user_signed_up_title)
-                message(R.string.user_signed_up_message)
+                title(R.string.password_reset_title)
+                message(R.string.password_reset_message)
                 positiveButton(R.string.ok) {
                     it.dismiss()
                 }

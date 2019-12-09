@@ -2,6 +2,9 @@
     <string name="app_name">HulApp</string>
     <string name="database_name">hulapp_database</string>
 
+    <!-- FastAdapter -->
+    <string name="country_item_id">country_item_id</string>
+
     <!-- SettingsRepository -->
     <string name="shared_preferences_is_user_logged_in">shared_preferences_is_user_logged_in</string>
 
