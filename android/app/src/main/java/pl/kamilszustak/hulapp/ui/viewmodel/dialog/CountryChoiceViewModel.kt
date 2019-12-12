@@ -16,19 +16,12 @@ class CountryChoiceViewModel(application: Application) : BaseViewModel(applicati
     @Inject
     protected lateinit var countryRepository: CountryRepository
 
-    private val countriesResource: ResourceLiveData<List<Country>> = ResourceLiveData()
-    val countries: LiveData<List<Country>> = countriesResource.dataLiveData
-    val areCountriesLoading: LiveData<Boolean> = countriesResource.loadingLiveData
-    val countriesError: SingleLiveEvent<String> = countriesResource.errorLiveData
+    val countriesResource: ResourceLiveData<List<Country>> = ResourceLiveData()
 
     val countryName: UniqueLiveData<String> = UniqueLiveData()
 
     init {
         getApplicationComponent().inject(this)
-
-//        countriesResource.changeDataSource {
-//            countryRepository.getAll().asLiveData()
-//        }
     }
 
     fun loadCountriesByName(name: String) {

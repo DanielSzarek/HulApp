@@ -89,11 +89,11 @@ class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
             viewModel.loadCountriesByName(it)
         }
 
-        viewModel.countries.observe(this) {
+        viewModel.countriesResource.data.observe(this) {
             FastAdapterDiffUtil.set(modelAdapter, it)
         }
 
-        viewModel.areCountriesLoading.observe(this) {
+        viewModel.countriesResource.isLoading.observe(this) {
             if (it)
                 progressBar.show()
             else

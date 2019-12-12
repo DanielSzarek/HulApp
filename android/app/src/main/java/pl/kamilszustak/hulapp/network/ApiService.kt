@@ -47,5 +47,4 @@ interface ApiService {
 
     @GET("/api/cities/{name}")
     suspend fun getCitiesByName(@Path("name") name: String): Response<List<City>>
-
 }

@@ -10,9 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentLoginBinding
+import pl.kamilszustak.hulapp.ui.view.main.MainActivity
 import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel
@@ -67,7 +69,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun observeViewModel() {
         viewModel.loginCompleted.observe(this) {
-            toast("Logowanie zakończowe sukcesem")
+            startActivity<MainActivity>()
+            requireActivity().finish()
         }
 
         viewModel.isLoggingInProgress.observe(this) {

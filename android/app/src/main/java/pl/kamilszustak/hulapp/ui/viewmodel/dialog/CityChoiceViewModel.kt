@@ -16,10 +16,7 @@ class CityChoiceViewModel(application: Application) : BaseViewModel(application)
     @Inject
     protected lateinit var cityRepository: CityRepository
 
-    private val citiesResource: ResourceLiveData<List<City>> = ResourceLiveData()
-    val cities: LiveData<List<City>> = citiesResource.dataLiveData
-    val areCitiesLoading: LiveData<Boolean> = citiesResource.loadingLiveData
-    val citiesError: SingleLiveEvent<String> = citiesResource.errorLiveData
+    val citiesResource: ResourceLiveData<List<City>> = ResourceLiveData()
 
     val cityName: UniqueLiveData<String> = UniqueLiveData()
 

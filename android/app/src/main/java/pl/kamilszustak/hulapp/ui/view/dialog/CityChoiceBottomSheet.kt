@@ -89,11 +89,11 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
             viewModel.loadCitiesByName(it)
         }
 
-        viewModel.cities.observe(this) {
+        viewModel.citiesResource.data.observe(this) {
             FastAdapterDiffUtil.set(modelAdapter, it)
         }
 
-        viewModel.areCitiesLoading.observe(this) {
+        viewModel.citiesResource.isLoading.observe(this) {
             if (it)
                 progressBar.show()
             else

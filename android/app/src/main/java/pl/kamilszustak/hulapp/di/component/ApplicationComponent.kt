@@ -14,6 +14,7 @@ import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel
 import javax.inject.Singleton
 
 @Singleton
@@ -35,6 +36,8 @@ interface ApplicationComponent : AndroidInjector<BaseApplication> {
     fun inject(countryChoiceViewModel: CountryChoiceViewModel)
 
     fun inject(cityChoiceViewModel: CityChoiceViewModel)
+
+    fun inject(profileViewModel: ProfileViewModel)
 
     @Component.Builder
     interface Builder {

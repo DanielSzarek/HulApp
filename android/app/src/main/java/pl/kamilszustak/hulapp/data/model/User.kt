@@ -54,4 +54,8 @@ data class User(
     @ColumnInfo(name = "country_id")
     @Json(name = "country")
     var countryId: Long?
-) : DatabaseEntity()
+) : DatabaseEntity() {
+
+    @Transient
+    val fullName: String = "$name $surname"
+}

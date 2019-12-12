@@ -106,8 +106,6 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
                 _isLoggingInProgress.setValue(true)
             }
 
-            Timber.i("1")
-
             val response = try {
                 apiService.login()
             } catch (exception: NoInternetConnectionException) {
@@ -116,14 +114,15 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
                 return@launch
             }
 
-            Timber.i("2")
-
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
                     userRepository.insert(body)
                     userDetailsRepository.setValue(
                         UserDetailsRepository.UserDetailsKey.USER_ID to body.id
+                    )
+                    settingsRepository.setValue(
+                        SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to true
                     )
                     withMainContext {
                         _loginCompleted.call()
@@ -135,8 +134,6 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
                     _loginError.value = "Nie udało się zalogować"
                 }
             }
-
-            Timber.i("3")
 
             withMainContext {
                 _isLoggingInProgress.setValue(false)
