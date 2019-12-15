@@ -16,8 +16,8 @@ class Registration extends React.Component{
                 repeatedPassword: '',
                 name: '',
                 surname: '',
-                country: '',
-                city: '',
+                country: 2,
+                city: 4,
                 message: ''
         };
         this.handleChange = this.handleChange.bind(this);
@@ -28,7 +28,7 @@ class Registration extends React.Component{
         event.preventDefault();
          console.log("email "+this.state.email)
          //walidacja
-         fetch('http://hulapp.pythonanywhere.com/api/users', {
+         fetch('http://hulapp.pythonanywhere.com/auth/users/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
