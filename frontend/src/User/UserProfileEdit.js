@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import '../Styles/App.css';
 import '../Styles/UserProfile.css';
 
-
+import AuthService from './AuthService';
 
 class Registration extends React.Component{
 
@@ -21,9 +21,22 @@ class Registration extends React.Component{
                 age: '',
                 message: ''
         };
+		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
+	  
+	  componentDidMount(){
+		  this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
+		  .then((res) => {
+			  console.log(res);
+			  this.setState({name: res.first_name})
+			  this.setState({surname: res.last_name})
+		  })
+		  .catch((error) => {
+                console.log({message: "ERROR " + error});
+            });
+	  }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -93,11 +106,11 @@ class Registration extends React.Component{
                     <hr />
                     <Form.Group controlId="formEditName">
                         <Form.Label>Imię:</Form.Label>
-                        <Form.Control name="name" type="text"  onChange={this.handleChange} required/>
+                        <Form.Control name="name" type="text" value={this.state.name} onChange={this.handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formEditSurname">
                         <Form.Label>Nazwisko:</Form.Label>
-                        <Form.Control name="surname" type="text"  onChange={this.handleChange} required/>
+                        <Form.Control name="surname" type="text" value={this.state.surname} onChange={this.handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formEditAge">
                         <Form.Label >Wiek:</Form.Label>

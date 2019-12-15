@@ -72,10 +72,10 @@ class LoggingForm extends React.Component{
         });
     }
 
-componentWillMount(){
-    if(this.Auth.loggedIn())
-        this.props.history.replace('/profile-edit');
-}
+// componentWillMount(){
+//     if(this.Auth.loggedIn())
+//         this.props.history.replace('/profile-edit');
+// }
 
     render(){
         return(

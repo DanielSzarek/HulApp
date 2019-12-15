@@ -21,15 +21,57 @@ export default class AuthService {
                 password: password
             })
         }).then(res => {
-            this.setToken(res.token) // Setting the token in localStorage
+			console.log(res);
+            this.setToken(res.access) // Setting the token in localStorage
+			this.setRefreshidToken(res.refresh)
             return Promise.resolve(res);
         })
     }
+	
+	refresh(){
+		console.log("refreshing token");
+		return fetch('http://hulapp.pythonanywhere.com/auth/jwt/refresh/', {
+            method: 'POST',
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                refresh: this.getRefreshToken()
+            })
+        })
+		.then(res => res.json())
+		.then(res => {
+			console.log(res);
+			console.log("Setting new acc token")
+            this.setToken(res.access) // Setting the token in localStorage
+            return Promise.resolve(res);
+        })
+		.catch((error) => {
+                console.log({message: "ERROR " + error});
+            });
+	}
 
-    loggedIn() {
+    async loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
-        return !!token && !this.isTokenExpired(token) // handwaiving here
+		//check if tokem expired
+		if(!!token && token !== 'undefined' && !this.isTokenExpired(token)){
+			console.log("token valid");
+			return true;
+		}
+		else{
+			console.log("checking");
+			//check if refresh token not expired
+			const refreshToken = this.getRefreshToken();
+			console.log(refreshToken);
+			if(!!refreshToken && !this.isTokenExpired(refreshToken)){
+				await this.refresh();
+				return true;
+			}
+		}
+		
+        return false;
     }
 
     isTokenExpired(token) {
@@ -50,10 +92,20 @@ export default class AuthService {
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
+	
+	setRefreshidToken(idToken) {
+        // Saves user token to localStorage
+        localStorage.setItem('id_refresh', idToken)
+    }
 
     getToken() {
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
+    }
+	
+	getRefreshToken() {
+        // Retrieves the refresh token from localStorage
+        return localStorage.getItem('id_refresh')
     }
 
     logout() {
@@ -67,7 +119,7 @@ export default class AuthService {
     }
 
 
-    fetch(url, options) {
+    async fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {
             'Accept': 'application/json',
@@ -76,9 +128,13 @@ export default class AuthService {
 
         // Setting Authorization header
         // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
-        if (this.loggedIn()) {
+        if (await this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
+			console.log("authorization header added");
         }
+		else{
+			console.log("not logged in");
+		}
 
         return fetch(url, {
             headers,
