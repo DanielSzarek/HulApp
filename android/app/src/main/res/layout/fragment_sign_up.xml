@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/emailInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_envelope"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/passwordInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_lock"
                     app:passwordToggleEnabled="true"
                     android:layout_marginTop="@dimen/default_margin">
 
@@ -67,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/passwordEditText"
-                        android:hint="Password"
+                        android:hint="Hasło"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:text="@={viewModel.userPassword}"/>
@@ -79,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/retypedPasswordInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_lock"
                     app:passwordToggleEnabled="true"
                     android:layout_marginTop="@dimen/default_margin">
 
@@ -86,7 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/retypedPasswordEditText"
-                        android:hint="Retype password"
+                        android:hint="Powtórz hasło"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:text="@={viewModel.retypedUserPassword}"/>
@@ -98,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/nameInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_person"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -116,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/surnameInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_person"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -134,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/cityInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_city"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -153,6 +159,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/countryInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:startIconDrawable="@drawable/icon_flag"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -185,11 +192,39 @@
             android:text="Sign up"
             android:textSize="24sp"
             style="@style/MaterialButtonStyle"
-            android:layout_margin="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
             android:padding="@dimen/default_half_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toTopOf="@id/backToLoginPageLayout" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backToLoginPageLayout"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backToLoginPageTextView"
+                android:text="Masz już konto?" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backToLoginPageButton"
+                android:text="Zaloguj się"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

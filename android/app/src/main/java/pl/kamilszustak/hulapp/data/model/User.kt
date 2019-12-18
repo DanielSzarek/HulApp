@@ -58,4 +58,7 @@ data class User(
 
     @Transient
     val fullName: String = "$name $surname"
+
+    @Transient
+    var imageUrl: String? = null
 }

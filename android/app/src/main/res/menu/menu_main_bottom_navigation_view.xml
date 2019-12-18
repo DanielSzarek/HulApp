@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/feedFragment"
-        android:icon="@drawable/icon_feed"
+        android:icon="@drawable/icon_home"
         android:title="Aktualności" />
 
     <item

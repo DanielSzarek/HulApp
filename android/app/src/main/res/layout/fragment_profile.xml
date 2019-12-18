@@ -12,6 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilePhotoGuideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:id="@+id/profilePhotoImageView"
+            android:src="@{viewModel.user.imageUrl}"
+            tools:src="@drawable/icon_profile"
+            android:background="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/profilePhotoGuideline"
+            app:layout_constraintBottom_toBottomOf="@id/profilePhotoGuideline"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,8 +40,7 @@
             android:fontFamily="sans-serif-light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

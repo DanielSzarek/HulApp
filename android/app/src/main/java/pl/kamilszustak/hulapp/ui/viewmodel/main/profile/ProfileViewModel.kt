@@ -9,7 +9,6 @@ import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.repository.*
 import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import pl.kamilszustak.hulapp.util.mapNotNull
-import pl.kamilszustak.hulapp.util.switchMapResource
 import javax.inject.Inject
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {

@@ -21,6 +21,7 @@
 
         <activity
             android:name="pl.kamilszustak.hulapp.ui.view.authorization.AuthorizationActivity"
+            android:theme="@style/AppTheme.TransparentActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

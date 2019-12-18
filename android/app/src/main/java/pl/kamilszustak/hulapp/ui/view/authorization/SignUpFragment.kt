@@ -21,6 +21,7 @@ import pl.kamilszustak.hulapp.ui.view.authorization.item.CountryItem
 import pl.kamilszustak.hulapp.ui.view.dialog.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.view.dialog.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
+import pl.kamilszustak.hulapp.util.navigateUp
 import timber.log.Timber
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
@@ -53,7 +54,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Timber.i("onViewCreated()")
         initializeBottomSheets()
         setListeners()
         observeViewModel()
@@ -100,6 +100,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun setListeners() {
         signUpButton.setOnClickListener {
             viewModel.signUp()
+        }
+
+        backToLoginPageButton.setOnClickListener {
+            navigateUp()
         }
 
         cityNameEditText.setOnClickListener {
