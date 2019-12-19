@@ -10,6 +10,8 @@ import pl.kamilszustak.hulapp.ui.viewmodel.AndroidViewModelFactory
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
+import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel
 
@@ -43,4 +45,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditProfileViewModel::class)
     abstract fun bindEditProfileViewModel(editProfileViewModel: EditProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CityChoiceViewModel::class)
+    abstract fun bindCityChoiceViewModel(cityChoiceViewModel: CityChoiceViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CountryChoiceViewModel::class)
+    abstract fun bindCountryChoiceViewModel(countryChoiceViewModel: CountryChoiceViewModel): ViewModel
 }
