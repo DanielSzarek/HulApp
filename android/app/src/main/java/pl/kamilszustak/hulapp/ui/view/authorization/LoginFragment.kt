@@ -5,25 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentLoginBinding
+import pl.kamilszustak.hulapp.ui.view.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.view.main.MainActivity
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment : BaseFragment(R.layout.fragment_login) {
+
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
 
     private val viewModel: LoginViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     override fun onCreateView(

@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.common.livedata
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.util.mapNotNull

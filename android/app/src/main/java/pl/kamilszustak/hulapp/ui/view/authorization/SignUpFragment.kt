@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.IAdapter
@@ -15,22 +15,25 @@ import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.util.dialog
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.ui.view.authorization.item.CityItem
 import pl.kamilszustak.hulapp.ui.view.authorization.item.CountryItem
+import pl.kamilszustak.hulapp.ui.view.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.view.dialog.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.view.dialog.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
 import pl.kamilszustak.hulapp.util.navigateUp
-import timber.log.Timber
+import javax.inject.Inject
 
-class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private lateinit var countryChoiceBottomSheet: CountryChoiceBottomSheet
     private lateinit var cityChoiceBottomSheet: CityChoiceBottomSheet
 
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
+
     private val viewModel: SignUpViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     override fun onCreateView(

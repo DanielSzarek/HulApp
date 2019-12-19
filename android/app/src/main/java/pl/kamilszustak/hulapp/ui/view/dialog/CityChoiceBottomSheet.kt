@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.bottom_sheet_city_choice.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.ui.view.authorization.item.CityItem
+import pl.kamilszustak.hulapp.ui.view.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
 import pl.kamilszustak.hulapp.util.set
+import javax.inject.Inject
 
-class CityChoiceBottomSheet : BottomSheetDialogFragment() {
+class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
     companion object {
         const val tag: String = "CITY_CHOICE_BOTTOM_SHEET"
@@ -31,8 +32,11 @@ class CityChoiceBottomSheet : BottomSheetDialogFragment() {
             CityChoiceBottomSheet()
     }
 
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
+
     private val viewModel: CityChoiceViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     var listener: ClickListener<CityItem>? = null

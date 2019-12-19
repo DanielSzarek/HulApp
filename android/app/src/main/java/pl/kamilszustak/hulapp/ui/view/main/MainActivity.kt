@@ -1,18 +1,16 @@
 package pl.kamilszustak.hulapp.ui.view.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.util.navigateUp
+import pl.kamilszustak.hulapp.ui.view.base.BaseActivity
 import pl.kamilszustak.hulapp.util.setupWithNavController
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private var currentNavController: LiveData<NavController>? = null
 

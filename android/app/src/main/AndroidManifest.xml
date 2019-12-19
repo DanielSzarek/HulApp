@@ -20,15 +20,19 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="pl.kamilszustak.hulapp.ui.view.authorization.AuthorizationActivity"
-            android:theme="@style/AppTheme.TransparentActionBar"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".ui.view.splashscreen.SplashScreenActivity"
+            android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.view.authorization.AuthorizationActivity"
+            android:theme="@style/AppTheme.TransparentActionBar"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
 
         <activity android:name=".ui.view.main.MainActivity"
             android:exported="true" />

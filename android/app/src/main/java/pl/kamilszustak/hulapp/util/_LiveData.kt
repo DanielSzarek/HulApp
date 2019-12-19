@@ -1,9 +1,6 @@
 package pl.kamilszustak.hulapp.util
 
 import androidx.lifecycle.*
-import pl.kamilszustak.hulapp.common.data.Resource
-import pl.kamilszustak.hulapp.common.livedata.ResourceLiveData
-
 
 inline fun <S, T> LiveData<T>.mapNotNull(crossinline function: (T) -> S?): LiveData<S> {
     val result = MediatorLiveData<S>()
@@ -46,7 +43,3 @@ fun <T> LiveData<T>.merge(source: LiveData<T>): LiveData<T> {
 
     return result
 }
-
-//inline fun <S, T> LiveData<S>.switchMapResource(crossinline function: (S) -> ResourceLiveData<T>): ResourceLiveData<T> {
-//
-//}

@@ -7,6 +7,11 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     </style>
 
+    <style name="AppTheme.SplashScreen">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="actionBarStyle">@style/Theme.MaterialComponents.Light.NoActionBar</item>
+    </style>
+
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundMode">filled</item>
         <item name="boxBackgroundColor">@color/colorForm</item>

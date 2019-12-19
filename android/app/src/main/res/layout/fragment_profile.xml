@@ -1,46 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="viewModel"
             type="pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:paddingTop="@dimen/default_double_padding"
+        android:paddingBottom="@dimen/default_double_padding">
 
-        <androidx.constraintlayout.widget.Guideline
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/profilePhotoGuideline"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
+            android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:id="@+id/profilePhotoImageView"
-            android:src="@{viewModel.user.imageUrl}"
-            tools:src="@drawable/icon_profile"
-            android:background="@color/colorAccent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/profilePhotoGuideline"
-            app:layout_constraintBottom_toBottomOf="@id/profilePhotoGuideline"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:id="@+id/profilePhotoImageView"
+                android:src="@drawable/icon_profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.user.fullName}"
-            tools:text="Jan Kowalski"
-            android:textSize="32sp"
-            android:fontFamily="sans-serif-light"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userFullNameTextView"
+                android:text="@{viewModel.user.fullName}"
+                tools:text="Jan Kowalski"
+                android:textSize="32sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif-light"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userCityTextView"
+                android:text="@{viewModel.city.name}"
+                tools:text="Gdynia"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="@id/userFullNameTextView"
+                app:layout_constraintEnd_toStartOf="@id/userCountryTextView"
+                app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
+                app:layout_constraintHorizontal_chainStyle="spread"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userCountryTextView"
+                android:text="@{viewModel.country.name}"
+                tools:text="Polska"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toEndOf="@id/userCityTextView"
+                app:layout_constraintEnd_toEndOf="@id/userFullNameTextView"
+                app:layout_constraintTop_toBottomOf="@id/userFullNameTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

@@ -20,25 +20,15 @@ import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-class LoginViewModel(application: Application) : BaseViewModel(application) {
-
-    @Inject
-    protected lateinit var apiService: ApiService
-
-    @Inject
-    protected lateinit var userRepository: UserRepository
-
-    @Inject
-    protected lateinit var settingsRepository: SettingsRepository
-
-    @Inject
-    protected lateinit var jwtTokenRepository: JwtTokenRepository
-
-    @Inject
-    protected lateinit var userDetailsRepository: UserDetailsRepository
-
-    @Inject
-    protected lateinit var validator: FormValidator
+class LoginViewModel @Inject constructor(
+    application: Application,
+    private val apiService: ApiService,
+    private val userRepository: UserRepository,
+    private val settingsRepository: SettingsRepository,
+    private val jwtTokenRepository: JwtTokenRepository,
+    private val userDetailsRepository: UserDetailsRepository,
+    private val validator: FormValidator
+) : BaseViewModel(application) {
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -54,8 +44,6 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     val loginError: LiveData<String> = _loginError
 
     init {
-        getApplicationComponent().inject(this)
-
         val isUserLoggedIn: Boolean = SettingsRepository.SettingsKey.IS_USER_LOGGED_IN.let {
             settingsRepository.getValue(it, it.getDefaultValue())
         }

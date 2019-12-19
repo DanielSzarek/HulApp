@@ -1,14 +1,14 @@
 package pl.kamilszustak.hulapp.ui.view.authorization
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_authorization.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.ui.view.base.BaseActivity
 import pl.kamilszustak.hulapp.util.navigateUp
 
-class AuthorizationActivity : AppCompatActivity(R.layout.activity_authorization) {
+class AuthorizationActivity : BaseActivity(R.layout.activity_authorization) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

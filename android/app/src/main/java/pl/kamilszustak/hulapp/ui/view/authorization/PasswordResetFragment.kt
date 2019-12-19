@@ -5,21 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.fragment_password_reset.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPasswordResetBinding
+import pl.kamilszustak.hulapp.ui.view.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
+import javax.inject.Inject
 
-class PasswordResetFragment : Fragment(R.layout.fragment_password_reset) {
+class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
+
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
 
     private val viewModel: PasswordResetViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     override fun onCreateView(

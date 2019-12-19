@@ -3,21 +3,25 @@ package pl.kamilszustak.hulapp.ui.view.main.profile
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.view.authorization.AuthorizationActivity
+import pl.kamilszustak.hulapp.ui.view.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
+import javax.inject.Inject
 
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
+class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
+
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
 
     private val viewModel: ProfileViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     override fun onCreateView(

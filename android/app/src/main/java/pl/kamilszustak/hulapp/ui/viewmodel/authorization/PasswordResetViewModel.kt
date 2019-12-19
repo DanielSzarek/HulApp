@@ -15,13 +15,11 @@ import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import javax.inject.Inject
 
-class PasswordResetViewModel(application: Application) : BaseViewModel(application) {
-
-    @Inject
-    protected lateinit var apiService: ApiService
-
-    @Inject
-    protected lateinit var validator: FormValidator
+class PasswordResetViewModel @Inject constructor(
+    application: Application,
+    private val apiService: ApiService,
+    private val validator: FormValidator
+) : BaseViewModel(application) {
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -33,10 +31,6 @@ class PasswordResetViewModel(application: Application) : BaseViewModel(applicati
 
     private val _resetInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
     val resetInProgress: LiveData<Boolean> = _resetInProgress
-
-    init {
-        getApplicationComponent().inject(this)
-    }
 
     fun resetPassword() {
         val email = userEmail.value

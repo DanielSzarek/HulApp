@@ -108,7 +108,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/nameEditText"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
                         android:text="@={viewModel.userName}"
                         android:hint="Imię" />
@@ -127,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/surnameEditText"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
                         android:text="@={viewModel.userSurname}"
                         android:hint="Nazwisko" />
@@ -189,7 +189,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signUpButton"
-            android:text="Sign up"
+            android:text="Zarejestruj się"
             android:textSize="24sp"
             style="@style/MaterialButtonStyle"
             android:layout_marginTop="@dimen/default_margin"

@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.bottom_sheet_country_choice.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
-import pl.kamilszustak.hulapp.util.getAndroidViewModelFactory
 import pl.kamilszustak.hulapp.ui.view.authorization.item.CountryItem
+import pl.kamilszustak.hulapp.ui.view.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.util.set
+import javax.inject.Inject
 
-class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
+class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
     companion object {
         const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
@@ -31,8 +32,11 @@ class CountryChoiceBottomSheet : BottomSheetDialogFragment() {
             CountryChoiceBottomSheet()
     }
 
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
+
     private val viewModel: CountryChoiceViewModel by viewModels {
-        getAndroidViewModelFactory()
+        viewModelFactory
     }
 
     var listener: ClickListener<CountryItem>? = null

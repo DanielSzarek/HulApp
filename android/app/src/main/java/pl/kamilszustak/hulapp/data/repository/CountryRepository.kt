@@ -7,7 +7,6 @@ import pl.kamilszustak.hulapp.data.database.dao.CountryDao
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 class CountryRepository @Inject constructor(

@@ -20,13 +20,11 @@ import pl.kamilszustak.hulapp.ui.viewmodel.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-class SignUpViewModel(application: Application) : BaseViewModel(application) {
-
-    @Inject
-    protected lateinit var apiService: ApiService
-
-    @Inject
-    protected lateinit var validator: FormValidator
+class SignUpViewModel @Inject constructor(
+    application: Application,
+    private val apiService: ApiService,
+    private val validator: FormValidator
+) : BaseViewModel(application) {
 
     val userEmail: UniqueLiveData<String> = UniqueLiveData()
 
@@ -50,10 +48,6 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
 
     private val _signUpError: SingleLiveEvent<String> = SingleLiveEvent()
     val signUpError: LiveData<String> = _signUpError
-
-    init {
-        getApplicationComponent().inject(this)
-    }
 
     fun onCityChoosen(city: City) {
         userCity.setValue(city)
