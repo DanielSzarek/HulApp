@@ -3,8 +3,9 @@ import logo from '../Images/logo.png';
 import { Form, Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import '../Styles/App.css';
-import '../Styles/Registration.css';
+import '../Styles/UserProfile.css';
 
+import AuthService from './AuthService';
 
 class Registration extends React.Component{
 
@@ -12,36 +13,49 @@ class Registration extends React.Component{
         super(props);
         this.state = {
             email: '',
-                password: '',
-                repeatedPassword: '',
                 name: '',
                 surname: '',
-                country: 2,
-                city: 4,
+                country: '',
+                city: '',
+                description: '',
+                age: '',
                 message: ''
         };
+		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
+	  
+	  componentDidMount(){
+		  this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
+		  .then((res) => {
+			  console.log(res);
+			  this.setState({name: res.first_name})
+			  this.setState({surname: res.last_name})
+		  })
+		  .catch((error) => {
+                console.log({message: "ERROR " + error});
+            });
+	  }
 
     handleSubmit = (event) => {
         event.preventDefault();
-         console.log("email "+this.state.email)
+        //  console.log("email "+this.state.email)
          //walidacja
-         fetch('http://hulapp.pythonanywhere.com/auth/users/', {
-            method: 'POST',
+         fetch('http://hulapp.pythonanywhere.com/​auth​/users​/me​/', {
+            method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 username: this.state.email,
-                email: this.state.email,
-                password: this.state.password,
+                // email: this.state.email,
+              
                 first_name: this.state.name,
                 last_name: this.state.surname,
-                country: this.state.country,
-                city: this.state.city
+                // country: this.state.country,
+                // city: this.state.city
             })
             })
             .then((response) => {
@@ -74,43 +88,52 @@ class Registration extends React.Component{
     render(){
         return(
          
-    <div className="offset-md-4 col-12 col-md-4">
-            <div className="registration-container">
-                <img src={logo} alt={"logo"}/>
-         
+    <div className="offset-md-1 col-12 col-md-10">
+            <div className="edit-container">
+                {/* <img src={logo} alt={"logo"}/> */}
+         <h1>Edytuj profil</h1>
+                    <hr/>
+                    <div className="row">
+                    <div className="col-4">
+                    <button onClick={this.uploadHandler}>Edytuj</button>
+                    <input type="file" onChange={this.fileChangedHandler}/>
+                        
+                    </div>
+                    <div className='col-8'>
                 <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label >Email:</Form.Label>
-                        <Form.Control name="email" type="email"  onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Hasło:</Form.Label>
-                        <Form.Control name="password" type="password"  onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <Form.Group controlId="formRepeatedPassword">
-                        <Form.Label>Powtórz hasło:</Form.Label>
-                        <Form.Control name="repeatedPassword" type="password"  onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicName">
+                    
+                    <h2>Osoba:</h2>
+                    <hr />
+                    <Form.Group controlId="formEditName">
                         <Form.Label>Imię:</Form.Label>
-                        <Form.Control name="name" type="text"  onChange={this.handleChange} required/>
+                        <Form.Control name="name" type="text" value={this.state.name} onChange={this.handleChange} required/>
                     </Form.Group>
-                    <Form.Group controlId="formBasicSurname">
+                    <Form.Group controlId="formEditSurname">
                         <Form.Label>Nazwisko:</Form.Label>
-                        <Form.Control name="surname" type="text"  onChange={this.handleChange} required/>
+                        <Form.Control name="surname" type="text" value={this.state.surname} onChange={this.handleChange} required/>
                     </Form.Group>
-                    <Form.Group controlId="formBasicCity">
+                    <Form.Group controlId="formEditAge">
+                        <Form.Label >Wiek:</Form.Label>
+                        <Form.Control name="age" type="text"  onChange={this.handleChange} />
+                    </Form.Group>
+                    <Form.Group controlId="formEditCity">
                         <Form.Label>Miasto:</Form.Label>
                         <Form.Control name="city" type="text"  onChange={this.handleChange} required/>
                     </Form.Group>
-                    <Form.Group controlId="formBasicCountry">
+                    <Form.Group controlId="formEditCountry">
                         <Form.Label>Kraj:</Form.Label>
                         <Form.Control name="country" type="text"  onChange={this.handleChange} required/>
                     </Form.Group>
+                    <Form.Group controlId="formEditDescription">
+                        <Form.Label >Opis:</Form.Label>
+                        <Form.Control name="description" type="textarea"  onChange={this.handleChange} />
+                    </Form.Group>
                     <button type="submit" className="button-login btn-red">
-                        Zarejestruj
+                        Edytuj
                     </button>
                 </form>
+                </div>
+                </div>
 
                     <div className="result">{ this.state.message }</div>
                 </div>            
