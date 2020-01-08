@@ -3,9 +3,9 @@ package pl.kamilszustak.hulapp.di.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import pl.kamilszustak.hulapp.di.scope.ActivityScope
-import pl.kamilszustak.hulapp.ui.view.authorization.AuthorizationActivity
-import pl.kamilszustak.hulapp.ui.view.main.MainActivity
-import pl.kamilszustak.hulapp.ui.view.splashscreen.SplashScreenActivity
+import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
+import pl.kamilszustak.hulapp.ui.main.MainActivity
+import pl.kamilszustak.hulapp.ui.splashscreen.SplashScreenActivity
 
 @Module
 abstract class ActivityModule {

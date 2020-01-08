@@ -48,8 +48,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.appcompat:appcompat-resources:$app_compat_version"
 
-    // Material
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    // MaterialComponents
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.2.0-rc03'
+    def fragment_version = '1.2.0-rc04'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -75,7 +75,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.2.0-rc03'
+    def navigation_version = '2.2.0-rc04'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -104,7 +104,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Room
-    def room_version = "2.2.2"
+    def room_version = '2.2.3'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -139,7 +139,7 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
     // Dagger
-    def dagger_version = '2.25.3'
+    def dagger_version = '2.25.4'
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
@@ -155,7 +155,7 @@ dependencies {
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
 
     // Moshi
     def moshi_version = '1.9.2'
@@ -183,7 +183,7 @@ dependencies {
     implementation 'com.github.yashovardhan99:TimeIt:1.2.0'
 
     // FastAdapter
-    def fast_adapter_version = '4.1.1'
+    def fast_adapter_version = '4.1.2'
     def materialize_version = '1.2.0'
     implementation "com.mikepenz:fastadapter:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-expandable:$fast_adapter_version"
@@ -199,7 +199,10 @@ dependencies {
     // CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
-    testImplementation 'junit:junit:4.12'
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.3.1'
+
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

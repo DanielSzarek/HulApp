@@ -5,20 +5,29 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel" />
+            type="pl.kamilszustak.hulapp.ui.main.profile.ProfileViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        android:paddingTop="@dimen/default_double_padding"
-        android:paddingBottom="@dimen/default_double_padding">
+        android:background="@color/colorPrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/saveButton"
+                android:src="@drawable/icon_edit_light"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="128dp"
@@ -29,7 +38,8 @@
                 app:civ_border_color="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/default_margin"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +64,9 @@
                 app:layout_constraintStart_toStartOf="@id/userFullNameTextView"
                 app:layout_constraintEnd_toStartOf="@id/userCountryTextView"
                 app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
-                app:layout_constraintHorizontal_chainStyle="spread"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:layout_marginBottom="@dimen/default_margin"/>
 
             <TextView
                 android:layout_width="wrap_content"

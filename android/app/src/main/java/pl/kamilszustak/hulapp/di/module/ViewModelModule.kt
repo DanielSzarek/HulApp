@@ -6,14 +6,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import pl.kamilszustak.hulapp.di.ViewModelKey
-import pl.kamilszustak.hulapp.ui.viewmodel.AndroidViewModelFactory
-import pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.authorization.PasswordResetViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CityChoiceViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.dialog.CountryChoiceViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.EditProfileViewModel
-import pl.kamilszustak.hulapp.ui.viewmodel.main.profile.ProfileViewModel
+import pl.kamilszustak.hulapp.common.AndroidViewModelFactory
+import pl.kamilszustak.hulapp.ui.authorization.login.LoginViewModel
+import pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetViewModel
+import pl.kamilszustak.hulapp.ui.authorization.signup.SignUpViewModel
+import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceViewModel
+import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.EditProfileViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.ProfileViewModel
 
 @Module
 abstract class ViewModelModule {

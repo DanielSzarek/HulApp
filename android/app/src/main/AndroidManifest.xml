@@ -20,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.view.splashscreen.SplashScreenActivity"
+            android:name="pl.kamilszustak.hulapp.ui.splashscreen.SplashScreenActivity"
             android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.view.authorization.AuthorizationActivity"
-            android:theme="@style/AppTheme.TransparentActionBar"
-            android:windowSoftInputMode="adjustResize"
+        <activity android:name="pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
 
-        <activity android:name=".ui.view.main.MainActivity"
+        <activity android:name="pl.kamilszustak.hulapp.ui.main.MainActivity"
             android:exported="true" />
     </application>
 

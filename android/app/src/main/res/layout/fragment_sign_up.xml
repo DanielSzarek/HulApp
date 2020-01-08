@@ -5,12 +5,14 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.viewmodel.authorization.SignUpViewModel" />
+            type="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/motionLayout"
+        app:layoutDescription="@xml/motion_scene_sign_up_fragment">
 
         <ScrollView
             android:layout_width="0dp"
@@ -42,6 +44,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/emailInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:errorEnabled="@{!viewModel.userEmailField.isValid}"
+                    app:errorText="@{viewModel.userEmailField.errorMessage}"
                     app:startIconDrawable="@drawable/icon_envelope"
                     android:layout_marginTop="@dimen/default_margin">
 
@@ -50,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/emailEditText"
                         android:hint="Email"
-                        android:text="@={viewModel.userEmail}"
+                        android:text="@={viewModel.userEmailField.data}"
                         android:inputType="textEmailAddress"
                         android:maxLines="1" />
 
@@ -61,6 +65,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/passwordInputLayout"
                     style="@style/TextInputLayoutStyle"
+                    app:errorEnabled="@{!viewModel.userPasswordField.isValid}"
+                    app:errorText="@{viewModel.userPasswordField.errorMessage}"
                     app:startIconDrawable="@drawable/icon_lock"
                     app:passwordToggleEnabled="true"
                     android:layout_marginTop="@dimen/default_margin">
@@ -72,7 +78,7 @@
                         android:hint="Hasło"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:text="@={viewModel.userPassword}"/>
+                        android:text="@={viewModel.userPasswordField.data}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,6 +89,8 @@
                     style="@style/TextInputLayoutStyle"
                     app:startIconDrawable="@drawable/icon_lock"
                     app:passwordToggleEnabled="true"
+                    app:errorEnabled="@{!viewModel.retypedUserPasswordField.isValid}"
+                    app:errorText="@{viewModel.retypedUserPasswordField.errorMessage}"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +100,7 @@
                         android:hint="Powtórz hasło"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:text="@={viewModel.retypedUserPassword}"/>
+                        android:text="@={viewModel.retypedUserPasswordField.data}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +110,8 @@
                     android:id="@+id/nameInputLayout"
                     style="@style/TextInputLayoutStyle"
                     app:startIconDrawable="@drawable/icon_person"
+                    app:errorEnabled="@{!viewModel.userNameField.isValid}"
+                    app:errorText="@{viewModel.userNameField.errorMessage}"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -110,7 +120,7 @@
                         android:id="@+id/nameEditText"
                         android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userName}"
+                        android:text="@={viewModel.userNameField.data}"
                         android:hint="Imię" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -121,6 +131,8 @@
                     android:id="@+id/surnameInputLayout"
                     style="@style/TextInputLayoutStyle"
                     app:startIconDrawable="@drawable/icon_person"
+                    app:errorEnabled="@{!viewModel.userSurnameField.isValid}"
+                    app:errorText="@{viewModel.userSurnameField.errorMessage}"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -129,59 +141,85 @@
                         android:id="@+id/surnameEditText"
                         android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
-                        android:text="@={viewModel.userSurname}"
+                        android:text="@={viewModel.userSurnameField.data}"
                         android:hint="Nazwisko" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cityInputLayout"
-                    style="@style/TextInputLayoutStyle"
-                    app:startIconDrawable="@drawable/icon_city"
-                    android:layout_marginTop="@dimen/default_margin">
+                    android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cityNameEditText"
-                        android:inputType="textCapWords"
-                        android:maxLines="1"
-                        android:text="@{viewModel.userCity.name}"
-                        android:hint="Miasto"
-                        android:focusable="false" />
+                        android:id="@+id/cityInputLayout"
+                        style="@style/TextInputLayoutStyle"
+                        app:startIconDrawable="@drawable/icon_city"
+                        app:errorEnabled="@{!viewModel.userCityField.isValid}"
+                        app:errorText="@{viewModel.userCityField.errorMessage}"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginEnd="@dimen/default_half_margin"
+                        android:layout_toStartOf="@id/clearCityButton">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cityNameEditText"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"
+                            android:text="@{viewModel.userCityField.data.name}"
+                            android:hint="Miasto"
+                            android:focusable="false" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/clearCityButton"
+                        android:src="@drawable/icon_close"
+                        android:background="@android:color/transparent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/countryInputLayout"
-                    style="@style/TextInputLayoutStyle"
-                    app:startIconDrawable="@drawable/icon_flag"
-                    android:layout_marginTop="@dimen/default_margin">
+                    android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/countryNameEditText"
-                        android:inputType="textCapWords"
-                        android:maxLines="1"
-                        android:text="@{viewModel.userCountry.name}"
-                        android:hint="Kraj"
-                        android:focusable="false" />
+                        android:id="@+id/countryInputLayout"
+                        style="@style/TextInputLayoutStyle"
+                        app:startIconDrawable="@drawable/icon_flag"
+                        app:errorEnabled="@{!viewModel.userCountryField.isValid}"
+                        app:errorText="@{viewModel.userCountryField.errorMessage}"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginEnd="@dimen/default_half_margin"
+                        android:layout_toStartOf="@id/clearCountryButton">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/countryNameEditText"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"
+                            android:text="@{viewModel.userCountryField.data.name}"
+                            android:hint="Kraj"
+                            android:focusable="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.core.widget.ContentLoadingProgressBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/progressBar"
-                    style="@style/Widget.AppCompat.ProgressBar"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:layout_marginTop="@dimen/default_margin"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/clearCountryButton"
+                        android:src="@drawable/icon_close"
+                        android:background="@android:color/transparent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 
@@ -192,6 +230,7 @@
             android:text="Zarejestruj się"
             android:textSize="24sp"
             style="@style/MaterialButtonStyle"
+            android:enabled="@{viewModel.isSignUpEnabled}"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
@@ -211,7 +250,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -226,5 +264,14 @@
                 android:textAllCaps="false"
                 style="@style/Widget.MaterialComponents.Button.TextButton" />
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/signUpButton"
+            app:layout_constraintBottom_toBottomOf="@id/signUpButton" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

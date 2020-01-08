@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_track"
+    app:startDestination="@id/tracksFragment">
+
+    <fragment
+        android:id="@+id/tracksFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.track.TracksFragment"
+        android:label="TracksFragment"
+        tools:layout="@layout/fragment_tracks" />
+</navigation>

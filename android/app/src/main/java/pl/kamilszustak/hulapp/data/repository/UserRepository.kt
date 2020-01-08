@@ -40,10 +40,13 @@ class UserRepository @Inject constructor(
         TODO()
     }
 
-    fun getOne(): Flow<Resource<User>> {
+    fun getOne(shouldFetch: Boolean = true): Flow<Resource<User>> {
         return object : NetworkBoundResource<User>() {
             override fun loadFromDatabase(): Flow<User> =
                 userDao.getOne()
+
+            override fun shouldFetch(data: User): Boolean =
+                shouldFetch
 
             override suspend fun fetchFromNetwork(): Response<User> =
                 apiService.login()

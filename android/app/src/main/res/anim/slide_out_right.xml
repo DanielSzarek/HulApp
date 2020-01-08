@@ -5,5 +5,5 @@
         android:toXDelta="100%"
         android:fromYDelta="0%"
         android:toYDelta="0%"
-        android:duration="@integer/config_navAnimTime" />
+        android:duration="@integer/default_fragment_transition_duration" />
 </set>

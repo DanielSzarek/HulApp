@@ -3,11 +3,13 @@ package pl.kamilszustak.hulapp.di.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import pl.kamilszustak.hulapp.di.scope.FragmentScope
-import pl.kamilszustak.hulapp.ui.view.authorization.LoginFragment
-import pl.kamilszustak.hulapp.ui.view.authorization.PasswordResetFragment
-import pl.kamilszustak.hulapp.ui.view.authorization.SignUpFragment
-import pl.kamilszustak.hulapp.ui.view.dialog.CityChoiceBottomSheet
-import pl.kamilszustak.hulapp.ui.view.dialog.CountryChoiceBottomSheet
+import pl.kamilszustak.hulapp.ui.authorization.login.LoginFragment
+import pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetCompletedFragment
+import pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetFragment
+import pl.kamilszustak.hulapp.ui.authorization.signup.SignUpCompletedFragment
+import pl.kamilszustak.hulapp.ui.authorization.signup.SignUpFragment
+import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
+import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 
 @Module
 abstract class AuthorizationActivityModule {
@@ -22,7 +24,15 @@ abstract class AuthorizationActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
+    abstract fun contributeSignUpCompletedFragment(): SignUpCompletedFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
     abstract fun contributePasswordResetFragment(): PasswordResetFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributePasswordResetCompletedFragment(): PasswordResetCompletedFragment
 
     @FragmentScope
     @ContributesAndroidInjector

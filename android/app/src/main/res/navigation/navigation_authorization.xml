@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="pl.kamilszustak.hulapp.ui.view.authorization.LoginFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authorization.login.LoginFragment"
         android:label="Logowanie">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -26,10 +26,32 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="pl.kamilszustak.hulapp.ui.view.authorization.SignUpFragment"
-        android:label="Rejestracja" />
+        android:name="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpFragment"
+        android:label="Rejestracja" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpCompleted"
+            app:destination="@id/signUpCompleted"
+            app:enterAnim="@anim/popup_in"
+            app:popExitAnim="@anim/popup_out"
+            app:popUpTo="@+id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/passwordResetFragment"
-        android:name="pl.kamilszustak.hulapp.ui.view.authorization.PasswordResetFragment"
-        android:label="Reset hasła" />
+        android:name="pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetFragment"
+        android:label="Reset hasła" >
+        <action
+            android:id="@+id/action_passwordResetFragment_to_passwordResetCompletedFragment"
+            app:destination="@id/passwordResetCompletedFragment"
+            app:enterAnim="@anim/popup_in"
+            app:popExitAnim="@anim/popup_out"
+            app:popUpTo="@+id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCompleted"
+        android:name="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpCompletedFragment"
+        android:label="SignUpCompleted" />
+    <fragment
+        android:id="@+id/passwordResetCompletedFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetCompletedFragment"
+        android:label="PasswordResetCompletedFragment" />
 </navigation>

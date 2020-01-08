@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.viewmodel.authorization.LoginViewModel" />
+            type="pl.kamilszustak.hulapp.ui.authorization.login.LoginViewModel" />
     </data>
 
     <ScrollView
@@ -14,10 +14,21 @@
         android:layout_height="wrap_content"
         android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding">
+            android:id="@+id/motionLayout"
+            android:padding="@dimen/default_padding"
+            app:layoutDescription="@xml/motion_scene_login_fragment">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:id="@+id/appLogoImageView"
+                android:src="@drawable/hulapp_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -26,19 +37,14 @@
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    android:id="@+id/appLogoImageView"
-                    android:src="@drawable/hulapp_logo" />
+                app:layout_constraintTop_toBottomOf="@id/appLogoImageView">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/loginTextView"
                     android:text="Logowanie"
-                    android:textAppearance="?textAppearanceHeadline4"/>
+                    android:textAppearance="?textAppearanceHeadline4"  />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -46,13 +52,15 @@
                     android:id="@+id/emailInputLayout"
                     style="@style/TextInputLayoutStyle"
                     app:startIconDrawable="@drawable/icon_envelope"
+                    app:errorEnabled="@{!viewModel.userEmailField.isValid}"
+                    app:errorText="@{viewModel.userEmailField.errorMessage}"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/emailEditText"
-                        android:text="@={viewModel.userEmail}"
+                        android:text="@={viewModel.userEmailField.data}"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1" />
@@ -65,6 +73,8 @@
                     style="@style/TextInputLayoutStyle"
                     app:startIconDrawable="@drawable/icon_lock"
                     app:passwordToggleEnabled="true"
+                    app:errorEnabled="@{!viewModel.userPasswordField.isValid}"
+                    app:errorText="@{viewModel.userPasswordField.errorMessage}"
                     android:layout_marginTop="@dimen/default_margin">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -72,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/passwordEditText"
                         android:hint="Hasło"
-                        android:text="@={viewModel.userPassword}"
+                        android:text="@={viewModel.userPasswordField.data}"
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +91,7 @@
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/resetPasswordButton"
+                android:id="@+id/passwordResetButton"
                 android:text="Zapomniałeś hasła?"
                 android:textAllCaps="false"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -94,13 +104,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginButton"
+                android:enabled="@{viewModel.isLoginEnabled}"
                 android:text="Zaloguj"
                 android:textSize="24sp"
                 android:padding="@dimen/default_half_padding"
                 style="@style/MaterialButtonStyle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/resetPasswordButton" />
+                app:layout_constraintTop_toBottomOf="@id/passwordResetButton" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -126,16 +137,13 @@
             </LinearLayout>
 
             <androidx.core.widget.ContentLoadingProgressBar
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/progressBar"
                 style="@style/Widget.AppCompat.ProgressBar"
-                android:visibility="gone"
-                tools:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/signUpLayout"
-                android:layout_marginTop="@dimen/default_margin"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/loginButton"
+                app:layout_constraintBottom_toBottomOf="@id/loginButton" />
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </ScrollView>
 </layout>
