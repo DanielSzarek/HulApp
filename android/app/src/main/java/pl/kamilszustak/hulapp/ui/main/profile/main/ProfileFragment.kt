@@ -6,12 +6,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import kotlinx.android.synthetic.main.fragment_profile.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
@@ -79,6 +82,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun setListeners() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
+
+        profilePhotoImageView.setOnLongClickListener {
+            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
+            navigateTo(direction)
+
+            true
+        }
     }
 
     private fun observeViewModel() {
@@ -88,7 +101,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         viewModel.userResource.error.observe(this) {
-            toast("Wystąpił błąd podczas ładowania profilu użytkownika")
+            view?.snackbar("Wystąpił błąd podczas ładowania profilu użytkownika")
         }
     }
 

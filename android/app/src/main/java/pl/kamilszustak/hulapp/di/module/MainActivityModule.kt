@@ -11,6 +11,7 @@ import pl.kamilszustak.hulapp.ui.main.message.MessagesFragment
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordFragment
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileFragment
+import pl.kamilszustak.hulapp.ui.main.profile.main.photooptions.ProfilePhotoOptionsBottomSheet
 import pl.kamilszustak.hulapp.ui.main.track.TracksFragment
 
 @Module
@@ -27,6 +28,10 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeChangePasswordFragment(): ChangePasswordFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeProfilePhotoOptionsBottomSheet(): ProfilePhotoOptionsBottomSheet
 
     @FragmentScope
     @ContributesAndroidInjector

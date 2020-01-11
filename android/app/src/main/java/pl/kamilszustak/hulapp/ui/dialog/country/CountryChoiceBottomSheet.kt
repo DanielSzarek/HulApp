@@ -24,13 +24,6 @@ import javax.inject.Inject
 
 class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
-    companion object {
-        const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
-
-        fun getInstance(): CountryChoiceBottomSheet =
-            CountryChoiceBottomSheet()
-    }
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
 
@@ -102,5 +95,12 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
             else
                 progressBar.hide()
         }
+    }
+
+    companion object {
+        const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
+
+        fun getInstance(): CountryChoiceBottomSheet =
+            CountryChoiceBottomSheet()
     }
 }

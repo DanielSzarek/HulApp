@@ -15,6 +15,7 @@ import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.main.photooptions.ProfilePhotoOptionsViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -51,6 +52,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ChangePasswordViewModel::class)
     abstract fun bindChangePasswordViewModel(changePasswordViewModel: ChangePasswordViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfilePhotoOptionsViewModel::class)
+    abstract fun bindProfilePhotoOptionsViewModel(profilePhotoOptionsViewModel: ProfilePhotoOptionsViewModel): ViewModel
 
     @Binds
     @IntoMap

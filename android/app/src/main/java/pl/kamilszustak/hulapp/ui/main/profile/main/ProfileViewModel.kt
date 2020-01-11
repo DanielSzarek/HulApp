@@ -53,6 +53,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun onRefresh() {
+        userResource.refresh()
+    }
+
     fun onLogoutItemClick() {
         settingsRepository.setValue(
             SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to false
