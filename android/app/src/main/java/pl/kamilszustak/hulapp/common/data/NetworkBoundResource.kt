@@ -1,11 +1,12 @@
 package pl.kamilszustak.hulapp.common.data
 
 import kotlinx.coroutines.flow.*
+import retrofit2.HttpException
 import retrofit2.Response
 
-abstract class NetworkBoundResource<T> {
+abstract class NetworkBoundResource<ResponseType, EntityType> {
 
-    fun asFlow(): Flow<Resource<T>> {
+    fun asFlow(): Flow<Resource<EntityType>> {
         return flow {
             emit(Resource.loading(null))
             val databaseValue = loadFromDatabase().first()
@@ -17,13 +18,16 @@ abstract class NetworkBoundResource<T> {
                     val response = fetchFromNetwork()
                     val body = response.body()
 
-                    if (response.isSuccessful && body != null)
+                    if (response.isSuccessful && body != null) {
                         saveFetchResult(body)
+                    } else {
+                        throw HttpException(response)
+                    }
 
                     emitAll(loadFromDatabase().map {
                         Resource.success(it)
                     })
-                } catch(throwable: Throwable) {
+                } catch (throwable: Throwable) {
                     onFetchFailed(throwable)
                     emitAll(loadFromDatabase().map {
                         Resource.error(throwable.message ?: "", it)
@@ -37,13 +41,13 @@ abstract class NetworkBoundResource<T> {
         }
     }
 
-    abstract fun loadFromDatabase(): Flow<T>
+    abstract fun loadFromDatabase(): Flow<EntityType>
 
-    abstract suspend fun fetchFromNetwork(): Response<T>
+    abstract suspend fun fetchFromNetwork(): Response<ResponseType>
 
-    abstract suspend fun saveFetchResult(data: T)
+    abstract suspend fun saveFetchResult(result: ResponseType)
 
-    open fun onFetchFailed(throwable: Throwable) = Unit
+    open fun onFetchFailed(throwable: Throwable): Unit = Unit
 
-    open fun shouldFetch(data: T) = true
+    open fun shouldFetch(data: EntityType?): Boolean = true
 }

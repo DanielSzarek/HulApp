@@ -3,7 +3,6 @@ package pl.kamilszustak.hulapp.data.repository
 import android.app.Application
 import androidx.core.content.edit
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.repository.constant.DEFAULT_LOGGED_IN_USER_ID
 import pl.kamilszustak.hulapp.data.repository.constant.DEFAULT_IS_USER_LOGGED_IN
 import javax.inject.Inject
 import javax.inject.Singleton

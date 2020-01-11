@@ -37,6 +37,11 @@ android {
     dataBinding {
         enabled = true
     }
+    android {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xallow-result-return-type"]
+        }
+    }
 }
 
 dependencies {
@@ -46,14 +51,13 @@ dependencies {
     // AppCompat
     def app_compat_version = '1.2.0-alpha01'
     implementation "androidx.appcompat:appcompat:$app_compat_version"
-    implementation "androidx.appcompat:appcompat-resources:$app_compat_version" +
-            ""
+    implementation "androidx.appcompat:appcompat-resources:$app_compat_version"
 
-    // Material
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    // MaterialComponents
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 
     // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
     // Core
     def core_version = '1.2.0-rc01'
@@ -66,7 +70,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.2.0-rc03'
+    def fragment_version = '1.2.0-rc05'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -76,7 +80,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.2.0-rc03'
+    def navigation_version = '2.2.0-rc04'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -105,7 +109,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Room
-    def room_version = "2.2.2"
+    def room_version = '2.2.3'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -140,8 +144,9 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
     // Dagger
-    def dagger_version = '2.25.2'
+    def dagger_version = '2.25.4'
     implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
@@ -155,7 +160,7 @@ dependencies {
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
 
     // Moshi
     def moshi_version = '1.9.2'
@@ -175,7 +180,7 @@ dependencies {
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
     // Glide
-    def glide_version = '4.10.0'
+    def glide_version = '4.11.0'
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
@@ -183,7 +188,7 @@ dependencies {
     implementation 'com.github.yashovardhan99:TimeIt:1.2.0'
 
     // FastAdapter
-    def fast_adapter_version = '4.1.1'
+    def fast_adapter_version = '4.1.2'
     def materialize_version = '1.2.0'
     implementation "com.mikepenz:fastadapter:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-expandable:$fast_adapter_version"
@@ -196,7 +201,13 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-ui:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-utils:$fast_adapter_version"
 
-    testImplementation 'junit:junit:4.12'
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.3.1'
+
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
