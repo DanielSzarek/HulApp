@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.util.mapNotNull
 
-class ResourceLiveData<T>(
+class ResourceDataSource<T>(
     block: () -> LiveData<Resource<T>> = { MutableLiveData<Resource<T>>() }
-) : RefreshableLiveData<Resource<T>>(block) {
+) : RefreshableDataSource<Resource<T>>(block) {
 
-    val data: LiveData<T> = this.mapNotNull {
+    val data: LiveData<T> = this.result.mapNotNull {
         it.data
     }
 
-    val isLoading: LiveData<Boolean> = ResourceLoadingLiveData(this)
+    val isLoading: LiveData<Boolean> = ResourceLoadingLiveData(this.result)
 
-    val error: SingleLiveEvent<String> = ResourceErrorLiveData(this)
+    val error: SingleLiveEvent<String> = ResourceErrorLiveData(this.result)
 }

@@ -90,9 +90,5 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         viewModel.loginError.observe(this) {
             view?.snackbar(it)
         }
-
-        viewModel.userEmailField.isValid.observe(this) {
-            Timber.i("isValid $it")
-        }
     }
 }

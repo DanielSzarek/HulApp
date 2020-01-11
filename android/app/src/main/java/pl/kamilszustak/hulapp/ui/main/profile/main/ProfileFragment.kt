@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.main.profile
+package pl.kamilszustak.hulapp.ui.main.profile.main
 
 import android.os.Bundle
 import android.view.*
@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
@@ -58,6 +57,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.editProfileItem -> {
+                navigateToEditProfileFragment()
+                true
+            }
+
+            R.id.changePasswordItem -> {
+                navigateToChangePasswordFragment()
+                true
+            }
+
             R.id.logoutItem -> {
                 viewModel.onLogoutItemClick()
                 true
@@ -70,9 +79,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun setListeners() {
-        saveButton.setOnClickListener {
-            navigateToEditProfileFragment()
-        }
     }
 
     private fun observeViewModel() {
@@ -87,7 +93,12 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun navigateToEditProfileFragment() {
-        val direction = ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment2()
+        val direction = ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToChangePasswordFragment() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment()
         navigateTo(direction)
     }
 }

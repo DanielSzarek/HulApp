@@ -2,7 +2,7 @@ package pl.kamilszustak.hulapp.ui.dialog.city
 
 import android.app.Application
 import androidx.lifecycle.asLiveData
-import pl.kamilszustak.hulapp.common.livedata.ResourceLiveData
+import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.repository.CityRepository
@@ -14,12 +14,12 @@ class CityChoiceViewModel @Inject constructor(
     private val cityRepository: CityRepository
 ) : BaseViewModel(application) {
 
-    val citiesResource: ResourceLiveData<List<City>> = ResourceLiveData()
+    val citiesResource: ResourceDataSource<List<City>> = ResourceDataSource()
 
     val cityName: UniqueLiveData<String> = UniqueLiveData()
 
     fun loadCitiesByName(name: String) {
-        citiesResource.changeDataSource {
+        citiesResource.changeLiveDataSource {
             cityRepository.getByName(name).asLiveData()
         }
     }

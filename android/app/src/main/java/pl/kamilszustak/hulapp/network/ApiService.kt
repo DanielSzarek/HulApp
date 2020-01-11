@@ -7,10 +7,7 @@ import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.*
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -23,9 +20,17 @@ interface ApiService {
     @POST("/auth/users/")
     suspend fun signUp(@Body user: User): Response<User>
 
-    @GET("/auth/users/me")
+    @GET("/auth/users/me/")
     @Authorize
     suspend fun login(): Response<User>
+
+    @PUT("/auth/users/me/")
+    @Authorize
+    suspend fun putUser(@Body user: User): Response<User>
+
+    @POST("/auth/users/set_password/")
+    @Authorize
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordRequest>
 
     @POST("/auth/users/reset_password/")
     suspend fun resetPassword(@Body passwordResetRequest: PasswordResetRequest): Response<Unit>

@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.main.profile
+package pl.kamilszustak.hulapp.ui.main.profile.edit
 
 import android.os.Bundle
 import android.view.*
@@ -9,6 +9,7 @@ import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.IAdapter
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
+import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.data.item.CountryItem
@@ -16,6 +17,8 @@ import pl.kamilszustak.hulapp.databinding.FragmentEditProfileBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
+import pl.kamilszustak.hulapp.util.navigateUp
+import timber.log.Timber
 import javax.inject.Inject
 
 class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
@@ -125,6 +128,22 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     private fun observeViewModel() {
         viewModel.userResource.data.observe(this) {
             viewModel.onUserLoaded(it)
+        }
+
+        viewModel.saveError.observe(this) {
+            view?.snackbar(it)
+        }
+
+        viewModel.isSaving.observe(this) {
+            if (it) {
+                progressBar.show()
+            } else {
+                progressBar.hide()
+            }
+        }
+
+        viewModel.saveCompleted.observe(this) {
+            navigateUp()
         }
     }
 }

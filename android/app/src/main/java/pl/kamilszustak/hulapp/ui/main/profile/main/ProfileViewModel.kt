@@ -1,8 +1,8 @@
-package pl.kamilszustak.hulapp.ui.main.profile
+package pl.kamilszustak.hulapp.ui.main.profile.main
 
 import android.app.Application
 import androidx.lifecycle.*
-import pl.kamilszustak.hulapp.common.livedata.ResourceLiveData
+import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
@@ -20,37 +20,34 @@ class ProfileViewModel @Inject constructor(
     private val countryRepository: CountryRepository
 ) : BaseViewModel(application) {
 
-    val userResource: ResourceLiveData<User> = ResourceLiveData()
-    val user: LiveData<User> = userResource.data
+    val userResource: ResourceDataSource<User> = ResourceDataSource()
 
-    val cityResource: ResourceLiveData<City> = ResourceLiveData()
-    val city: LiveData<City> = cityResource.data
+    val cityResource: ResourceDataSource<City> = ResourceDataSource()
 
-    val countryResource: ResourceLiveData<Country> = ResourceLiveData()
-    val country: LiveData<Country> = countryResource.data
+    val countryResource: ResourceDataSource<Country> = ResourceDataSource()
 
     private val _logoutEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
     val logoutEvent: LiveData<Unit> = _logoutEvent
 
     init {
-        userResource.changeDataSource {
+        userResource.changeLiveDataSource {
             userRepository.getOne().asLiveData()
         }
 
-        cityResource.addSource(user) {
+        cityResource.result.addSource(userResource.data) {
             val cityId = it.cityId
             if (cityId != null) {
-                cityResource.changeDataSource {
-                    cityRepository.getById(cityId).asLiveData()
+                cityResource.changeFlowSource {
+                    cityRepository.getById(cityId)
                 }
             }
         }
 
-        countryResource.addSource(user) {
+        countryResource.result.addSource(userResource.data) {
             val countryId = it.countryId
             if (countryId != null) {
-                countryResource.changeDataSource {
-                    countryRepository.getById(countryId).asLiveData()
+                countryResource.changeFlowSource {
+                    countryRepository.getById(countryId)
                 }
             }
         }

@@ -117,7 +117,6 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             } else {
-                Timber.i("Login error")
                 withMainContext {
                     _loginError.value = "Nie udało się zalogować"
                 }

@@ -37,6 +37,11 @@ android {
     dataBinding {
         enabled = true
     }
+    android {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xallow-result-return-type"]
+        }
+    }
 }
 
 dependencies {
@@ -65,7 +70,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.2.0-rc04'
+    def fragment_version = '1.2.0-rc05'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -175,7 +180,7 @@ dependencies {
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
     // Glide
-    def glide_version = '4.10.0'
+    def glide_version = '4.11.0'
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 

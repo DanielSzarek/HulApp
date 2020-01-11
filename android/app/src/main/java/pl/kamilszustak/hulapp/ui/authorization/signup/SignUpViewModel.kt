@@ -153,7 +153,6 @@ class SignUpViewModel @Inject constructor(
                     }
                 }
             } else {
-                Timber.i("Sign up error")
                 withMainContext {
                     _signUpError.value = "Nie udało się utworzyć konta"
                 }

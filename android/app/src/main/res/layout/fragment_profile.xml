@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.main.profile.ProfileViewModel" />
+            type="pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel" />
     </data>
 
     <LinearLayout
@@ -17,17 +17,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/saveButton"
-                android:src="@drawable/icon_edit_light"
-                android:background="@android:color/transparent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="128dp"
@@ -45,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/userFullNameTextView"
-                android:text="@{viewModel.user.fullName}"
+                android:text="@{viewModel.userResource.data.fullName}"
                 tools:text="Jan Kowalski"
                 android:textSize="32sp"
                 android:textColor="@android:color/white"
@@ -58,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/userCityTextView"
-                android:text="@{viewModel.city.name}"
+                android:text="@{viewModel.cityResource.data.name}"
                 tools:text="Gdynia"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="@id/userFullNameTextView"
@@ -72,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/userCountryTextView"
-                android:text="@{viewModel.country.name}"
+                android:text="@{viewModel.countryResource.data.name}"
                 tools:text="Polska"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toEndOf="@id/userCityTextView"

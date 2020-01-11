@@ -153,21 +153,5 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             val direction = SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleted()
             navigateTo(direction)
         }
-
-        viewModel.userEmailField.isValid.observe(this) {
-            Timber.i("email valid $it")
-        }
-
-        viewModel.userEmailField.errorMessage.observe(this) {
-            Timber.i("email message $it")
-        }
-
-        viewModel.retypedUserPasswordField.isValid.observe(this) {
-            Timber.i("retyped valid $it")
-        }
-
-        viewModel.retypedUserPasswordField.errorMessage.observe(this) {
-            Timber.i("retyped message $it")
-        }
     }
 }

@@ -2,8 +2,11 @@ package pl.kamilszustak.hulapp.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
+import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.util.needAuthorization
+import retrofit2.Invocation
+import timber.log.Timber
 import javax.inject.Inject
 
 class HttpInterceptor @Inject constructor(

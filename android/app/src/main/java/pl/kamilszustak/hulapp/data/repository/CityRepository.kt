@@ -12,48 +12,52 @@ import javax.inject.Inject
 class CityRepository @Inject constructor(
     private val cityDao: CityDao,
     private val apiService: ApiService
-) : ResourceRepository<City> {
+) {
 
-    override fun getAll(): Flow<Resource<List<City>>> {
-        return object : NetworkBoundResource<List<City>>() {
+    fun getAll(shouldFetch: Boolean = true): Flow<Resource<List<City>>> {
+        return object : NetworkBoundResource<List<City>, List<City>>() {
             override fun loadFromDatabase(): Flow<List<City>> =
                 cityDao.getAll()
+
+            override fun shouldFetch(data: List<City>?): Boolean = shouldFetch
 
             override suspend fun fetchFromNetwork(): Response<List<City>> =
                 apiService.getAllCities()
 
-            override suspend fun saveFetchResult(data: List<City>) {
-                cityDao.insertAll(data)
+            override suspend fun saveFetchResult(result: List<City>) {
+                cityDao.insertAll(result)
             }
-
-            override fun shouldFetch(data: List<City>): Boolean = false
         }.asFlow()
     }
 
-    override fun getById(id: Long): Flow<Resource<City>> {
-        return object : NetworkBoundResource<City>() {
+    fun getById(id: Long, shouldFetch: Boolean = true): Flow<Resource<City>> {
+        return object : NetworkBoundResource<City, City>() {
             override fun loadFromDatabase(): Flow<City> =
                 cityDao.getById(id)
+
+            override fun shouldFetch(data: City?): Boolean = shouldFetch
 
             override suspend fun fetchFromNetwork(): Response<City> =
                 apiService.getCityById(id)
 
-            override suspend fun saveFetchResult(data: City) {
-                cityDao.insert(data)
+            override suspend fun saveFetchResult(result: City) {
+                cityDao.insert(result)
             }
         }.asFlow()
     }
 
-    fun getByName(name: String): Flow<Resource<List<City>>> {
-        return object : NetworkBoundResource<List<City>>() {
+    fun getByName(name: String, shouldFetch: Boolean = true): Flow<Resource<List<City>>> {
+        return object : NetworkBoundResource<List<City>, List<City>>() {
             override fun loadFromDatabase(): Flow<List<City>> =
                 cityDao.getByName(name)
+
+            override fun shouldFetch(data: List<City>?): Boolean = shouldFetch
 
             override suspend fun fetchFromNetwork(): Response<List<City>> =
                 apiService.getCitiesByName(name)
 
-            override suspend fun saveFetchResult(data: List<City>) {
-                cityDao.insertAll(data)
+            override suspend fun saveFetchResult(result: List<City>) {
+                cityDao.insertAll(result)
             }
         }.asFlow()
     }
