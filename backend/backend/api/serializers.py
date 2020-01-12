@@ -30,6 +30,12 @@ class ApiUserRegistrationSerializer(UserCreateSerializer):
         fields = ['id', 'email', 'username', 'password', 'first_name', 'last_name', 'country', 'city']
 
 
+class ApiCurrentUserSerializer(UserCreateSerializer):
+
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name', 'country', 'city']
+
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User
