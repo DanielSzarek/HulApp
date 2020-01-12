@@ -4,8 +4,9 @@ import '../Styles/App.css';
 import '../Styles/Login.css';
 import {Link} from 'react-router-dom';
 import logo from '../Images/logo.png';
-
+import {GoogleReCaptchaProvider,GoogleReCaptcha} from 'react-google-recaptcha-v3';
 import AuthService from './AuthService';
+
 
 class LoggingForm extends React.Component{
 
@@ -15,6 +16,8 @@ class LoggingForm extends React.Component{
                 email: '',
                 password: '',
                 message: ''
+                //resp: ''
+                
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,6 +46,7 @@ class LoggingForm extends React.Component{
             .then(res =>{
                this.props.history.replace('/profile-edit');
             })
+            
             // .catch(err =>{
             //     alert(err);
             // })
@@ -61,8 +65,15 @@ class LoggingForm extends React.Component{
             //         this.setState({ message: "Something went wrong. Response status: "+response.status });
             //     }
             // })
+            // .then((resp)=>{ return resp.json() }).then((resp)=>{ console.log(resp) })
+            // .then(response => {
+            //     console.log(response);
+            //     return response.json()
+            // })
             .catch((error) => {
                 this.setState({message: "ERROR " + error});
+                // return response.json();
+                // this.setState({resp : "yout problem: " +response});  
             });
     };
 
@@ -75,12 +86,16 @@ class LoggingForm extends React.Component{
 async componentWillMount(){
     if(await this.Auth.loggedIn())
         this.props.history.replace('/profile-edit');
+        console.log("here, bad");
 }
 
     render(){
         return(
      <div className="offset-md-4 col-12 col-md-4">
             <div className="logging-container">
+            <GoogleReCaptchaProvider
+                reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
+            <GoogleReCaptcha onVerify={token => console.log("token z recaptcha: " +token)} />
                 <img src={logo} alt={"logo"}/>
          
                 <form className="input-in-form" onSubmit={this.handleSubmit}>
@@ -110,6 +125,8 @@ async componentWillMount(){
                 Nie pamiętam hasła
               </button>
             </Link>
+        </GoogleReCaptchaProvider>
+
             </div>
             </div>
         );
