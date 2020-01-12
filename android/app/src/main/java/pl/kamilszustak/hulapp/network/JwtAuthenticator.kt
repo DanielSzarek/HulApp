@@ -93,8 +93,6 @@ class JwtAuthenticator @Inject constructor(
             access
         }
 
-        Timber.i(accessToken)
-
         return if (accessToken != null) {
             response.request
                 .newBuilder()
