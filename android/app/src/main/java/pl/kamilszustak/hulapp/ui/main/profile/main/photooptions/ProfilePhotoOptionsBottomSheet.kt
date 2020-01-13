@@ -1,9 +1,11 @@
 package pl.kamilszustak.hulapp.ui.main.profile.main.photooptions
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.bottom_sheet_profile_photo_options.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
@@ -26,12 +28,26 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
 
     private fun setListeners() {
         changeProfilePhotoLayout.setOnClickListener {
-
+            openImagePicker()
         }
 
         deleteProfilePhotoLayout.setOnClickListener {
-
+            viewModel.onDeleteProfilePhotoButtonClick()
         }
+    }
+
+    private fun openImagePicker() {
+        ImagePicker.with(this)
+            .cropSquare()
+            .compress(1024)
+            .start { resultCode, data ->
+                if (resultCode == Activity.RESULT_OK) {
+                    val file = ImagePicker.getFile(data)
+                    if (file != null) {
+                        viewModel.uploadPhoto(file)
+                    }
+                }
+            }
     }
 
     companion object {
