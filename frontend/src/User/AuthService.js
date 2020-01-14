@@ -112,6 +112,11 @@ export default class AuthService {
     logout() {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        localStorage.removeItem('id_refresh');
+        // <Redirect to="/" />
+        // this.props.history.replace('/login');
+
+        console.log("clean local storage");
     }
 
     getProfile() {

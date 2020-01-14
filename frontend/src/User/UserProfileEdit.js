@@ -6,6 +6,9 @@ import '../Styles/App.css';
 import '../Styles/UserProfile.css';
 import AutoComplete from './SelectAutocomplete';
 import AuthService from './AuthService';
+import { Redirect } from 'react-router-dom';
+import Navbarex from './Navbar';
+
 
 class ProfileEdition extends React.Component{
 
@@ -109,7 +112,10 @@ class ProfileEdition extends React.Component{
     render(){
         console.log("this.state.countryId" + this.state.countryId);
         return(
+            <div>
+                <Navbarex/>
             <div className="offset-md-1 col-12 col-md-10">
+            {(this.state.auth) ? '' : <Redirect to="/" />}
                 <div className="edit-container">
                     <h1>Edytuj profil</h1>
                         <hr/>
@@ -168,6 +174,7 @@ class ProfileEdition extends React.Component{
                 </div>
                     <div className="result">{ this.state.message }</div>
                 </div>            
+            </div>
             </div>
         );
     }
