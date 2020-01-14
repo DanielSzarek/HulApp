@@ -19,6 +19,7 @@ class App extends React.Component {
             <Route path="/activate/:uid/:token" component={AccountActivation}/> 
             <Route path="/profile-edit" component={UserProfileEdit}/> 
 
+
           </Switch>
         </BrowserRouter>
       </div>

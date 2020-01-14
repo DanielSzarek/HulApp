@@ -16,7 +16,6 @@ class LoggingForm extends React.Component{
                 email: '',
                 password: '',
                 message: ''
-                //resp: ''
                 
         };
 
@@ -29,18 +28,7 @@ class LoggingForm extends React.Component{
       handleSubmit = (event) => {
         event.preventDefault();
          console.log("email "+this.state.email)
-         //walidacja
-        //  fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         email: this.state.email,
-        //         password: this.state.password
-        //     })
-        //     })
+
 
         this.Auth.login(this.state.email,this.state.password)
             .then(res =>{
@@ -72,6 +60,7 @@ class LoggingForm extends React.Component{
             // })
             .catch((error) => {
                 this.setState({message: "ERROR " + error});
+
                 // return response.json();
                 // this.setState({resp : "yout problem: " +response});  
             });
@@ -95,7 +84,7 @@ async componentWillMount(){
             <div className="logging-container">
             <GoogleReCaptchaProvider
                 reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
-            <GoogleReCaptcha onVerify={token => console.log("token z recaptcha: " +token)} />
+            <GoogleReCaptcha onVerify={token => console.log("token from reCaptcha: " +token)} />
                 <img src={logo} alt={"logo"}/>
          
                 <form className="input-in-form" onSubmit={this.handleSubmit}>

@@ -4,58 +4,67 @@ import { Form, Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import '../Styles/App.css';
 import '../Styles/UserProfile.css';
-
+import AutoComplete from './SelectAutocomplete';
 import AuthService from './AuthService';
 
-class Registration extends React.Component{
+class ProfileEdition extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+                userId: '',
+                email: '',
                 name: '',
                 surname: '',
-                country: '',
+                countryId: '',
                 city: '',
                 description: '',
                 age: '',
-                message: ''
+                message: '',
+                auth: true
         };
 		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCityChange = this.handleCityChange.bind(this);
+		this.handleCountryChange = this.handleCountryChange.bind(this);
       }
 	  
-	  componentDidMount(){
-		  this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
-		  .then((res) => {
+     async componentDidMount(){
+		  if ( await this.Auth.loggedIn()){
+            this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
+		    .then((res) => {
 			  console.log(res);
-			  this.setState({name: res.first_name})
-			  this.setState({surname: res.last_name})
+			  this.setState({
+				  name: res.first_name,
+				  userId: res.id,
+				  surname: res.last_name,
+				  email: res.email,
+				  countryId: 2
+			  })
 		  })
 		  .catch((error) => {
                 console.log({message: "ERROR " + error});
             });
+		  }
+		  else{
+			  this.setState({auth: false});
+		  }
 	  }
 
-    handleSubmit = (event) => {
+
+  handleSubmit = (event) => {
         event.preventDefault();
-        //  console.log("email "+this.state.email)
-         //walidacja
-         fetch('http://hulapp.pythonanywhere.com/​auth​/users​/me​/', {
+         this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
             method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+
             body: JSON.stringify({
-                username: this.state.email,
-                // email: this.state.email,
-              
+				id: this.state.userId,
+                email: this.state.email,              
                 first_name: this.state.name,
                 last_name: this.state.surname,
-                // country: this.state.country,
-                // city: this.state.city
+                country: this.state.countryId,
+                city: null//this.state.city
             })
             })
             .then((response) => {
@@ -64,19 +73,30 @@ class Registration extends React.Component{
                     return response.json();     
                 }else{
                     console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "Something went wrong. Response status: "+response.status });
+                    this.setState({ message: "Something went wrong. Response status: "+response.status+", response detail" + response.detail });
                 }
             })
             .catch((error) => {
                 this.setState({message: "ERROR " + error});
+                console.log(error);
             });
     };
+
 
      handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
+
+    handleCityChange(val){
+		this.setState({city: val})
+	}
+	
+	handleCountryChange(val){
+		this.setState({countryId: val})
+	}
+
 
     checkPassword = (value) => {
         if (value && value !== this.state.password.value) {
@@ -85,23 +105,21 @@ class Registration extends React.Component{
           //callback();
         }
       };
+      
     render(){
+        console.log("this.state.countryId" + this.state.countryId);
         return(
-         
-    <div className="offset-md-1 col-12 col-md-10">
-            <div className="edit-container">
-                {/* <img src={logo} alt={"logo"}/> */}
-         <h1>Edytuj profil</h1>
-                    <hr/>
-                    <div className="row">
-                    <div className="col-4">
-                    <button onClick={this.uploadHandler}>Edytuj</button>
-                    <input type="file" onChange={this.fileChangedHandler}/>
-                        
-                    </div>
-                    <div className='col-8'>
-                <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    
+            <div className="offset-md-1 col-12 col-md-10">
+                <div className="edit-container">
+                    <h1>Edytuj profil</h1>
+                        <hr/>
+                        <div className="row">
+                        <div className="col-4">
+                        <button onClick={this.uploadHandler}>Edytuj</button>
+                        <input type="file" onChange={this.fileChangedHandler}/>        
+                </div>
+                <div className='col-8'>
+                    <form className="input-in-form" onSubmit={this.handleSubmit}>
                     <h2>Osoba:</h2>
                     <hr />
                     <Form.Group controlId="formEditName">
@@ -116,14 +134,28 @@ class Registration extends React.Component{
                         <Form.Label >Wiek:</Form.Label>
                         <Form.Control name="age" type="text"  onChange={this.handleChange} />
                     </Form.Group>
-                    <Form.Group controlId="formEditCity">
+                    {/* <Form.Group controlId="formEditCity">
                         <Form.Label>Miasto:</Form.Label>
                         <Form.Control name="city" type="text"  onChange={this.handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formEditCountry">
                         <Form.Label>Kraj:</Form.Label>
                         <Form.Control name="country" type="text"  onChange={this.handleChange} required/>
-                    </Form.Group>
+                    </Form.Group> */}
+                    <AutoComplete 
+                        controlId="formEditCity" 
+                        label="Miasto" dest="cities" 
+                        name="city" required="true" 
+                        placeholder="Wprowadź..." 
+                        onSelect={this.handleCityChange} 
+                        value={this.state.city} />
+					<AutoComplete 
+                        controlId="formEditCountry" 
+                        label="Kraj" dest="countries" 
+                        name="countryId" required="true" 
+                        placeholder="Wprowadź..." 
+                        value={this.state.countryId} 
+                        onSelect={this.handleCountryChange} />
                     <Form.Group controlId="formEditDescription">
                         <Form.Label >Opis:</Form.Label>
                         <Form.Control name="description" type="textarea"  onChange={this.handleChange} />
@@ -134,7 +166,6 @@ class Registration extends React.Component{
                 </form>
                 </div>
                 </div>
-
                     <div className="result">{ this.state.message }</div>
                 </div>            
             </div>
@@ -142,4 +173,4 @@ class Registration extends React.Component{
     }
 }
 
-export default Registration;
+export default ProfileEdition;

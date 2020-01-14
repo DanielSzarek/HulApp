@@ -1,4 +1,5 @@
 import React from 'react';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 class LoggingForm extends React.Component{
 
@@ -49,9 +50,25 @@ class LoggingForm extends React.Component{
             });
     };
 
+//     async componentDidMount() {
+//     const token = await this.props.googleReCaptchaProps.executeRecaptcha('homepage');
+//   }
+const ReCaptchaComponent = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const token = executeRecaptcha("login_page");
+ 
+  return (...)
+}
+
     render(){
         return(
             <div>
+
+        <GoogleReCaptchaProvider
+                reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf"
+                // language="optional_language"
+            >
+            <GoogleReCaptcha onVerify={token => console.log(token)} />
             <form onSubmit={this.handleSubmit}>
                 <input 
                     type="text" 
@@ -72,8 +89,9 @@ class LoggingForm extends React.Component{
                     </button>
                 </div>
             </form>
-            <div className="result">{ this.state.message }</div>
-            </div>
+            <div className="result">{ this.state.message }</div>   
+        </GoogleReCaptchaProvider>
+     </div>
         );
   }  
 }
