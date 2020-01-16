@@ -14,6 +14,7 @@ export default class AuthService {
         console.log(password);
         return this.fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
             method: 'POST',
+            //  'credentials': 'include',
             body: JSON.stringify({
                 // username,
                 // password
@@ -111,6 +112,11 @@ export default class AuthService {
     logout() {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        localStorage.removeItem('id_refresh');
+        // <Redirect to="/" />
+        // this.props.history.replace('/login');
+
+        console.log("clean local storage");
     }
 
     getProfile() {
@@ -144,11 +150,22 @@ export default class AuthService {
             .then(response => response.json())
     }
 
-    _checkStatus(response) {
+    // _checkStatus(response) {
+    //     // raises an error in case response status is not a success
+    //     if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
+    //         return response
+    //     } else {
+    //         var error = new Error(response.statusText)
+    //         error.response = response
+    //         throw error
+    //     }
+    // }
+      _checkStatus(response) {
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response
-        } else {
+        }      
+        else {
             var error = new Error(response.statusText)
             error.response = response
             throw error
