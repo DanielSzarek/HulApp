@@ -8,21 +8,21 @@ import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
-    tableName = "users",
-    foreignKeys = [
-        ForeignKey(
-            entity = City::class,
-            parentColumns = ["id"],
-            childColumns = ["city_id"],
-            onDelete = ForeignKey.SET_NULL
-        ),
-        ForeignKey(
-            entity = Country::class,
-            parentColumns = ["id"],
-            childColumns = ["country_id"],
-            onDelete = ForeignKey.SET_NULL
-        )
-    ]
+    tableName = "users"
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = City::class,
+//            parentColumns = ["id"],
+//            childColumns = ["city_id"],
+//            onDelete = ForeignKey.SET_NULL
+//        ),
+//        ForeignKey(
+//            entity = Country::class,
+//            parentColumns = ["id"],
+//            childColumns = ["country_id"],
+//            onDelete = ForeignKey.SET_NULL
+//        )
+//    ]
 )
 @JsonClass(generateAdapter = true)
 @Parcelize
@@ -53,12 +53,13 @@ data class User(
 
     @ColumnInfo(name = "country_id")
     @Json(name = "country")
-    var countryId: Long?
+    var countryId: Long?,
+
+    @ColumnInfo(name = "profile_photo_url")
+    @Json(name = "profile_img")
+    var profilePhotoUrl: String? = null
 ) : DatabaseEntity() {
 
     @Transient
     val fullName: String = "$name $surname"
-
-    @Transient
-    var imageUrl: String? = null
 }

@@ -20,6 +20,7 @@ import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.set
+import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
 class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
@@ -86,7 +87,7 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         }
 
         viewModel.citiesResource.data.observe(this) {
-            FastAdapterDiffUtil.set(modelAdapter, it)
+            modelAdapter.updateModels(it)
         }
 
         viewModel.citiesResource.isLoading.observe(this) {

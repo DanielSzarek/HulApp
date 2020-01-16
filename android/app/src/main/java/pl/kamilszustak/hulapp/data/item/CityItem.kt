@@ -10,6 +10,10 @@ import pl.kamilszustak.hulapp.data.model.City
 
 class CityItem(city: City) : ModelAbstractItem<City, CityItem.ViewHolder>(city) {
 
+    override var identifier: Long
+        get() = this.model.id
+        set(value) {}
+
     override val type: Int
         get() = R.id.fastadapter_city_item_id
 

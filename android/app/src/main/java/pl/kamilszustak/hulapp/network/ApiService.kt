@@ -1,5 +1,7 @@
 package pl.kamilszustak.hulapp.network
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
@@ -23,6 +25,11 @@ interface ApiService {
     @GET("/auth/users/me/")
     @Authorize
     suspend fun login(): Response<User>
+
+    @PATCH("/auth/users/me/")
+    @Authorize
+    @Multipart
+    suspend fun putProfilePhoto(@Part file: MultipartBody.Part): Response<User>
 
     @PUT("/auth/users/me/")
     @Authorize

@@ -20,6 +20,7 @@ import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.set
+import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
 class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
@@ -86,7 +87,7 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         }
 
         viewModel.countriesResource.data.observe(this) {
-            FastAdapterDiffUtil.set(modelAdapter, it)
+            modelAdapter.updateModels(it)
         }
 
         viewModel.countriesResource.isLoading.observe(this) {

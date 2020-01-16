@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.bottom_sheet_profile_photo_options.*
 import pl.kamilszustak.hulapp.R
@@ -24,6 +25,7 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
         super.onViewCreated(view, savedInstanceState)
 
         setListeners()
+        observeViewModel()
     }
 
     private fun setListeners() {
@@ -33,6 +35,16 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
 
         deleteProfilePhotoLayout.setOnClickListener {
             viewModel.onDeleteProfilePhotoButtonClick()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.isCancelable.observe(this) {
+            this.isCancelable = it
+        }
+
+        viewModel.uploadCompleted.observe(this) {
+            this.dismiss()
         }
     }
 

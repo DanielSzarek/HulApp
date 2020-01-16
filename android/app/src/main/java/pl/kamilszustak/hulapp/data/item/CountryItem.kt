@@ -10,6 +10,10 @@ import pl.kamilszustak.hulapp.data.model.Country
 
 class CountryItem(country: Country) : ModelAbstractItem<Country, CountryItem.ViewHolder>(country) {
 
+    override var identifier: Long
+        get() = this.model.id
+        set(value) {}
+
     override val type: Int
         get() = R.id.fastadapter_country_item_id
 
