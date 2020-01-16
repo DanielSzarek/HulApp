@@ -8,6 +8,8 @@ import AutoComplete from './SelectAutocomplete';
 import AuthService from './AuthService';
 import { Redirect } from 'react-router-dom';
 import Navbarex from './Navbar';
+import Avatar from 'react-avatar';
+import axios from 'axios';
 
 
 class ProfileEdition extends React.Component{
@@ -24,7 +26,8 @@ class ProfileEdition extends React.Component{
                 description: '',
                 age: '',
                 message: '',
-                auth: true
+                auth: true,
+                fileUploaded : null
         };
 		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
@@ -43,7 +46,9 @@ class ProfileEdition extends React.Component{
 				  userId: res.id,
 				  surname: res.last_name,
 				  email: res.email,
-				  countryId: 2
+				  countryId: 2,
+                  city: res.city,
+                  src : ''
 			  })
 		  })
 		  .catch((error) => {
@@ -55,6 +60,7 @@ class ProfileEdition extends React.Component{
 		  }
 	  }
 
+//dodaj token w headersach
 
   handleSubmit = (event) => {
         event.preventDefault();
@@ -62,12 +68,13 @@ class ProfileEdition extends React.Component{
             method: 'PATCH',
 
             body: JSON.stringify({
-				id: this.state.userId,
-                email: this.state.email,              
+				// id: this.state.userId,
+                // email: this.state.email,              
                 first_name: this.state.name,
                 last_name: this.state.surname,
                 country: this.state.countryId,
-                city: null//this.state.city
+        
+                city: this.state.city
             })
             })
             .then((response) => {
@@ -109,6 +116,46 @@ class ProfileEdition extends React.Component{
         }
       };
       
+      fileSelectedHandler = (event)=>{
+        console.log(event.target.files[0]);
+        this.setState({
+            fileUploaded : event.target.files[0]
+        })
+    }
+
+    fileUploadHandler = () => {
+        console.log("downloaded " +this.state.fileUploaded)
+
+        //  let data = JSON.stringify({
+        //      profile_img : this.state.fileUploaded
+        //  })
+        // console.log("profile img " +data);
+        
+        const fd = new FormData();
+        fd.append('image', this.state.fileUploaded, this.state.fileUploaded.name);
+        console.log("fD " +this.state.fileUploaded.name);
+    //     axios.patch('http://hulapp.pythonanywhere.com/auth/users/me/',  {
+    // headers: { Authorization: "Bearer " +  localStorage.getItem('id_token') }, data: { profile_img: this.state.fileUploaded }})
+    axios({ method: 'PATCH', url: 'http://hulapp.pythonanywhere.com/auth/users/me/', headers: { 'content-type': 'multipart/form-data', Authorization: "Bearer " +  localStorage.getItem('id_token')}, data: { profile_img: this.state.fileUploaded  } })
+        .then(res =>{
+            console.log(res);
+        } 
+    //     //  this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
+    //     //     method: 'PATCH',
+
+    //     //     body: JSON.stringify({
+              
+    //     //        profile_image : this.state.fileUploaded
+
+    //     //     })
+    //     //     })
+    //     //     .then(res =>{
+    //     //     console.log(res);
+    //     // } 
+    );
+    }
+
+
     render(){
         console.log("this.state.countryId" + this.state.countryId);
         return(
@@ -121,8 +168,11 @@ class ProfileEdition extends React.Component{
                         <hr/>
                         <div className="row">
                         <div className="col-4">
-                        <button onClick={this.uploadHandler}>Edytuj</button>
-                        <input type="file" onChange={this.fileChangedHandler}/>        
+                        {/* <button onClick={this.uploadHandler}>Edytuj</button>
+                        <input type="file" onChange={this.fileChangedHandler}/>         */}
+                        <input type='file' onChange={this.fileSelectedHandler}/>
+                        <button onClick={this.fileUploadHandler}> Upload! </button>
+                        <Avatar  size='300' round="300px" name="H"  src=""  />
                 </div>
                 <div className='col-8'>
                     <form className="input-in-form" onSubmit={this.handleSubmit}>
