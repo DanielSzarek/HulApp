@@ -2,39 +2,39 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../Styles/App.css';
 import '../Styles/Login.css';
-import {Link} from 'react-router-dom';
-import logo from '../Images/logo.png';
-import {GoogleReCaptchaProvider,GoogleReCaptcha} from 'react-google-recaptcha-v3';
+import { Link } from 'react-router-dom';
+import logo from '../Images/logo_hulapp.png';
+import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
 import AuthService from './AuthService';
 
 
-class LoggingForm extends React.Component{
+class LoggingForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-                email: '',
-                password: '',
-                message: ''
-                
+            email: '',
+            password: '',
+            message: ''
+
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.Auth = new AuthService();
-      }
+    }
 
-      handleSubmit = (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
-         console.log("email "+this.state.email)
+        console.log("email " + this.state.email)
 
 
-        this.Auth.login(this.state.email,this.state.password)
-            .then(res =>{
-               this.props.history.replace('/profile-edit');
+        this.Auth.login(this.state.email, this.state.password)
+            .then(res => {
+                this.props.history.replace('/profile-edit');
             })
-            
+
             // .catch(err =>{
             //     alert(err);
             // })
@@ -59,7 +59,7 @@ class LoggingForm extends React.Component{
             //     return response.json()
             // })
             .catch((error) => {
-                this.setState({message: "ERROR " + error});
+                this.setState({ message: "ERROR " + error });
 
                 // return response.json();
                 // this.setState({resp : "yout problem: " +response});  
@@ -72,53 +72,53 @@ class LoggingForm extends React.Component{
         });
     }
 
-async componentWillMount(){
-    if(await this.Auth.loggedIn())
-        this.props.history.replace('/profile-edit');
+    async componentWillMount() {
+        if (await this.Auth.loggedIn())
+            this.props.history.replace('/profile-edit');
         console.log("here, bad");
-}
+    }
 
-    render(){
-        return(
-     <div className="offset-md-4 col-12 col-md-4">
-            <div className="logging-container">
-            <GoogleReCaptchaProvider
-                reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
-            <GoogleReCaptcha onVerify={token => console.log("token from reCaptcha: " +token)} />
-                <img src={logo} alt={"logo"}/>
-         
-                <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label >Email:</Form.Label>
-                        <Form.Control name="email" type="email"  onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Hasło:</Form.Label>
-                        <Form.Control name="password" type="password"  onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <button type="submit" className="button-login btn-red">
-                        Zaloguj
-                    </button>
-                </form>
-           
+    render() {
+        return (
+            <div>
+                <img src={logo} alt={"logo"} />
 
-            <div className="result">{ this.state.message }</div>
+                <div className="offset-md-4 col-12 col-md-4">
 
-             <Link to="/registration">
-              <button  type="button" className="button-login" >
-                Załóż konto
-              </button>
-            </Link>
-            <Link to="/forgotten-password">
-              <button  type="button" className="button-login button-forgotten-pwd" >
-                Nie pamiętam hasła
-              </button>
-            </Link>
-        </GoogleReCaptchaProvider>
+                    <div className="logging-container">
+                        <GoogleReCaptchaProvider
+                            reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
+                            <GoogleReCaptcha onVerify={token => console.log("token from reCaptcha: " + token)} />
 
-            </div>
+                            <form className="input-in-form" onSubmit={this.handleSubmit}>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label >Email:</Form.Label>
+                                    <Form.Control name="email" type="email" onChange={this.handleChange} required />
+                                </Form.Group>
+                                <Form.Group controlId="formBasicPassword">
+                                    <Form.Label>Hasło:</Form.Label>
+                                    <Form.Control name="password" type="password" onChange={this.handleChange} required />
+                                </Form.Group>
+                                <button type="submit" className="button-login btn-red">
+                                    Zaloguj</button>
+                            </form>
+
+                            <div className="result">{this.state.message}</div>
+
+                            <Link to="/registration">
+                                <button type="button" className="button-login" >
+                                    Załóż konto</button>
+                            </Link>
+                            <Link to="/forgotten-password">
+                                <button type="button" className="button-login button-forgotten-pwd" >
+                                    Nie pamiętam hasła</button>
+                            </Link>
+                        </GoogleReCaptchaProvider>
+
+                    </div>
+                </div>
             </div>
         );
-    }  
+    }
 }
 export default LoggingForm;
