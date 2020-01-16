@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User, Province, Country, City
-from djoser.serializers import UserCreateSerializer
+from djoser.serializers import UserCreateSerializer, UserSerializer
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -32,9 +32,9 @@ class ApiUserRegistrationSerializer(UserCreateSerializer):
 
 class ApiCurrentUserSerializer(UserCreateSerializer):
 
-    class Meta(UserCreateSerializer.Meta):
+    class Meta(UserSerializer.Meta):
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'country', 'city']
+        fields = ['id', 'email', 'first_name', 'last_name', 'country', 'city', 'profile_img']
 
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
