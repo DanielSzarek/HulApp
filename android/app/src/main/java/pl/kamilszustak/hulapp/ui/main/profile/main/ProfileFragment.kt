@@ -16,6 +16,7 @@ import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.navigateTo
+import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {

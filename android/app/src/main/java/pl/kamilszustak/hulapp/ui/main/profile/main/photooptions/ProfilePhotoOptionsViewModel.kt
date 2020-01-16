@@ -24,6 +24,9 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
     private val _uploadCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
     val uploadCompleted: LiveData<Unit> = _uploadCompleted
 
+    private val _uploadError: SingleLiveEvent<String> = SingleLiveEvent()
+    val uploadError: LiveData<String> = _uploadError
+
     fun uploadPhoto(file: File) {
         viewModelScope.launch(Dispatchers.Main) {
             _isCancelable.setValue(false)
@@ -32,8 +35,13 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
                 userRepository.uploadProfilePhoto(file)
             }
 
+            if (result.isSuccess) {
+                _uploadCompleted.call()
+            } else {
+                _uploadError.value = "Wystąpił błąd podczas zmiany zdjęcia profilowego"
+            }
+
             _isCancelable.setValue(true)
-            _uploadCompleted.call()
         }
     }
 

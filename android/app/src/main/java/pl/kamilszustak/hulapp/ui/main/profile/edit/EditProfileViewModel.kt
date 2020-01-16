@@ -15,11 +15,14 @@ import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
 import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.util.withIoContext
 import pl.kamilszustak.hulapp.util.withMainContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
@@ -80,6 +83,8 @@ class EditProfileViewModel @Inject constructor(
                 cityResource.changeFlowSource {
                     cityRepository.getById(cityId)
                 }
+            } else {
+                onCityLoaded(null)
             }
         }
 
@@ -89,8 +94,18 @@ class EditProfileViewModel @Inject constructor(
                 countryResource.changeFlowSource {
                     countryRepository.getById(countryId)
                 }
+            } else {
+                onCountryLoaded(null)
             }
         }
+    }
+
+    fun onCityLoaded(city: City?) {
+        userCityField.data.setValue(city)
+    }
+
+    fun onCountryLoaded(country: Country?) {
+        userCountryField.data.setValue(country)
     }
 
     fun onUserLoaded(user: User) {
@@ -115,17 +130,8 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun onSaveButtonClick() {
-        _isSaving.setValue(true)
-
         if (!isInternetConnected()) {
             _saveError.value = "Brak dostępu do Internetu"
-            return
-        }
-
-        val user = userResource.data.value
-
-        if (user == null) {
-            _saveError.value = "Nie załadowano użytkownika"
             return
         }
 
@@ -133,32 +139,31 @@ class EditProfileViewModel @Inject constructor(
         val surname = userSurnameField.data.value
 
         if (name == null || surname == null) {
+            _saveError.value = "Imię i nazwisko nie mogą być puste"
             return
         }
 
-        user.apply {
-            this.name = name
-            this.surname = surname
-            this.cityId = userCityField.data.value?.id
-            this.countryId = userCountryField.data.value?.id
-        }
+        val request = UpdateUserRequest(
+            name,
+            surname,
+            userCityField.data.value?.id,
+            userCountryField.data.value?.id
+        )
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = userRepository.update(user)
+        viewModelScope.launch(Dispatchers.Main) {
+            _isSaving.setValue(true)
+
+            val result = withIoContext {
+                userRepository.update(request)
+            }
 
             if (result.isSuccess) {
-                withMainContext {
-                    _saveCompleted.call()
-                }
+                _saveCompleted.call()
             } else {
-                withMainContext {
-                    _saveError.value = "Wystąpił błąd podczas edycji profilu"
-                }
+                _saveError.value = "Wystąpił błąd podczas edycji profilu"
             }
 
-            withMainContext {
-                _isSaving.setValue(false)
-            }
+            _isSaving.setValue(false)
         }
     }
 }

@@ -15,7 +15,8 @@ import pl.kamilszustak.hulapp.data.form.Password
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.withMainContext
+import pl.kamilszustak.hulapp.util.withIoContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class ChangePasswordViewModel @Inject constructor(
@@ -26,13 +27,13 @@ class ChangePasswordViewModel @Inject constructor(
 ) : BaseViewModel(application) {
 
     val currentPasswordField: FormField<String> = formField {
-        +Rule<String>("Nieprawidłowy format hasła") {
-            it.isNotBlank() //&& validator.validate(Password(it))
+        +Rule<String>("Hasło musi posiadać min. 8 znaków, 1 cyfrę oraz 1 znak specjalny") {
+            it.isNotBlank() && validator.validate(Password(it))
         }
     }
 
     val newPasswordField: FormField<String> = formField {
-        +Rule<String>("Nieprawidłowy format hasła") {
+        +Rule<String>("Hasło musi posiadać min. 8 znaków, 1 cyfrę oraz 1 znak specjalny") {
             it.isNotBlank() && validator.validate(Password(it))
         }
     }
@@ -68,25 +69,25 @@ class ChangePasswordViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = userRepository.changePassword(currentPassword, newPassword)
+        viewModelScope.launch(Dispatchers.Main) {
+            val result = withIoContext {
+                userRepository.changePassword(currentPassword, newPassword)
+            }
+
+            Timber.i("result: $result")
+            Timber.i("success: ${result.isSuccess}")
 
             if (result.isSuccess) {
                 logoutUser()
-                withMainContext {
-                    _passwordChangeCompleted.call()
-                }
+                _passwordChangeCompleted.call()
             } else {
-                withMainContext {
-                    _passwordChangeError.value = "Wystąpił błąd podczas zmiany hasła"
-                }
+                _passwordChangeError.value = "Wystąpił błąd podczas zmiany hasła"
             }
 
-            withMainContext {
-                _isPasswordChanging.setValue(false)
-            }
+            _isPasswordChanging.setValue(false)
         }
     }
+
 
     private fun logoutUser() {
         settingsRepository.setValue(

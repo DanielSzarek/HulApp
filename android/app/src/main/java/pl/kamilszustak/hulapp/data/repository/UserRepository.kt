@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
@@ -15,8 +14,7 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
 
 @Singleton
 class UserRepository @Inject constructor(
@@ -38,7 +36,7 @@ class UserRepository @Inject constructor(
                     file.asRequestBody()
                 )
 
-                return apiService.putProfilePhoto(body)
+                return apiService.patchUserProfilePhoto(body)
             }
 
             override suspend fun saveCallResult(result: User) {
@@ -49,10 +47,10 @@ class UserRepository @Inject constructor(
         }.call()
     }
 
-    suspend fun update(user: User): Result<Unit> {
+    suspend fun update(updateUserRequest: UpdateUserRequest): Result<Unit> {
         return object : NetworkCall<User, Unit>() {
             override suspend fun makeCall(): Response<User> =
-                apiService.putUser(user)
+                apiService.patchUser(updateUserRequest)
 
             override suspend fun saveCallResult(result: User) {
                 userDao.update(result)

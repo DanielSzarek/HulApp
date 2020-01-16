@@ -29,11 +29,11 @@ interface ApiService {
     @PATCH("/auth/users/me/")
     @Authorize
     @Multipart
-    suspend fun putProfilePhoto(@Part file: MultipartBody.Part): Response<User>
+    suspend fun patchUserProfilePhoto(@Part file: MultipartBody.Part): Response<User>
 
-    @PUT("/auth/users/me/")
+    @PATCH("/auth/users/me/")
     @Authorize
-    suspend fun putUser(@Body user: User): Response<User>
+    suspend fun patchUser(@Body updateUserRequest: UpdateUserRequest): Response<User>
 
     @POST("/auth/users/set_password/")
     @Authorize
@@ -46,6 +46,7 @@ interface ApiService {
     suspend fun getAllCountries(): Response<List<Country>>
 
     @GET("/api/countries/{id}")
+    @Authorize
     suspend fun getCountryById(@Path("id") id: Long): Response<Country>
 
     @GET("/api/countries/{name}")
@@ -55,6 +56,7 @@ interface ApiService {
     suspend fun getAllCities(): Response<List<City>>
 
     @GET("/api/cities/{id}")
+    @Authorize
     suspend fun getCityById(@Path("id") id: Long): Response<City>
 
     @GET("/api/cities/{name}")

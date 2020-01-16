@@ -5,7 +5,7 @@ import retrofit2.Response
 
 abstract class NetworkCall<ResponseType, ReturnType> {
 
-    suspend fun call(): Result<ReturnType> {
+    suspend fun callForResponse(): Result<ReturnType> {
         return try {
             val response = makeCall()
             val body = response.body()
@@ -13,6 +13,21 @@ abstract class NetworkCall<ResponseType, ReturnType> {
             return if (response.isSuccessful && body != null) {
                 saveCallResult(body)
                 Result.success(mapResponse(body))
+            } else {
+                val exception = HttpException(response)
+                Result.failure(exception)
+            }
+        } catch (throwable: Throwable) {
+            Result.failure(throwable)
+        }
+    }
+
+    suspend fun call(): Result<Unit> {
+        return try {
+            val response = makeCall()
+
+            return if (response.isSuccessful) {
+                Result.success(Unit)
             } else {
                 val exception = HttpException(response)
                 Result.failure(exception)

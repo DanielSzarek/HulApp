@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.bottom_sheet_profile_photo_options.*
+import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import javax.inject.Inject
@@ -45,6 +46,10 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
 
         viewModel.uploadCompleted.observe(this) {
             this.dismiss()
+        }
+
+        viewModel.uploadError.observe(this) {
+            view?.snackbar(it)
         }
     }
 
