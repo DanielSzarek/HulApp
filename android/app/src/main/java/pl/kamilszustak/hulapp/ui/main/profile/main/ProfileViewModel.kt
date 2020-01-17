@@ -29,6 +29,9 @@ class ProfileViewModel @Inject constructor(
     private val _logoutEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
     val logoutEvent: LiveData<Unit> = _logoutEvent
 
+    private val _openProfilePhoto: SingleLiveEvent<String> = SingleLiveEvent()
+    val openProfilePhoto: LiveData<String> = _openProfilePhoto
+
     init {
         userResource.changeLiveDataSource {
             userRepository.getOne().asLiveData()
@@ -62,5 +65,12 @@ class ProfileViewModel @Inject constructor(
             SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to false
         )
         _logoutEvent.call()
+    }
+
+    fun openProfilePhoto() {
+        val profilePhotoUrl = userResource.data.value?.profilePhotoUrl
+        if (profilePhotoUrl != null) {
+            _openProfilePhoto.value = profilePhotoUrl
+        }
     }
 }

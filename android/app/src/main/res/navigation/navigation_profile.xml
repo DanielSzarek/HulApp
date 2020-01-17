@@ -27,6 +27,11 @@
         <action
             android:id="@+id/action_profileFragment_to_profilePhotoOptionsBottomSheet"
             app:destination="@id/profilePhotoOptionsBottomSheet" />
+        <action
+            android:id="@+id/action_profileFragment_to_profilePhotoFullscreenDialog"
+            app:destination="@id/profilePhotoFullscreenDialog"
+            app:enterAnim="@anim/popup_in"
+            app:popExitAnim="@anim/popup_out" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -40,7 +45,16 @@
         tools:layout="@layout/fragment_change_password" />
     <dialog
         android:id="@+id/profilePhotoOptionsBottomSheet"
-        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photooptions.ProfilePhotoOptionsBottomSheet"
+        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsBottomSheet"
         android:label="ProfilePhotoOptionsBottomSheet"
         tools:layout="@layout/bottom_sheet_profile_photo_options" />
+    <fragment
+        android:id="@+id/profilePhotoFullscreenDialog"
+        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialog"
+        android:label="ProfilePhotoFullscreenDialog"
+        tools:layout="@layout/dialog_profile_photo_fullscreen">
+        <argument
+            android:name="profilePhotoUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>
