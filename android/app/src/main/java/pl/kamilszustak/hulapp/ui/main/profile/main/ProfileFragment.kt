@@ -6,18 +6,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialog
-import pl.kamilszustak.hulapp.util.dialog
+import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
 import pl.kamilszustak.hulapp.util.navigateTo
-import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -93,8 +91,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         profilePhotoImageView.setOnLongClickListener {
+            val extras = FragmentNavigatorExtras(
+                profilePhotoImageView to ProfilePhotoFullscreenDialogFragment.sharedElementTransitionName
+            )
             val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
-            navigateTo(direction)
+            navigateTo(direction, extras)
 
             true
         }

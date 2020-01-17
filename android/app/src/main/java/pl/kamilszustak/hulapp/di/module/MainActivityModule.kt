@@ -11,7 +11,7 @@ import pl.kamilszustak.hulapp.ui.main.message.MessagesFragment
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordFragment
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileFragment
-import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialog
+import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsBottomSheet
 import pl.kamilszustak.hulapp.ui.main.track.TracksFragment
 
@@ -36,7 +36,7 @@ abstract class MainActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun contributeProfilePhotoFullscreenDialog(): ProfilePhotoFullscreenDialog
+    abstract fun contributeProfilePhotoFullscreenDialogFragment(): ProfilePhotoFullscreenDialogFragment
 
     @FragmentScope
     @ContributesAndroidInjector

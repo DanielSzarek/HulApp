@@ -48,13 +48,13 @@
         android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsBottomSheet"
         android:label="ProfilePhotoOptionsBottomSheet"
         tools:layout="@layout/bottom_sheet_profile_photo_options" />
-    <fragment
+    <dialog
         android:id="@+id/profilePhotoFullscreenDialog"
-        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialog"
+        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment"
         android:label="ProfilePhotoFullscreenDialog"
         tools:layout="@layout/dialog_profile_photo_fullscreen">
         <argument
             android:name="profilePhotoUrl"
             app:argType="string" />
-    </fragment>
+    </dialog>
 </navigation>

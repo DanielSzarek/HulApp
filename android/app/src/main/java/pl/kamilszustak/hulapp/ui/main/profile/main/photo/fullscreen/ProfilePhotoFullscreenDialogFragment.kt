@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_profile_photo_fullscreen.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.DialogProfilePhotoFullscreenBinding
-import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.ui.base.BaseDialogFragment
+import pl.kamilszustak.hulapp.util.navigateUp
 
-class ProfilePhotoFullscreenDialog : BaseFragment(R.layout.dialog_profile_photo_fullscreen) {
+class ProfilePhotoFullscreenDialogFragment : BaseDialogFragment(R.layout.dialog_profile_photo_fullscreen) {
 
-    private val args: ProfilePhotoFullscreenDialogArgs by navArgs()
+    private val args: ProfilePhotoFullscreenDialogFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +27,7 @@ class ProfilePhotoFullscreenDialog : BaseFragment(R.layout.dialog_profile_photo_
             container,
             false
         ).apply {
-            this.profilePhotoUrl = this@ProfilePhotoFullscreenDialog.args.profilePhotoUrl
+            this.profilePhotoUrl = args.profilePhotoUrl
             this.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -36,12 +37,16 @@ class ProfilePhotoFullscreenDialog : BaseFragment(R.layout.dialog_profile_photo_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hideActionBar()
+        setListeners()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun setListeners() {
+        closeButton.setOnClickListener {
+            navigateUp()
+        }
+    }
 
-        showActionBar()
+    companion object {
+        const val sharedElementTransitionName: String = "PROFILE_PHOTO_FULLSCREEN_TRANSITION"
     }
 }
