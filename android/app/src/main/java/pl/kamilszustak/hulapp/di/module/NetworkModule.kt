@@ -28,6 +28,13 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMoshiConverterFactory(moshi: Moshi): MoshiConverterFactory {
+        return MoshiConverterFactory.create(moshi)
+            .withNullSerialization()
+    }
+
+    @Provides
+    @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY
@@ -36,7 +43,11 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(jwtAuthenticator: JwtAuthenticator, httpInterceptor: HttpInterceptor, httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        jwtAuthenticator: JwtAuthenticator,
+        httpInterceptor: HttpInterceptor,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .authenticator(jwtAuthenticator)
             .addInterceptor(httpInterceptor)
@@ -49,11 +60,14 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(moshiConverterFactory)
             .build()
     }
 

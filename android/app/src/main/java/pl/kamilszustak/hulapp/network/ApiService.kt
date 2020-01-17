@@ -1,5 +1,7 @@
 package pl.kamilszustak.hulapp.network
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
@@ -24,9 +26,14 @@ interface ApiService {
     @Authorize
     suspend fun login(): Response<User>
 
-    @PUT("/auth/users/me/")
+    @PATCH("/auth/users/me/")
     @Authorize
-    suspend fun putUser(@Body user: User): Response<User>
+    @Multipart
+    suspend fun patchUserProfilePhoto(@Part file: MultipartBody.Part): Response<User>
+
+    @PATCH("/auth/users/me/")
+    @Authorize
+    suspend fun patchUser(@Body updateUserRequest: UpdateUserRequest): Response<User>
 
     @POST("/auth/users/set_password/")
     @Authorize
@@ -39,6 +46,7 @@ interface ApiService {
     suspend fun getAllCountries(): Response<List<Country>>
 
     @GET("/api/countries/{id}")
+    @Authorize
     suspend fun getCountryById(@Path("id") id: Long): Response<Country>
 
     @GET("/api/countries/{name}")
@@ -48,6 +56,7 @@ interface ApiService {
     suspend fun getAllCities(): Response<List<City>>
 
     @GET("/api/cities/{id}")
+    @Authorize
     suspend fun getCityById(@Path("id") id: Long): Response<City>
 
     @GET("/api/cities/{name}")

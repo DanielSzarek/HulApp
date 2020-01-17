@@ -130,6 +130,16 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
             viewModel.onUserLoaded(it)
         }
 
+        viewModel.cityResource.data.observe(this) {
+            viewModel.onCityLoaded(it)
+            //cityNameEditText.setText(it?.name)
+        }
+
+        viewModel.countryResource.data.observe(this) {
+            viewModel.onCountryLoaded(it)
+            //countryNameEditText.setText(it?.name)
+        }
+
         viewModel.saveError.observe(this) {
             view?.snackbar(it)
         }

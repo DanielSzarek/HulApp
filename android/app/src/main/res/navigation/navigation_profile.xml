@@ -24,15 +24,23 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_profilePhotoOptionsBottomSheet"
+            app:destination="@id/profilePhotoOptionsBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileFragment"
-        android:label="EditProfileFragment"
+        android:label="Edycja profilu"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordFragment"
-        android:label="ChangePasswordFragment"
+        android:label="Zmiana hasła"
         tools:layout="@layout/fragment_change_password" />
+    <dialog
+        android:id="@+id/profilePhotoOptionsBottomSheet"
+        android:name="pl.kamilszustak.hulapp.ui.main.profile.main.photooptions.ProfilePhotoOptionsBottomSheet"
+        android:label="ProfilePhotoOptionsBottomSheet"
+        tools:layout="@layout/bottom_sheet_profile_photo_options" />
 </navigation>

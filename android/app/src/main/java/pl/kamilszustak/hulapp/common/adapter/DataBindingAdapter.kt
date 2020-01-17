@@ -4,14 +4,16 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
+import pl.kamilszustak.hulapp.R
 
 object DataBindingAdapter {
 
-    @BindingAdapter("src")
+    @BindingAdapter("app:profilePhoto")
     @JvmStatic
     fun ImageView.setImage(url: String?) {
         Glide.with(this.context)
             .load(url)
+            .placeholder(R.drawable.icon_profile)
             .into(this)
     }
 

@@ -20,16 +20,10 @@ import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.set
+import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
 class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
-
-    companion object {
-        const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
-
-        fun getInstance(): CountryChoiceBottomSheet =
-            CountryChoiceBottomSheet()
-    }
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -93,7 +87,7 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         }
 
         viewModel.countriesResource.data.observe(this) {
-            FastAdapterDiffUtil.set(modelAdapter, it)
+            modelAdapter.updateModels(it)
         }
 
         viewModel.countriesResource.isLoading.observe(this) {
@@ -102,5 +96,12 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
             else
                 progressBar.hide()
         }
+    }
+
+    companion object {
+        const val tag: String = "COUNTRY_CHOICE_BOTTOM_SHEET"
+
+        fun getInstance(): CountryChoiceBottomSheet =
+            CountryChoiceBottomSheet()
     }
 }

@@ -110,8 +110,9 @@ class SignUpViewModel @Inject constructor(
         val city = userCityField.data.value
         val country = userCountryField.data.value
 
-        if (!isInternetConnected())
+        if (!isInternetConnected()) {
             _signUpError.value = "Brak połączenia z Internetem"
+        }
 
         if (email == null ||
             password == null ||
