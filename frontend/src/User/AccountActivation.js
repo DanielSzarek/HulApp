@@ -49,7 +49,7 @@ class AccountActivation extends React.Component {
                     console.log("SOMETHING WENT WRONG")
                     this.setState({ message: "Something went wrong." });
                 }
-                return response.json();
+                // return response.json();
 
             })
             .then((data) => {
@@ -66,7 +66,7 @@ class AccountActivation extends React.Component {
             <div>
                 <div className="activationText">
                     <div className="result">{this.state.message}</div>
-                    <div style={{ fontSize: 16 }}>{this.state.res.uid}</div>
+                    {/* <div style={{ fontSize: 16 }}>{this.state.res.uid}</div> */}
                 </div>
                 <br />
 
