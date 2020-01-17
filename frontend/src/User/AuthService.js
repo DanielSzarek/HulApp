@@ -137,6 +137,7 @@ export default class AuthService {
         if (await this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
 			console.log("authorization header added");
+            console.log(this.getToken());
         }
 		else{
 			console.log("not logged in");

@@ -14,7 +14,6 @@ class App extends React.Component {
       // <div className="row">
       <div>
         <BrowserRouter>
-        {/* <Navbarex/> */}
           <Switch>
           <Route exact path="/" component={AlternativeLoggingForm}/>
           <Route  path="/login" component={AlternativeLoggingForm}/>
