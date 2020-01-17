@@ -18,8 +18,8 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel(application) {
 
-    private val _isCancelable: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isCancelable: LiveData<Boolean> = _isCancelable
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _uploadCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
     val uploadCompleted: LiveData<Unit> = _uploadCompleted
@@ -29,7 +29,7 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
 
     fun uploadPhoto(file: File) {
         viewModelScope.launch(Dispatchers.Main) {
-            _isCancelable.setValue(false)
+            _isLoading.setValue(false)
 
             val result = withIoContext {
                 userRepository.uploadProfilePhoto(file)
@@ -41,7 +41,7 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
                 _uploadError.value = "Wystąpił błąd podczas zmiany zdjęcia profilowego"
             }
 
-            _isCancelable.setValue(true)
+            _isLoading.setValue(true)
         }
     }
 

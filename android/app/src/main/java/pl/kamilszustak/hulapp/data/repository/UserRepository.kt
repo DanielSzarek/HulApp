@@ -44,7 +44,7 @@ class UserRepository @Inject constructor(
             }
 
             override suspend fun mapResponse(response: User): Unit = Unit
-        }.call()
+        }.callForResponse()
     }
 
     suspend fun update(updateUserRequest: UpdateUserRequest): Result<Unit> {

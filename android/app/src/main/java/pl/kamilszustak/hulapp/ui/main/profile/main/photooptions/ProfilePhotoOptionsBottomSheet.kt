@@ -40,8 +40,8 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
     }
 
     private fun observeViewModel() {
-        viewModel.isCancelable.observe(this) {
-            this.isCancelable = it
+        viewModel.isLoading.observe(this) {
+            this.isCancelable = !it
         }
 
         viewModel.uploadCompleted.observe(this) {
