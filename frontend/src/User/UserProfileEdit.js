@@ -346,6 +346,7 @@ class ProfileEdition extends React.Component{
                 this.setState({message: "ERROR " + error});
                 console.log(error);
             });
+            window.location.reload();
     };
 
 
