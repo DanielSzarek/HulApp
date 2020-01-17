@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+img {
+  width: 40%;
+  height: 40%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .logrej {
   position: absolute;
     top: 50%;
@@ -45,9 +53,9 @@ code {
   padding: 10px;
   border: none;
   /* margin-bottom: 20px; */
-
-
 }
+
+.button-login:hover {background: #da190b;}
 
 .btn-red {
   background-color: red;
