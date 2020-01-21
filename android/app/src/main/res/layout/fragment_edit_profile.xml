@@ -115,7 +115,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/clearCityButton"
-                            android:src="@drawable/icon_close"
+                            android:src="@drawable/icon_close_dark"
                             android:background="@android:color/transparent"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true" />
@@ -152,7 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/clearCountryButton"
-                            android:src="@drawable/icon_close"
+                            android:src="@drawable/icon_close_dark"
                             android:background="@android:color/transparent"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"/>
