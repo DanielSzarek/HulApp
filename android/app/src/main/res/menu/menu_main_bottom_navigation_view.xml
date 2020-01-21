@@ -15,7 +15,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_track"
+        android:id="@+id/navigation_tracking"
         android:icon="@drawable/icon_tracking"
         android:title="Trasa"
         app:showAsAction="always" />

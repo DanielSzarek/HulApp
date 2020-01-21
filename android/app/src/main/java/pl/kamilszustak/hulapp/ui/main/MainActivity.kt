@@ -20,9 +20,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         }
-
-//        initializeNavigation()
-//        setListeners()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -30,9 +27,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             super.onRestoreInstanceState(savedInstanceState)
         }
 
-        // Now that BottomNavigationBar has restored its instance state
-        // and its selectedItemId, we can proceed with setting up the
-        // BottomNavigationBar with Navigation
         setupBottomNavigationBar()
     }
 
@@ -40,12 +34,11 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         val navGraphIds = listOf(
             R.navigation.navigation_feed,
             R.navigation.navigation_event,
-            R.navigation.navigation_track,
+            R.navigation.navigation_tracking,
             R.navigation.navigation_message,
             R.navigation.navigation_profile
         )
 
-        // Setup the bottom navigation view with a list of navigation graphs
         val controller = mainBottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
@@ -53,7 +46,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             intent = intent
         )
 
-        // Whenever the selected controller changes, setup the action bar.
         controller.observe(this) {
             setupActionBarWithNavController(it)
         }

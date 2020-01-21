@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        android:id="@+id/trackingStateTransition"
+        app:constraintSetStart="@layout/fragment_tracking"
+        app:constraintSetEnd="@id/endConstraintSet"
+        app:duration="@integer/default_motion_scene_transition_duration" />
+
+    <ConstraintSet
+        android:id="@+id/endConstraintSet">
+
+        <Constraint
+            android:id="@id/startTrackingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/stopTrackingButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin" />
+
+        <Constraint
+            android:id="@id/stopTrackingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/startTrackingButton"
+            app:layout_constraintTop_toTopOf="@id/startTrackingButton"
+            app:layout_constraintBottom_toBottomOf="@id/startTrackingButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginEnd="@dimen/default_margin" />
+    </ConstraintSet>
+</MotionScene>

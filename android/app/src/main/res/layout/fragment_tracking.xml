@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/motionLayout"
+        app:layoutDescription="@xml/motion_scene_tracking_fragment">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/startTrackingButton"
+            android:src="@drawable/icon_play_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/default_margin" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stopTrackingButton"
+            android:src="@drawable/icon_stop_light"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="@id/startTrackingButton"
+            app:layout_constraintEnd_toEndOf="@id/startTrackingButton"
+            app:layout_constraintTop_toTopOf="@id/startTrackingButton"
+            app:layout_constraintBottom_toBottomOf="@id/startTrackingButton" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>
