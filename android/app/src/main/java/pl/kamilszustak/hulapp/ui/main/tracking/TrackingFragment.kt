@@ -26,8 +26,6 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         viewModelFactory
     }
 
-    private var start: Boolean = true
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,13 +54,11 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
     private fun setListeners() {
         startTrackingButton.setOnClickListener {
-            if (start) {
-                motionLayout.transitionToEnd()
-            } else {
-                motionLayout.transitionToStart()
-            }
+            viewModel.onStartTrackingButtonClick()
+        }
 
-            start = !start
+        endTrackingButton.setOnClickListener {
+            viewModel.onEndTrackingButtonClick()
         }
     }
 
@@ -70,14 +66,14 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         viewModel.trackingState.observe(this) {
             when (it) {
                 is TrackingState.Started -> {
-
+                    motionLayout.transitionToEnd()
                 }
 
                 is TrackingState.Paused -> {
-
                 }
 
-                is TrackingState.Stopped -> {
+                is TrackingState.Ended -> {
+                    motionLayout.transitionToStart()
                 }
             }
         }
@@ -99,6 +95,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
     private fun observeLocation() {
         viewModel.location.observe(this) {
+            Timber.i(it.toString())
+        }
+
+        viewModel.distance.observe(this) {
             Timber.i(it.toString())
         }
     }

@@ -15,14 +15,14 @@
             android:id="@id/startTrackingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/stopTrackingButton"
+            app:layout_constraintStart_toEndOf="@id/endTrackingButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin" />
 
         <Constraint
-            android:id="@id/stopTrackingButton"
+            android:id="@id/endTrackingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"

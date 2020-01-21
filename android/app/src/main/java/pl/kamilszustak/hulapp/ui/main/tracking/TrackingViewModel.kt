@@ -1,7 +1,9 @@
 package pl.kamilszustak.hulapp.ui.main.tracking
 
 import android.app.Application
+import android.location.Location
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
@@ -25,9 +27,20 @@ class TrackingViewModel @Inject constructor(
         onErrorCallback = getOnErrorCallback()
     )
 
+    private var currentTrackingState: TrackingState = TrackingState.Idle
+    private var currentDistance: Double = 0.0
+    private var lastLocation: Location? = null
+    private var isFirstLocationChange: Boolean = true
+
     private val _trackingState: UniqueLiveData<TrackingState> = UniqueLiveData()
     val trackingState: LiveData<TrackingState> = _trackingState
 
+    private val _distance: MediatorLiveData<Double> = MediatorLiveData()
+    val distance: LiveData<Double> = _distance
+
+    init {
+        initializeDistance()
+    }
 
     private fun getOnErrorCallback(): LocationLiveData.OnErrorCallback {
         return object : LocationLiveData.OnErrorCallback {
@@ -39,5 +52,51 @@ class TrackingViewModel @Inject constructor(
                 Timber.e("Permission missing")
             }
         }
+    }
+
+    private fun initializeDistance() {
+        _distance.value = currentDistance
+        _distance.addSource(location) {
+            if (!isFirstLocationChange) {
+                val newDistance = lastLocation?.distanceTo(it) ?: 0F
+                currentDistance += newDistance
+                _distance.value = currentDistance
+            } else {
+                lastLocation = it
+                isFirstLocationChange = false
+            }
+        }
+    }
+
+    private fun changeTrackingState(trackingState: TrackingState) {
+        currentTrackingState = trackingState
+        _trackingState.setValue(currentTrackingState)
+    }
+
+    fun onStartTrackingButtonClick() {
+        val state = when (currentTrackingState) {
+            is TrackingState.Idle -> {
+                TrackingState.Started
+            }
+
+            is TrackingState.Started -> {
+                TrackingState.Paused
+            }
+
+            is TrackingState.Paused -> {
+                TrackingState.Started
+            }
+
+            is TrackingState.Ended -> {
+                TrackingState.Started
+            }
+        }
+
+        changeTrackingState(state)
+    }
+
+    fun onEndTrackingButtonClick() {
+        val state = TrackingState.Ended()
+        changeTrackingState(state)
     }
 }
