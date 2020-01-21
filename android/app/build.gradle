@@ -96,9 +96,6 @@ dependencies {
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
-
     // Anko
     def anko_version = '0.10.8'
     implementation "org.jetbrains.anko:anko:$anko_version"
@@ -118,13 +115,13 @@ dependencies {
     implementation 'com.commonsware.cwac:saferoom.x:1.2.1'
 
     // Retrofit
-    def retrofit_version = '2.7.0'
+    def retrofit_version = '2.7.1'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // OkHttp
-    def ok_http_version = '4.2.2'
+    def ok_http_version = '4.3.1'
     implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
 
@@ -133,15 +130,6 @@ dependencies {
 
     // EasyPermissions
     implementation 'pub.devrel:easypermissions:3.0.0'
-
-    // Bcrypt
-    implementation 'at.favre.lib:bcrypt:0.9.0'
-
-    // JJWT
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-    //JAXB API
-    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
     // Dagger
     def dagger_version = '2.25.4'
@@ -189,7 +177,7 @@ dependencies {
 
     // FastAdapter
     def fast_adapter_version = '4.1.2'
-    def materialize_version = '1.2.0'
+    def materialize_version = '1.2.1'
     implementation "com.mikepenz:fastadapter:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-expandable:$fast_adapter_version"
     implementation "com.mikepenz:materialize:$materialize_version"
@@ -202,7 +190,7 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-utils:$fast_adapter_version"
 
     // CircleImageView
-    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'de.hdodenhof:circleimageview:3.0.2'
 
     // Lottie
     implementation 'com.airbnb.android:lottie:3.3.1'

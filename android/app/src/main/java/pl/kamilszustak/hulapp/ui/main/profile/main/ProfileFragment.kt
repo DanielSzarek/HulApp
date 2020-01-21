@@ -91,11 +91,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         profilePhotoImageView.setOnLongClickListener {
-            val extras = FragmentNavigatorExtras(
-                profilePhotoImageView to ProfilePhotoFullscreenDialogFragment.sharedElementTransitionName
-            )
             val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
-            navigateTo(direction, extras)
+            navigateTo(direction)
 
             true
         }
