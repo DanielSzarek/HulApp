@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="pl.kamilszustak.hulapp.ui.main.tracking.TrackingState" />
+
         <variable
             name="viewModel"
             type="pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel" />
@@ -14,11 +16,66 @@
         android:id="@+id/motionLayout"
         app:layoutDescription="@xml/motion_scene_tracking_fragment">
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/statisticsCardView"
+            app:contentPadding="@dimen/default_padding"
+            app:cardElevation="@dimen/default_half_elevation"
+            app:cardCornerRadius="@dimen/default_half_radius"
+            android:alpha="0.0"
+            tools:alpha="1.0"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_constraintTop_toBottomOf="@null"
+            tools:layout_constraintBottom_toTopOf="@id/startTrackingButton"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/durationTextView"
+                    android:text="00:50:45"
+                    tools:text="00:50:45"
+                    android:textAppearance="?textAppearanceHeadline4"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Czas trwania"
+                    android:textAppearance="?textAppearanceBody1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/distanceTextView"
+                    android:text="@{viewModel.distance.toString()}"
+                    tools:text="12.5"
+                    android:textAppearance="?textAppearanceHeadline4"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Przebyty dystans"
+                    android:textAppearance="?textAppearanceBody1" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/startTrackingButton"
-            android:src="@drawable/icon_play_light"
+            android:src="@{viewModel.trackingState instanceof TrackingState.Started ? @drawable/icon_pause_light : @drawable/icon_play_light}"
+            tools:src="@drawable/icon_play_light"
             app:tint="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
