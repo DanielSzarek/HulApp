@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/closeButton"
-            android:src="@drawable/icon_close"
+            android:src="@drawable/icon_close_dark"
             android:background="@android:color/transparent" />
 
         <com.google.android.material.textfield.TextInputLayout

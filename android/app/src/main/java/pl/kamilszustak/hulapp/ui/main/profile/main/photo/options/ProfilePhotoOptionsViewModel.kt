@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.main.profile.main.photooptions
+package pl.kamilszustak.hulapp.ui.main.profile.main.photo.options
 
 import android.app.Application
 import androidx.lifecycle.LiveData

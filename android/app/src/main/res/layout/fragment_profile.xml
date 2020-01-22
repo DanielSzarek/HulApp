@@ -37,6 +37,7 @@
                         android:src="@drawable/icon_profile"
                         app:civ_border_width="2dp"
                         app:civ_border_color="@android:color/white"
+                        android:transitionName="PROFILE_PHOTO_FULLSCREEN_TRANSITION"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
