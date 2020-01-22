@@ -7,8 +7,10 @@ import androidx.lifecycle.MediatorLiveData
 import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.util.round
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,6 +40,9 @@ class TrackingViewModel @Inject constructor(
     private val _distance: MediatorLiveData<Double> = MediatorLiveData()
     val distance: LiveData<Double> = _distance
 
+    private val _moveToUserLocation: SingleLiveEvent<Location> = SingleLiveEvent()
+    val moveToUserLocation: LiveData<Location> = _moveToUserLocation
+
     init {
         initializeDistance()
     }
@@ -60,7 +65,7 @@ class TrackingViewModel @Inject constructor(
             if (!isFirstLocationChange) {
                 val newDistance = lastLocation?.distanceTo(it) ?: 0F
                 currentDistance += newDistance
-                _distance.value = currentDistance
+                _distance.value = currentDistance.round()
             } else {
                 lastLocation = it
                 isFirstLocationChange = false
@@ -98,5 +103,12 @@ class TrackingViewModel @Inject constructor(
     fun onEndTrackingButtonClick() {
         val state = TrackingState.Ended()
         changeTrackingState(state)
+    }
+
+    fun onUserLocationButtonClick() {
+        val currentLocation = location.value
+        if (currentLocation != null) {
+            _moveToUserLocation.value = currentLocation
+        }
     }
 }
