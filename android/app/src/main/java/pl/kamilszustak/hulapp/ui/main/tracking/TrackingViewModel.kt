@@ -4,9 +4,11 @@ import android.app.Application
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.maps.GoogleMap
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
@@ -34,6 +36,13 @@ class TrackingViewModel @Inject constructor(
     private var lastLocation: Location? = null
     private var isFirstLocationChange: Boolean = true
 
+    private val mapTypes: List<Int> = listOf(
+        GoogleMap.MAP_TYPE_NORMAL,
+        GoogleMap.MAP_TYPE_SATELLITE,
+        GoogleMap.MAP_TYPE_TERRAIN
+    )
+    private var currentMapTypeIndex: Int = 0
+
     private val _trackingState: UniqueLiveData<TrackingState> = UniqueLiveData()
     val trackingState: LiveData<TrackingState> = _trackingState
 
@@ -42,6 +51,9 @@ class TrackingViewModel @Inject constructor(
 
     private val _moveToUserLocation: SingleLiveEvent<Location> = SingleLiveEvent()
     val moveToUserLocation: LiveData<Location> = _moveToUserLocation
+
+    private val _mapType: UniqueLiveData<Int> = UniqueLiveData()
+    val mapType: LiveData<Int> = _mapType
 
     init {
         initializeDistance()
@@ -111,4 +123,16 @@ class TrackingViewModel @Inject constructor(
             _moveToUserLocation.value = currentLocation
         }
     }
+
+    fun onMapTypeButtonClick() {
+        if (currentMapTypeIndex == mapTypes.size - 1) {
+            currentMapTypeIndex = 0
+        } else {
+            currentMapTypeIndex++
+        }
+
+        _mapType.setValue(mapTypes[currentMapTypeIndex])
+    }
+
+    fun getCurrentMapType(): Int = mapTypes[currentMapTypeIndex]
 }

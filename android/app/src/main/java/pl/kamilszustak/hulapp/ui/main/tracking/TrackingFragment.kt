@@ -99,6 +99,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         userLocationButton.setOnClickListener {
             viewModel.onUserLocationButtonClick()
         }
+
+        mapTypeButton.setOnClickListener {
+            viewModel.onMapTypeButtonClick()
+        }
     }
 
     private fun observeViewModel() {
@@ -119,6 +123,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
         viewModel.moveToUserLocation.observe(this) {
             moveTo(it)
+        }
+
+        viewModel.mapType.observe(this) {
+            googleMap?.mapType = it
         }
     }
 
@@ -147,6 +155,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     private fun getOnMapReadyCallback(): OnMapReadyCallback {
         return OnMapReadyCallback {
             this.googleMap = it
+            googleMap?.mapType = viewModel.getCurrentMapType()
         }
     }
 }

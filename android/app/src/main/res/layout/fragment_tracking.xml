@@ -26,15 +26,30 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ImageButton
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/userLocationButton"
-            android:src="@drawable/icon_location_dark"
-            android:background="?actionBarItemBackground"
-            android:padding="@dimen/default_padding"
+            android:id="@+id/mapButtonsLayout"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/mapFragment"
-            app:layout_constraintTop_toTopOf="@id/mapFragment" />
+            app:layout_constraintTop_toTopOf="@id/mapFragment">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userLocationButton"
+                android:src="@drawable/icon_location_dark"
+                android:background="?actionBarItemBackground"
+                android:padding="@dimen/default_padding" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mapTypeButton"
+                android:src="@drawable/icon_map_dark"
+                android:background="?actionBarItemBackground"
+                android:padding="@dimen/default_padding" />
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
