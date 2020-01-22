@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}Hulapp - Twoje konto zostało stworzone i aktywowane!{% endblocktrans %}
+{% endblock %}
+
+{% block html_body %}
+<p>{% trans "Twoje konto zostało utworzone i jest gotowe do użycia!" %}</p>
+
+<p>{% trans "Dziękujemy za korzystanie z naszej aplikacji!" %}</p>
+
+<p>{% blocktrans %}Zespół Hulapp{% endblocktrans %}</p>
+{% endblock html_body %}

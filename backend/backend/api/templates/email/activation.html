@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}Aktywacja konta Hulapp{% endblocktrans %}
+{% endblock subject %}
+
+{% block html_body %}
+<p>{% blocktrans %}Otrzymałeś tego emaila, ponieważ potrzebujesz dokończyć proces aktywacji w aplikacji Hulapp.{% endblocktrans %}</p>
+
+<p>{% trans "Proszę przejdź na poniższą stronę, by aktywować konto:" %}</p>
+<p><a href="{{ protocol }}://{{ url|safe }}">{{ protocol }}://{{ url|safe }}</a></p>
+
+<p>{% trans "Dziękujemy za korzystanie z naszej aplikacji!" %}</p>
+
+<p>{% blocktrans %}Zespół Hulapp{% endblocktrans %}</p>
+
+{% endblock html_body %}
