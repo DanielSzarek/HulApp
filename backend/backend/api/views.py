@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import User, Country, City, Province
 from .serializers import ApiUserRegistrationSerializer, CountrySerializer, CitySerializer, ProvinceSerializer
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django.utils import timezone
 
 
 class UserListView(generics.ListCreateAPIView):
@@ -15,6 +16,9 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = ApiUserRegistrationSerializer
     queryset = User.objects.all()
+
+    def perform_update(self, serializer):
+        serializer.save(mod_date=timezone.now())
 
 
 class CountryListView(generics.ListAPIView):
@@ -43,6 +47,9 @@ class CountryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CountrySerializer
     queryset = Country.objects.all()
 
+    def perform_update(self, serializer):
+        serializer.save(mod_date=timezone.now())
+
 
 class ProvinceListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
@@ -54,6 +61,9 @@ class ProvinceDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProvinceSerializer
     queryset = Province.objects.all()
+
+    def perform_update(self, serializer):
+        serializer.save(mod_date=timezone.now())
 
 
 class ProvincePostView(generics.CreateAPIView):
