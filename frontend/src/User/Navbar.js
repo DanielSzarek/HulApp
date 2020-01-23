@@ -7,7 +7,7 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
-import { FaRoute } from 'react-icons/fa';
+import { FaRoute, FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import AuthService from './AuthService';
 import logoNav from '../Images/logoNav.png';
@@ -41,8 +41,13 @@ export default class Navbarex extends React.Component {
         <NavbarBrand href="/"> <img className="logoNav" src={logoNav} alt={"logo"}/></NavbarBrand>
           <Nav>
             <NavItem>
-              <NavLink className="navLink" active href="/login">
+              <NavLink className="navLink" active href="/tracks">
                 Trasy <FaRoute />
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="navLink" active href="/">
+                Profil <FaUser />
               </NavLink>
             </NavItem>
             <NavItem onClick={this.onClickLogOut}>

@@ -2,10 +2,10 @@ import React from 'react';
 import './Styles/App.css';
 import AlternativeLoggingForm from './User/AlternativeLoggingForm';
 import Registration from './User/Registration';
-import {  Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AccountActivation from './User/AccountActivation';
 import UserProfileEdit from './User/UserProfileEdit';
-import Navbarex from './User/Navbar';
+import UserTrack from './Track/UserTracks';
 
 
 class App extends React.Component {
@@ -16,12 +16,11 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
           <Route exact path="/" component={AlternativeLoggingForm}/>
-          <Route  path="/login" component={AlternativeLoggingForm}/>
-            <Route path="/registration" component={Registration}/>
-            <Route path="/activate/:uid/:token" component={AccountActivation}/> 
-            <Route path="/profile-edit" component={UserProfileEdit}/> 
-
-
+          <Route path="/login" component={AlternativeLoggingForm}/>
+          <Route path="/registration" component={Registration}/>
+          <Route path="/activate/:uid/:token" component={AccountActivation}/> 
+          <Route path="/profile-edit" component={UserProfileEdit}/>
+          <Route path="/tracks" component={UserTrack}/>
           </Switch>
         </BrowserRouter>
       </div>
