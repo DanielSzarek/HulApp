@@ -6,6 +6,8 @@ import {  Link, BrowserRouter, Switch, Route } from 'react-router-dom';
 import AccountActivation from './User/AccountActivation';
 import UserProfileEdit from './User/UserProfileEdit';
 import Navbarex from './User/Navbar';
+import ResetPassword from './User/ResetPassword';
+import ResetPasswordConfirm from './User/ResetPasswordConfim';
 
 
 class App extends React.Component {
@@ -20,6 +22,8 @@ class App extends React.Component {
             <Route path="/registration" component={Registration}/>
             <Route path="/activate/:uid/:token" component={AccountActivation}/> 
             <Route path="/profile-edit" component={UserProfileEdit}/> 
+            <Route path="/reset-password" component={ResetPassword}/>
+            <Route path="/password/reset/confirm/:uid/:token" component={ResetPasswordConfirm}/>
 
 
           </Switch>

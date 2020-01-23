@@ -151,7 +151,8 @@ class Registration extends React.Component{
                 country: '',
                 city: '',
                 message: '',
-				match: false
+				match: false,
+                answear: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -192,10 +193,13 @@ class Registration extends React.Component{
             .then((response) => {
                 if(response.status >= 200 && response.status <300){
                     console.log("SUCCESSS")
-                    return response.json();     
+                    return response.json(); 
+                    
                 }else{
                     console.log("SOMETHING WENT WRONG")
                     this.setState({ message: "Something went wrong. Response status: "+response.status });
+                    // this.setState({ answear : response.map(request => ({ password : request}))})
+                    // this.setState({answear : response.password})
                 }
             })
             .catch((error) => {
@@ -281,6 +285,14 @@ class Registration extends React.Component{
                 </form>
 
                     <div className="result">{ this.state.message }</div>
+                    {/* <div className="result">{ this.state.answear.password }</div> */}
+                    {/* <div>
+                        {this.state.answear.map(item =>
+                                <span>{item}</span>
+                        )}
+                        {this.state.answear}
+                    </div> */}
+
                 </div>            
             </div>
         );
