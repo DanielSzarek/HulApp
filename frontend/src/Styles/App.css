@@ -24,3 +24,9 @@
 .y {
   margin-top: 20px;
 }
+
+.resultReg {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}

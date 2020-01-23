@@ -5,7 +5,7 @@ import '../Styles/Login.css';
 import '../Styles/App.css';
 import { Link , Redirect} from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-
+import AlertNewPwdConfirmed from './AlertNewPwdConfirmed';
 import logo from '../Images/logo_hulapp.png';
 
 class ResetPasswordConfirm extends React.Component {
@@ -20,7 +20,9 @@ class ResetPasswordConfirm extends React.Component {
             newPassword: '',
             newPasswordRepeated: '',
             match: false,
-            passwordChanged: false
+            passwordChanged: false,
+            visible: false,
+            messageError: ''
 
         };
         this.handleChange = this.handleChange.bind(this);
@@ -51,7 +53,8 @@ class ResetPasswordConfirm extends React.Component {
 
                 if (response.status === 204) {
                     console.log("SUCCESSS")
-                    this.setState({ message: "git, działa" , passwordChanged: true});
+                    this.setState({ message: "git, działa" , visible: true});
+                    {this.state.visible&&setTimeout(() => this.setState({ passwordChanged: true }), 6000)}
                 }
                 else if (response.status >= 400) {
                     console.log("FAILED: ")
@@ -80,7 +83,7 @@ class ResetPasswordConfirm extends React.Component {
                 console.log(data)
             })
             .catch((error) => {
-                this.setState({ message: "ERROR " + error });
+                this.setState({ messageError: "ERROR " + error });
             });
     };
 
@@ -116,6 +119,10 @@ class ResetPasswordConfirm extends React.Component {
                 <div className="offset-md-3 col-12 col-md-6">
                     <div className="forgotPwd">
                         <h2>Podaj swoje nowe hasło: </h2>
+                          <div className="resultReg">{this.state.message}</div>
+                    </div>
+                     <div className="mailSend">
+                        {this.state.visible&& <AlertNewPwdConfirmed/>}
                     </div>
                 </div>
                 <div className="offset-md-4 col-12 col-md-4">
@@ -135,7 +142,7 @@ class ResetPasswordConfirm extends React.Component {
                                 <button type="button" className="button-login button-forgotten-pwd" >
                                     Powrót</button>
                             </Link>
-                            <div className="result">{this.state.message}</div>
+                      
 
 
                     </div>

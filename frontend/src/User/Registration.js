@@ -191,15 +191,29 @@ class Registration extends React.Component{
             })
             })
             .then((response) => {
+                let self = this;
                 if(response.status >= 200 && response.status <300){
                     console.log("SUCCESSS")
                     return response.json(); 
                     
                 }else{
-                    console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "Something went wrong. Response status: "+response.status });
+                    // console.log("SOMETHING WENT WRONG")
+                    // this.setState({ message: "Something went wrong. Response status: "+response.status });
                     // this.setState({ answear : response.map(request => ({ password : request}))})
                     // this.setState({answear : response.password})
+                     console.log("FAILED: ")
+                    var json = response.json().then((obj) => {
+					console.log(obj);
+					var allPropertyNames = Object.keys(obj);
+					var err = "";
+					for (var j=0; j<allPropertyNames.length; j++) {
+						var name = allPropertyNames[j];
+						var value = obj[name];
+						err += name + ": " + value + " ";
+						console.log("name: "+name+" value: "+value);
+					}
+                    self.setState({ message: "Rejestracja nie jest możliwa: " + err, newPassword: "", newPasswordRepeated: ""  });
+					});
                 }
             })
             .catch((error) => {
@@ -237,11 +251,18 @@ class Registration extends React.Component{
 	  
     render(){
         return(
-         
+            <div>
     <div className="offset-md-4 col-12 col-md-4">
             <div className="registration-container">
                 <img src={logo} alt={"logo"}/>
-         
+                </div>
+                </div>
+                <div className="offset-md-3 col-12 col-md-6">
+                          <div className="resultReg">{ this.state.message }</div>
+                </div>
+
+          <div className="offset-md-4 col-12 col-md-4">
+            <div className="registration-container">
                 <form className="input-in-form" onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label >Email:</Form.Label>
@@ -284,16 +305,12 @@ class Registration extends React.Component{
                     </div>
                 </form>
 
-                    <div className="result">{ this.state.message }</div>
-                    {/* <div className="result">{ this.state.answear.password }</div> */}
-                    {/* <div>
-                        {this.state.answear.map(item =>
-                                <span>{item}</span>
-                        )}
-                        {this.state.answear}
-                    </div> */}
+                  
 
-                </div>            
+                </div>   
+                                   
+         
+            </div>
             </div>
         );
     }
