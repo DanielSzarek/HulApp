@@ -1,5 +1,6 @@
 package pl.kamilszustak.hulapp.ui.main.tracking
 
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,14 +16,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_tracking.*
-import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.util.toLatLng
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -96,10 +95,6 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             viewModel.onEndTrackingButtonClick()
         }
 
-        userLocationButton.setOnClickListener {
-            viewModel.onUserLocationButtonClick()
-        }
-
         mapTypeButton.setOnClickListener {
             viewModel.onMapTypeButtonClick()
         }
@@ -121,12 +116,21 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             }
         }
 
-        viewModel.moveToUserLocation.observe(this) {
-            moveTo(it)
-        }
-
         viewModel.mapType.observe(this) {
             googleMap?.mapType = it
+        }
+
+        viewModel.locationPoints.observe(this) {
+            val points = it.map { point ->
+                point.toLatLng()
+            }
+
+            val polyline = PolylineOptions()
+                .color(Color.GREEN)
+                .addAll(points)
+
+            googleMap?.addPolyline(polyline)
+            moveTo(it.last())
         }
     }
 
@@ -140,22 +144,25 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         }
     }
 
-    private fun moveTo(location: Location) {
-        val position = location.toLatLng()
-        val marker = MarkerOptions().position(position)
+    private fun moveTo(locationPoint: LocationPoint) {
+        val position = locationPoint.toLatLng()
         val cameraLocation = CameraUpdateFactory.newLatLngZoom(position, mapZoomLevel)
 
         googleMap?.apply {
-            clear()
-            addMarker(marker)
             animateCamera(cameraLocation)
         }
     }
 
+    private fun moveTo(location: Location) {
+        moveTo(location.toLocationPoint())
+    }
+
     private fun getOnMapReadyCallback(): OnMapReadyCallback {
         return OnMapReadyCallback {
-            this.googleMap = it
-            googleMap?.mapType = viewModel.getCurrentMapType()
+            this.googleMap = it.apply {
+                this.mapType = viewModel.getCurrentMapType()
+                this.isMyLocationEnabled = true
+            }
         }
     }
 }

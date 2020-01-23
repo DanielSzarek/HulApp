@@ -9,8 +9,8 @@ import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.GoogleMap
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
+import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.round
 import timber.log.Timber
@@ -35,6 +35,7 @@ class TrackingViewModel @Inject constructor(
     private var currentDistance: Double = 0.0
     private var lastLocation: Location? = null
     private var isFirstLocationChange: Boolean = true
+    private val points: MutableList<LocationPoint> = arrayListOf()
 
     private val mapTypes: List<Int> = listOf(
         GoogleMap.MAP_TYPE_NORMAL,
@@ -49,11 +50,11 @@ class TrackingViewModel @Inject constructor(
     private val _distance: MediatorLiveData<Double> = MediatorLiveData()
     val distance: LiveData<Double> = _distance
 
-    private val _moveToUserLocation: SingleLiveEvent<Location> = SingleLiveEvent()
-    val moveToUserLocation: LiveData<Location> = _moveToUserLocation
-
     private val _mapType: UniqueLiveData<Int> = UniqueLiveData()
     val mapType: LiveData<Int> = _mapType
+
+    private val _locationPoints: MutableLiveData<List<LocationPoint>> = MutableLiveData()
+    val locationPoints: LiveData<List<LocationPoint>> = _locationPoints
 
     init {
         initializeDistance()
@@ -82,7 +83,14 @@ class TrackingViewModel @Inject constructor(
                 lastLocation = it
                 isFirstLocationChange = false
             }
+
+            //addLocationPoint(it.toLocationPoint())
         }
+    }
+
+    private fun addLocationPoint(locationPoint: LocationPoint) {
+        points.add(locationPoint)
+        _locationPoints.setValue(points)
     }
 
     private fun changeTrackingState(trackingState: TrackingState) {
@@ -115,13 +123,6 @@ class TrackingViewModel @Inject constructor(
     fun onEndTrackingButtonClick() {
         val state = TrackingState.Ended()
         changeTrackingState(state)
-    }
-
-    fun onUserLocationButtonClick() {
-        val currentLocation = location.value
-        if (currentLocation != null) {
-            _moveToUserLocation.value = currentLocation
-        }
     }
 
     fun onMapTypeButtonClick() {
