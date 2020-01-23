@@ -2,3 +2,25 @@
     width: 110px;
     border-radius: 10%;
 }
+
+.navLink {
+    color: white;
+}
+
+.navLink:hover {
+    color: black;
+}
+
+.navLinkLogout {
+    color: white;
+    position: absolute;
+    right: 20px;
+}
+
+.navLinkLogout:hover {
+    color: black;
+}
+
+.navbar {
+    background-color: red;
+}

@@ -5,17 +5,10 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  FormInput,
-  Collapse
+  NavLink
 } from "shards-react";
+import { FaRoute } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 import AuthService from './AuthService';
 import logoNav from '../Images/logoNav.png';
 import '../Styles/Navbar.css';
@@ -44,12 +37,17 @@ export default class Navbarex extends React.Component {
 
   render() {
     return (
-      <Navbar type="dark" theme="secondary" expand="md">
+      <Navbar className="navbar" type="dark" expand="md" >
         <NavbarBrand href="/"> <img className="logoNav" src={logoNav} alt={"logo"}/></NavbarBrand>
-          <Nav navbar>
+          <Nav>
+            <NavItem>
+              <NavLink className="navLink" active href="/login">
+                Trasy <FaRoute />
+              </NavLink>
+            </NavItem>
             <NavItem onClick={this.onClickLogOut}>
-              <NavLink active href="/login">
-                Wyloguj
+              <NavLink className="navLinkLogout" active href="/login">
+                Wyloguj <FiLogOut />
               </NavLink>
             </NavItem>   
           </Nav>
