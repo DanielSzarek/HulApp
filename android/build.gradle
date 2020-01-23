@@ -39,6 +39,9 @@ allprojects {
         maven {
             url  "https://dl.bintray.com/emre/maven"
         }
+        maven {
+            url 'https://jcenter.bintray.com'
+        }
     }
 }
 

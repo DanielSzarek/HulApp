@@ -32,4 +32,7 @@
 
     <string name="user_signed_up_title">Utworzono konto</string>
     <string name="user_signed_up_message">Twoje konto zostało utworzono. Na podany adres email został wysłany link aktywujący. Kliknij go, by móc zalogować się do HulApp.</string>
+
+    <string name="tracking_end_title">Koniec</string>
+    <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
 </resources>

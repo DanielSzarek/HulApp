@@ -174,9 +174,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    // TimeIt
-    implementation 'com.github.yashovardhan99:TimeIt:1.2.0'
-
     // FastAdapter
     def fast_adapter_version = '4.1.2'
     def materialize_version = '1.2.1'
@@ -214,6 +211,9 @@ dependencies {
 
     // Assent
     implementation 'com.afollestad.assent:core:3.0.0-RC3'
+
+    // TimeIt
+    implementation 'com.yashovardhan99.timeit:timeit:1.2.0'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

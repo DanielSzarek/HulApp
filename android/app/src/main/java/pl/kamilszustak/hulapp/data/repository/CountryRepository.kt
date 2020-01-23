@@ -8,7 +8,9 @@ import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CountryRepository @Inject constructor(
     private val countryDao: CountryDao,
     private val apiService: ApiService

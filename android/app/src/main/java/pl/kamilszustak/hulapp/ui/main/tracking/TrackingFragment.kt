@@ -16,14 +16,15 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_tracking.*
+import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.dialog
+import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
@@ -59,7 +60,6 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializeMap()
         getPermission()
         setListeners()
         observeViewModel()
@@ -80,6 +80,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             val allGranted = it.isAllGranted(*permissions)
             if (allGranted) {
                 observeLocation()
+                initializeMap()
             } else {
                 getPermission()
             }
@@ -92,7 +93,16 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         }
 
         endTrackingButton.setOnClickListener {
-            viewModel.onEndTrackingButtonClick()
+            dialog {
+                title(R.string.tracking_end_title)
+                message(R.string.tracking_end_message)
+                positiveButton(R.string.yes) {
+                    viewModel.onEndTrackingButtonClick()
+                }
+                negativeButton(R.string.no) {
+                    it.dismiss()
+                }
+            }
         }
 
         mapTypeButton.setOnClickListener {
@@ -125,22 +135,22 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
                 point.toLatLng()
             }
 
-            val polyline = PolylineOptions()
-                .color(Color.GREEN)
-                .addAll(points)
+            val polyline = polylineOptions {
+                color(Color.BLUE)
+                addAll(points)
+            }
 
             googleMap?.addPolyline(polyline)
-            moveTo(it.last())
+        }
+
+        viewModel.error.observe(this) {
+            view?.snackbar(it)
         }
     }
 
     private fun observeLocation() {
         viewModel.location.observe(this) {
             moveTo(it)
-        }
-
-        viewModel.distance.observe(this) {
-            Timber.i(it.toString())
         }
     }
 

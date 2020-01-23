@@ -12,7 +12,8 @@ import pl.kamilszustak.hulapp.data.model.*
     entities = [
         User::class,
         City::class,
-        Country::class
+        Country::class,
+        Track::class
     ],
     version = 1,
     exportSchema = true
@@ -25,6 +26,8 @@ abstract class ApplicationDatabase : RoomDatabase() {
     abstract fun getCityDao(): CityDao
 
     abstract fun getCountryDao(): CountryDao
+
+    abstract fun getTrackDao(): TrackDao
 
     companion object {
         private var INSTANCE: ApplicationDatabase? = null

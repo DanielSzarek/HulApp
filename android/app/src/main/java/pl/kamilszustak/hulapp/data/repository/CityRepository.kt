@@ -8,7 +8,9 @@ import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CityRepository @Inject constructor(
     private val cityDao: CityDao,
     private val apiService: ApiService
