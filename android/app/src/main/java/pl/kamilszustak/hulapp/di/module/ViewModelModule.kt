@@ -16,6 +16,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewM
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -67,4 +68,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CountryChoiceViewModel::class)
     abstract fun bindCountryChoiceViewModel(countryChoiceViewModel: CountryChoiceViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrackingViewModel::class)
+    abstract fun bindTrackingViewModel(trackingViewModel: TrackingViewModel): ViewModel
 }

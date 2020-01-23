@@ -29,4 +29,9 @@ class DatabaseModule {
     @Singleton
     fun provideCountryDao(applicationDatabase: ApplicationDatabase): CountryDao =
         applicationDatabase.getCountryDao()
+
+    @Provides
+    @Singleton
+    fun provideTrackDao(applicationDatabase: ApplicationDatabase): TrackDao =
+        applicationDatabase.getTrackDao()
 }

@@ -54,7 +54,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat-resources:$app_compat_version"
 
     // MaterialComponents
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
@@ -65,12 +65,12 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_version"
 
     // Activity
-    def activity_version = '1.1.0-rc03'
+    def activity_version = '1.1.0'
     implementation "androidx.activity:activity:$activity_version"
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.2.0-rc05'
+    def fragment_version = '1.2.0'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -80,7 +80,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.2.0-rc04'
+    def navigation_version = '2.2.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -88,10 +88,12 @@ dependencies {
     implementation 'androidx.security:security-crypto:1.0.0-alpha02'
 
     // Android Jetpack Lifecycle
-    def lifecycle_version = '2.2.0-rc03'
+    def lifecycle_version = '2.2.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -172,9 +174,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    // TimeIt
-    implementation 'com.github.yashovardhan99:TimeIt:1.2.0'
-
     // FastAdapter
     def fast_adapter_version = '4.1.2'
     def materialize_version = '1.2.1'
@@ -200,6 +199,21 @@ dependencies {
 
     // InlineActivityResult
     implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.1'
+
+    // LocationLiveData
+    implementation "com.emreeran.locationlivedata:locationlivedata:1.0.4"
+
+    // Play Services Location
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+    // Play Services Maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // Assent
+    implementation 'com.afollestad.assent:core:3.0.0-RC3'
+
+    // TimeIt
+    implementation 'com.yashovardhan99.timeit:timeit:1.2.0'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

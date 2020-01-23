@@ -5,6 +5,7 @@ import okhttp3.RequestBody
 import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.*
 import retrofit2.Call
@@ -61,4 +62,16 @@ interface ApiService {
 
     @GET("/api/cities/{name}")
     suspend fun getCitiesByName(@Path("name") name: String): Response<List<City>>
+
+    @POST("/api/tracks/")
+    @Authorize
+    suspend fun postTrack(@Body track: Track): Response<Track>
+
+    @GET("/api/tracks/")
+    @Authorize
+    suspend fun getAllTracks(): Response<List<Track>>
+
+    @GET("/api/tracks/{id}")
+    @Authorize
+    suspend fun getTrackById(@Path("id") id: Long): Response<Track>
 }
