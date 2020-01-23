@@ -23,6 +23,7 @@ import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog
+import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import javax.inject.Inject
@@ -60,9 +61,22 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getPermission()
+        try {
+            getPermission()
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+
         setListeners()
         observeViewModel()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun initializeMap() {
@@ -122,6 +136,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
                 is TrackingState.Ended -> {
                     motionLayout.transitionToStart()
+                    navigateToTrackDetailsFragment(it.track.id)
                 }
             }
         }
@@ -174,5 +189,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
                 this.isMyLocationEnabled = true
             }
         }
+    }
+
+    private fun navigateToTrackDetailsFragment(trackId: Long) {
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackDetailsFragment(trackId)
+        navigateTo(direction)
     }
 }

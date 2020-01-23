@@ -82,13 +82,13 @@
                         android:textAppearance="?textAppearanceBody2" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/distanceTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/distanceTextView"
-                        android:text="@{viewModel.distance.toString()}"
-                        tools:text="0.0"
-                        android:textAppearance="?textAppearanceHeadline5"
-                        android:layout_marginTop="@dimen/default_margin" />
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:text="@{@string/track_distance_value(viewModel.distance)}"
+                        tools:text="0.0 km"
+                        android:textAppearance="?textAppearanceHeadline5" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"

@@ -33,7 +33,7 @@ class TrackRepository @Inject constructor(
         }.asFlow()
     }
 
-    fun getById(id: Long, shouldFetch: Boolean): Flow<Resource<Track>> {
+    fun getById(id: Long, shouldFetch: Boolean = true): Flow<Resource<Track>> {
         return object : NetworkBoundResource<Track, Track>() {
             override fun loadFromDatabase(): Flow<Track> =
                 trackDao.getById(id)
