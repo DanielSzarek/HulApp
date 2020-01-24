@@ -3,9 +3,7 @@ package pl.kamilszustak.hulapp.ui.main.tracking
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -61,22 +59,28 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        try {
-            getPermission()
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-        }
-
+        setHasOptionsMenu(true)
+        getPermission()
         setListeners()
         observeViewModel()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_tracking_fragment, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.trackingHistoryItem -> {
+                navigateToTrackingHistoryBottomSheet()
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     private fun initializeMap() {
@@ -136,7 +140,6 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
                 is TrackingState.Ended -> {
                     motionLayout.transitionToStart()
-                    navigateToTrackDetailsFragment(it.track.id)
                 }
             }
         }
@@ -160,6 +163,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
         viewModel.error.observe(this) {
             view?.snackbar(it)
+        }
+
+        viewModel.trackSaved.observe(this) {
+            navigateToTrackDetailsFragment(it.id)
         }
     }
 
@@ -192,7 +199,14 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     }
 
     private fun navigateToTrackDetailsFragment(trackId: Long) {
-        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackDetailsFragment(trackId)
+        val direction =
+            TrackingFragmentDirections.actionTrackingFragmentToTrackDetailsFragment(trackId)
+        navigateTo(direction)
+    }
+
+    private fun navigateToTrackingHistoryBottomSheet() {
+        val direction =
+            TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
         navigateTo(direction)
     }
 }

@@ -18,6 +18,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -79,4 +80,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TrackDetailsViewModel::class)
     abstract fun bindTrackDetailsViewModel(trackDetailsViewModel: TrackDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrackingHistoryViewModel::class)
+    abstract fun bindTrackingHistoryViewModel(trackingHistoryViewModel: TrackingHistoryViewModel): ViewModel
 }

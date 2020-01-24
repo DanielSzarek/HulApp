@@ -1,9 +1,7 @@
 package pl.kamilszustak.hulapp.ui.main.tracking.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +11,7 @@ import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentTrackDetailsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
 class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
@@ -47,11 +46,38 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
         observeViewModel()
         viewModel.loadTrack(args.trackId)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_track_details_fragment, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.deleteTrackItem -> {
+                viewModel.onDeleteTrackButtonClick()
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun observeViewModel() {
+        viewModel.deletingCompleted.observe(this) {
+            navigateUp()
+        }
+
+        viewModel.error.observe(this) {
+            view?.snackbar(it)
+        }
+
         viewModel.trackResource.error.observe(this) {
             view?.snackbar(it)
         }

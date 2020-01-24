@@ -19,6 +19,7 @@ import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
+import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.util.set
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
@@ -70,14 +71,13 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         val fastAdapter = FastAdapter.with(modelAdapter)
         fastAdapter.onClickListener = listener
         countriesRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = fastAdapter
+            this.adapter = fastAdapter
         }
     }
 
     private fun setListeners() {
         closeButton.setOnClickListener {
-            this.dismiss()
+            navigateUp()
         }
     }
 

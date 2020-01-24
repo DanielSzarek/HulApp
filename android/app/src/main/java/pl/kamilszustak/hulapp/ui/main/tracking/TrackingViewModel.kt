@@ -79,6 +79,9 @@ class TrackingViewModel @Inject constructor(
     private val _error: SingleLiveEvent<String> = SingleLiveEvent()
     val error: LiveData<String> = _error
 
+    private val _trackSaved: SingleLiveEvent<Track> = SingleLiveEvent()
+    val trackSaved: LiveData<Track> = _trackSaved
+
     init {
         initializeDistance()
         initializeStopwatch()
@@ -195,8 +198,8 @@ class TrackingViewModel @Inject constructor(
             if (result.isSuccess) {
                 val resultTrack = result.getOrNull()
                 if (resultTrack != null) {
-                    val state = TrackingState.Ended(resultTrack)
-                    changeTrackingState(state)
+                    changeTrackingState(TrackingState.Ended)
+                    _trackSaved.value = resultTrack
                 }
             } else {
                 _error.value = "Wystąpił błąd podczas zapisywania trasy"

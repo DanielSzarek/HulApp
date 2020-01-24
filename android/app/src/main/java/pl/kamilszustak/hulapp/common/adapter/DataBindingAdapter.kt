@@ -6,15 +6,10 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import pl.kamilszustak.hulapp.R
-import java.text.SimpleDateFormat
+import pl.kamilszustak.hulapp.common.date.DateFormats
 import java.util.*
 
 object DataBindingAdapter {
-
-    private val simpleDateFormat: SimpleDateFormat = SimpleDateFormat(
-        "yyyy-MM-dd HH:mm:ss",
-        Locale.forLanguageTag("PL")
-    )
 
     @BindingAdapter("app:profilePhoto")
     @JvmStatic
@@ -35,7 +30,7 @@ object DataBindingAdapter {
     @BindingAdapter("android:text")
     fun TextView.setDate(date: Date?) {
         this.text = if (date != null) {
-            simpleDateFormat.format(date)
+            DateFormats.dateFormat.format(date)
         } else {
             ""
         }

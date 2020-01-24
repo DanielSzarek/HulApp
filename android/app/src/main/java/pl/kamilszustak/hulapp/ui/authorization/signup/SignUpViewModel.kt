@@ -19,7 +19,6 @@ import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(

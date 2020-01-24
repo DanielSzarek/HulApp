@@ -19,8 +19,8 @@ class CityChoiceViewModel @Inject constructor(
     val cityName: UniqueLiveData<String> = UniqueLiveData()
 
     fun loadCitiesByName(name: String) {
-        citiesResource.changeLiveDataSource {
-            cityRepository.getByName(name).asLiveData()
+        citiesResource.changeFlowSource {
+            cityRepository.getByName(name)
         }
     }
 }

@@ -19,8 +19,8 @@ class CountryChoiceViewModel @Inject constructor(
     val countryName: UniqueLiveData<String> = UniqueLiveData()
 
     fun loadCountriesByName(name: String) {
-        countriesResource.changeLiveDataSource {
-            countryRepository.getByName(name).asLiveData()
+        countriesResource.changeFlowSource {
+            countryRepository.getByName(name)
         }
     }
 }

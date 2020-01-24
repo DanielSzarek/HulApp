@@ -61,4 +61,17 @@ class TrackRepository @Inject constructor(
             }
         }.callForResponse()
     }
+
+    suspend fun deleteById(id: Long): Result<Unit> {
+        return object : NetworkCall<Unit, Unit>() {
+            override suspend fun makeCall(): Response<Unit> =
+                apiService.deleteTrackById(id)
+
+            override suspend fun mapResponse(response: Unit) = Unit
+
+            override suspend fun onResponseSuccess() {
+                trackDao.deleteById(id)
+            }
+        }.call()
+    }
 }
