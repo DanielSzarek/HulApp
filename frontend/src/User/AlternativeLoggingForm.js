@@ -109,7 +109,7 @@ class LoggingForm extends React.Component {
                                 <button type="button" className="button-login" >
                                     Załóż konto</button>
                             </Link>
-                            <Link to="/forgotten-password">
+                            <Link to="/reset-password">
                                 <button type="button" className="button-login button-forgotten-pwd" >
                                     Nie pamiętam hasła</button>
                             </Link>
