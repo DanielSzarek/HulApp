@@ -3,16 +3,19 @@ import Navbarex from '../User/Navbar';
 import AuthService from '../User/AuthService';
 import { ListGroup } from "react-bootstrap";
 import TrackItem from "./TrackItem"
+import { Link, Redirect } from 'react-router-dom';
+import { CircularProgress } from "@material-ui/core";
 
 
-class UserTracks extends React.Component{
+class UserTracks extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             tracks: [],
-            auth: true
+            auth: true,
+            progressBarDisplayState: "visible"
         }
         this.Auth = new AuthService();
     }
@@ -22,7 +25,8 @@ class UserTracks extends React.Component{
           this.Auth.fetch('http://hulapp.pythonanywhere.com/api/tracks/')
           .then((response) => {
             this.setState({
-                tracks: response
+                tracks: response,
+                progressBarDisplayState: "none"
             })
         })
         .catch((error) => {
@@ -37,14 +41,18 @@ class UserTracks extends React.Component{
     render() {
         return(
             <div>
-                <Navbarex/>
-                <h4 style={{textAlign: "center"}}>Moje trasy</h4>
-                <ListGroup style={{marginTop: "32px", position: "absolute"}}>
+                {(this.state.auth) ? '' : <Redirect to="/" />}
+                <Navbarex />
+                <CircularProgress style={{display: this.state.progressBarDisplayState, position: "absolute", marginLeft: "50%", marginTop: "100px"}} />
+                <h3 style={{marginTop: "10px", textAlign: "center"}}>Moje trasy</h3>
+                <ListGroup style={{ marginTop: "32px"}}>
                     {
                         this.state.tracks.map(track => 
-                            <ListGroup.Item>
-                                <TrackItem data={track}/>
-                            </ListGroup.Item>
+                            <Link to={`/track/${track.id}`} key={track.id} style={{marginTop: "16px"}}>
+                                <ListGroup.Item style={{color: "black"}}>
+                                    <TrackItem data={track}/>
+                                </ListGroup.Item>
+                            </Link>
                         )
                     }
                 </ListGroup>
