@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_double_margin">32dp</dimen>
+    <dimen name="default_half_margin">8dp</dimen>
+
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="default_double_padding">32dp</dimen>
+    <dimen name="default_half_padding">8dp</dimen>
+
+    <dimen name="default_radius">16dp</dimen>
+    <dimen name="default_double_radius">32dp</dimen>
+    <dimen name="default_half_radius">8dp</dimen>
+
+    <dimen name="default_elevation">12dp</dimen>
+    <dimen name="default_half_elevation">6dp</dimen>
+</resources>

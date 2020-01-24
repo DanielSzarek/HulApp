@@ -1,0 +1,13 @@
+h1 {
+    text-align: right;
+}
+
+.activationText {
+    padding-top: 30px;
+    text-align: center;
+    font-size: 64px;
+    color: crimson;
+    border-color: black;
+    text-shadow: black;
+    text-transform: uppercase;
+}

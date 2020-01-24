@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Transition
+        android:id="@+id/loginTransition"
+        app:constraintSetStart="@layout/fragment_login"
+        app:constraintSetEnd="@id/endConstraintSet"
+        app:duration="@integer/default_motion_scene_transition_duration" />
+
+    <ConstraintSet
+        android:id="@+id/endConstraintSet">
+
+        <Constraint
+            android:id="@id/progressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/loginButton"
+            app:layout_constraintBottom_toBottomOf="@id/loginButton" />
+
+        <Constraint
+            android:id="@id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordResetButton" />
+    </ConstraintSet>
+</MotionScene>

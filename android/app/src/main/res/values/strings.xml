@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">HulApp</string>
+    <string name="database_name">hulapp_database</string>
+
+    <!-- FastAdapter -->
+    <string name="country_item_id">country_item_id</string>
+
+    <!-- SettingsRepository -->
+    <string name="shared_preferences_is_user_logged_in">shared_preferences_is_user_logged_in</string>
+
+    <!-- JwtTokenRepository -->
+    <string name="shared_preferences_jwt_access_token">shared_preferences_jwt_access_token</string>
+    <string name="shared_preferences_jwt_refresh_token">shared_preferences_jwt_refresh_token</string>
+    <string name="shared_preferences_jwt_token_expiration_date_timestamp">shared_preferences_jwt_token_expiration_date_timestamp</string>
+
+    <!-- UserDetailsRepository -->
+    <string name="shared_preferences_user_email">shared_preferences_user_email</string>
+    <string name="shared_preferences_user_password">shared_preferences_user_password</string>
+    <string name="shared_preferences_user_id">shared_preferences_user_id</string>
+
+    <string name="ok">OK</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="cancel">Anuluj</string>
+    <string name="close">Zamknij</string>
+    <string name="open">Otwórz</string>
+    <string name="retry">Powtórz</string>
+
+    <string name="password_reset_info">Aby zresetować swoje hasło wpisz adres email, który został podany podczas rejestracji w HulApp. W ciągu kilku minut zostanie na niego wysłany link, który przekieruje Cię do strony resetu hasła.</string>
+    <string name="password_reset_title">Hasło zresetowane</string>
+    <string name="password_reset_message">Hasło zostało zresetowane. Na podany adres email otrzymasz link do resetu hasła.</string>
+
+    <string name="user_signed_up_title">Utworzono konto</string>
+    <string name="user_signed_up_message">Twoje konto zostało utworzono. Na podany adres email został wysłany link aktywujący. Kliknij go, by móc zalogować się do HulApp.</string>
+
+    <string name="tracking_end_title">Koniec</string>
+    <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
+
+    <!-- TrackingFragment -->
+    <string name="track_distance_value">%s km</string>
+
+    <!-- TrackDetailsFragment -->
+    <string name="exhaust_emission_value">%s g</string>
+</resources>

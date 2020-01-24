@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/countryChoiceLinearLayout"
+        android:orientation="vertical"
+        android:background="@drawable/bottom_sheet_rounded_background"
+        android:padding="@dimen/default_padding">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/closeButton"
+            android:src="@drawable/icon_close_dark"
+            android:background="?selectableItemBackgroundBorderless" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/countryInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_marginTop="@dimen/default_margin">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/countryNameEditText"
+                android:hint="Kraj"
+                android:text="@={viewModel.countryName}"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
+                android:drawableStart="@drawable/icon_search" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/countriesRecyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/default_margin"/>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginTop="@dimen/default_margin"/>
+
+    </LinearLayout>
+</layout>

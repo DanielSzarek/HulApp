@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/motionLayout">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/scrollView"
+            android:fillViewport="true"
+            android:layout_marginBottom="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/saveButton">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_padding">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/nameInputLayout"
+                        style="@style/TextInputLayoutStyle"
+                        app:startIconDrawable="@drawable/icon_person"
+                        app:errorEnabled="@{!viewModel.userNameField.isValid}"
+                        app:errorText="@{viewModel.userNameField.errorMessage}"
+                        android:layout_marginTop="@dimen/default_margin">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/nameEditText"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLines="1"
+                            android:text="@={viewModel.userNameField.data}"
+                            android:hint="Imię" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/surnameInputLayout"
+                        style="@style/TextInputLayoutStyle"
+                        app:startIconDrawable="@drawable/icon_person"
+                        app:errorEnabled="@{!viewModel.userSurnameField.isValid}"
+                        app:errorText="@{viewModel.userSurnameField.errorMessage}"
+                        android:layout_marginTop="@dimen/default_margin">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/surnameEditText"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLines="1"
+                            android:text="@={viewModel.userSurnameField.data}"
+                            android:hint="Nazwisko" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cityInputLayout"
+                            style="@style/TextInputLayoutStyle"
+                            app:startIconDrawable="@drawable/icon_city"
+                            app:errorEnabled="@{!viewModel.userCityField.isValid}"
+                            app:errorText="@{viewModel.userCityField.errorMessage}"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:layout_marginEnd="@dimen/default_half_margin"
+                            android:layout_toStartOf="@id/clearCityButton">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cityNameEditText"
+                                android:inputType="textCapWords"
+                                android:maxLines="1"
+                                android:text="@{viewModel.userCityField.data.name}"
+                                android:hint="Miasto"
+                                android:focusable="false" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/clearCityButton"
+                            android:src="@drawable/icon_close_dark"
+                            android:background="@android:color/transparent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/countryInputLayout"
+                            style="@style/TextInputLayoutStyle"
+                            app:startIconDrawable="@drawable/icon_flag"
+                            app:errorEnabled="@{!viewModel.userCountryField.isValid}"
+                            app:errorText="@{viewModel.userCountryField.errorMessage}"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:layout_marginEnd="@dimen/default_half_margin"
+                            android:layout_toStartOf="@id/clearCountryButton">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/countryNameEditText"
+                                android:inputType="textCapWords"
+                                android:maxLines="1"
+                                android:text="@{viewModel.userCountryField.data.name}"
+                                android:hint="Kraj"
+                                android:focusable="false" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/clearCountryButton"
+                            android:src="@drawable/icon_close_dark"
+                            android:background="@android:color/transparent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveButton"
+            android:text="Zapisz"
+            style="@style/MaterialButtonStyle"
+            android:enabled="@{viewModel.isSavingEnabled &amp;&amp; !viewModel.isSaving}"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipeRefreshLayout"
+        app:refreshing="@{viewModel.userResource.isLoading}">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorPrimary">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="128dp"
+                        android:layout_height="128dp"
+                        android:id="@+id/profilePhotoImageView"
+                        app:profilePhoto="@{viewModel.userResource.data.profilePhotoUrl}"
+                        android:src="@drawable/icon_profile"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@android:color/white"
+                        android:transitionName="PROFILE_PHOTO_FULLSCREEN_TRANSITION"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="@dimen/default_margin"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userFullNameTextView"
+                        android:text="@{viewModel.userResource.data.fullName}"
+                        tools:text="Jan Kowalski"
+                        android:textSize="32sp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="sans-serif-light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userCityTextView"
+                        android:text="@{viewModel.cityResource.data.name}"
+                        tools:text="Gdynia"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintStart_toStartOf="@id/userFullNameTextView"
+                        app:layout_constraintEnd_toStartOf="@id/userCountryTextView"
+                        app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        android:layout_marginBottom="@dimen/default_margin"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userCountryTextView"
+                        android:text="@{viewModel.countryResource.data.name}"
+                        tools:text="Polska"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintStart_toEndOf="@id/userCityTextView"
+                        app:layout_constraintEnd_toEndOf="@id/userFullNameTextView"
+                        app:layout_constraintTop_toBottomOf="@id/userFullNameTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

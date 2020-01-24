@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/trackingHistoryItem"
+        android:title="Historia tras"
+        android:icon="@drawable/icon_history_light"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}Hulapp - Twój login został pomyślnie zmieniony{% endblocktrans %}
+{% endblock %}
+
+{% block html_body %}
+<p>{% trans "Twój login został zmienion!" %}</p>
+
+<p>{% trans "Dziękujemy za korzystanie z naszej aplikacji!" %}</p>
+
+<p>{% blocktrans %}Zespół Hulapp{% endblocktrans %}</p>
+{% endblock html_body %}

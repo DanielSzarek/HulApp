@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fastadapter_country_item_id" type="id" />
+    <item name="fastadapter_city_item_id" type="id" />
+    <item name="fastadapter_track_item_id" type="id" />
+</resources>

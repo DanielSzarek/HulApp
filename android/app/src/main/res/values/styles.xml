@@ -1,0 +1,69 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    </style>
+
+    <style name="AppTheme.SplashScreen">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="actionBarStyle">@style/Theme.MaterialComponents.Light.NoActionBar</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxBackgroundColor">@color/colorForm</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/default_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/default_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/default_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/default_radius</item>
+    </style>
+
+    <style name="MaterialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/default_radius</item>
+    </style>
+
+    <style name="OutlinedMaterialButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">@dimen/default_radius</item>
+    </style>
+
+    <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/default_radius</item>
+        <item name="cardElevation">@dimen/default_elevation</item>
+    </style>
+
+    <style name="BottomSheetTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_rounded_background</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.TransparentActionBar">
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundStacked">@android:color/transparent</item>
+        <item name="android:displayOptions">showTitle</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

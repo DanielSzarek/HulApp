@@ -1,0 +1,18 @@
+.logging-container {
+    padding: 0 10%;
+}
+
+.button-forgotten-pwd {
+    margin-bottom: 10px;
+    margin-top:10px;
+}
+
+.forgotPwd {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.mailSend {
+    padding-bottom: 30px;
+    text-align: center;
+}
