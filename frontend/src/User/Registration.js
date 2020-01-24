@@ -36,16 +36,6 @@ class Registration extends React.Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-         console.log("req ");
-		 console.log(JSON.stringify({
-                username: this.state.email,
-                email: this.state.email,
-                password: this.state.password,
-                first_name: this.state.name,
-                last_name: this.state.surname,
-                country: this.state.country,
-                city: this.state.city
-            }));
          fetch('http://hulapp.pythonanywhere.com/auth/users/', {
             method: 'POST',
             headers: {
@@ -65,22 +55,18 @@ class Registration extends React.Component{
             .then((response) => {
                 let self = this;
                 if(response.status >= 200 && response.status <300){
-                    console.log("SUCCESSS")
                     this.setState({ message: "git, działa" , visible: true});
                     {this.state.visible&&setTimeout(() => this.setState({ success: true }), 6000)}
                     // return response.json(); 
                     
                 }else{
-                     console.log("FAILED: ")
                     var json = response.json().then((obj) => {
-					console.log(obj);
 					var allPropertyNames = Object.keys(obj);
 					var err = "";
 					for (var j=0; j<allPropertyNames.length; j++) {
 						var name = allPropertyNames[j];
 						var value = obj[name];
 						err += name + ": " + value + " ";
-						console.log("name: "+name+" value: "+value);
 					}
                     self.setState({ message: "Rejestracja nie jest możliwa: " + err, newPassword: "", newPasswordRepeated: ""  });
 					});
@@ -102,7 +88,6 @@ class Registration extends React.Component{
 	}
 	
 	handleCountryChange(val){
-		console.log("handleCountryChange: "+val);
 		this.setState({country: val})
 	}
 

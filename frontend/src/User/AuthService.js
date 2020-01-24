@@ -10,8 +10,6 @@ export default class AuthService {
 
     login(username, password) {
         // Get a token from api server using the fetch api
-        console.log(username);
-        console.log(password);
         return this.fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
             method: 'POST',
             //  'credentials': 'include',
@@ -22,7 +20,6 @@ export default class AuthService {
                 password: password
             })
         }).then(res => {
-			console.log(res);
             this.setToken(res.access) // Setting the token in localStorage
 			this.setRefreshidToken(res.refresh)
             return Promise.resolve(res);
@@ -30,7 +27,6 @@ export default class AuthService {
     }
 	
 	refresh(){
-		console.log("refreshing token");
 		return fetch('http://hulapp.pythonanywhere.com/auth/jwt/refresh/', {
             method: 'POST',
 			headers: {
@@ -43,8 +39,6 @@ export default class AuthService {
         })
 		.then(res => res.json())
 		.then(res => {
-			console.log(res);
-			console.log("Setting new acc token")
             this.setToken(res.access) // Setting the token in localStorage
             return Promise.resolve(res);
         })
@@ -58,14 +52,11 @@ export default class AuthService {
         const token = this.getToken() // GEtting token from localstorage
 		//check if tokem expired
 		if(!!token && token !== 'undefined' && !this.isTokenExpired(token)){
-			console.log("token valid");
 			return true;
 		}
 		else{
-			console.log("checking");
 			//check if refresh token not expired
 			const refreshToken = this.getRefreshToken();
-			console.log(refreshToken);
 			if(!!refreshToken && !this.isTokenExpired(refreshToken)){
 				await this.refresh();
 				return true;
@@ -136,8 +127,6 @@ export default class AuthService {
         // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
         if (await this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
-			console.log("authorization header added");
-            console.log(this.getToken());
         }
 		else{
 			console.log("not logged in");

@@ -27,8 +27,6 @@ class LoggingForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log("email " + this.state.email)
-
 
         this.Auth.login(this.state.email, this.state.password)
             .then(res => {
@@ -75,7 +73,6 @@ class LoggingForm extends React.Component {
     async componentWillMount() {
         if (await this.Auth.loggedIn())
             this.props.history.replace('/profile-edit');
-        console.log("here, bad");
     }
 
     render() {
@@ -88,7 +85,7 @@ class LoggingForm extends React.Component {
                     <div className="logging-container">
                         <GoogleReCaptchaProvider
                             reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
-                            <GoogleReCaptcha onVerify={token => console.log("token from reCaptcha: " + token)} />
+                            <GoogleReCaptcha />
 
                             <form className="input-in-form" onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">

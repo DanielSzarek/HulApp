@@ -21,21 +21,15 @@ class AutoComplete extends React.Component {
 			console.log("retrieveDataAsynchronously");
 			// Url of your website that process the data and returns a
 			let url = `http://hulapp.pythonanywhere.com/api/${this.props.dest}/${searchText}`;
-			console.log(url);
 			fetch(url)
 			.then(res => res.json())
-			.then((res) => {
-				console.log(typeof(res.detail) !== 'undefined');
-					
+			.then((res) => {					
 					if(typeof(res.detail) !== 'undefined'){
-						console.log("empty sugg");
 						this.setState({
 							options: []
 						})
 					}
 					else{
-						console.log("set sugg state");
-						console.log(res);
 						this.setState({
 							options: res
 						})
@@ -55,20 +49,13 @@ class AutoComplete extends React.Component {
     }
 	
 	onChange(e) {
-		console.log("onChange");
-        console.log(e.target);
         let splitted = e.target.value.split("-");
-        console.log(splitted[0]);
-        console.log(splitted[1]);
         this.setState({ value: e.target.value, inputValue: splitted[1] })
         this.props.onSelect(splitted[0]);
   }
   
   render() {
 	  let required = this.props.required ? "required" : "";
-		console.log("Render");
-		console.log(this.state.options);
-		console.log(this.props.value);
     return (
 	
       <div className="autocomplete-dropdown">
