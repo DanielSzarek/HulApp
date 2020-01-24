@@ -42,6 +42,10 @@ class UserTrackDetail extends React.Component {
         return date.toLocaleDateString() + " " + date.toLocaleTimeString();
     }
 
+    calculateAmountOfExhaustGas(length) {
+        return length * 120;
+    }
+
     render() {
         return (
             <div>
@@ -51,8 +55,9 @@ class UserTrackDetail extends React.Component {
                 { this.state && this.state.track.time_start &&
                     <Card style={{padding: "16px", marginTop: "32px"}}>
                         <h4>{this.formatDateTime(this.state.track.time_start)}</h4>
-                        <p>Czas trwania: <b>{this.state.track.duration}</b></p>
+                        <p>Czas trwania: <b>{this.state.track.duration}</b> sekund</p>
                         <p>Odległość: <b>{this.state.track.track_length}</b> km</p>
+                        <p>Ilość zaoszczędzonych spalin: <b>{this.calculateAmountOfExhaustGas(this.state.track.track_length)}</b> gram</p>
                     </Card>
                 }
             </div>

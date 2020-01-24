@@ -19,10 +19,6 @@ class AccountActivation extends React.Component {
     }
 
     componentDidMount() {
-        // alert("tutaj 2");
-        console.log("uid " + this.state.uid);
-        console.log("token " + this.state.token)
-        //walidacja
         fetch('http://hulapp.pythonanywhere.com/auth/users/activation/', {
             method: 'POST',
             headers: {
@@ -54,7 +50,6 @@ class AccountActivation extends React.Component {
             })
             .then((data) => {
                 this.setState({ res: data })
-                console.log(data)
             })
             .catch((error) => {
                 this.setState({ message: "ERROR " + error });

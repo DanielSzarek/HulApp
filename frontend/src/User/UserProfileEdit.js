@@ -45,7 +45,6 @@ class ProfileEdition extends React.Component{
 		  if ( await this.Auth.loggedIn()){
             this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
 		    .then((res) => {
-			  console.log(res);
 			  this.setState({
 				  name: res.first_name,
 				  userId: res.id,
@@ -84,7 +83,6 @@ class ProfileEdition extends React.Component{
             })
             .then((response) => {
                 if(response.status >= 200 && response.status <300){
-                    console.log("SUCCESSS")
                     return response.json();     
                 }
                 // else{
@@ -118,19 +116,15 @@ class ProfileEdition extends React.Component{
 	}
       
       fileSelectedHandler = (event)=>{
-        console.log(event.target.files[0]);
         this.setState({
             fileUploaded : event.target.files[0]
         })
     }
 
     fileUploadHandler = () => {
-        console.log("downloaded " +this.state.fileUploaded)
-
         const fd = new FormData();
         fd.append('profile_img', this.state.fileUploaded, this.state.fileUploaded.name);
 		fd.append('username', this.state.email);
-        console.log("fD " +this.state.fileUploaded.name);
 		
 		axios(
 		{ 
@@ -155,7 +149,6 @@ class ProfileEdition extends React.Component{
 
 
     render(){
-        console.log("this.state.countryId" + this.state.countryId);
         return(
             <div>
                 <Navbarex/>

@@ -33,8 +33,6 @@ class ResetPasswordConfirm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("uid " + this.state.uid);
-        console.log("token " + this.state.token)
         fetch('http://hulapp.pythonanywhere.com/auth/users/reset_password_confirm/', {
             method: 'POST',
             headers: {
@@ -59,14 +57,12 @@ class ResetPasswordConfirm extends React.Component {
                 else if (response.status >= 400) {
                     console.log("FAILED: ")
                     var json = response.json().then((obj) => {
-					console.log(obj);
 					var allPropertyNames = Object.keys(obj);
 					var err = "";
 					for (var j=0; j<allPropertyNames.length; j++) {
 						var name = allPropertyNames[j];
 						var value = obj[name];
 						err += name + ": " + value + " ";
-						console.log("name: "+name+" value: "+value);
 					}
                     self.setState({ message: "Zmiana hasła nie jest możliwa: " + err, newPassword: "", newPasswordRepeated: ""  });
 					});
@@ -80,7 +76,6 @@ class ResetPasswordConfirm extends React.Component {
             })
             .then((data) => {
                 this.setState({ res: data })
-                console.log(data)
             })
             .catch((error) => {
                 this.setState({ messageError: "ERROR " + error });
