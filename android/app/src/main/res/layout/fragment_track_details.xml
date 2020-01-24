@@ -38,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Czas trwania"
-                    android:textAppearance="?textAppearanceBody2" />
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -52,7 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Przebyty dystans"
-                    android:textAppearance="?textAppearanceBody2" />
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -66,7 +68,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data rozpoczęcia"
-                    android:textAppearance="?textAppearanceBody2" />
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -80,7 +83,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data zakończenia"
-                    android:textAppearance="?textAppearanceBody2" />
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/exhaust_emission_value(viewModel.exhaustEmission)}"
+                    tools:text="525 g"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    android:layout_marginTop="@dimen/default_margin"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Niewyemitowane spaliny"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

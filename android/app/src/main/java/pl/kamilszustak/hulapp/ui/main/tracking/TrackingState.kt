@@ -1,7 +1,5 @@
 package pl.kamilszustak.hulapp.ui.main.tracking
 
-import pl.kamilszustak.hulapp.data.model.Track
-
 sealed class TrackingState {
 
     val isIdle: Boolean =

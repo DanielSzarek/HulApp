@@ -11,6 +11,7 @@ import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.util.mapNotNull
 import pl.kamilszustak.hulapp.util.withIoContext
 import javax.inject.Inject
 
@@ -20,6 +21,10 @@ class TrackDetailsViewModel @Inject constructor(
 ) : BaseViewModel(application) {
 
     val trackResource: ResourceDataSource<Track> = ResourceDataSource()
+
+    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull {
+        120 * it.distance
+    }
 
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading

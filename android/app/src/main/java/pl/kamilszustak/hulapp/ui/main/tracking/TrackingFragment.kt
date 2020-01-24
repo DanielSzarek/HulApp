@@ -199,14 +199,12 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     }
 
     private fun navigateToTrackDetailsFragment(trackId: Long) {
-        val direction =
-            TrackingFragmentDirections.actionTrackingFragmentToTrackDetailsFragment(trackId)
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackDetailsFragment(trackId)
         navigateTo(direction)
     }
 
     private fun navigateToTrackingHistoryBottomSheet() {
-        val direction =
-            TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
         navigateTo(direction)
     }
 }

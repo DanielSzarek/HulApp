@@ -38,4 +38,7 @@
 
     <!-- TrackingFragment -->
     <string name="track_distance_value">%s km</string>
+
+    <!-- TrackDetailsFragment -->
+    <string name="exhaust_emission_value">%s g</string>
 </resources>

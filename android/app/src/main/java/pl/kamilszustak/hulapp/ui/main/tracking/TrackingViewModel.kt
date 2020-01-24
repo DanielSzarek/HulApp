@@ -83,6 +83,7 @@ class TrackingViewModel @Inject constructor(
     val trackSaved: LiveData<Track> = _trackSaved
 
     init {
+        initializeTracking()
         initializeDistance()
         initializeStopwatch()
     }
@@ -99,8 +100,21 @@ class TrackingViewModel @Inject constructor(
         }
     }
 
+    private fun initializeTracking() {
+        currentTrackingState = TrackingState.Idle
+        currentDistance = 0.0
+        currentDuration = 0
+        lastLocation = null
+        isFirstLocationChange = true
+        points.clear()
+        startDate = Date()
+
+        changeDistance(currentDistance)
+        changeTrackingState(TrackingState.Idle)
+    }
+
     private fun initializeDistance() {
-        _distance.value = currentDistance
+        changeDistance(currentDistance)
         _distance.addSource(location) {
             if (currentTrackingState.isStarted) {
                 if (!isFirstLocationChange) {
@@ -139,6 +153,11 @@ class TrackingViewModel @Inject constructor(
     private fun changeTrackingState(trackingState: TrackingState) {
         currentTrackingState = trackingState
         _trackingState.setValue(currentTrackingState)
+    }
+
+    private fun changeDistance(distance: Double) {
+        currentDistance = distance
+        _distance.value = currentDistance
     }
 
     fun onStartTrackingButtonClick() {
@@ -199,6 +218,7 @@ class TrackingViewModel @Inject constructor(
                 val resultTrack = result.getOrNull()
                 if (resultTrack != null) {
                     changeTrackingState(TrackingState.Ended)
+                    initializeTracking()
                     _trackSaved.value = resultTrack
                 }
             } else {
