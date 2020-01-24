@@ -55,7 +55,7 @@ class Registration extends React.Component{
             .then((response) => {
                 let self = this;
                 if(response.status >= 200 && response.status <300){
-                    this.setState({ message: "git, działa" , visible: true});
+                    this.setState({ message: "" , visible: true});
                     {this.state.visible&&setTimeout(() => this.setState({ success: true }), 6000)}
                     // return response.json(); 
                     
