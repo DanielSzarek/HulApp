@@ -51,7 +51,7 @@ class ResetPasswordConfirm extends React.Component {
 
                 if (response.status === 204) {
                     console.log("SUCCESSS")
-                    this.setState({ message: "git, działa" , visible: true});
+                    this.setState({ message: "" , visible: true});
                     {this.state.visible&&setTimeout(() => this.setState({ passwordChanged: true }), 6000)}
                 }
                 else if (response.status >= 400) {
@@ -69,7 +69,7 @@ class ResetPasswordConfirm extends React.Component {
                 }
                 else {
                     console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "bardzo nie działa." });
+                    this.setState({ message: "" });
                 }
                 return response.json();
 
