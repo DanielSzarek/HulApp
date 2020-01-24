@@ -21,8 +21,6 @@ import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.withIoContext
-import pl.kamilszustak.hulapp.util.withMainContext
-import timber.log.Timber
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
@@ -73,15 +71,15 @@ class EditProfileViewModel @Inject constructor(
     )
 
     init {
-        userResource.changeLiveDataSource {
-            userRepository.getOne().asLiveData()
+        userResource.changeFlowSource {
+            userRepository.getOne(false)
         }
 
         cityResource.result.addSource(userResource.data) {
             val cityId = it.cityId
             if (cityId != null) {
                 cityResource.changeFlowSource {
-                    cityRepository.getById(cityId)
+                    cityRepository.getById(cityId, false)
                 }
             } else {
                 onCityLoaded(null)
@@ -92,7 +90,7 @@ class EditProfileViewModel @Inject constructor(
             val countryId = it.countryId
             if (countryId != null) {
                 countryResource.changeFlowSource {
-                    countryRepository.getById(countryId)
+                    countryRepository.getById(countryId, false)
                 }
             } else {
                 onCountryLoaded(null)

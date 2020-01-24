@@ -79,7 +79,11 @@ class TrackingViewModel @Inject constructor(
     private val _error: SingleLiveEvent<String> = SingleLiveEvent()
     val error: LiveData<String> = _error
 
+    private val _trackSaved: SingleLiveEvent<Track> = SingleLiveEvent()
+    val trackSaved: LiveData<Track> = _trackSaved
+
     init {
+        initializeTracking()
         initializeDistance()
         initializeStopwatch()
     }
@@ -96,8 +100,21 @@ class TrackingViewModel @Inject constructor(
         }
     }
 
+    private fun initializeTracking() {
+        currentTrackingState = TrackingState.Idle
+        currentDistance = 0.0
+        currentDuration = 0
+        lastLocation = null
+        isFirstLocationChange = true
+        points.clear()
+        startDate = Date()
+
+        changeDistance(currentDistance)
+        changeTrackingState(TrackingState.Idle)
+    }
+
     private fun initializeDistance() {
-        _distance.value = currentDistance
+        changeDistance(currentDistance)
         _distance.addSource(location) {
             if (currentTrackingState.isStarted) {
                 if (!isFirstLocationChange) {
@@ -136,6 +153,11 @@ class TrackingViewModel @Inject constructor(
     private fun changeTrackingState(trackingState: TrackingState) {
         currentTrackingState = trackingState
         _trackingState.setValue(currentTrackingState)
+    }
+
+    private fun changeDistance(distance: Double) {
+        currentDistance = distance
+        _distance.value = currentDistance
     }
 
     fun onStartTrackingButtonClick() {
@@ -195,8 +217,9 @@ class TrackingViewModel @Inject constructor(
             if (result.isSuccess) {
                 val resultTrack = result.getOrNull()
                 if (resultTrack != null) {
-                    val state = TrackingState.Ended(resultTrack)
-                    changeTrackingState(state)
+                    changeTrackingState(TrackingState.Ended)
+                    initializeTracking()
+                    _trackSaved.value = resultTrack
                 }
             } else {
                 _error.value = "Wystąpił błąd podczas zapisywania trasy"

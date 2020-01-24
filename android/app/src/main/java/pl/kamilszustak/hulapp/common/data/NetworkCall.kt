@@ -27,6 +27,7 @@ abstract class NetworkCall<ResponseType, ReturnType> {
             val response = makeCall()
 
             return if (response.isSuccessful) {
+                onResponseSuccess()
                 Result.success(Unit)
             } else {
                 val exception = HttpException(response)
@@ -42,4 +43,6 @@ abstract class NetworkCall<ResponseType, ReturnType> {
     abstract suspend fun mapResponse(response: ResponseType): ReturnType
 
     open suspend fun saveCallResult(result: ResponseType): Unit = Unit
+
+    open suspend fun onResponseSuccess(): Unit = Unit
 }

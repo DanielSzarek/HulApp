@@ -74,9 +74,6 @@ class ChangePasswordViewModel @Inject constructor(
                 userRepository.changePassword(currentPassword, newPassword)
             }
 
-            Timber.i("result: $result")
-            Timber.i("success: ${result.isSuccess}")
-
             if (result.isSuccess) {
                 logoutUser()
                 _passwordChangeCompleted.call()

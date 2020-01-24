@@ -21,7 +21,6 @@ import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.navigateUp
-import timber.log.Timber
 import javax.inject.Inject
 
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {

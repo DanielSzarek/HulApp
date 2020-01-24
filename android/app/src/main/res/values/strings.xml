@@ -35,4 +35,10 @@
 
     <string name="tracking_end_title">Koniec</string>
     <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
+
+    <!-- TrackingFragment -->
+    <string name="track_distance_value">%s km</string>
+
+    <!-- TrackDetailsFragment -->
+    <string name="exhaust_emission_value">%s g</string>
 </resources>

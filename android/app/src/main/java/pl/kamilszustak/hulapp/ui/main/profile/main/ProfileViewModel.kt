@@ -33,8 +33,8 @@ class ProfileViewModel @Inject constructor(
     val openProfilePhoto: LiveData<String> = _openProfilePhoto
 
     init {
-        userResource.changeLiveDataSource {
-            userRepository.getOne().asLiveData()
+        userResource.changeFlowSource {
+            userRepository.getOne()
         }
 
         cityResource.result.addSource(userResource.data) {

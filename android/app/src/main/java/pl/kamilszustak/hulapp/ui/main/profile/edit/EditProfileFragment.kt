@@ -18,7 +18,6 @@ import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.util.navigateUp
-import timber.log.Timber
 import javax.inject.Inject
 
 class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {

@@ -1,7 +1,5 @@
 package pl.kamilszustak.hulapp.ui.main.tracking
 
-import pl.kamilszustak.hulapp.data.model.Track
-
 sealed class TrackingState {
 
     val isIdle: Boolean =
@@ -17,12 +15,7 @@ sealed class TrackingState {
         this is Ended
 
     object Idle : TrackingState()
-
     object Started : TrackingState()
-
     object Paused : TrackingState()
-
-    class Ended(
-        val track: Track
-    ) : TrackingState()
+    object Ended : TrackingState()
 }

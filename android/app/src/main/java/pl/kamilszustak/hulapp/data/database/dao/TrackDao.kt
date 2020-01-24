@@ -16,6 +16,9 @@ interface TrackDao {
     @Delete
     suspend fun delete(track: Track)
 
+    @Query("DELETE FROM tracks WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("SELECT * FROM tracks")
     fun getAll(): Flow<List<Track>>
 

@@ -74,4 +74,8 @@ interface ApiService {
     @GET("/api/tracks/{id}")
     @Authorize
     suspend fun getTrackById(@Path("id") id: Long): Response<Track>
+
+    @DELETE("/api/tracks/{id}")
+    @Authorize
+    suspend fun deleteTrackById(@Path("id") id: Long): Response<Unit>
 }

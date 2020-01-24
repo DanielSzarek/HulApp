@@ -8,6 +8,39 @@
     <fragment
         android:id="@+id/trackingFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.TrackingFragment"
-        android:label="TrackingFragment"
-        tools:layout="@layout/fragment_tracking" />
+        android:label="Śledzenie trasy"
+        tools:layout="@layout/fragment_tracking">
+        <action
+            android:id="@+id/action_trackingFragment_to_trackDetailsFragment"
+            app:destination="@id/trackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_trackingFragment_to_trackingHistoryBottomSheet"
+            app:destination="@id/trackingHistoryBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackDetailsFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsFragment"
+        android:label="Szczegóły trasy"
+        tools:layout="@layout/fragment_track_details">
+        <argument
+            android:name="trackId"
+            app:argType="long" />
+    </fragment>
+    <dialog
+        android:id="@+id/trackingHistoryBottomSheet"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryBottomSheet"
+        android:label="TrackingHistoryBottomSheet"
+        tools:layout="@layout/bottom_sheet_tracking_history" >
+        <action
+            android:id="@+id/action_trackingHistoryBottomSheet_to_trackDetailsFragment"
+            app:destination="@id/trackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </dialog>
 </navigation>

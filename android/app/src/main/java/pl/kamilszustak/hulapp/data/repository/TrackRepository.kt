@@ -33,7 +33,7 @@ class TrackRepository @Inject constructor(
         }.asFlow()
     }
 
-    fun getById(id: Long, shouldFetch: Boolean): Flow<Resource<Track>> {
+    fun getById(id: Long, shouldFetch: Boolean = true): Flow<Resource<Track>> {
         return object : NetworkBoundResource<Track, Track>() {
             override fun loadFromDatabase(): Flow<Track> =
                 trackDao.getById(id)
@@ -60,5 +60,18 @@ class TrackRepository @Inject constructor(
                 trackDao.insert(result)
             }
         }.callForResponse()
+    }
+
+    suspend fun deleteById(id: Long): Result<Unit> {
+        return object : NetworkCall<Unit, Unit>() {
+            override suspend fun makeCall(): Response<Unit> =
+                apiService.deleteTrackById(id)
+
+            override suspend fun mapResponse(response: Unit) = Unit
+
+            override suspend fun onResponseSuccess() {
+                trackDao.deleteById(id)
+            }
+        }.call()
     }
 }

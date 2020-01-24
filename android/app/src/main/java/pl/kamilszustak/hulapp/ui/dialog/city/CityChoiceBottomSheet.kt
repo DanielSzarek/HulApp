@@ -19,6 +19,7 @@ import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
+import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.util.set
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         viewModelFactory
     }
 
+    var listener: ClickListener<CityItem>? = null
 
     private lateinit var modelAdapter: ModelAdapter<City, CityItem>
 
@@ -51,8 +53,7 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         }
 
         return dataBinding.root
-    }var listener: ClickListener<CityItem>? = null
-
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,14 +71,13 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         val fastAdapter = FastAdapter.with(modelAdapter)
         fastAdapter.onClickListener = listener
         citiesRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = fastAdapter
+            this.adapter = fastAdapter
         }
     }
 
     private fun setListeners() {
         closeButton.setOnClickListener {
-            this.dismiss()
+            navigateUp()
         }
     }
 
