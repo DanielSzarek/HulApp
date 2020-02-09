@@ -35,6 +35,7 @@ class CountryPostView(generics.CreateAPIView):
     serializer_class = CountrySerializer
 
     def create(self, request, *args, **kwargs):
+        # I created a special JSON structure using free database of some polish countries and cities
         serializer = self.get_serializer(data=request.data['country'], many=True)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -92,7 +93,6 @@ class CityPostView(generics.CreateAPIView):
     serializer_class = CitySerializer
 
     def create(self, request, *args, **kwargs):
-        # I created special JSON structure using free database of some polish cities
         serializer = self.get_serializer(data=request.data['cities'], many=True)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
