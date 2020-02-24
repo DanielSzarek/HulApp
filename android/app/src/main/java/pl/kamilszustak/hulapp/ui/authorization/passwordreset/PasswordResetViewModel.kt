@@ -9,19 +9,22 @@ import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
-import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequest
+import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequestBody
 import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
+import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.util.withIoContext
 import javax.inject.Inject
 
 class PasswordResetViewModel @Inject constructor(
     application: Application,
     private val apiService: ApiService,
-    private val validator: FormValidator
+    private val validator: FormValidator,
+    private val authorizationManager: AuthorizationManager
 ) : BaseViewModel(application) {
 
     val userEmail: FormField<String> = formField {
@@ -52,26 +55,24 @@ class PasswordResetViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            _resetInProgress.postValue(true)
+        viewModelScope.launch(Dispatchers.Main) {
+            _resetInProgress.value = true
 
-            val request = PasswordResetRequest(email)
-            val response = try {
-                apiService.resetPassword(request)
-            } catch (exception: NoInternetConnectionException) {
-                exception.printStackTrace()
-                _resetError.postValue("Brak połączenia z Internetem")
-                return@launch
+            val result = withIoContext {
+                authorizationManager.resetPassword(email)
             }
 
-            if (response.isSuccessful) {
-                _resetCompleted.callAsync()
-            } else {
-                _resetError.postValue("Nie udało się zresetować hasła")
-                _resetError.value
+            result.onSuccess {
+                _resetCompleted.call()
+            }.onFailure { throwable ->
+                val errorMessage = when (throwable) {
+                    is NoInternetConnectionException -> "Brak połączenia z Internetem"
+                    else -> "Nie udało się zresetować hasła"
+                }
+                _resetError.value = errorMessage
             }
 
-            _resetInProgress.postValue(false)
+            _resetInProgress.value = false
         }
     }
 }

@@ -2,6 +2,7 @@ package pl.kamilszustak.hulapp.manager
 
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequestBody
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
@@ -42,5 +43,16 @@ class AuthorizationManager @Inject constructor(
                 }
             }.callForResponse()
         }
+    }
+
+    suspend fun resetPassword(email: String): Result<Unit> {
+        return object : NetworkCall<Unit, Unit>() {
+            override suspend fun makeCall(): Response<Unit> {
+                val request = PasswordResetRequestBody(email)
+                return apiService.resetPassword(request)
+            }
+
+            override suspend fun mapResponse(response: Unit): Unit = Unit
+        }.call()
     }
 }

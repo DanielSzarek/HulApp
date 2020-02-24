@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.network
 
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
@@ -41,7 +40,7 @@ interface ApiService {
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordRequest>
 
     @POST("/auth/users/reset_password/")
-    suspend fun resetPassword(@Body passwordResetRequest: PasswordResetRequest): Response<Unit>
+    suspend fun resetPassword(@Body passwordResetRequestBody: PasswordResetRequestBody): Response<Unit>
 
     @GET("/api/countries/")
     suspend fun getAllCountries(): Response<List<Country>>
