@@ -7,7 +7,6 @@ import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
 import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.network.ChangePasswordRequest
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import java.io.File
@@ -22,7 +21,6 @@ class UserRepository @Inject constructor(
     private val apiService: ApiService,
     private val userDetailsRepository: UserDetailsRepository
 ) {
-
     suspend fun insert(item: User) {
         userDao.insert(item)
     }
@@ -60,7 +58,7 @@ class UserRepository @Inject constructor(
         }.call()
     }
 
-    fun getOne(shouldFetch: Boolean = true): Flow<Resource<User>> {
+    fun get(shouldFetch: Boolean = true): Flow<Resource<User>> {
         return object : NetworkBoundResource<User, User>() {
             override fun loadFromDatabase(): Flow<User> =
                 userDao.getOne()
@@ -77,21 +75,7 @@ class UserRepository @Inject constructor(
         }.asFlow()
     }
 
-    suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
-        return object : NetworkCall<ChangePasswordRequest, Unit>() {
-            override suspend fun makeCall(): Response<ChangePasswordRequest> {
-                val request = ChangePasswordRequest(currentPassword, newPassword)
-
-                return apiService.changePassword(request)
-            }
-
-            override suspend fun saveCallResult(result: ChangePasswordRequest) {
-                userDetailsRepository.setValue(
-                    UserDetailsRepository.UserDetailsKey.USER_PASSWORD to result.newPassword
-                )
-            }
-
-            override suspend fun mapResponse(response: ChangePasswordRequest): Unit = Unit
-        }.call()
+    suspend fun delete() {
+        userDao.deleteAll()
     }
 }

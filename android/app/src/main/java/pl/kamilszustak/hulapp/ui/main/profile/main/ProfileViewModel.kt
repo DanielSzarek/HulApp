@@ -34,7 +34,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         userResource.changeFlowSource {
-            userRepository.getOne()
+            userRepository.get()
         }
 
         cityResource.result.addSource(userResource.data) {

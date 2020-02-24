@@ -70,7 +70,7 @@ class EditProfileViewModel @Inject constructor(
 
     init {
         userResource.changeFlowSource {
-            userRepository.getOne(false)
+            userRepository.get(false)
         }
 
         cityResource.result.addSource(userResource.data) {

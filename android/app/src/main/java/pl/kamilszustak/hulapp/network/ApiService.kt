@@ -37,7 +37,7 @@ interface ApiService {
 
     @POST("/auth/users/set_password/")
     @Authorize
-    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ChangePasswordRequest>
+    suspend fun changePassword(@Body changePasswordRequestBody: ChangePasswordRequestBody): Response<ChangePasswordRequestBody>
 
     @POST("/auth/users/reset_password/")
     suspend fun resetPassword(@Body passwordResetRequestBody: PasswordResetRequestBody): Response<Unit>

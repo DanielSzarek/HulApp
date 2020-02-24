@@ -1,7 +1,9 @@
 package pl.kamilszustak.hulapp.manager
 
 import pl.kamilszustak.hulapp.common.data.NetworkCall
+import pl.kamilszustak.hulapp.data.database.ApplicationDatabase
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.network.ChangePasswordRequestBody
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequestBody
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
@@ -17,7 +19,8 @@ class AuthorizationManager @Inject constructor(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
     private val userDetailsRepository: UserDetailsRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val applicationDatabase: ApplicationDatabase
 ) {
     suspend fun login(email: String, password: String): Result<Unit> {
         userDetailsRepository.setValues(
@@ -33,6 +36,7 @@ class AuthorizationManager @Inject constructor(
                 override suspend fun mapResponse(response: User): Unit = Unit
 
                 override suspend fun saveCallResult(result: User) {
+                    userRepository.delete()
                     userRepository.insert(result)
                     userDetailsRepository.setValue(
                         UserDetailsRepository.UserDetailsKey.USER_ID to result.id
@@ -45,14 +49,55 @@ class AuthorizationManager @Inject constructor(
         }
     }
 
-    suspend fun resetPassword(email: String): Result<Unit> {
-        return object : NetworkCall<Unit, Unit>() {
-            override suspend fun makeCall(): Response<Unit> {
-                val request = PasswordResetRequestBody(email)
-                return apiService.resetPassword(request)
-            }
+    suspend fun logout() {
+        withIoContext {
+            applicationDatabase.clearAllTables()
+            userDetailsRepository.restoreDefaultValues()
+            settingsRepository.restoreDefaultValues()
+        }
+    }
 
-            override suspend fun mapResponse(response: Unit): Unit = Unit
-        }.call()
+    suspend fun signUp(user: User): Result<Unit> {
+        return withIoContext {
+            object : NetworkCall<User, Unit>() {
+                override suspend fun makeCall(): Response<User> =
+                    apiService.signUp(user)
+
+                override suspend fun mapResponse(response: User): Unit = Unit
+            }.call()
+        }
+    }
+
+    suspend fun resetPassword(email: String): Result<Unit> {
+        return withIoContext {
+            object : NetworkCall<Unit, Unit>() {
+                override suspend fun makeCall(): Response<Unit> {
+                    val request = PasswordResetRequestBody(email)
+                    return apiService.resetPassword(request)
+                }
+
+                override suspend fun mapResponse(response: Unit): Unit = Unit
+            }.call()
+        }
+    }
+
+    suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
+        return withIoContext {
+            object : NetworkCall<ChangePasswordRequestBody, Unit>() {
+                override suspend fun makeCall(): Response<ChangePasswordRequestBody> {
+                    val request = ChangePasswordRequestBody(currentPassword, newPassword)
+
+                    return apiService.changePassword(request)
+                }
+
+                override suspend fun mapResponse(response: ChangePasswordRequestBody): Unit = Unit
+
+                override suspend fun saveCallResult(result: ChangePasswordRequestBody) {
+                    userDetailsRepository.setValue(
+                        UserDetailsRepository.UserDetailsKey.USER_PASSWORD to result.newPassword
+                    )
+                }
+            }.call()
+        }
     }
 }

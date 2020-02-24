@@ -2,11 +2,9 @@ package pl.kamilszustak.hulapp.common.form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.util.*
-import timber.log.Timber
 
 class FormField<T>(
     rule: Rule<T>? = null
@@ -48,11 +46,10 @@ class FormField<T>(
 
     fun isValid(): Boolean {
         val value = this.data.value
-        val isValid = this.isNullable || (value != null && rules.all {
+
+        return isNullable || (value != null && rules.all {
             it.isValid(value)
         })
-
-        return isValid
     }
 
     companion object {

@@ -88,12 +88,10 @@ class LoginViewModel @Inject constructor(
             result.onSuccess {
                 _loginCompleted.callAsync()
             }.onFailure { throwable ->
-                val errorMessage = when (throwable) {
+                _loginError.value = when (throwable) {
                     is NoInternetConnectionException -> "Brak połączenia z Internetem"
                     else -> "Nie udało się zalogować"
                 }
-
-                _loginError.value = errorMessage
             }
 
             _isLoggingInProgress.value = false

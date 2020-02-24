@@ -29,6 +29,10 @@ abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun getTrackDao(): TrackDao
 
+    init {
+        this.clearAllTables()
+    }
+
     companion object {
         private var INSTANCE: ApplicationDatabase? = null
 
