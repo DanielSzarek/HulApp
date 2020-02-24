@@ -11,21 +11,19 @@ import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
-import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.*
-import pl.kamilszustak.hulapp.network.ApiService
+import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     application: Application,
-    private val apiService: ApiService,
-    private val userRepository: UserRepository,
     private val settingsRepository: SettingsRepository,
     private val jwtTokenRepository: JwtTokenRepository,
     private val userDetailsRepository: UserDetailsRepository,
-    private val validator: FormValidator
+    private val validator: FormValidator,
+    private val authorizationManager: AuthorizationManager
 ) : BaseViewModel(application) {
 
     val userEmailField: FormField<String> = formField {
@@ -59,10 +57,11 @@ class LoginViewModel @Inject constructor(
             settingsRepository.getValue(it, it.getDefaultValue())
         }
 
-        if (isUserLoggedIn)
+        if (isUserLoggedIn) {
             _loginCompleted.call()
-        else
+        } else {
             clearData()
+        }
     }
 
     private fun clearData() {
@@ -82,39 +81,22 @@ class LoginViewModel @Inject constructor(
             return
         }
 
-        userDetailsRepository.setValues(
-            UserDetailsRepository.UserDetailsKey.USER_EMAIL to email,
-            UserDetailsRepository.UserDetailsKey.USER_PASSWORD to password
-        )
+        viewModelScope.launch(Dispatchers.Main) {
+            _isLoggingInProgress.value = true
 
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoggingInProgress.postValue(true)
-
-            val response = try {
-                apiService.login()
-            } catch (exception: NoInternetConnectionException) {
-                exception.printStackTrace()
-                _loginError.postValue("Brak połączenia z Internetem")
-                return@launch
-            }
-
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    userRepository.insert(body)
-                    userDetailsRepository.setValue(
-                        UserDetailsRepository.UserDetailsKey.USER_ID to body.id
-                    )
-                    settingsRepository.setValue(
-                        SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to true
-                    )
-                    _loginCompleted.callAsync()
+            val result = authorizationManager.login(email, password)
+            result.onSuccess {
+                _loginCompleted.callAsync()
+            }.onFailure { throwable ->
+                val errorMessage = when (throwable) {
+                    is NoInternetConnectionException -> "Brak połączenia z Internetem"
+                    else -> "Nie udało się zalogować"
                 }
-            } else {
-                _loginError.postValue("Nie udało się zalogować")
+
+                _loginError.value = errorMessage
             }
 
-            _isLoggingInProgress.postValue(false)
+            _isLoggingInProgress.value = false
         }
     }
 }
