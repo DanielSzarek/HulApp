@@ -20,7 +20,6 @@ import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp
-import pl.kamilszustak.hulapp.util.set
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -82,19 +81,20 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.cityName.observe(this) {
-            viewModel.loadCitiesByName(it)
+        viewModel.cityName.observe(viewLifecycleOwner) { name ->
+            viewModel.loadCitiesByName(name)
         }
 
-        viewModel.citiesResource.data.observe(this) {
-            modelAdapter.updateModels(it)
+        viewModel.citiesResource.data.observe(viewLifecycleOwner) { cities ->
+            modelAdapter.updateModels(cities)
         }
 
-        viewModel.citiesResource.isLoading.observe(this) {
-            if (it)
+        viewModel.citiesResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 progressBar.show()
-            else
+            } else {
                 progressBar.hide()
+            }
         }
     }
 

@@ -1,13 +1,14 @@
 package pl.kamilszustak.hulapp.common.livedata
 
 import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 import timber.log.Timber
 
-open class SingleLiveEvent<T> : MutableLiveData<T>() {
+open class SingleLiveData<T> : MutableLiveData<T>() {
 
     private val pending = AtomicBoolean(false)
 
@@ -25,13 +26,24 @@ open class SingleLiveEvent<T> : MutableLiveData<T>() {
     }
 
     @MainThread
-    override fun setValue(t: T?) {
+    override fun setValue(value: T?) {
         pending.set(true)
-        super.setValue(t)
+        super.setValue(value)
+    }
+
+    @WorkerThread
+    override fun postValue(value: T?) {
+        pending.set(true)
+        super.postValue(value)
     }
 
     @MainThread
     fun call() {
-        value = null
+        this.value = null
+    }
+
+    @WorkerThread
+    fun callAsync() {
+        this.postValue(null)
     }
 }

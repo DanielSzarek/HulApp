@@ -7,7 +7,7 @@ open class ErrorLiveData<T>(
     source: LiveData<T>,
     message: String,
     condition: (T) -> Boolean
-) : SingleLiveEvent<String>() {
+) : SingleLiveData<String>() {
 
     private val updater: MediatorLiveData<T> = MediatorLiveData()
 

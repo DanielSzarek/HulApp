@@ -82,19 +82,20 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.countryName.observe(this) {
-            viewModel.loadCountriesByName(it)
+        viewModel.countryName.observe(viewLifecycleOwner) { name ->
+            viewModel.loadCountriesByName(name)
         }
 
-        viewModel.countriesResource.data.observe(this) {
-            modelAdapter.updateModels(it)
+        viewModel.countriesResource.data.observe(viewLifecycleOwner) { countries ->
+            modelAdapter.updateModels(countries)
         }
 
-        viewModel.countriesResource.isLoading.observe(this) {
-            if (it)
+        viewModel.countriesResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 progressBar.show()
-            else
+            } else {
                 progressBar.hide()
+            }
         }
     }
 

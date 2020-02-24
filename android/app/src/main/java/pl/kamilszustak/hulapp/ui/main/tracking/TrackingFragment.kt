@@ -129,8 +129,8 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     }
 
     private fun observeViewModel() {
-        viewModel.trackingState.observe(this) {
-            when (it) {
+        viewModel.trackingState.observe(viewLifecycleOwner) { state ->
+            when (state) {
                 is TrackingState.Started -> {
                     motionLayout.transitionToEnd()
                 }
@@ -144,12 +144,12 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             }
         }
 
-        viewModel.mapType.observe(this) {
-            googleMap?.mapType = it
+        viewModel.mapType.observe(viewLifecycleOwner) { type ->
+            googleMap?.mapType = type
         }
 
-        viewModel.locationPoints.observe(this) {
-            val points = it.map { point ->
+        viewModel.locationPoints.observe(viewLifecycleOwner) { locations ->
+            val points = locations.map { point ->
                 point.toLatLng()
             }
 
@@ -161,18 +161,18 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             googleMap?.addPolyline(polyline)
         }
 
-        viewModel.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.trackSaved.observe(this) {
-            navigateToTrackDetailsFragment(it.id)
+        viewModel.trackSaved.observe(viewLifecycleOwner) { track ->
+            navigateToTrackDetailsFragment(track.id)
         }
     }
 
     private fun observeLocation() {
-        viewModel.location.observe(this) {
-            moveTo(it)
+        viewModel.location.observe(viewLifecycleOwner) { location ->
+            moveTo(location)
         }
     }
 

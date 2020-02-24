@@ -70,13 +70,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.loginCompleted.observe(this) {
+        viewModel.loginCompleted.observe(viewLifecycleOwner) {
             startActivity<MainActivity>()
             requireActivity().finish()
         }
 
-        viewModel.isLoggingInProgress.observe(this) {
-            if (it) {
+        viewModel.isLoggingInProgress.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 motionLayout.transitionToEnd()
                 loginButton.isEnabled = false
                 progressBar.show()
@@ -87,8 +87,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             }
         }
 
-        viewModel.loginError.observe(this) {
-            view?.snackbar(it)
+        viewModel.loginError.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
     }
 }

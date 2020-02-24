@@ -125,33 +125,31 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     }
 
     private fun observeViewModel() {
-        viewModel.userResource.data.observe(this) {
-            viewModel.onUserLoaded(it)
+        viewModel.userResource.data.observe(viewLifecycleOwner) { user ->
+            viewModel.onUserLoaded(user)
         }
 
-        viewModel.cityResource.data.observe(this) {
-            viewModel.onCityLoaded(it)
-            //cityNameEditText.setText(it?.name)
+        viewModel.cityResource.data.observe(viewLifecycleOwner) { city ->
+            viewModel.onCityLoaded(city)
         }
 
-        viewModel.countryResource.data.observe(this) {
-            viewModel.onCountryLoaded(it)
-            //countryNameEditText.setText(it?.name)
+        viewModel.countryResource.data.observe(viewLifecycleOwner) { country ->
+            viewModel.onCountryLoaded(country)
         }
 
-        viewModel.saveError.observe(this) {
-            view?.snackbar(it)
+        viewModel.saveError.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.isSaving.observe(this) {
-            if (it) {
+        viewModel.isSaving.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 progressBar.show()
             } else {
                 progressBar.hide()
             }
         }
 
-        viewModel.saveCompleted.observe(this) {
+        viewModel.saveCompleted.observe(viewLifecycleOwner) {
             navigateUp()
         }
     }

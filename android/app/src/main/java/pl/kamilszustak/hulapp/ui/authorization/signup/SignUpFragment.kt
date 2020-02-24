@@ -132,8 +132,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeViewModel() {
-        viewModel.isSigningUpInProgress.observe(this) {
-            if (it) {
+        viewModel.isSigningUpInProgress.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 motionLayout.transitionToEnd()
                 signUpButton.isEnabled = false
                 progressBar.show()
@@ -144,11 +144,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             }
         }
 
-        viewModel.signUpError.observe(this) {
-            view?.snackbar(it)
+        viewModel.signUpError.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.userSignedUp.observe(this) {
+        viewModel.userSignedUp.observe(viewLifecycleOwner) {
             val direction = SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleted()
             navigateTo(direction)
         }

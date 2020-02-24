@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
@@ -15,9 +15,7 @@ import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.*
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.util.withMainContext
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -47,13 +45,13 @@ class LoginViewModel @Inject constructor(
         userPasswordField
     )
 
-    private val _loginCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _loginCompleted: SingleLiveData<Unit> = SingleLiveData()
     val loginCompleted: LiveData<Unit> = _loginCompleted
 
     private val _isLoggingInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoggingInProgress: LiveData<Boolean> = _isLoggingInProgress
 
-    private val _loginError: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _loginError: SingleLiveData<String> = SingleLiveData()
     val loginError: LiveData<String> = _loginError
 
     init {
@@ -90,15 +88,13 @@ class LoginViewModel @Inject constructor(
         )
 
         viewModelScope.launch(Dispatchers.IO) {
-            withMainContext {
-                _isLoggingInProgress.setValue(true)
-            }
+            _isLoggingInProgress.postValue(true)
 
             val response = try {
                 apiService.login()
             } catch (exception: NoInternetConnectionException) {
                 exception.printStackTrace()
-                _loginError.value = "Brak połączenia z Internetem"
+                _loginError.postValue("Brak połączenia z Internetem")
                 return@launch
             }
 
@@ -112,19 +108,13 @@ class LoginViewModel @Inject constructor(
                     settingsRepository.setValue(
                         SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to true
                     )
-                    withMainContext {
-                        _loginCompleted.call()
-                    }
+                    _loginCompleted.callAsync()
                 }
             } else {
-                withMainContext {
-                    _loginError.value = "Nie udało się zalogować"
-                }
+                _loginError.postValue("Nie udało się zalogować")
             }
 
-            withMainContext {
-                _isLoggingInProgress.setValue(false)
-            }
+            _isLoggingInProgress.postValue(false)
         }
     }
 }

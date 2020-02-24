@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormValidator
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequest
@@ -32,10 +32,10 @@ class PasswordResetViewModel @Inject constructor(
 
     val isPasswordResetEnabled: LiveData<Boolean> = FormField.validateFields(userEmail)
 
-    private val _resetError: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _resetError: SingleLiveData<String> = SingleLiveData()
     val resetError: LiveData<String> = _resetError
 
-    private val _resetCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _resetCompleted: SingleLiveData<Unit> = SingleLiveData()
     val resetCompleted: LiveData<Unit> = _resetCompleted
 
     private val _resetInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
@@ -52,25 +52,26 @@ class PasswordResetViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch(Dispatchers.Main) {
-            _resetInProgress.setValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            _resetInProgress.postValue(true)
 
             val request = PasswordResetRequest(email)
             val response = try {
                 apiService.resetPassword(request)
             } catch (exception: NoInternetConnectionException) {
                 exception.printStackTrace()
-                _resetError.value = "Brak połączenia z Internetem"
+                _resetError.postValue("Brak połączenia z Internetem")
                 return@launch
             }
 
             if (response.isSuccessful) {
-                _resetCompleted.call()
+                _resetCompleted.callAsync()
             } else {
-                _resetError.value = "Nie udało się zresetować hasła"
+                _resetError.postValue("Nie udało się zresetować hasła")
+                _resetError.value
             }
 
-            _resetInProgress.setValue(false)
+            _resetInProgress.postValue(false)
         }
     }
 }

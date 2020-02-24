@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.form.Password
@@ -18,7 +18,6 @@ import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
@@ -75,29 +74,29 @@ class SignUpViewModel @Inject constructor(
         userCountryField
     )
 
-    private val _userSignedUp: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _userSignedUp: SingleLiveData<Unit> = SingleLiveData()
     val userSignedUp: LiveData<Unit> = _userSignedUp
 
     private val _isSigningUpInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
     val isSigningUpInProgress: LiveData<Boolean> = _isSigningUpInProgress
 
-    private val _signUpError: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _signUpError: SingleLiveData<String> = SingleLiveData()
     val signUpError: LiveData<String> = _signUpError
 
     fun onCityChoosen(city: City) {
-        userCityField.data.setValue(city)
+        userCityField.data.value = city
     }
 
     fun onCountryChoosen(country: Country) {
-        userCountryField.data.setValue(country)
+        userCountryField.data.value = country
     }
 
     fun onClearCityButtonClick() {
-        userCityField.data.setValue(null)
+        userCityField.data.value = null
     }
 
     fun onClearCountryButtonClick() {
-        userCountryField.data.setValue(null)
+        userCountryField.data.value = null
     }
 
     fun onSignUpButtonClick() {
@@ -111,6 +110,7 @@ class SignUpViewModel @Inject constructor(
 
         if (!isInternetConnected()) {
             _signUpError.value = "Brak połączenia z Internetem"
+            return
         }
 
         if (email == null ||
@@ -133,34 +133,26 @@ class SignUpViewModel @Inject constructor(
         )
 
         viewModelScope.launch(Dispatchers.IO) {
-            withMainContext {
-                _isSigningUpInProgress.setValue(true)
-            }
+            _isSigningUpInProgress.value = true
 
             val response = try {
                 apiService.signUp(user)
             } catch (exception: NoInternetConnectionException) {
                 exception.printStackTrace()
-                _signUpError.value = "Brak połączenia z Internetem"
+                _signUpError.postValue("Brak połączenia z Internetem")
                 return@launch
             }
 
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
-                    withMainContext {
-                        _userSignedUp.call()
-                    }
+                    _userSignedUp.callAsync()
                 }
             } else {
-                withMainContext {
-                    _signUpError.value = "Nie udało się utworzyć konta"
-                }
+                _signUpError.postValue("Nie udało się utworzyć konta")
             }
 
-            withMainContext {
-                _isSigningUpInProgress.setValue(false)
-            }
+            _isSigningUpInProgress.value = false
         }
     }
 }

@@ -99,17 +99,17 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun observeViewModel() {
-        viewModel.logoutEvent.observe(this) {
+        viewModel.logoutEvent.observe(viewLifecycleOwner) {
             startActivity<AuthorizationActivity>()
             requireActivity().finish()
         }
 
-        viewModel.userResource.error.observe(this) {
+        viewModel.userResource.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar("Wystąpił błąd podczas ładowania profilu użytkownika")
         }
 
-        viewModel.openProfilePhoto.observe(this) {
-            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(it)
+        viewModel.openProfilePhoto.observe(viewLifecycleOwner) { url ->
+            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(url)
             navigateTo(direction)
         }
     }

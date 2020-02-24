@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
@@ -21,10 +21,10 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _uploadCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _uploadCompleted: SingleLiveData<Unit> = SingleLiveData()
     val uploadCompleted: LiveData<Unit> = _uploadCompleted
 
-    private val _uploadError: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _uploadError: SingleLiveData<String> = SingleLiveData()
     val uploadError: LiveData<String> = _uploadError
 
     fun uploadPhoto(file: File) {

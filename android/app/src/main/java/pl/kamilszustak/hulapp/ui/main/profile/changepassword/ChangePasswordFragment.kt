@@ -58,19 +58,19 @@ class ChangePasswordFragment : BaseFragment(R.layout.fragment_change_password) {
     }
 
     private fun observeViewModel() {
-        viewModel.isPasswordChanging.observe(this) {
-            if (it) {
+        viewModel.isPasswordChanging.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 progressBar.show()
             } else {
                 progressBar.hide()
             }
         }
 
-        viewModel.passwordChangeError.observe(this) {
-            view?.snackbar(it)
+        viewModel.passwordChangeError.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.passwordChangeCompleted.observe(this) {
+        viewModel.passwordChangeCompleted.observe(viewLifecycleOwner) {
             startActivity<AuthorizationActivity>()
             requireActivity().finish()
         }
