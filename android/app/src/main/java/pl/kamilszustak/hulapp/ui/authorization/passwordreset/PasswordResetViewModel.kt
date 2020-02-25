@@ -3,6 +3,7 @@ package pl.kamilszustak.hulapp.ui.authorization.passwordreset
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormValidator
@@ -15,6 +16,7 @@ import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 class PasswordResetViewModel @Inject constructor(
@@ -48,17 +50,25 @@ class PasswordResetViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch(Dispatchers.Main) {
+        val handler = CoroutineExceptionHandler { _, exception ->
+
+        }
+
+        viewModelScope.launch(Dispatchers.Main + handler) {
             _resetInProgress.value = true
 
             val result = authorizationManager.resetPassword(email)
+            Timber.i("a")
             result.onSuccess {
+                Timber.i("b")
                 _resetCompleted.call()
             }.onFailure { throwable ->
+                Timber.i("c: $throwable")
                 _resetError.value = when (throwable) {
                     is NoInternetConnectionException -> "Brak połączenia z Internetem"
                     else -> "Nie udało się zresetować hasła"
                 }
+                Timber.i("d")
             }
 
             _resetInProgress.value = false

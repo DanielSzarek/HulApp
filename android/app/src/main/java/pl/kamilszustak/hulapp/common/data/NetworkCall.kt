@@ -1,7 +1,9 @@
 package pl.kamilszustak.hulapp.common.data
 
+import pl.kamilszustak.hulapp.util.withIoContext
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 
 abstract class NetworkCall<ResponseType, ReturnType> {
 
@@ -24,16 +26,23 @@ abstract class NetworkCall<ResponseType, ReturnType> {
 
     suspend fun call(): Result<Unit> {
         return try {
+            Timber.i("1")
             val response = makeCall()
+            Timber.i("2")
 
-            return if (response.isSuccessful) {
+            if (response.isSuccessful) {
+                Timber.i("success")
+
                 onResponseSuccess()
                 Result.success(Unit)
             } else {
+                Timber.i("failure")
                 val exception = HttpException(response)
                 Result.failure(exception)
             }
         } catch (throwable: Throwable) {
+            Timber.i("3")
+            Timber.e(throwable)
             Result.failure(throwable)
         }
     }
