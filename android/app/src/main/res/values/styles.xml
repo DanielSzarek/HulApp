@@ -5,11 +5,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
 
     <style name="AppTheme.SplashScreen">
         <item name="android:windowBackground">@drawable/background_splashscreen</item>
         <item name="actionBarStyle">@style/Theme.MaterialComponents.Light.NoActionBar</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextColor">@android:color/white</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

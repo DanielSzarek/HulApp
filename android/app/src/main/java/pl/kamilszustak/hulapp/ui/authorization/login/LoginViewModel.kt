@@ -43,14 +43,14 @@ class LoginViewModel @Inject constructor(
         userPasswordField
     )
 
-    private val _loginCompleted: SingleLiveData<Unit> = SingleLiveData()
-    val loginCompleted: LiveData<Unit> = _loginCompleted
+    private val _completed: SingleLiveData<Unit> = SingleLiveData()
+    val completed: LiveData<Unit> = _completed
 
-    private val _isLoggingInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isLoggingInProgress: LiveData<Boolean> = _isLoggingInProgress
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _loginError: SingleLiveData<String> = SingleLiveData()
-    val loginError: LiveData<String> = _loginError
+    private val _error: SingleLiveData<String> = SingleLiveData()
+    val error: LiveData<String> = _error
 
     init {
         val isUserLoggedIn: Boolean = SettingsRepository.SettingsKey.IS_USER_LOGGED_IN.let {
@@ -58,7 +58,7 @@ class LoginViewModel @Inject constructor(
         }
 
         if (isUserLoggedIn) {
-            _loginCompleted.call()
+            _completed.call()
         } else {
             clearData()
         }
@@ -75,26 +75,26 @@ class LoginViewModel @Inject constructor(
         val password = userPasswordField.data.value
 
         if (!isInternetConnected())
-            _loginError.value = "Brak połączenia z Internetem"
+            _error.value = "Brak połączenia z Internetem"
 
         if (email == null || password == null) {
             return
         }
 
         viewModelScope.launch(Dispatchers.Main) {
-            _isLoggingInProgress.value = true
+            _isLoading.value = true
 
             val result = authorizationManager.login(email, password)
             result.onSuccess {
-                _loginCompleted.callAsync()
+                _completed.callAsync()
             }.onFailure { throwable ->
-                _loginError.value = when (throwable) {
+                _error.value = when (throwable) {
                     is NoInternetConnectionException -> "Brak połączenia z Internetem"
                     else -> "Nie udało się zalogować"
                 }
             }
 
-            _isLoggingInProgress.value = false
+            _isLoading.value = false
         }
     }
 }

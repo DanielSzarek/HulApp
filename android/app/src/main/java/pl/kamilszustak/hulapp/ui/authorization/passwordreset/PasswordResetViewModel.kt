@@ -3,9 +3,7 @@ package pl.kamilszustak.hulapp.ui.authorization.passwordreset
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
@@ -17,7 +15,6 @@ import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 class PasswordResetViewModel @Inject constructor(
@@ -34,37 +31,37 @@ class PasswordResetViewModel @Inject constructor(
 
     val isPasswordResetEnabled: LiveData<Boolean> = FormField.validateFields(userEmail)
 
-    private val _resetError: SingleLiveData<String> = SingleLiveData()
-    val resetError: LiveData<String> = _resetError
+    private val _completed: SingleLiveData<Unit> = SingleLiveData()
+    val completed: LiveData<Unit> = _completed
 
-    private val _resetCompleted: SingleLiveData<Unit> = SingleLiveData()
-    val resetCompleted: LiveData<Unit> = _resetCompleted
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _resetInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
-    val resetInProgress: LiveData<Boolean> = _resetInProgress
+    private val _error: SingleLiveData<String> = SingleLiveData()
+    val error: LiveData<String> = _error
 
     fun onPasswordResetButtonClick() {
         val email = userEmail.data.value
 
         if (email == null) {
-            _resetError.value = "Nie wpisano adresu email"
+            _error.value = "Nie wpisano adresu email"
             return
         }
 
         viewModelScope.launch(Dispatchers.Main) {
-            _resetInProgress.value = true
+            _isLoading.value = true
 
             val result = authorizationManager.resetPassword(email)
             result.onSuccess {
-                _resetCompleted.call()
+                _completed.call()
             }.onFailure { throwable ->
-                _resetError.value = when (throwable) {
+                _error.value = when (throwable) {
                     is NoInternetConnectionException -> "Brak połączenia z Internetem"
                     else -> "Nie udało się zresetować hasła"
                 }
             }
 
-            _resetInProgress.value = false
+            _isLoading.value = false
         }
     }
 }

@@ -57,11 +57,11 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
     }
 
     private fun observeViewModel() {
-        viewModel.resetError.observe(viewLifecycleOwner) { message ->
+        viewModel.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 
-        viewModel.resetInProgress.observe(viewLifecycleOwner) { isLoading ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 motionLayout.transitionToEnd()
                 passwordResetButton.isEnabled = false
@@ -73,7 +73,7 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
             }
         }
 
-        viewModel.resetCompleted.observe(viewLifecycleOwner) {
+        viewModel.completed.observe(viewLifecycleOwner) {
             val direction = PasswordResetFragmentDirections.actionPasswordResetFragmentToPasswordResetCompletedFragment()
             navigateTo(direction)
         }

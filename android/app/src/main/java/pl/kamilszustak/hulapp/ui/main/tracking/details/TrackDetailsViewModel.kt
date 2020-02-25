@@ -22,8 +22,8 @@ class TrackDetailsViewModel @Inject constructor(
 
     val trackResource: ResourceDataSource<Track> = ResourceDataSource()
 
-    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull {
-        120 * it.distance
+    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull { track ->
+        120 * track.distance
     }
 
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()

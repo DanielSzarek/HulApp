@@ -204,11 +204,11 @@ class TrackingViewModel @Inject constructor(
             startDate,
             Date(),
             currentDuration,
-            currentDistance
+            currentDistance.round()
         )
 
         viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.setValue(true)
+            _isLoading.value = true
 
             val result = withIoContext {
                 trackRepository.save(track)
@@ -225,7 +225,7 @@ class TrackingViewModel @Inject constructor(
                 _error.value = "Wystąpił błąd podczas zapisywania trasy"
             }
 
-            _isLoading.setValue(false)
+            _isLoading.value = false
         }
     }
 
