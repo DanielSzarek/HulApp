@@ -26,7 +26,7 @@ import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import javax.inject.Inject
 
-class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
+class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCallback {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -85,7 +85,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
     private fun initializeMap() {
         val fragment = childFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment
-        fragment?.getMapAsync(getOnMapReadyCallback())
+        fragment?.getMapAsync(this)
     }
 
     private fun getPermission() {
@@ -94,8 +94,8 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             Permission.ACCESS_COARSE_LOCATION
         )
 
-        askForPermissions(*permissions) {
-            val allGranted = it.isAllGranted(*permissions)
+        askForPermissions(*permissions) { result ->
+            val allGranted = result.isAllGranted(*permissions)
             if (allGranted) {
                 observeLocation()
                 initializeMap()
@@ -166,6 +166,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         }
 
         viewModel.trackSaved.observe(viewLifecycleOwner) { track ->
+            googleMap?.clear()
             navigateToTrackDetailsFragment(track.id)
         }
     }
@@ -189,12 +190,10 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         moveTo(location.toLocationPoint())
     }
 
-    private fun getOnMapReadyCallback(): OnMapReadyCallback {
-        return OnMapReadyCallback {
-            this.googleMap = it.apply {
-                this.mapType = viewModel.getCurrentMapType()
-                this.isMyLocationEnabled = true
-            }
+    override fun onMapReady(map: GoogleMap?) {
+        this.googleMap = map?.apply {
+            this.mapType = viewModel.getCurrentMapType()
+            this.isMyLocationEnabled = true
         }
     }
 

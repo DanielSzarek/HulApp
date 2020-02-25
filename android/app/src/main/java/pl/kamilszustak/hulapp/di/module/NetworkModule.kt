@@ -57,7 +57,7 @@ class NetworkModule {
             .authenticator(jwtAuthenticator)
             .addInterceptor(httpInterceptor)
             .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(errorInterceptor)
+//            .addInterceptor(errorInterceptor)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)

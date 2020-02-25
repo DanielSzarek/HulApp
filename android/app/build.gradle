@@ -210,7 +210,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // Assent
-    implementation 'com.afollestad.assent:core:3.0.0-RC3'
+    def assent_version = '3.0.0-RC4'
+    implementation "com.afollestad.assent:core:$assent_version"
+    implementation "com.afollestad.assent:rationales:$assent_version"
+    implementation "com.afollestad.assent:coroutines:$assent_version"
 
     // TimeIt
     implementation 'com.yashovardhan99.timeit:timeit:1.2.0'

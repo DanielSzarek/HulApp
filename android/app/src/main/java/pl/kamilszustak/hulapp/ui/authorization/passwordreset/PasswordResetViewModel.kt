@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
@@ -50,25 +51,17 @@ class PasswordResetViewModel @Inject constructor(
             return
         }
 
-        val handler = CoroutineExceptionHandler { _, exception ->
-
-        }
-
-        viewModelScope.launch(Dispatchers.Main + handler) {
+        viewModelScope.launch(Dispatchers.Main) {
             _resetInProgress.value = true
 
             val result = authorizationManager.resetPassword(email)
-            Timber.i("a")
             result.onSuccess {
-                Timber.i("b")
                 _resetCompleted.call()
             }.onFailure { throwable ->
-                Timber.i("c: $throwable")
                 _resetError.value = when (throwable) {
                     is NoInternetConnectionException -> "Brak połączenia z Internetem"
                     else -> "Nie udało się zresetować hasła"
                 }
-                Timber.i("d")
             }
 
             _resetInProgress.value = false
