@@ -1,24 +1,30 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
+
 from .models import User, Country, City, Province
-from .serializers import ApiUserRegistrationSerializer, CountrySerializer, CitySerializer, ProvinceSerializer
+from .serializers import (
+    ApiCurrentUserSerializer,
+    CountrySerializer,
+    CitySerializer,
+    ProvinceSerializer,
+)
+
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.utils import timezone
 
 
 class UserListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = ApiUserRegistrationSerializer
+    serializer_class = ApiCurrentUserSerializer
     queryset = User.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name', 'last_name']
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = ApiUserRegistrationSerializer
+    serializer_class = ApiCurrentUserSerializer
     queryset = User.objects.all()
-
-    def perform_update(self, serializer):
-        serializer.save(mod_date=timezone.now())
 
 
 class CountryListView(generics.ListAPIView):
