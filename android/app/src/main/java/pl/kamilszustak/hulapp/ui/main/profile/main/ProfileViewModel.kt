@@ -14,7 +14,6 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     application: Application,
     private val userRepository: UserRepository,
-    private val userDetailsRepository: UserDetailsRepository,
     private val settingsRepository: SettingsRepository,
     private val cityRepository: CityRepository,
     private val countryRepository: CountryRepository

@@ -147,7 +147,7 @@ class EditProfileViewModel @Inject constructor(
         )
 
         viewModelScope.launch(Dispatchers.IO) {
-            _isSaving.value = true
+            _isSaving.postValue(true)
 
             val result = userRepository.update(request)
             result.onSuccess {

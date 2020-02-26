@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="android.view.View" />
+        <import type="android.text.Html" />
 
         <variable
             name="viewModel"
@@ -34,10 +35,21 @@
                     app:profilePhoto="@{viewModel.userResource.data.profilePhotoUrl}"
                     android:src="@drawable/icon_profile"
                     app:civ_border_width="1dp"
-                    android:transitionName="PROFILE_PHOTO_FULLSCREEN_TRANSITION"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addPhotoButton"
+                    android:src="@drawable/icon_add_photo_light"
+                    app:fabSize="mini"
+                    app:tint="@null"
+                    app:layout_constraintCircle="@id/profilePhotoImageView"
+                    app:layout_constraintCircleAngle="135"
+                    app:layout_constraintCircleRadius="64dp"
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,7 +62,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
-
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -71,8 +82,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/userCityTextView"
-                            android:text="@{viewModel.cityResource.data.name}"
-                            tools:text="Gdynia"
+                            android:text="@{Html.fromHtml(@string/user_profile_city(viewModel.cityResource.data.name))}"
+                            tools:text="Mieszka w: Gdynia"
+                            android:gravity="center_vertical"
                             android:drawableStart="@drawable/icon_city"
                             android:drawablePadding="@dimen/default_half_margin"
                             android:visibility="@{viewModel.cityResource.data != null ? View.VISIBLE : View.GONE}"
@@ -82,8 +94,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/userCountryTextView"
-                            android:text="@{viewModel.countryResource.data.name}"
+                            android:text="@{Html.fromHtml(@string/user_profile_country(viewModel.countryResource.data.name))}"
                             tools:text="Polska"
+                            android:gravity="center_vertical"
                             android:drawableStart="@drawable/icon_flag"
                             android:drawablePadding="@dimen/default_half_margin"
                             android:visibility="@{viewModel.countryResource.data != null ? View.VISIBLE : View.GONE}"
@@ -91,6 +104,15 @@
                             android:layout_marginTop="@dimen/default_half_margin" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editProfileButton"
+                    android:text="Edytuj profil"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    app:layout_constraintTop_toBottomOf="@id/userDetailsCardView"
+                    android:layout_marginTop="@dimen/default_half_margin"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
