@@ -11,7 +11,7 @@ interface CountryDao {
     suspend fun insert(country: Country)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(countries: List<Country>)
+    suspend fun insertAll(countries: Collection<Country>)
 
     @Update
     suspend fun update(country: Country)
@@ -26,9 +26,9 @@ interface CountryDao {
     fun getById(id: Long): Flow<Country>
 
     @Query(
-        "SELECT * FROM countries WHERE name LIKE :name || '%'" +
-                "OR name LIKE '% ' || :name || '%'" +
-                "OR name LIKE '%-' || :name || '%'"
+        "SELECT * FROM countries WHERE LOWER(name) LIKE LOWER(:name) || '%'" +
+                "OR LOWER(name) LIKE '% ' || LOWER(:name) || '%'" +
+                "OR LOWER(name) LIKE '%-' || LOWER(:name) || '%'"
     )
-    fun getByName(name: String): Flow<List<Country>>
+    fun getByNameContaining(text: String): Flow<List<Country>>
 }

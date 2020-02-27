@@ -77,4 +77,12 @@ interface ApiService {
     @DELETE("/api/tracks/{id}")
     @Authorize
     suspend fun deleteTrackById(@Path("id") id: Long): Response<Unit>
+
+    @GET("/api/users/")
+    @Authorize
+    suspend fun searchForUsers(@Query("search") text: String): Response<List<User>>
+
+    @GET("/api/users/{id}")
+    @Authorize
+    suspend fun getUserById(@Path("id") id: Long): Response<User>
 }

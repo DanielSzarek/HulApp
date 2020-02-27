@@ -2,6 +2,7 @@ package pl.kamilszustak.hulapp.manager
 
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.data.database.ApplicationDatabase
+import pl.kamilszustak.hulapp.data.database.dao.UserDao
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.ChangePasswordRequestBody
 import pl.kamilszustak.hulapp.data.model.network.PasswordResetRequestBody
@@ -18,6 +19,7 @@ import javax.inject.Singleton
 class AuthorizationManager @Inject constructor(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
+    private val userDao: UserDao,
     private val userDetailsRepository: UserDetailsRepository,
     private val settingsRepository: SettingsRepository,
     private val applicationDatabase: ApplicationDatabase
@@ -36,8 +38,7 @@ class AuthorizationManager @Inject constructor(
                 override suspend fun mapResponse(response: User): Unit = Unit
 
                 override suspend fun saveCallResult(result: User) {
-                    userRepository.delete()
-                    userRepository.insert(result)
+                    userDao.insert(result)
                     userDetailsRepository.setValue(
                         UserDetailsRepository.UserDetailsKey.USER_ID to result.id
                     )
