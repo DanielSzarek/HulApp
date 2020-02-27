@@ -73,6 +73,7 @@ class SearchFragment : BaseFragment() {
             this.isIconifiedByDefault = false
             this.setOnQueryTextListener(queryListener)
             this.requestFocus()
+            this.queryHint = "Szukaj"
         }
 
         super.onCreateOptionsMenu(menu, inflater)
