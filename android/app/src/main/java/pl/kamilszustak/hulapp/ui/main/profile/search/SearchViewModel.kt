@@ -13,17 +13,13 @@ class SearchViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel(application) {
 
-    val inputText: UniqueLiveData<String> = UniqueLiveData()
+    private val inputText: UniqueLiveData<String> = UniqueLiveData()
 
     val usersResource: ResourceDataSource<List<User>> = ResourceDataSource()
 
-    init {
-        usersResource.result.addSource(inputText) { text ->
-            if (text != null) {
-                usersResource.changeFlowSource {
-                    userRepository.searchFor(text)
-                }
-            }
+    fun onSubmit(text: String) {
+        usersResource.changeFlowSource {
+            userRepository.searchFor(text)
         }
     }
 }

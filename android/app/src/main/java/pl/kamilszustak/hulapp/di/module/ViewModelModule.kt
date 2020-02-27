@@ -16,6 +16,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewM
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.search.SearchViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryViewModel
@@ -85,4 +86,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TrackingHistoryViewModel::class)
     abstract fun bindTrackingHistoryViewModel(trackingHistoryViewModel: TrackingHistoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 }

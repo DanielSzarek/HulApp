@@ -59,7 +59,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.searchItem -> {
-
+                navigateToSearchFragment()
                 true
             }
 
@@ -115,6 +115,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         viewModel.openProfilePhoto.observe(viewLifecycleOwner) { url ->
             navigateToProfilePhotoFullscreenDialog(url)
         }
+    }
+
+    private fun navigateToSearchFragment() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToSearchFragment()
+        navigateTo(direction)
     }
 
     private fun navigateToEditProfileFragment() {
