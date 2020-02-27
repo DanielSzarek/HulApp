@@ -26,9 +26,9 @@ interface CountryDao {
     fun getById(id: Long): Flow<Country>
 
     @Query(
-        "SELECT * FROM countries WHERE LOWER(name) LIKE LOWER(:name) || '%'" +
-                "OR LOWER(name) LIKE '% ' || LOWER(:name) || '%'" +
-                "OR LOWER(name) LIKE '%-' || LOWER(:name) || '%'"
+        "SELECT * FROM countries WHERE LOWER(name) LIKE LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '% ' || LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '%-' || LOWER(:text) || '%'"
     )
     fun getByNameContaining(text: String): Flow<List<Country>>
 }

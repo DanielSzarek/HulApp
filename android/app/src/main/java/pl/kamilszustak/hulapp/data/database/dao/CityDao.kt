@@ -26,9 +26,9 @@ interface CityDao {
     fun getById(id: Long): Flow<City>
 
     @Query(
-        "SELECT * FROM cities WHERE LOWER(name) LIKE LOWER(:name) || '%'" +
-                "OR LOWER(name) LIKE '% ' || LOWER(:name) || '%'" +
-                "OR LOWER(name) LIKE '%-' || LOWER(:name) || '%'"
+        "SELECT * FROM cities WHERE LOWER(name) LIKE LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '% ' || LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '%-' || LOWER(:text) || '%'"
     )
-    fun getByNameContaining(name: String): Flow<List<City>>
+    fun getByNameContaining(text: String): Flow<List<City>>
 }
