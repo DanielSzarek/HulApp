@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:contentPadding="@dimen/default_padding"
     app:cardCornerRadius="@dimen/default_radius"
-    android:elevation="@dimen/default_half_elevation"
+    app:cardElevation="@dimen/default_quarter_elevation"
     android:layout_marginBottom="@dimen/default_margin">
 
     <LinearLayout

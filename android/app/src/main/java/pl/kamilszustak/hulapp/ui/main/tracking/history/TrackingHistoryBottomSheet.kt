@@ -72,20 +72,20 @@ class TrackingHistoryBottomSheet : BaseBottomSheetDialogFragment(R.layout.bottom
     }
 
     private fun observeViewModel() {
-        viewModel.tracksResource.data.observe(this) {
-            modelAdapter.updateModels(it.reversed())
+        viewModel.tracksResource.data.observe(viewLifecycleOwner) { tracks ->
+            modelAdapter.updateModels(tracks.reversed())
         }
 
-        viewModel.tracksResource.isLoading.observe(this) {
-            if (it) {
+        viewModel.tracksResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 progressBar.show()
             } else {
                 progressBar.hide()
             }
         }
 
-        viewModel.tracksResource.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.tracksResource.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
     }
 

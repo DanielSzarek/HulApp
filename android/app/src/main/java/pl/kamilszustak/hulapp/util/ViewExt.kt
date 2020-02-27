@@ -16,7 +16,7 @@ fun View.animatePressed(duration: Long = 200, endAction: () -> Unit = {}) {
                 .scaleY(1F)
                 .setDuration(duration / 2)
                 .withEndAction(endAction)
-    }
+        }
 }
 
 fun View.showKeyboard() {

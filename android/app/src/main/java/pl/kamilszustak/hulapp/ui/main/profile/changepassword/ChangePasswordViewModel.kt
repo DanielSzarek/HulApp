@@ -5,25 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Password
-import pl.kamilszustak.hulapp.data.repository.SettingsRepository
-import pl.kamilszustak.hulapp.data.repository.UserRepository
+import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.withIoContext
-import timber.log.Timber
 import javax.inject.Inject
 
 class ChangePasswordViewModel @Inject constructor(
     application: Application,
-    private val userRepository: UserRepository,
-    private val settingsRepository: SettingsRepository,
-    private val validator: FormValidator
+    private val validator: FormValidator,
+    private val authorizationManager: AuthorizationManager
 ) : BaseViewModel(application) {
 
     val currentPasswordField: FormField<String> = formField {
@@ -44,24 +41,22 @@ class ChangePasswordViewModel @Inject constructor(
         }
     }
 
-    val isPasswordChangeEnabled = FormField.validateFields(
+    val isPasswordChangeEnabled: LiveData<Boolean> = FormField.validateFields(
         currentPasswordField,
         newPasswordField,
         newRetypedPasswordField
     )
 
-    private val _passwordChangeCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val passwordChangeCompleted: LiveData<Unit> = _passwordChangeCompleted
+    private val _completed: SingleLiveData<Unit> = SingleLiveData()
+    val passwordChangeCompleted: LiveData<Unit> = _completed
 
-    private val _isPasswordChanging: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isPasswordChanging: LiveData<Boolean> = _isPasswordChanging
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isPasswordChanging: LiveData<Boolean> = _isLoading
 
-    private val _passwordChangeError: SingleLiveEvent<String> = SingleLiveEvent()
-    val passwordChangeError: LiveData<String> = _passwordChangeError
+    private val _error: SingleLiveData<String> = SingleLiveData()
+    val passwordChangeError: LiveData<String> = _error
 
     fun onChangePasswordButtonClick() {
-        _isPasswordChanging.setValue(true)
-
         val currentPassword = currentPasswordField.data.value
         val newPassword = newPasswordField.data.value
 
@@ -70,25 +65,20 @@ class ChangePasswordViewModel @Inject constructor(
         }
 
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withIoContext {
-                userRepository.changePassword(currentPassword, newPassword)
+            _isLoading.value = true
+
+            val result = authorizationManager.changePassword(currentPassword, newPassword)
+            result.onSuccess {
+                authorizationManager.logout()
+                _completed.call()
+            }.onFailure { throwable ->
+                _error.value = when (throwable) {
+                    is NoInternetConnectionException -> "Brak połączenia z Internetem"
+                    else -> "Wystąpił błąd podczas zmiany hasła"
+                }
             }
 
-            if (result.isSuccess) {
-                logoutUser()
-                _passwordChangeCompleted.call()
-            } else {
-                _passwordChangeError.value = "Wystąpił błąd podczas zmiany hasła"
-            }
-
-            _isPasswordChanging.setValue(false)
+            _isLoading.value = false
         }
-    }
-
-
-    private fun logoutUser() {
-        settingsRepository.setValue(
-            SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to false
-        )
     }
 }

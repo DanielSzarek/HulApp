@@ -17,6 +17,7 @@ import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.ui.base.State
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.util.navigateTo
@@ -132,8 +133,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeViewModel() {
-        viewModel.isSigningUpInProgress.observe(this) {
-            if (it) {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 motionLayout.transitionToEnd()
                 signUpButton.isEnabled = false
                 progressBar.show()
@@ -144,11 +145,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             }
         }
 
-        viewModel.signUpError.observe(this) {
-            view?.snackbar(it)
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.userSignedUp.observe(this) {
+        viewModel.completed.observe(viewLifecycleOwner) {
             val direction = SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleted()
             navigateTo(direction)
         }

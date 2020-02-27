@@ -30,13 +30,6 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{NumberExtKt.asTimeString(viewModel.trackResource.data.duration)}"
-                    tools:text="00:30:45"
-                    android:textAppearance="?textAppearanceHeadline5" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Czas trwania"
                     android:textAppearance="?textAppearanceBody2"
                     android:textColor="@color/colorPrimary" />
@@ -44,62 +37,69 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/track_distance_value(viewModel.trackResource.data.distance)}"
-                    tools:text="12.35 km"
-                    android:textAppearance="?textAppearanceHeadline5"
-                    android:layout_marginTop="@dimen/default_margin" />
+                    android:text="@{NumberExtKt.asTimeString(viewModel.trackResource.data.duration)}"
+                    tools:text="00:30:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Przebyty dystans"
                     android:textAppearance="?textAppearanceBody2"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.trackResource.data.startDate}"
-                    tools:text="2020-01-10 12:30:45"
-                    android:textAppearance="?textAppearanceHeadline5"
-                    android:layout_marginTop="@dimen/default_margin"/>
+                    android:text="@{@string/track_distance_value(viewModel.trackResource.data.distance)}"
+                    tools:text="12.35 km"
+                    android:textAppearance="?textAppearanceHeadline5" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data rozpoczęcia"
                     android:textAppearance="?textAppearanceBody2"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.trackResource.data.endDate}"
-                    tools:text="2020-01-10 13:00:45"
-                    android:textAppearance="?textAppearanceHeadline5"
-                    android:layout_marginTop="@dimen/default_margin"/>
+                    android:text="@{viewModel.trackResource.data.startDate}"
+                    tools:text="2020-01-10 12:30:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Data zakończenia"
                     android:textAppearance="?textAppearanceBody2"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/exhaust_emission_value(viewModel.exhaustEmission)}"
-                    tools:text="525 g"
-                    android:textAppearance="?textAppearanceHeadline5"
-                    android:layout_marginTop="@dimen/default_margin"/>
+                    android:text="@{viewModel.trackResource.data.endDate}"
+                    tools:text="2020-01-10 13:00:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Niewyemitowane spaliny"
                     android:textAppearance="?textAppearanceBody2"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/exhaust_emission_value(viewModel.exhaustEmission)}"
+                    tools:text="525 g"
+                    android:textAppearance="?textAppearanceHeadline5" />
             </LinearLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

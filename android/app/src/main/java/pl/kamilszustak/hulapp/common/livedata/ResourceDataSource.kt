@@ -15,5 +15,5 @@ class ResourceDataSource<T>(
 
     val isLoading: LiveData<Boolean> = ResourceLoadingLiveData(this.result)
 
-    val error: SingleLiveEvent<String> = ResourceErrorLiveData(this.result)
+    val error: SingleLiveData<String> = ResourceErrorLiveData(this.result)
 }

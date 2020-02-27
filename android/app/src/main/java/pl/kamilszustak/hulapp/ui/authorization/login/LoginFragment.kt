@@ -16,7 +16,6 @@ import pl.kamilszustak.hulapp.databinding.FragmentLoginBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.main.MainActivity
 import pl.kamilszustak.hulapp.util.navigateTo
-import timber.log.Timber
 import javax.inject.Inject
 
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
@@ -70,13 +69,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.loginCompleted.observe(this) {
+        viewModel.completed.observe(viewLifecycleOwner) {
             startActivity<MainActivity>()
             requireActivity().finish()
         }
 
-        viewModel.isLoggingInProgress.observe(this) {
-            if (it) {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 motionLayout.transitionToEnd()
                 loginButton.isEnabled = false
                 progressBar.show()
@@ -87,8 +86,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             }
         }
 
-        viewModel.loginError.observe(this) {
-            view?.snackbar(it)
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
     }
 }

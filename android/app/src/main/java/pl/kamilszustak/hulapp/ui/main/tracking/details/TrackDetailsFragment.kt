@@ -70,16 +70,16 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
     }
 
     private fun observeViewModel() {
-        viewModel.deletingCompleted.observe(this) {
+        viewModel.deletingCompleted.observe(viewLifecycleOwner) {
             navigateUp()
         }
 
-        viewModel.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.trackResource.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.trackResource.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
     }
 }
