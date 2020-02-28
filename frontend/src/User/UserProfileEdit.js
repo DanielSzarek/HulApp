@@ -11,6 +11,7 @@ import Navbarex from './Navbar';
 import Avatar from 'react-avatar';
 import axios from 'axios';
 import {Alert } from "shards-react";
+import blankprofpic from '../Images/blankprofpic.png';
 
 
 
@@ -30,7 +31,8 @@ class ProfileEdition extends React.Component{
                 message: '',
                 showAlert: false,
                 auth: true,
-                visible: true 
+                visible: true ,
+                blankProf : true
         };
 		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
@@ -65,16 +67,13 @@ class ProfileEdition extends React.Component{
 		  }
 	  }
 
-//dodaj token w headersach
-
   handleSubmit = (event) => {
         event.preventDefault();
          this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
             method: 'PATCH',
 
             body: JSON.stringify({
-				// id: this.state.userId,
-                // email: this.state.email,              
+            
                 first_name: this.state.name,
                 last_name: this.state.surname,
                 country: this.state.countryId,
@@ -85,19 +84,8 @@ class ProfileEdition extends React.Component{
                 if(response.status >= 200 && response.status <300){
                     return response.json();     
                 }
-                // else{
-                //     console.log("SOMETHING WENT WRONG")
-                //     // this.setState({ message: "Something went wrong. Response status: "+response.status+", response detail" + response.detail });
-                //     this.setState({ message: "Something went wrong. Response status: " +response.status  });
-
-                // }
             })
             window.location.reload();
-            // .catch((error) => {
-            //     this.setState({message: "ERROR " + error});
-            //     console.log(error);
-            // });
-
     };
 
 
@@ -125,6 +113,7 @@ class ProfileEdition extends React.Component{
         const fd = new FormData();
         fd.append('profile_img', this.state.fileUploaded, this.state.fileUploaded.name);
 		fd.append('username', this.state.email);
+         this.setState({blankProf : false});
 		
 		axios(
 		{ 
@@ -132,8 +121,11 @@ class ProfileEdition extends React.Component{
 			url: 'http://hulapp.pythonanywhere.com/auth/users/me/', 
 			headers: { 'content-type': 'multipart/form-data', 'Authorization': "Bearer " +  localStorage.getItem('id_token')}, 
 			data: fd })
+            
         .then(res =>{
             this.setState({src: res.profile_img});
+                    this.setState({blankProf : false});
+
             window.location.reload();
 			
         } 
@@ -161,7 +153,12 @@ class ProfileEdition extends React.Component{
                         <div className="col-4">
                         <input type='file' onChange={this.fileSelectedHandler} accept="image/*"/>
                         <button onClick={this.fileUploadHandler}> Upload! </button>
-                        <Avatar  size='300' round="300px" name="H"  src={this.state.src}  />
+                        {/* {(this.state.blankProf) &&
+                        <Avatar  size='300' round="300px" src={blankprofpic}   
+                          /> } */}
+                        <Avatar  size='300' round="300px"  name="hulapp" src={this.state.src} />  
+                
+                        
                 </div>
                 <div className='col-8'>
                     <form className="input-in-form" onSubmit={this.handleSubmit}>

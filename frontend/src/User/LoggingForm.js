@@ -15,9 +15,7 @@ class LoggingForm extends React.Component{
 
       handleSubmit = (event) => {
         event.preventDefault();
-       // alert("tutaj 2");
          console.log("email "+this.state.email)
-         //walidacja
          fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
             method: 'POST',
             headers: {
@@ -34,7 +32,6 @@ class LoggingForm extends React.Component{
                 if(response.status === 201 ){
                     console.log("SUCCESSS")
                     this.setState({message: "Jesteś zalogowany "});
-                    //return response.json();     
                 }
                 else if(response.status === 401){
                     console.log("UNAUTHORIZED")
@@ -50,9 +47,6 @@ class LoggingForm extends React.Component{
             });
     };
 
-//     async componentDidMount() {
-//     const token = await this.props.googleReCaptchaProps.executeRecaptcha('homepage');
-//   }
 const ReCaptchaComponent = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const token = executeRecaptcha("login_page");
@@ -66,7 +60,6 @@ const ReCaptchaComponent = () => {
 
         <GoogleReCaptchaProvider
                 reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf"
-                // language="optional_language"
             >
             <GoogleReCaptcha onVerify={token => console.log(token)} />
             <form onSubmit={this.handleSubmit}>
