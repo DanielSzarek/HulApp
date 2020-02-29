@@ -12,11 +12,14 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.item.SearchPromptItem
 import pl.kamilszustak.hulapp.data.item.UserSearchItem
+import pl.kamilszustak.hulapp.data.model.SearchPrompt
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.updateModels
+import timber.log.Timber
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment() {
@@ -28,7 +31,8 @@ class SearchFragment : BaseFragment() {
         viewModelFactory
     }
 
-    private lateinit var modelAdapter: ModelAdapter<User, UserSearchItem>
+    private lateinit var userModelAdapter: ModelAdapter<User, UserSearchItem>
+    private lateinit var searchPromptModelAdapter: ModelAdapter<SearchPrompt, SearchPromptItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,19 +56,30 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeSearchView()
-        initializeRecyclerView()
+        initializeModelAdapters()
         observeViewModel()
+    }
+
+    private fun initializeModelAdapters() {
+        userModelAdapter = ModelAdapter { user ->
+            UserSearchItem(user)
+        }
+
+        searchPromptModelAdapter = ModelAdapter { prompt ->
+            SearchPromptItem(prompt)
+        }
     }
 
     private fun initializeSearchView() {
         val queryListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.onQueryTextChange(newText)
                 return true
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return if (query != null) {
-                    viewModel.onSubmit(query)
+                    viewModel.onQueryTextSubmit(query)
                     true
                 } else {
                     false
@@ -75,20 +90,9 @@ class SearchFragment : BaseFragment() {
         userSearchView.setOnQueryTextListener(queryListener)
     }
 
-    private fun initializeRecyclerView() {
-        modelAdapter = ModelAdapter { user ->
-            UserSearchItem(user)
-        }
-
-        val fastAdapter = FastAdapter.with(modelAdapter)
-        usersRecyclerView.apply {
-            this.adapter = fastAdapter
-        }
-    }
-
     private fun observeViewModel() {
         viewModel.usersResource.data.observe(viewLifecycleOwner) { users ->
-            modelAdapter.updateModels(users)
+            userModelAdapter.updateModels(users)
         }
 
         viewModel.usersResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -101,6 +105,23 @@ class SearchFragment : BaseFragment() {
 
         viewModel.usersResource.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
+        }
+
+        viewModel.searchPrompts.observe(viewLifecycleOwner) { prompts ->
+            searchPromptModelAdapter.updateModels(prompts)
+            Timber.i(prompts.toString())
+        }
+
+        viewModel.adapterType.observe(viewLifecycleOwner) { type ->
+            recyclerView.adapter = when (type) {
+                SearchViewModel.AdapterType.USERS -> {
+                    userModelAdapter.clear()
+                    FastAdapter.with(userModelAdapter)
+                }
+                SearchViewModel.AdapterType.SEARCH_PROMPTS -> {
+                    FastAdapter.with(searchPromptModelAdapter)
+                }
+            }
         }
     }
 }

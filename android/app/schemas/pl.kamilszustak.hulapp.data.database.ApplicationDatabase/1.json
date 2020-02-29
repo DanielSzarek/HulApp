@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "090f9c21d2f71487e075a46b790cc8d9",
+    "identityHash": "9f2b2498c0c4f66f7483203daf90c4b1",
     "entities": [
       {
         "tableName": "users",
@@ -218,14 +218,8 @@
       },
       {
         "tableName": "search_prompts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`text` TEXT NOT NULL, `id` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `text` TEXT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "text",
-            "columnName": "text",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "id",
             "columnName": "id",
@@ -233,15 +227,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
-            "columnName": "created_at",
+            "fieldPath": "date",
+            "columnName": "date",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "updatedAt",
-            "columnName": "updated_at",
-            "affinity": "INTEGER",
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -249,7 +243,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -258,7 +252,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '090f9c21d2f71487e075a46b790cc8d9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f2b2498c0c4f66f7483203daf90c4b1')"
     ]
   }
 }

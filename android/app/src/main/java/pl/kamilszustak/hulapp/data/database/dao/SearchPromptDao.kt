@@ -18,11 +18,23 @@ interface SearchPromptDao {
     @Delete
     suspend fun delete(prompt: SearchPrompt)
 
+    @Query("DELETE FROM search_prompts WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("DELETE FROM search_prompts")
     suspend fun deleteAll()
 
+    @Query("SELECT * FROM search_prompts WHERE id = :id")
+    fun getById(id: Long): Flow<List<SearchPrompt>>
+
     @Query("SELECT * FROM search_prompts")
     fun getAll(): Flow<List<SearchPrompt>>
+
+    @Query("SELECT * FROM search_prompts ORDER BY date ASC")
+    fun getAllOrderedByDateAscending(): Flow<List<SearchPrompt>>
+
+    @Query("SELECT * FROM search_prompts ORDER BY date DESC")
+    fun getAllOrderedByDateDescending(): Flow<List<SearchPrompt>>
 
     @Query("SELECT * FROM search_prompts WHERE LOWER(text) LIKE '%' || LOWER(:text) || '%'")
     fun getAllByTextContaining(text: String): Flow<List<SearchPrompt>>
