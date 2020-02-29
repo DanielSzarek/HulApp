@@ -6,7 +6,6 @@ import pl.kamilszustak.hulapp.data.model.Track
 
 @Dao
 interface TrackDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(track: Track): Long
 

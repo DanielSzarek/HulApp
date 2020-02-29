@@ -6,7 +6,6 @@ import pl.kamilszustak.hulapp.data.model.City
 
 @Dao
 interface CityDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(city: City): Long
 

@@ -12,15 +12,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userSearchView"
+            android:queryHint="Szukaj"
+            android:iconifiedByDefault="false"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             tools:layout_height="wrap_content"
             android:id="@+id/usersRecyclerView"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userSearchView"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_constraintBottom_toBottomOf="@null" />
+            tools:layout_constraintBottom_toBottomOf="@null"
+            android:layout_marginTop="@dimen/default_margin" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:layout_width="wrap_content"

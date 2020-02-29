@@ -7,7 +7,6 @@ import com.squareup.moshi.Json
 import java.util.*
 
 abstract class DatabaseEntity : Parcelable {
-
     @PrimaryKey(autoGenerate = false)
     @Json(name = "id")
     var id: Long = 0

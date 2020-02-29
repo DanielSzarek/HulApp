@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import okhttp3.MultipartBody
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
@@ -79,7 +78,7 @@ class UserRepository @Inject constructor(
     fun searchFor(text: String, shouldFetch: Boolean = true): Flow<Resource<List<User>>> {
         return object : NetworkBoundResource<List<User>, List<User>>() {
             override fun loadFromDatabase(): Flow<List<User>> =
-                userDao.getByNameOrSurnameContaining(text)
+                userDao.getAllByNameOrSurnameContaining(text)
 
             override fun shouldFetch(data: List<User>?): Boolean = shouldFetch
 

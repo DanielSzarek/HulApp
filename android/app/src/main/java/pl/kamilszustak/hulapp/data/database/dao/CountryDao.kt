@@ -6,7 +6,6 @@ import pl.kamilszustak.hulapp.data.model.Country
 
 @Dao
 interface CountryDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(country: Country)
 

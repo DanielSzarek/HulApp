@@ -6,7 +6,6 @@ import pl.kamilszustak.hulapp.data.model.User
 
 @Dao
 interface UserDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User): Long
 
@@ -29,5 +28,5 @@ interface UserDao {
     fun getById(id: Long): Flow<User>
 
     @Query("SELECT * FROM users WHERE LOWER(name || ' ' || surname) LIKE '%' || LOWER(:text) || '%'")
-    fun getByNameOrSurnameContaining(text: String): Flow<List<User>>
+    fun getAllByNameOrSurnameContaining(text: String): Flow<List<User>>
 }

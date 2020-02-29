@@ -48,12 +48,15 @@ class SearchFragment : BaseFragment() {
         return dataBinding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val searchItem = menu.findItem(R.id.searchItem)
-        val searchView = searchItem.actionView as? SearchView
+        initializeSearchView()
+        initializeRecyclerView()
+        observeViewModel()
+    }
 
+    private fun initializeSearchView() {
         val queryListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
@@ -69,22 +72,7 @@ class SearchFragment : BaseFragment() {
             }
         }
 
-        searchView?.apply {
-            this.isIconifiedByDefault = false
-            this.setOnQueryTextListener(queryListener)
-            this.requestFocus()
-            this.queryHint = "Szukaj"
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setHasOptionsMenu(true)
-        initializeRecyclerView()
-        observeViewModel()
+        userSearchView.setOnQueryTextListener(queryListener)
     }
 
     private fun initializeRecyclerView() {
