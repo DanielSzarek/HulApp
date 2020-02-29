@@ -7,7 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.design.snackbar
@@ -34,6 +36,9 @@ class SearchFragment : BaseFragment() {
     private lateinit var userModelAdapter: ModelAdapter<User, UserSearchItem>
     private lateinit var searchPromptModelAdapter: ModelAdapter<SearchPrompt, SearchPromptItem>
 
+    private lateinit var userFastAdapter: FastAdapter<UserSearchItem>
+    private lateinit var searchPromptFastAdapter: FastAdapter<SearchPromptItem>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,17 +61,38 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeSearchView()
-        initializeModelAdapters()
+        initializeAdapters()
         observeViewModel()
     }
 
-    private fun initializeModelAdapters() {
+    private fun initializeAdapters() {
+        initializeUserAdapter()
+        initializeSearchPromptAdapter()
+    }
+
+    private fun initializeUserAdapter() {
         userModelAdapter = ModelAdapter { user ->
             UserSearchItem(user)
         }
+        userFastAdapter = FastAdapter.with(userModelAdapter)
+    }
 
+    private fun initializeSearchPromptAdapter() {
         searchPromptModelAdapter = ModelAdapter { prompt ->
             SearchPromptItem(prompt)
+        }
+
+        searchPromptFastAdapter = FastAdapter.with(searchPromptModelAdapter)
+        searchPromptFastAdapter.onClickListener = object : ClickListener<SearchPromptItem> {
+            override fun invoke(
+                v: View?,
+                adapter: IAdapter<SearchPromptItem>,
+                item: SearchPromptItem,
+                position: Int
+            ): Boolean {
+                userSearchView.setQuery(item.model.text, true)
+                return true
+            }
         }
     }
 
@@ -116,10 +142,10 @@ class SearchFragment : BaseFragment() {
             recyclerView.adapter = when (type) {
                 SearchViewModel.AdapterType.USERS -> {
                     userModelAdapter.clear()
-                    FastAdapter.with(userModelAdapter)
+                    userFastAdapter
                 }
                 SearchViewModel.AdapterType.SEARCH_PROMPTS -> {
-                    FastAdapter.with(searchPromptModelAdapter)
+                    searchPromptFastAdapter
                 }
             }
         }
