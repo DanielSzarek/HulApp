@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/searchItem"
+        android:icon="@drawable/icon_search_light"
+        android:title="Wyszukiwanie"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/editProfileItem"
         android:title="Edytuj profil" />

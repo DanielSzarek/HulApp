@@ -5,8 +5,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
-import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.date.DateFormats
+import pl.kamilszustak.hulapp.util.load
 import java.util.*
 
 object DataBindingAdapter {
@@ -14,10 +14,7 @@ object DataBindingAdapter {
     @BindingAdapter("app:profilePhoto")
     @JvmStatic
     fun ImageView.setImage(url: String?) {
-        Glide.with(this.context)
-            .load(url)
-            .placeholder(R.drawable.icon_profile)
-            .into(this)
+        this.load(url)
     }
 
     @BindingAdapter("app:errorText")

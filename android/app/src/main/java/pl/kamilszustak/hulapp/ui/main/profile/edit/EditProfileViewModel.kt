@@ -70,7 +70,7 @@ class EditProfileViewModel @Inject constructor(
 
     init {
         userResource.changeFlowSource {
-            userRepository.get(false)
+            userRepository.getLoggedIn(false)
         }
 
         cityResource.result.addSource(userResource.data) {

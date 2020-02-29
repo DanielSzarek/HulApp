@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/countryNameEditText"
                 android:hint="Kraj"
-                android:text="@={viewModel.countryName}"
+                app:delayedText="@={viewModel.countryName}"
                 android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:drawableStart="@drawable/icon_search" />

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.profile.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userSearchView"
+            android:queryHint="Szukaj"
+            android:iconifiedByDefault="false"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:layout_height="wrap_content"
+            android:id="@+id/recyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/userSearchView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_constraintBottom_toBottomOf="@null"
+            android:layout_marginTop="@dimen/default_margin" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"
+            android:layout_marginTop="@dimen/default_margin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

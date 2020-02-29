@@ -3,4 +3,6 @@
     <item name="fastadapter_country_item_id" type="id" />
     <item name="fastadapter_city_item_id" type="id" />
     <item name="fastadapter_track_item_id" type="id" />
+    <item name="fastadapter_user_search_item_id" type="id" />
+    <item name="fastadapter_search_prompt_id" type="id" />
 </resources>

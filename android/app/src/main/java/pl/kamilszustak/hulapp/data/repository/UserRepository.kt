@@ -21,10 +21,6 @@ class UserRepository @Inject constructor(
     private val apiService: ApiService,
     private val userDetailsRepository: UserDetailsRepository
 ) {
-    suspend fun insert(item: User) {
-        userDao.insert(item)
-    }
-
     suspend fun uploadProfilePhoto(file: File): Result<Unit> {
         return object : NetworkCall<User, Unit>() {
             override suspend fun makeCall(): Response<User> {
@@ -58,10 +54,12 @@ class UserRepository @Inject constructor(
         }.call()
     }
 
-    fun get(shouldFetch: Boolean = true): Flow<Resource<User>> {
+    fun getLoggedIn(shouldFetch: Boolean = true): Flow<Resource<User>> {
+        val userId = userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
+
         return object : NetworkBoundResource<User, User>() {
             override fun loadFromDatabase(): Flow<User> =
-                userDao.getOne()
+                userDao.getById(userId)
 
             override fun shouldFetch(data: User?): Boolean = shouldFetch
 
@@ -69,13 +67,27 @@ class UserRepository @Inject constructor(
                 apiService.login()
 
             override suspend fun saveFetchResult(result: User) {
-                userDao.deleteAll()
                 userDao.insert(result)
+                userDetailsRepository.setValue(
+                    UserDetailsRepository.UserDetailsKey.USER_ID to result.id
+                )
             }
         }.asFlow()
     }
 
-    suspend fun delete() {
-        userDao.deleteAll()
+    fun searchFor(text: String, shouldFetch: Boolean = true): Flow<Resource<List<User>>> {
+        return object : NetworkBoundResource<List<User>, List<User>>() {
+            override fun loadFromDatabase(): Flow<List<User>> =
+                userDao.getAllByNameOrSurnameContaining(text)
+
+            override fun shouldFetch(data: List<User>?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<List<User>> =
+                apiService.searchForUsers(text)
+
+            override suspend fun saveFetchResult(result: List<User>) {
+                userDao.insertAll(result)
+            }
+        }.asFlow()
     }
 }

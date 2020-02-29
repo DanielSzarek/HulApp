@@ -53,9 +53,7 @@ class LoginViewModel @Inject constructor(
     val error: LiveData<String> = _error
 
     init {
-        val isUserLoggedIn: Boolean = SettingsRepository.SettingsKey.IS_USER_LOGGED_IN.let {
-            settingsRepository.getValue(it, it.getDefaultValue())
-        }
+        val isUserLoggedIn: Boolean = settingsRepository.getValue(SettingsRepository.SettingsKey.IS_USER_LOGGED_IN)
 
         if (isUserLoggedIn) {
             _completed.call()

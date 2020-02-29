@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "283e88cf6db749bfe78c38e5ec7531cb",
+    "identityHash": "9f2b2498c0c4f66f7483203daf90c4b1",
     "entities": [
       {
         "tableName": "users",
@@ -215,12 +215,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "search_prompts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `text` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '283e88cf6db749bfe78c38e5ec7531cb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f2b2498c0c4f66f7483203daf90c4b1')"
     ]
   }
 }
