@@ -20,6 +20,7 @@ import pl.kamilszustak.hulapp.data.model.SearchPrompt
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.updateModels
 import timber.log.Timber
 import javax.inject.Inject
@@ -62,6 +63,7 @@ class SearchFragment : BaseFragment() {
 
         initializeSearchView()
         initializeAdapters()
+        setListeners()
         observeViewModel()
     }
 
@@ -75,6 +77,17 @@ class SearchFragment : BaseFragment() {
             UserSearchItem(user)
         }
         userFastAdapter = FastAdapter.with(userModelAdapter)
+        userFastAdapter.onClickListener = object : ClickListener<UserSearchItem> {
+            override fun invoke(
+                v: View?,
+                adapter: IAdapter<UserSearchItem>,
+                item: UserSearchItem,
+                position: Int
+            ): Boolean {
+                navigateToUserProfileFragment(item.model.id)
+                return true
+            }
+        }
     }
 
     private fun initializeSearchPromptAdapter() {
@@ -116,6 +129,12 @@ class SearchFragment : BaseFragment() {
         searchView.setOnQueryTextListener(queryListener)
     }
 
+    private fun setListeners() {
+        searchButton.setOnClickListener {
+            searchView.setQuery(searchView.query, true)
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.usersResource.data.observe(viewLifecycleOwner) { users ->
             userModelAdapter.updateModels(users)
@@ -149,5 +168,10 @@ class SearchFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun navigateToUserProfileFragment(userId: Long) {
+        val direction = SearchFragmentDirections.actionSearchFragmentToUserProfileFragment(userId)
+        navigateTo(direction)
     }
 }

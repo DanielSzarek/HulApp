@@ -68,5 +68,22 @@
         android:id="@+id/searchFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.profile.search.SearchFragment"
         android:label="Szukaj"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment"
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
 </navigation>
