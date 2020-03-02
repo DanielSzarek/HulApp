@@ -90,7 +90,7 @@ class SearchFragment : BaseFragment() {
                 item: SearchPromptItem,
                 position: Int
             ): Boolean {
-                userSearchView.setQuery(item.model.text, true)
+                searchView.setQuery(item.model.text, true)
                 return true
             }
         }
@@ -113,7 +113,7 @@ class SearchFragment : BaseFragment() {
             }
         }
 
-        userSearchView.setOnQueryTextListener(queryListener)
+        searchView.setOnQueryTextListener(queryListener)
     }
 
     private fun observeViewModel() {

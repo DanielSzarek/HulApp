@@ -5,19 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.model.Country
 
 @Dao
-interface CountryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(country: Country)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(countries: Collection<Country>)
-
-    @Update
-    suspend fun update(country: Country)
-
-    @Delete
-    suspend fun delete(country: Country)
-
+interface CountryDao : BaseDao<Country> {
     @Query("SELECT * FROM countries")
     fun getAll(): Flow<List<Country>>
 

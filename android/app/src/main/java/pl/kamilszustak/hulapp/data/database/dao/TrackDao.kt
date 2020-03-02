@@ -5,16 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.model.Track
 
 @Dao
-interface TrackDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(track: Track): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(tracks: Collection<Track>): List<Long>
-
-    @Delete
-    suspend fun delete(track: Track)
-
+interface TrackDao : BaseDao<Track> {
     @Query("DELETE FROM tracks WHERE id = :id")
     suspend fun deleteById(id: Long)
 

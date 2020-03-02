@@ -5,19 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.model.User
 
 @Dao
-interface UserDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: User): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(user: Collection<User>): List<Long>
-
-    @Update
-    suspend fun update(user: User)
-
-    @Delete
-    suspend fun delete(user: User)
-
+interface UserDao : BaseDao<User> {
     @Query("DELETE FROM users")
     suspend fun deleteAll()
 
