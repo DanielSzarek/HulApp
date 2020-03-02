@@ -14,6 +14,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsBottomSheet
 import pl.kamilszustak.hulapp.ui.main.profile.search.SearchFragment
+import pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryBottomSheet
@@ -76,4 +77,8 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserProfileFragment(): UserProfileFragment
 }

@@ -9,7 +9,7 @@ import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.withIoContext
+import pl.kamilszustak.hulapp.util.withIOContext
 import java.io.File
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             _isLoading.setValue(false)
 
-            val result = withIoContext {
+            val result = withIOContext {
                 userRepository.uploadProfilePhoto(file)
             }
 

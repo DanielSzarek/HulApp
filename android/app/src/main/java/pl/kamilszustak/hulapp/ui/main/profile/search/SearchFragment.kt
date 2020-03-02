@@ -61,6 +61,7 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
         initializeSearchView()
         initializeAdapters()
         setListeners()
@@ -70,6 +71,24 @@ class SearchFragment : BaseFragment() {
     private fun initializeAdapters() {
         initializeUserAdapter()
         initializeSearchPromptAdapter()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search_fragment, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.deleteSearchPromptsItem -> {
+                viewModel.onDeleteSearchPromptsItemClick()
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     private fun initializeUserAdapter() {

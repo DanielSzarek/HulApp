@@ -10,7 +10,7 @@ import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.network.ApiService
-import pl.kamilszustak.hulapp.util.withIoContext
+import pl.kamilszustak.hulapp.util.withIOContext
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +30,7 @@ class AuthorizationManager @Inject constructor(
             UserDetailsRepository.UserDetailsKey.USER_PASSWORD to password
         )
 
-        return withIoContext {
+        return withIOContext {
             object : NetworkCall<User, Unit>() {
                 override suspend fun makeCall(): Response<User> =
                     apiService.login()
@@ -51,7 +51,7 @@ class AuthorizationManager @Inject constructor(
     }
 
     suspend fun logout() {
-        withIoContext {
+        withIOContext {
             applicationDatabase.clearAllTables()
             userDetailsRepository.restoreDefaultValues()
             settingsRepository.restoreDefaultValues()
@@ -59,7 +59,7 @@ class AuthorizationManager @Inject constructor(
     }
 
     suspend fun signUp(user: User): Result<Unit> {
-        return withIoContext {
+        return withIOContext {
             object : NetworkCall<User, Unit>() {
                 override suspend fun makeCall(): Response<User> =
                     apiService.signUp(user)
@@ -70,7 +70,7 @@ class AuthorizationManager @Inject constructor(
     }
 
     suspend fun resetPassword(email: String): Result<Unit> {
-        return withIoContext {
+        return withIOContext {
             object : NetworkCall<Unit, Unit>() {
                 override suspend fun makeCall(): Response<Unit> {
                     val request = PasswordResetRequestBody(email)
@@ -83,7 +83,7 @@ class AuthorizationManager @Inject constructor(
     }
 
     suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
-        return withIoContext {
+        return withIOContext {
             object : NetworkCall<ChangePasswordRequestBody, Unit>() {
                 override suspend fun makeCall(): Response<ChangePasswordRequestBody> {
                     val request = ChangePasswordRequestBody(currentPassword, newPassword)

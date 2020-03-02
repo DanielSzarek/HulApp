@@ -31,7 +31,7 @@ class UserProfileFragment : BaseFragment() {
     ): View? {
         val dataBinding = DataBindingUtil.inflate<FragmentUserProfileBinding>(
             inflater,
-            R.layout.fragment_search,
+            R.layout.fragment_user_profile,
             container,
             false
         ).apply {

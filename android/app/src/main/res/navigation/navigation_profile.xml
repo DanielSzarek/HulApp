@@ -80,7 +80,7 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment"
-        android:label="UserProfileFragment"
+        android:label="Profil użytkownika"
         tools:layout="@layout/fragment_user_profile">
         <argument
             android:name="userId"
