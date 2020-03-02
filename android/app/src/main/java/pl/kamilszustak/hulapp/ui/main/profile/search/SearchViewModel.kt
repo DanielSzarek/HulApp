@@ -57,6 +57,12 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun onDeleteSearchPromptButtonClick(promptId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchPromptRepository.deleteById(promptId)
+        }
+    }
+
     enum class AdapterType {
         SEARCH_PROMPTS,
         USERS

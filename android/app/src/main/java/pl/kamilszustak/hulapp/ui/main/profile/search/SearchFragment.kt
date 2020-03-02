@@ -7,10 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.listeners.ClickEventHook
+import com.mikepenz.fastadapter.listeners.EventHook
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
@@ -115,17 +118,29 @@ class SearchFragment : BaseFragment() {
         }
 
         searchPromptFastAdapter = FastAdapter.with(searchPromptModelAdapter)
-        searchPromptFastAdapter.onClickListener = object : ClickListener<SearchPromptItem> {
-            override fun invoke(
-                v: View?,
-                adapter: IAdapter<SearchPromptItem>,
-                item: SearchPromptItem,
-                position: Int
-            ): Boolean {
-                searchView.setQuery(item.model.text, true)
-                return true
+        searchPromptFastAdapter.onClickListener = { view, adapter, item, position ->
+            searchView.setQuery(item.model.text, true)
+            true
+        }
+
+        val eventHook = object : ClickEventHook<SearchPromptItem>() {
+            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                return if (viewHolder is SearchPromptItem.ViewHolder) {
+                    viewHolder.deleteButton
+                } else {
+                    null
+                }
+            }
+            override fun onClick(
+                v: View,
+                position: Int,
+                fastAdapter: FastAdapter<SearchPromptItem>,
+                item: SearchPromptItem
+            ) {
+                viewModel.onDeleteSearchPromptButtonClick(item.model.id)
             }
         }
+        searchPromptFastAdapter.addEventHook(eventHook)
     }
 
     private fun initializeSearchView() {
