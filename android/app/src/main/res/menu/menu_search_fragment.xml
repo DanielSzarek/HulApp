@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/deleteSearchPromptsItem"
-        android:title="Usuń podpowiedzi"
+        android:title="Wyczyść podpowiedzi"
         app:showAsAction="never" />
 </menu>
