@@ -25,8 +25,7 @@ abstract class NetworkCall<ResponseType, ReturnType> {
     suspend fun call(): Result<Unit> {
         return try {
             val response = makeCall()
-
-            return if (response.isSuccessful) {
+            if (response.isSuccessful) {
                 onResponseSuccess()
                 Result.success(Unit)
             } else {

@@ -51,7 +51,7 @@ class CountryRepository @Inject constructor(
     fun getByName(name: String, shouldFetch: Boolean = true): Flow<Resource<List<Country>>> {
         return object : NetworkBoundResource<List<Country>, List<Country>>() {
             override fun loadFromDatabase(): Flow<List<Country>> =
-                countryDao.getByName(name)
+                countryDao.getByNameContaining(name)
 
             override fun shouldFetch(data: List<Country>?): Boolean = shouldFetch
 

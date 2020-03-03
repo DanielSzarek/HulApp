@@ -6,12 +6,11 @@ import pl.kamilszustak.hulapp.data.model.User
 
 @Dao
 interface UserDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(user: User): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: User)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(user: List<User>)
+    suspend fun insertAll(user: Collection<User>): List<Long>
 
     @Update
     suspend fun update(user: User)
@@ -28,6 +27,6 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id")
     fun getById(id: Long): Flow<User>
 
-    @Query("SELECT * FROM users LIMIT 1")
-    fun getOne(): Flow<User>
+    @Query("SELECT * FROM users WHERE LOWER(name || ' ' || surname) LIKE '%' || LOWER(:text) || '%'")
+    fun getAllByNameOrSurnameContaining(text: String): Flow<List<User>>
 }

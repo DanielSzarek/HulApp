@@ -13,7 +13,8 @@ import pl.kamilszustak.hulapp.data.model.*
         User::class,
         City::class,
         Country::class,
-        Track::class
+        Track::class,
+        SearchPrompt::class
     ],
     version = 1,
     exportSchema = true
@@ -22,12 +23,10 @@ import pl.kamilszustak.hulapp.data.model.*
 abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
-
     abstract fun getCityDao(): CityDao
-
     abstract fun getCountryDao(): CountryDao
-
     abstract fun getTrackDao(): TrackDao
+    abstract fun getSearchPromptDao(): SearchPromptDao
 
     companion object {
         private var INSTANCE: ApplicationDatabase? = null

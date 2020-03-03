@@ -23,7 +23,7 @@ fun <A : ModelAdapter<Model, Item>, Model, Item : GenericItem> FastAdapterDiffUt
     return this.calculateDiff(adapter, items)
 }
 
-fun <Model, Item: GenericItem> ModelAdapter<Model, Item>.updateModels(models: List<Model>) {
+fun <Model, Item : GenericItem> ModelAdapter<Model, Item>.updateModels(models: List<Model>) {
     val result = FastAdapterDiffUtil.calculateDiff(this, models)
     FastAdapterDiffUtil.set(this, result)
 }

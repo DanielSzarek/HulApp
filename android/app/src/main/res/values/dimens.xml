@@ -14,4 +14,5 @@
 
     <dimen name="default_elevation">12dp</dimen>
     <dimen name="default_half_elevation">6dp</dimen>
+    <dimen name="default_quarter_elevation">2dp</dimen>
 </resources>

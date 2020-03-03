@@ -2,11 +2,8 @@ package pl.kamilszustak.hulapp.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import pl.kamilszustak.hulapp.common.annotation.Authorize
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.util.needAuthorization
-import retrofit2.Invocation
-import timber.log.Timber
 import javax.inject.Inject
 
 class HttpInterceptor @Inject constructor(
@@ -25,9 +22,7 @@ class HttpInterceptor @Inject constructor(
             return chain.proceed(request)
         }
 
-        val accessToken: String = JwtTokenRepository.JwtTokenKey.ACCESS_TOKEN.let {
-            jwtTokenRepository.getValue(it, it.getDefaultValue())
-        }
+        val accessToken: String = jwtTokenRepository.getValue(JwtTokenRepository.JwtTokenKey.ACCESS_TOKEN)
 
         val request = originalRequest.newBuilder()
             .header("Authorization", "Bearer $accessToken")

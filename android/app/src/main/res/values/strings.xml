@@ -41,4 +41,8 @@
 
     <!-- TrackDetailsFragment -->
     <string name="exhaust_emission_value">%s g</string>
+
+    <!-- ProfileFragment -->
+    <string name="user_profile_city">Mieszka w: &lt;b>%1$s&lt;/b></string>
+    <string name="user_profile_country">Z: &lt;b>%1$s&lt;/b></string>
 </resources>

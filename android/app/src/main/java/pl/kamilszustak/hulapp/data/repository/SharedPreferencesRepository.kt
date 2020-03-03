@@ -26,12 +26,10 @@ abstract class SharedPreferencesRepository<K : SharedPreferencesRepository.Share
         )
     }
 
-    fun <T : Comparable<T>> getValue(
-        sharedPreferencesKey: K,
-        defaultValue: T
-    ): T {
+    fun <T : Comparable<T>> getValue(sharedPreferencesKey: K): T {
         val resourceId = sharedPreferencesKey.getStringResourceId()
         val key = getStringFromResources(resourceId)
+        val defaultValue: T = sharedPreferencesKey.getDefaultValue()
 
         return when (defaultValue) {
             is Int -> sharedPreferences.getInt(key, defaultValue)

@@ -70,6 +70,13 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Czas trwania"
+                        android:textAppearance="?textAppearanceBody2"
+                        android:textColor="@color/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/durationTextView"
                         android:text="@{NumberExtKt.asTimeString(viewModel.duration)}"
                         tools:text="00:00:00"
@@ -78,25 +85,18 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Czas trwania"
+                        android:text="Przebyty dystans"
                         android:textAppearance="?textAppearanceBody2"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginTop="@dimen/default_margin" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/distanceTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
                         android:text="@{@string/track_distance_value(viewModel.distance)}"
                         tools:text="0.0 km"
                         android:textAppearance="?textAppearanceHeadline5" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Przebyty dystans"
-                        android:textAppearance="?textAppearanceBody2"
-                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

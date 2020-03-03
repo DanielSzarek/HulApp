@@ -4,6 +4,8 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 
 fun View.animatePressed(duration: Long = 200, endAction: () -> Unit = {}) {
     this.animate()
@@ -16,7 +18,7 @@ fun View.animatePressed(duration: Long = 200, endAction: () -> Unit = {}) {
                 .scaleY(1F)
                 .setDuration(duration / 2)
                 .withEndAction(endAction)
-    }
+        }
 }
 
 fun View.showKeyboard() {
@@ -44,4 +46,10 @@ fun View.setGone() {
 
 fun CompoundButton.setTintListByColor(color: Int) {
     buttonTintList = ColorStateList.valueOf(color)
+}
+
+fun ImageView.load(url: String?) {
+    Glide.with(this)
+        .load(url)
+        .into(this)
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
@@ -22,17 +22,17 @@ class TrackDetailsViewModel @Inject constructor(
 
     val trackResource: ResourceDataSource<Track> = ResourceDataSource()
 
-    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull {
-        120 * it.distance
+    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull { track ->
+        120 * track.distance
     }
 
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _error: SingleLiveData<String> = SingleLiveData()
     val error: LiveData<String> = _error
 
-    private val _deletingCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _deletingCompleted: SingleLiveData<Unit> = SingleLiveData()
     val deletingCompleted: LiveData<Unit> = _deletingCompleted
 
     fun loadTrack(trackId: Long, force: Boolean = false) {

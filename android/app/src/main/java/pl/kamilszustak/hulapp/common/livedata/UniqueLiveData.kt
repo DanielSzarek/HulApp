@@ -8,13 +8,13 @@ class UniqueLiveData<T> : MutableLiveData<T> {
 
     constructor(value: T) : super(value)
 
-    override fun setValue(value: T) {
+    override fun setValue(value: T?) {
         if (this.value != value) {
             super.setValue(value)
         }
     }
 
-    override fun postValue(value: T) {
+    override fun postValue(value: T?) {
         if (this.value != value) {
             super.postValue(value)
         }

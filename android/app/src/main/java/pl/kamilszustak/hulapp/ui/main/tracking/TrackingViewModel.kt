@@ -13,7 +13,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.yashovardhan99.timeit.Stopwatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.data.model.Track
@@ -76,10 +76,10 @@ class TrackingViewModel @Inject constructor(
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _error: SingleLiveData<String> = SingleLiveData()
     val error: LiveData<String> = _error
 
-    private val _trackSaved: SingleLiveEvent<Track> = SingleLiveEvent()
+    private val _trackSaved: SingleLiveData<Track> = SingleLiveData()
     val trackSaved: LiveData<Track> = _trackSaved
 
     init {
@@ -204,11 +204,11 @@ class TrackingViewModel @Inject constructor(
             startDate,
             Date(),
             currentDuration,
-            currentDistance
+            currentDistance.round()
         )
 
         viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.setValue(true)
+            _isLoading.value = true
 
             val result = withIoContext {
                 trackRepository.save(track)
@@ -225,7 +225,7 @@ class TrackingViewModel @Inject constructor(
                 _error.value = "Wystąpił błąd podczas zapisywania trasy"
             }
 
-            _isLoading.setValue(false)
+            _isLoading.value = false
         }
     }
 

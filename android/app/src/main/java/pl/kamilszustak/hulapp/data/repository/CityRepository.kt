@@ -51,7 +51,7 @@ class CityRepository @Inject constructor(
     fun getByName(name: String, shouldFetch: Boolean = true): Flow<Resource<List<City>>> {
         return object : NetworkBoundResource<List<City>, List<City>>() {
             override fun loadFromDatabase(): Flow<List<City>> =
-                cityDao.getByName(name)
+                cityDao.getByNameContaining(name)
 
             override fun shouldFetch(data: List<City>?): Boolean = shouldFetch
 

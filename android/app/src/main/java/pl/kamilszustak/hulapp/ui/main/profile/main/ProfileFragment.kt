@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
@@ -14,7 +13,6 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
@@ -60,6 +58,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.searchItem -> {
+                navigateToSearchFragment()
+                true
+            }
+
             R.id.editProfileItem -> {
                 navigateToEditProfileFragment()
                 true
@@ -90,28 +93,33 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             viewModel.openProfilePhoto()
         }
 
-        profilePhotoImageView.setOnLongClickListener {
-            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
-            navigateTo(direction)
+        addPhotoButton.setOnClickListener {
+            navigateToProfilePhotoOptionsBottomSheet()
+        }
 
-            true
+        editProfileButton.setOnClickListener {
+            navigateToEditProfileFragment()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.logoutEvent.observe(this) {
+        viewModel.logoutEvent.observe(viewLifecycleOwner) {
             startActivity<AuthorizationActivity>()
             requireActivity().finish()
         }
 
-        viewModel.userResource.error.observe(this) {
+        viewModel.userResource.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar("Wystąpił błąd podczas ładowania profilu użytkownika")
         }
 
-        viewModel.openProfilePhoto.observe(this) {
-            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(it)
-            navigateTo(direction)
+        viewModel.openProfilePhoto.observe(viewLifecycleOwner) { url ->
+            navigateToProfilePhotoFullscreenDialog(url)
         }
+    }
+
+    private fun navigateToSearchFragment() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToSearchFragment()
+        navigateTo(direction)
     }
 
     private fun navigateToEditProfileFragment() {
@@ -121,6 +129,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private fun navigateToChangePasswordFragment() {
         val direction = ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToProfilePhotoOptionsBottomSheet() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
+        navigateTo(direction)
+    }
+
+    private fun navigateToProfilePhotoFullscreenDialog(url: String) {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(url)
         navigateTo(direction)
     }
 }

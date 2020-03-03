@@ -6,12 +6,11 @@ import pl.kamilszustak.hulapp.data.model.City
 
 @Dao
 interface CityDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(city: City): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(city: City)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(cities: List<City>)
+    suspend fun insertAll(cities: Collection<City>): List<Long>
 
     @Update
     suspend fun update(city: City)
@@ -26,9 +25,9 @@ interface CityDao {
     fun getById(id: Long): Flow<City>
 
     @Query(
-        "SELECT * FROM cities WHERE name LIKE :name || '%'" +
-                "OR name LIKE '% ' || :name || '%'" +
-                "OR name LIKE '%-' || :name || '%'"
+        "SELECT * FROM cities WHERE LOWER(name) LIKE LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '% ' || LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '%-' || LOWER(:text) || '%'"
     )
-    fun getByName(name: String): Flow<List<City>>
+    fun getByNameContaining(text: String): Flow<List<City>>
 }

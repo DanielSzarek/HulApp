@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.form.Email
 import pl.kamilszustak.hulapp.data.form.Password
@@ -17,14 +17,14 @@ import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
     application: Application,
-    private val apiService: ApiService,
-    private val validator: FormValidator
+    private val validator: FormValidator,
+    private val authorizationManager: AuthorizationManager
 ) : BaseViewModel(application) {
 
     val userEmailField: FormField<String> = formField {
@@ -75,29 +75,29 @@ class SignUpViewModel @Inject constructor(
         userCountryField
     )
 
-    private val _userSignedUp: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val userSignedUp: LiveData<Unit> = _userSignedUp
+    private val _completed: SingleLiveData<Unit> = SingleLiveData()
+    val completed: LiveData<Unit> = _completed
 
-    private val _isSigningUpInProgress: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isSigningUpInProgress: LiveData<Boolean> = _isSigningUpInProgress
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _signUpError: SingleLiveEvent<String> = SingleLiveEvent()
-    val signUpError: LiveData<String> = _signUpError
+    private val _error: SingleLiveData<String> = SingleLiveData()
+    val error: LiveData<String> = _error
 
     fun onCityChoosen(city: City) {
-        userCityField.data.setValue(city)
+        userCityField.data.value = city
     }
 
     fun onCountryChoosen(country: Country) {
-        userCountryField.data.setValue(country)
+        userCountryField.data.value = country
     }
 
     fun onClearCityButtonClick() {
-        userCityField.data.setValue(null)
+        userCityField.data.value = null
     }
 
     fun onClearCountryButtonClick() {
-        userCountryField.data.setValue(null)
+        userCountryField.data.value = null
     }
 
     fun onSignUpButtonClick() {
@@ -110,7 +110,8 @@ class SignUpViewModel @Inject constructor(
         val country = userCountryField.data.value
 
         if (!isInternetConnected()) {
-            _signUpError.value = "Brak połączenia z Internetem"
+            _error.value = "Brak połączenia z Internetem"
+            return
         }
 
         if (email == null ||
@@ -132,35 +133,20 @@ class SignUpViewModel @Inject constructor(
             country?.id
         )
 
-        viewModelScope.launch(Dispatchers.IO) {
-            withMainContext {
-                _isSigningUpInProgress.setValue(true)
-            }
+        viewModelScope.launch(Dispatchers.Main) {
+            _isLoading.value = true
 
-            val response = try {
-                apiService.signUp(user)
-            } catch (exception: NoInternetConnectionException) {
-                exception.printStackTrace()
-                _signUpError.value = "Brak połączenia z Internetem"
-                return@launch
-            }
-
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    withMainContext {
-                        _userSignedUp.call()
-                    }
-                }
-            } else {
-                withMainContext {
-                    _signUpError.value = "Nie udało się utworzyć konta"
+            val result = authorizationManager.signUp(user)
+            result.onSuccess {
+                _completed.call()
+            }.onFailure { throwable ->
+                _error.value = when (throwable) {
+                    is NoInternetConnectionException -> "Brak połączenia z Internetem"
+                    else -> "Wystąpił błąd podczas tworzenia konta"
                 }
             }
 
-            withMainContext {
-                _isSigningUpInProgress.setValue(false)
-            }
+            _isLoading.value = false
         }
     }
 }

@@ -10,6 +10,7 @@ import pl.kamilszustak.hulapp.data.model.network.ApiServiceHolder
 import pl.kamilszustak.hulapp.network.BASE_URL
 import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.network.JwtAuthenticator
+import pl.kamilszustak.hulapp.network.interceptor.ErrorInterceptor
 import pl.kamilszustak.hulapp.network.interceptor.HttpInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -49,12 +50,14 @@ class NetworkModule {
     fun provideOkHttpClient(
         jwtAuthenticator: JwtAuthenticator,
         httpInterceptor: HttpInterceptor,
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        errorInterceptor: ErrorInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .authenticator(jwtAuthenticator)
             .addInterceptor(httpInterceptor)
             .addInterceptor(httpLoggingInterceptor)
+//            .addInterceptor(errorInterceptor)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
