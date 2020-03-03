@@ -22,7 +22,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(('backend.api.urls', "api"), namespace="api")),
-    url(r'^track/', include(('backend.track.urls', "track"), namespace="tracks")),
+    url(r'^api/', include(('backend.track.urls', "track"), namespace="tracks")),
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.jwt')),
     # Swagger
