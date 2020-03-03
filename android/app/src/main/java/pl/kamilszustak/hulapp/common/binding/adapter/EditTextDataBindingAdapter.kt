@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.common.adapter
+package pl.kamilszustak.hulapp.common.binding.adapter
 
 import android.os.Handler
 import android.os.Looper
