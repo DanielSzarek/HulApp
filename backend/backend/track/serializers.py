@@ -5,7 +5,11 @@ from .models import Track
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
-        exclude = ['add_date', 'mod_date', 'user']
+        exclude = (
+            'add_date',
+            'mod_date',
+            'user'
+        )
 
     def validate(self, attrs):
         if attrs['time_start'] > attrs['time_finish']:

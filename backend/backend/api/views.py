@@ -1,24 +1,30 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
+
 from .models import User, Country, City, Province
-from .serializers import ApiUserRegistrationSerializer, CountrySerializer, CitySerializer, ProvinceSerializer
+from .serializers import (
+    ApiCurrentUserSerializer,
+    CountrySerializer,
+    CitySerializer,
+    ProvinceSerializer,
+)
+
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.utils import timezone
 
 
 class UserListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = ApiUserRegistrationSerializer
+    serializer_class = ApiCurrentUserSerializer
     queryset = User.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name', 'last_name']
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = ApiUserRegistrationSerializer
+    serializer_class = ApiCurrentUserSerializer
     queryset = User.objects.all()
-
-    def perform_update(self, serializer):
-        serializer.save(mod_date=timezone.now())
 
 
 class CountryListView(generics.ListAPIView):
@@ -35,6 +41,7 @@ class CountryPostView(generics.CreateAPIView):
     serializer_class = CountrySerializer
 
     def create(self, request, *args, **kwargs):
+        # I created a special JSON structure using free database of some polish countries and cities
         serializer = self.get_serializer(data=request.data['country'], many=True)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -92,7 +99,6 @@ class CityPostView(generics.CreateAPIView):
     serializer_class = CitySerializer
 
     def create(self, request, *args, **kwargs):
-        # I created special JSON structure using free database of some polish cities
         serializer = self.get_serializer(data=request.data['cities'], many=True)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
