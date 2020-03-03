@@ -11,7 +11,9 @@ import Navbarex from './Navbar';
 import Avatar from 'react-avatar';
 import axios from 'axios';
 import {Alert } from "shards-react";
-import blankprofpic from '../Images/blankprofpic.png';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import CheckIcon from '@material-ui/icons/Check';
+import LoadingSpinner from 'react-loader-spinner'
 
 
 
@@ -32,7 +34,11 @@ class ProfileEdition extends React.Component{
                 showAlert: false,
                 auth: true,
                 visible: true ,
-                blankProf : true
+				cityName: '',
+				countryName: '',
+                redirect : false,
+                showSubmit : false,
+                loadig : false,
         };
 		this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
@@ -40,6 +46,7 @@ class ProfileEdition extends React.Component{
         this.handleCityChange = this.handleCityChange.bind(this);
 		this.handleCountryChange = this.handleCountryChange.bind(this);
         this.dismiss = this.dismiss.bind(this);
+		this.cityChanged = this.cityChanged.bind(this)
 
       }
 	  
@@ -52,11 +59,25 @@ class ProfileEdition extends React.Component{
 				  userId: res.id,
 				  surname: res.last_name,
 				  email: res.email,
-				  countryId: 2,
+				  countryId: res.country,
                   fileUploaded : null,
                   city:res.city,
-                  src : res.profile_img
-			  })
+                  src : res.profile_img,
+                  endSprinner : false,
+			  });
+			  this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/cities/${res.city}`)
+			  .then((r) => {
+				  this.setState({
+					  cityName: r.name,
+				  });
+			  });
+			  this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/countries/${res.country}`)
+			  .then((r) => {
+				  this.setState({
+					  countryName: r.name,
+				  });
+			  });
+			  
 		  })
 		  .catch((error) => {
                 console.log({message: "ERROR " + error});
@@ -72,8 +93,7 @@ class ProfileEdition extends React.Component{
          this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
             method: 'PATCH',
 
-            body: JSON.stringify({
-            
+            body: JSON.stringify({             
                 first_name: this.state.name,
                 last_name: this.state.surname,
                 country: this.state.countryId,
@@ -85,7 +105,7 @@ class ProfileEdition extends React.Component{
                     return response.json();     
                 }
             })
-            window.location.reload();
+            {setTimeout(() => {window.location.reload()}, 3500)}
     };
 
 
@@ -96,7 +116,13 @@ class ProfileEdition extends React.Component{
     }
 
     handleCityChange(val){
+		console.log("city handleCityChange autocomplete changed "+val);
 		this.setState({city: val})
+	}
+	
+	cityChanged(val){
+		console.log("city cityChanged autocomplete changed "+val);
+
 	}
 	
 	handleCountryChange(val){
@@ -105,7 +131,8 @@ class ProfileEdition extends React.Component{
       
       fileSelectedHandler = (event)=>{
         this.setState({
-            fileUploaded : event.target.files[0]
+            fileUploaded : event.target.files[0],
+            showSubmit : true
         })
     }
 
@@ -113,7 +140,7 @@ class ProfileEdition extends React.Component{
         const fd = new FormData();
         fd.append('profile_img', this.state.fileUploaded, this.state.fileUploaded.name);
 		fd.append('username', this.state.email);
-         this.setState({blankProf : false});
+        this.setState({loading : true})
 		
 		axios(
 		{ 
@@ -121,11 +148,9 @@ class ProfileEdition extends React.Component{
 			url: 'http://hulapp.pythonanywhere.com/auth/users/me/', 
 			headers: { 'content-type': 'multipart/form-data', 'Authorization': "Bearer " +  localStorage.getItem('id_token')}, 
 			data: fd })
-            
         .then(res =>{
-            this.setState({src: res.profile_img});
-                    this.setState({blankProf : false});
-
+            this.setState({src: res.profile_img,
+            loading : false});
             window.location.reload();
 			
         } 
@@ -139,7 +164,6 @@ class ProfileEdition extends React.Component{
         })
     }
 
-
     render(){
         return(
             <div>
@@ -147,23 +171,20 @@ class ProfileEdition extends React.Component{
             <div className="offset-md-1 col-12 col-md-10">
             {(this.state.auth) ? '' : <Redirect to="/" />}
                 <div className="edit-container">
-                    <h1>Edytuj profil</h1>
+                    <h1>EDYTUJ PROFIL</h1>
                         <hr/>
                         <div className="row">
                         <div className="col-4">
-                        <input type='file' onChange={this.fileSelectedHandler} accept="image/*"/>
-                        <button onClick={this.fileUploadHandler}> Upload! </button>
-                        {/* {(this.state.blankProf) &&
-                        <Avatar  size='300' round="300px" src={blankprofpic}   
-                          /> } */}
-                        <Avatar  size='300' round="300px"  name="hulapp" src={this.state.src} />  
-                
-                        
+                        <div className="button-photo-wrapper">
+                        <label className ="new-button" for="upload"><PhotoCameraIcon/> zdjęcie </label>
+                        <input name="myfile" id="upload" type='file' onChange={this.fileSelectedHandler} accept="image/*"/>
+                        </div>
+                        {this.state.loading ? <div className="spinner"><LoadingSpinner/></div> : <Avatar  size='300' round="300px" name="H"  src={this.state.src}  /> }
+                        {this.state.showSubmit && <button className="submit-photo-button" onClick={this.fileUploadHandler}><CheckIcon/> Załaduj! </button>}
+
                 </div>
                 <div className='col-8'>
                     <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    <h2>Osoba:</h2>
-                    <hr />
                     <Form.Group controlId="formEditName">
                         <Form.Label>Imię:</Form.Label>
                         <Form.Control name="name" type="text" value={this.state.name} onChange={this.handleChange} required/>
@@ -172,28 +193,34 @@ class ProfileEdition extends React.Component{
                         <Form.Label>Nazwisko:</Form.Label>
                         <Form.Control name="surname" type="text" value={this.state.surname} onChange={this.handleChange} required/>
                     </Form.Group>
+                    <Form>
+                    <div className="nameMiasto"> Miasto: </div>
                     <AutoComplete 
                         controlId="formEditCity" 
                         label="Miasto" dest="cities" 
                         name="city" required="true" 
-                        placeholder="Wprowadź..." 
                         onSelect={this.handleCityChange} 
-                        value={this.state.city} />
+						onChange={this.cityChanged}
+                        value={this.state.city} 
+                        defVal={this.state.cityName} />
+                    <div className="name"> Kraj: </div>
 					<AutoComplete 
                         controlId="formEditCountry" 
                         label="Kraj" dest="countries" 
                         name="countryId" required="true" 
-                        placeholder="Wprowadź..." 
                         value={this.state.countryId} 
+						defVal={this.state.countryName}
                         onSelect={this.handleCountryChange} />
+                    </Form>
+
                         {this.state.showAlert &&
                             <div className="y">
                             <Alert theme="warning" dismissible={this.dismiss} open={this.state.visible} >
-                                Dane zostały zmienone 
+                                Dane zostały zmienione 
                             </Alert>
                             </div>
                         }
-                    <button type="submit" onClick={this.submitHandlerAlertShow} className="button-login btn-red">
+                    <button type="submit" onClick={this.submitHandlerAlertShow} className="button-login btn-red edytuj">
                         Edytuj
                     </button>
                 </form>

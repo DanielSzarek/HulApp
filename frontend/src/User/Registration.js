@@ -251,11 +251,9 @@ class Registration extends React.Component{
                     </button>
                     <Link to="/login">
                     <div className = "button-return">
-                    {/* <div  className="logging-form" > */}
                     <button type="button" className="button-login" >
                             Powrót do logowania
                     </button>
-                    {/* </div> */}
                     </div>
                     </Link>
                     </div>                
