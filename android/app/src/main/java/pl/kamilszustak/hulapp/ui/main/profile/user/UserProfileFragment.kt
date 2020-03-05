@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_user_profile.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentUserProfileBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
@@ -45,6 +46,13 @@ class UserProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setListeners()
         viewModel.loadData(args.userId)
+    }
+
+    private fun setListeners() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadData(args.userId, true)
+        }
     }
 }

@@ -13,7 +13,6 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
-import com.mikepenz.fastadapter.listeners.EventHook
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
@@ -98,6 +97,7 @@ class SearchFragment : BaseFragment() {
         userModelAdapter = ModelAdapter { user ->
             UserSearchItem(user)
         }
+
         userFastAdapter = FastAdapter.with(userModelAdapter)
         userFastAdapter.onClickListener = object : ClickListener<UserSearchItem> {
             override fun invoke(
@@ -169,7 +169,24 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Ważna jest kolejność, gdyż najpierw ustawiony zostanie adapter,
+     * a następnie przypisane zostaną do niego modele.
+     */
     private fun observeViewModel() {
+        viewModel.adapterType.observe(viewLifecycleOwner) { type ->
+            Timber.i(type.toString())
+            recyclerView.adapter = when (type) {
+                SearchViewModel.AdapterType.USERS -> {
+                    userModelAdapter.clear()
+                    userFastAdapter
+                }
+                SearchViewModel.AdapterType.SEARCH_PROMPTS -> {
+                    searchPromptFastAdapter
+                }
+            }
+        }
+
         viewModel.usersResource.data.observe(viewLifecycleOwner) { users ->
             userModelAdapter.updateModels(users)
         }
@@ -188,19 +205,6 @@ class SearchFragment : BaseFragment() {
 
         viewModel.searchPrompts.observe(viewLifecycleOwner) { prompts ->
             searchPromptModelAdapter.updateModels(prompts)
-            Timber.i(prompts.toString())
-        }
-
-        viewModel.adapterType.observe(viewLifecycleOwner) { type ->
-            recyclerView.adapter = when (type) {
-                SearchViewModel.AdapterType.USERS -> {
-                    userModelAdapter.clear()
-                    userFastAdapter
-                }
-                SearchViewModel.AdapterType.SEARCH_PROMPTS -> {
-                    searchPromptFastAdapter
-                }
-            }
         }
     }
 
