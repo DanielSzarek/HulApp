@@ -1,9 +1,11 @@
 import React from 'react';
-// import '../Styles/UserProfile.css';
 import AutoComplete from 'react-autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+import AuthService from './AuthService';
+import '../Styles/UserProfile.css';
+import Avatar from 'react-avatar';
+import '../Styles/Navbar.css';
 
 
 export default class PersonAutoselect extends React.Component {
@@ -13,9 +15,11 @@ export default class PersonAutoselect extends React.Component {
         this.state = {
             value: "",
             autocompleteData: [],
-			selectedValue : ""
-        };
+			selectedValue : "",
+            auth: true,
 
+        };
+        this.Auth = new AuthService();
         this.onChange = this.onChange.bind(this);
         this.onSelect = this.onSelect.bind(this);
         this.getItemValue = this.getItemValue.bind(this);
@@ -30,28 +34,26 @@ export default class PersonAutoselect extends React.Component {
      * @param {String} searchText content of the input that will filter the autocomplete data.
      * @return {Nothing} The state is updated but no value is returned
      */
-    retrieveDataAsynchronously(searchText){
-        let _this = this;
-        let url = `http://hulapp.pythonanywhere.com/api/users/${searchText}`;
-        
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'json';
-        xhr.onload = () => {
-            let status = xhr.status;
 
-            if (status == 200) {
-                _this.setState({
-                    autocompleteData: xhr.response
-                });
-                console.log(xhr.response);
-            } else {
-                console.error("Cannot load data from remote source");
-            }
-        };
-
-        xhr.send();
-    }
+     async retrieveDataAsynchronously(searchText){
+		  if ( await this.Auth.loggedIn()){
+            this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/users/?search=${searchText}`)
+		     .then((res) => {
+ 					if(typeof(res.detail) !== 'undefined'){
+						console.log("not undef");
+ 						this.setState({
+							autocompleteData: []
+ 						})
+ 					}
+ 					else{
+						
+						console.log(res);
+						console.log("====");
+ 						this.setState({
+ 							autocompleteData: res
+ 						})
+ 					}
+	  })}};
     
     /**
      * Callback triggered when the user types in the autocomplete field
@@ -95,8 +97,8 @@ export default class PersonAutoselect extends React.Component {
      */
     renderItem(item, isHighlighted){
         return (
-            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }} key={item.id}>
-                {item.name}
+            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }} key={item.id} className="searchAvatar">
+               <Avatar  size='50' round="300px" name="H"  src={item.profile_img}  /> {item.first_name} {item.last_name}
             </div>   
         ); 
     }
@@ -108,25 +110,20 @@ export default class PersonAutoselect extends React.Component {
      * @return {String} val
      */
     getItemValue(item){
-         return `${item.id} - ${item.name}`;
+         return `${item.id} - ${item.first_name} ${item.last_name}`;
+                //  return `${item.id}`;
+
    }
 
     render() {
         return (
-            <div className='form-group'>
+            <div className='form-group  person-autoselect'>
 
 				
 				<AutoComplete
-					// placeholder={this.props.label}
-					inputProps={{ style: { width:'100%' ,border: '1px solid #ced4da', padding:'5px' },
-                    //  startAdornment:(<SearchIcon/>), 
-                    startAdornment : (
-                     <InputAdornment position={"start"}>
-                        {SearchIcon}
-                     </InputAdornment> ),
+					inputProps={{ style: { width:'400px' ,border: '1px solid #ced4da', padding:'5px' },
                      placeholder:'Szukaj...'
                      }}
-                    
                     getItemValue={this.getItemValue}
                     items={this.state.autocompleteData}
                     renderItem={this.renderItem}
@@ -134,9 +131,9 @@ export default class PersonAutoselect extends React.Component {
                     onChange={this.onChange}
                     onSelect={this.onSelect}
 					name={this.props.name}
-                    // wrapperStyle={{ width:  '100%'   }}
                 />            
             </div>
         );
     }
 }
+

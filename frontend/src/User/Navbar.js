@@ -15,6 +15,9 @@ import '../Styles/Navbar.css';
 import { useHistory } from 'react-router-dom';
 import PersonAutoselect from '../User/PersonAutoselect';
 import SearchIcon from '@material-ui/icons/Search';
+import {Link} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
+
 
 
 export default class Navbarex extends React.Component {
@@ -22,12 +25,15 @@ export default class Navbarex extends React.Component {
     constructor(props) {
             super(props);
             this.state = {
-              user : '',
+              userId : '',
               userCriteria: '',
+              redirect: false
             }
 
             this.onClickLogOut = this.onClickLogOut.bind(this);
             this.Auth = new AuthService();
+            this.handleUserChange = this.handleUserChange.bind(this);
+            this.userChanged = this.userChanged.bind(this);
         }
 
     onClickLogOut = (event) => {
@@ -39,7 +45,10 @@ export default class Navbarex extends React.Component {
 
      handleUserChange(val){
 		    console.log("user handleUserChange autocomplete changed "+val);
-		    this.setState({user: val})
+		    this.setState({
+          userId: val,
+          redirect: true})
+    console.log("redirect" +this.state.redirect)
 	}
 
   userChanged(val){
@@ -66,13 +75,16 @@ export default class Navbarex extends React.Component {
                 <PersonAutoselect
                         controlId="formUsersSearch" 
                         label="Przyjaciele" dest="users" 
-                        name="search" required="true" 
+                        name="userId" required="true" 
                         onSelect={this.handleUserChange} 
 						            onChange={this.userChanged}
                         value={this.state.user} 
-                        defVal={this.state.userCriteria}/>
-
+                        defVal={this.state.userId}
+                        onClick={this.clickHandler}
+                        let url = {"/user/"+this.state.userId}
+                        />
             </NavItem>
+            {this.state.redirect&& <Redirect to={"/user/"+this.state.userId}/>}
             <NavItem onClick={this.onClickLogOut}>
               <NavLink className="navLinkLogout" active href="/login">
                Wyloguj <FiLogOut />
