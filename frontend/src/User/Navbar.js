@@ -48,6 +48,7 @@ export default class Navbarex extends React.Component {
 		    this.setState({
           userId: val,
           redirect: true})
+          {setTimeout(() => {window.location.reload()}, 500)}
     console.log("redirect" +this.state.redirect)
 	}
 
@@ -84,7 +85,7 @@ export default class Navbarex extends React.Component {
                         let url = {"/user/"+this.state.userId}
                         />
             </NavItem>
-            {this.state.redirect&& <Redirect to={"/user/"+this.state.userId}/>}
+            {this.state.redirect&& <Redirect to={"/user/"+this.state.userId}/>  }
             <NavItem onClick={this.onClickLogOut}>
               <NavLink className="navLinkLogout" active href="/login">
                Wyloguj <FiLogOut />

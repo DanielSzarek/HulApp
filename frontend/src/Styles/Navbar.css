@@ -30,3 +30,15 @@
 	max-height: 200px !important;
     z-index: 100;
 }
+
+.name-search {
+    text-transform: uppercase;
+}
+
+/* .inputgrouptext {
+    border-radius: 0%;
+} */
+
+/* .input-group-text >div >div {
+    border-radius: 0px !important;
+} */
