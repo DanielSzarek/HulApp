@@ -12,8 +12,12 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import kotlinx.android.synthetic.main.bottom_sheet_tracking_history.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.binding.delegate.viewBinding
 import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.data.model.Track
+import pl.kamilszustak.hulapp.databinding.BottomSheetTrackingHistoryBinding
+import pl.kamilszustak.hulapp.databinding.FragmentLoginBindingImpl
+import pl.kamilszustak.hulapp.databinding.FragmentSignUpCompletedBinding
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.navigateUp
@@ -21,6 +25,10 @@ import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
 class TrackingHistoryBottomSheet : BaseBottomSheetDialogFragment(R.layout.bottom_sheet_tracking_history) {
+
+    private val binding: BottomSheetTrackingHistoryBinding by viewBinding() {
+        BottomSheetTrackingHistoryBinding.bind()
+    }
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory

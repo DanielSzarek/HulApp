@@ -1,9 +1,8 @@
-package pl.kamilszustak.hulapp.common.adapter
+package pl.kamilszustak.hulapp.common.binding.adapter
 
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import pl.kamilszustak.hulapp.common.date.DateFormats
 import pl.kamilszustak.hulapp.util.load
