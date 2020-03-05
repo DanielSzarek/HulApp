@@ -1,6 +1,6 @@
 package pl.kamilszustak.hulapp.data.repository.searchprompt
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import pl.kamilszustak.hulapp.data.database.dao.SearchPromptDao
 import pl.kamilszustak.hulapp.data.model.SearchPrompt
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class SearchPromptRepository @Inject constructor(
     private val searchPromptDao: SearchPromptDao
 ) {
     suspend fun add(prompt: SearchPrompt) {
-        searchPromptDao.insert(prompt)
+        searchPromptDao.insertAndDeleteDuplicates(prompt)
     }
 
     suspend fun deleteById(id: Long) {

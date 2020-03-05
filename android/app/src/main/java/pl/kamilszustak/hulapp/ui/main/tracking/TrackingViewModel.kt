@@ -21,7 +21,7 @@ import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.round
 import pl.kamilszustak.hulapp.util.toLocationPoint
-import pl.kamilszustak.hulapp.util.withIoContext
+import pl.kamilszustak.hulapp.util.withIOContext
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -210,7 +210,7 @@ class TrackingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             _isLoading.value = true
 
-            val result = withIoContext {
+            val result = withIOContext {
                 trackRepository.save(track)
             }
 

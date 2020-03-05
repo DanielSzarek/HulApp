@@ -5,18 +5,15 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.model.SearchPrompt
 
 @Dao
-interface SearchPromptDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(prompt: SearchPrompt): Long
+interface SearchPromptDao : BaseDao<SearchPrompt> {
+    @Transaction
+    suspend fun insertAndDeleteDuplicates(prompt: SearchPrompt): Long {
+        deleteAllWhereTextEquals(prompt.text)
+        return insert(prompt)
+    }
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(prompts: Collection<SearchPrompt>): List<Long>
-
-    @Update
-    suspend fun update(prompt: SearchPrompt)
-
-    @Delete
-    suspend fun delete(prompt: SearchPrompt)
+    @Query("DELETE FROM SEARCH_PROMPTS WHERE text = :text")
+    suspend fun deleteAllWhereTextEquals(text: String)
 
     @Query("DELETE FROM search_prompts WHERE id = :id")
     suspend fun deleteById(id: Long)

@@ -12,7 +12,7 @@ import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.mapNotNull
-import pl.kamilszustak.hulapp.util.withIoContext
+import pl.kamilszustak.hulapp.util.withIOContext
 import javax.inject.Inject
 
 class TrackDetailsViewModel @Inject constructor(
@@ -53,7 +53,7 @@ class TrackDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             _isLoading.setValue(true)
 
-            val result = withIoContext {
+            val result = withIOContext {
                 trackRepository.deleteById(trackId)
             }
 

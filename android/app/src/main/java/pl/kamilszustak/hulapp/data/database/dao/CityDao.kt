@@ -5,19 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.model.City
 
 @Dao
-interface CityDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(city: City): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(cities: Collection<City>): List<Long>
-
-    @Update
-    suspend fun update(city: City)
-
-    @Delete
-    suspend fun delete(city: City)
-
+interface CityDao : BaseDao<City> {
     @Query("SELECT * FROM cities")
     fun getAll(): Flow<List<City>>
 

@@ -62,11 +62,11 @@ interface ApiService {
     @GET("/api/cities/{name}")
     suspend fun getCitiesByName(@Path("name") name: String): Response<List<City>>
 
-    @POST("/api/tracks/")
+    @POST("/api/my-tracks/")
     @Authorize
     suspend fun postTrack(@Body track: Track): Response<Track>
 
-    @GET("/api/tracks/")
+    @GET("/api/my-tracks/")
     @Authorize
     suspend fun getAllTracks(): Response<List<Track>>
 
@@ -85,4 +85,7 @@ interface ApiService {
     @GET("/api/users/{id}")
     @Authorize
     suspend fun getUserById(@Path("id") id: Long): Response<User>
+
+    @GET("/api/track/")
+    suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<Track>>
 }

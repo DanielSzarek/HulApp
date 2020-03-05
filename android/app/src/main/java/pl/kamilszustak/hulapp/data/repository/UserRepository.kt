@@ -90,4 +90,20 @@ class UserRepository @Inject constructor(
             }
         }.asFlow()
     }
+
+    fun getById(id: Long, shouldFetch: Boolean = true): Flow<Resource<User>> {
+        return object : NetworkBoundResource<User, User>() {
+            override fun loadFromDatabase(): Flow<User> =
+                userDao.getById(id)
+
+            override fun shouldFetch(data: User?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<User> =
+                apiService.getUserById(id)
+
+            override suspend fun saveFetchResult(result: User) {
+                userDao.insert(result)
+            }
+        }.asFlow()
+    }
 }

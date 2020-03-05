@@ -1,6 +1,7 @@
 package pl.kamilszustak.hulapp.data.item
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.ModelAbstractItem
@@ -22,6 +23,7 @@ class SearchPromptItem(searchPrompt: SearchPrompt) : ModelAbstractItem<SearchPro
 
     class ViewHolder(view: View) : FastAdapter.ViewHolder<SearchPromptItem>(view) {
         private val searchPromptTextView: TextView = view.searchPromptTextView
+        val deleteButton: ImageButton = view.deleteButton
 
         override fun bindView(item: SearchPromptItem, payloads: MutableList<Any>) {
             searchPromptTextView.text = item.model.text

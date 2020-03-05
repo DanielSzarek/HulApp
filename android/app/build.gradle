@@ -21,22 +21,31 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     dataBinding {
         enabled = true
     }
+
+    viewBinding {
+        enabled = true
+    }
+
     android {
         kotlinOptions {
             freeCompilerArgs = ["-Xallow-result-return-type"]
@@ -49,7 +58,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // AppCompat
-    def app_compat_version = '1.2.0-alpha02'
+    def app_compat_version = '1.2.0-alpha03'
     implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.appcompat:appcompat-resources:$app_compat_version"
 
@@ -60,7 +69,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
     // Core
-    def core_version = '1.3.0-alpha01'
+    def core_version = '1.3.0-alpha02'
     implementation "androidx.core:core:$core_version"
     implementation "androidx.core:core-ktx:$core_version"
 
@@ -80,7 +89,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.2.1'
+    def navigation_version = '2.3.0-alpha03'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -94,6 +103,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    // SwipeRefreshLayout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

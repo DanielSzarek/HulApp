@@ -17,6 +17,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.search.SearchViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryViewModel
@@ -91,4 +92,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserProfileViewModel::class)
+    abstract fun bindUserProfileViewModel(userProfileViewModel: UserProfileViewModel): ViewModel
 }
