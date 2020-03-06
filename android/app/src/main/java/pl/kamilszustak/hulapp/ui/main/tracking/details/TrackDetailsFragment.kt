@@ -1,5 +1,6 @@
 package pl.kamilszustak.hulapp.ui.main.tracking.details
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -58,6 +59,11 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.shareTrackItem -> {
+                viewModel.onShareTrackButtonClick()
+                true
+            }
+
             R.id.deleteTrackItem -> {
                 viewModel.onDeleteTrackButtonClick()
                 true
@@ -80,6 +86,13 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
 
         viewModel.trackResource.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
+        }
+
+        viewModel.sharedTrackIntent.observe(viewLifecycleOwner) { event ->
+            val chooser = Intent.createChooser(event.intent, event.chooserText)
+            chooser?.let { intent ->
+                startActivity(intent)
+            }
         }
     }
 }
