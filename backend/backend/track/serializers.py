@@ -8,6 +8,7 @@ class TrackSerializer(serializers.ModelSerializer):
         exclude = (
             'add_date',
             'mod_date',
+            'user',
         )
 
     def validate(self, attrs):
