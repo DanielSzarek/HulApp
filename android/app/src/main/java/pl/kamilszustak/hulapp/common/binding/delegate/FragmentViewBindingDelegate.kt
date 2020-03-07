@@ -47,5 +47,5 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     }
 }
 
-fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T): FragmentViewBindingDelegate<T> =
-    FragmentViewBindingDelegate(this, T::bind)
+//fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T): FragmentViewBindingDelegate<T> =
+//    FragmentViewBindingDelegate(this, T::bind)

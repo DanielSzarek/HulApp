@@ -55,6 +55,7 @@ class TrackDetailsViewModel @Inject constructor(
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             this.putExtra(Intent.EXTRA_TEXT, "test")
+            this.type = "text/plain"
         }
 
         _sharedTrackIntent.value = ShareEvent(intent, "Udostępnij trasę")

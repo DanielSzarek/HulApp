@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.ModelAbstractItem
-import kotlinx.android.synthetic.main.layout_track_history_item.view.*
+import kotlinx.android.synthetic.main.item_tracks_history.view.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.date.DateFormats
 import pl.kamilszustak.hulapp.data.model.Track
@@ -20,7 +20,7 @@ class TrackItem(track: Track) : ModelAbstractItem<Track, TrackItem.ViewHolder>(t
         get() = R.id.fastadapter_track_item_id
 
     override val layoutRes: Int
-        get() = R.layout.layout_track_history_item
+        get() = R.layout.item_tracks_history
 
     override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
@@ -29,22 +29,21 @@ class TrackItem(track: Track) : ModelAbstractItem<Track, TrackItem.ViewHolder>(t
     ) : FastAdapter.ViewHolder<TrackItem>(view) {
 
         private val startDateTextView: TextView = view.startDateTextView
-        private val distanceTextView: TextView = view.distanceTextView
-        private val durationTextView: TextView = view.durationTextView
+        private val distanceAndTimeTextView: TextView = view.distanceAndTimeTextView
 
         override fun bindView(item: TrackItem, payloads: MutableList<Any>) {
             startDateTextView.text = DateFormats.dateFormat.format(item.model.startDate)
-            distanceTextView.text = view.context.getString(
-                R.string.track_distance_value,
-                item.model.distance.toString()
+            val distanceAndTime = view.context.getString(
+                R.string.track_distance_and_time,
+                item.model.distance.toString(),
+                item.model.duration.asTimeString()
             )
-            durationTextView.text = item.model.duration.asTimeString()
+            distanceAndTimeTextView.text = distanceAndTime
         }
 
         override fun unbindView(item: TrackItem) {
             startDateTextView.text = null
-            distanceTextView.text = null
-            durationTextView.text = null
+            distanceAndTimeTextView.text = null
         }
     }
 }
