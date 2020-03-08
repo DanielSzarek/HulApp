@@ -5,6 +5,7 @@ import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
@@ -22,6 +23,7 @@ open class BaseProfileViewModel(
     val userResource: ResourceDataSource<User> = ResourceDataSource()
     val cityResource: ResourceDataSource<City> = ResourceDataSource()
     val countryResource: ResourceDataSource<Country> = ResourceDataSource()
+    val tracksResource: ResourceDataSource<List<TrackEntity>> = ResourceDataSource()
 
     init {
         cityResource.result.addSource(userResource.data) { user ->
@@ -32,7 +34,7 @@ open class BaseProfileViewModel(
             }
         }
 
-        countryResource.result.addSource(userResource.data) { user ->
+       countryResource.result.addSource(userResource.data) { user ->
             user?.countryId?.let { id ->
                 countryResource.changeFlowSource {
                     countryRepository.getById(id)

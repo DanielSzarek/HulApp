@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_tracking_history.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.item.TrackItem
-import pl.kamilszustak.hulapp.data.model.Track
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.navigateUp
@@ -29,7 +29,7 @@ class TrackingHistoryBottomSheet : BaseBottomSheetDialogFragment(R.layout.bottom
         viewModelFactory
     }
 
-    private lateinit var modelAdapter: ModelAdapter<Track, TrackItem>
+    private lateinit var modelAdapter: ModelAdapter<TrackEntity, TrackItem>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

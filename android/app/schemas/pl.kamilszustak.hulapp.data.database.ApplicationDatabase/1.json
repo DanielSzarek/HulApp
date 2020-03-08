@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9f2b2498c0c4f66f7483203daf90c4b1",
+    "identityHash": "a5fc2b378e96c258457e87c2465a5547",
     "entities": [
       {
         "tableName": "users",
@@ -161,8 +161,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "tracks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`start_date` INTEGER NOT NULL, `end_date` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `distance` REAL NOT NULL, `id` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "Track",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`start_date` INTEGER NOT NULL, `end_date` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `distance` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "startDate",
@@ -187,30 +187,10 @@
             "columnName": "distance",
             "affinity": "REAL",
             "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "createdAt",
-            "columnName": "created_at",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "updatedAt",
-            "columnName": "updated_at",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": [],
           "autoGenerate": false
         },
         "indices": [],
@@ -252,7 +232,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f2b2498c0c4f66f7483203daf90c4b1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5fc2b378e96c258457e87c2465a5547')"
     ]
   }
 }

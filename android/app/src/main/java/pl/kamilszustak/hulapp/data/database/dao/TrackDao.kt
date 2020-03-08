@@ -11,8 +11,8 @@ interface TrackDao : BaseDao<TrackEntity> {
     @Query("DELETE FROM tracks WHERE id = :id")
     suspend fun deleteById(id: Long)
 
-    @Query("SELECT * FROM tracks WHERE user_id = :userId")
-    fun getAllByUserId(userId: Long): Flow<List<TrackEntity>>
+    @Query("SELECT * FROM tracks WHERE user_id = :userId LIMIT :limit")
+    fun getAllByUserId(userId: Long, limit: Int = Int.MAX_VALUE): Flow<List<TrackEntity>>
 
     @Query("SELECT * FROM tracks WHERE id = :id")
     fun getById(id: Long): Flow<TrackEntity>

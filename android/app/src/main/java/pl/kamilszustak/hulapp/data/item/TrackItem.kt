@@ -7,10 +7,10 @@ import com.mikepenz.fastadapter.items.ModelAbstractItem
 import kotlinx.android.synthetic.main.item_tracks_history.view.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.date.DateFormats
-import pl.kamilszustak.hulapp.data.model.Track
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.util.asTimeString
 
-class TrackItem(track: Track) : ModelAbstractItem<Track, TrackItem.ViewHolder>(track) {
+class TrackItem(track: TrackEntity) : ModelAbstractItem<TrackEntity, TrackItem.ViewHolder>(track) {
 
     override var identifier: Long
         get() = this.model.id

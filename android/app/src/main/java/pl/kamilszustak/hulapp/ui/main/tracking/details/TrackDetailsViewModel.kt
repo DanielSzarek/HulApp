@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.Track
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.mapNotNull
@@ -20,7 +20,7 @@ class TrackDetailsViewModel @Inject constructor(
     private val trackRepository: TrackRepository
 ) : BaseViewModel(application) {
 
-    val trackResource: ResourceDataSource<Track> = ResourceDataSource()
+    val trackResource: ResourceDataSource<TrackEntity> = ResourceDataSource()
 
     val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull { track ->
         120 * track.distance
