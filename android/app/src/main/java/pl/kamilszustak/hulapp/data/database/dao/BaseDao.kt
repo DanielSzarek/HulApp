@@ -18,6 +18,18 @@ interface BaseDao<E> {
     @Update
     suspend fun update(entity: E)
 
+    @Update
+    suspend fun update(vararg entities: E)
+
+    @Update
+    suspend fun updateAll(entities: Iterable<E>)
+
     @Delete
     suspend fun delete(entity: E)
+
+    @Delete
+    suspend fun delete(vararg entities: E)
+
+    @Delete
+    suspend fun deleteAll(entities: Iterable<E>)
 }

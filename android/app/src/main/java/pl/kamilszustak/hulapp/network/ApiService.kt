@@ -7,6 +7,7 @@ import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.*
+import pl.kamilszustak.hulapp.data.model.track.TrackJson
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -68,11 +69,11 @@ interface ApiService {
 
     @GET("/api/my-tracks/")
     @Authorize
-    suspend fun getAllTracks(): Response<List<Track>>
+    suspend fun getCurrentUserTracks(): Response<List<TrackJson>>
 
     @GET("/api/tracks/{id}")
     @Authorize
-    suspend fun getTrackById(@Path("id") id: Long): Response<Track>
+    suspend fun getTrackById(@Path("id") id: Long): Response<TrackJson>
 
     @DELETE("/api/tracks/{id}")
     @Authorize
@@ -87,5 +88,5 @@ interface ApiService {
     suspend fun getUserById(@Path("id") id: Long): Response<User>
 
     @GET("/api/track/")
-    suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<Track>>
+    suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<TrackJson>>
 }

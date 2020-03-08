@@ -113,6 +113,30 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:layout_constraintTop_toBottomOf="@id/userDetailsCardView"
                     android:layout_marginTop="@dimen/default_half_margin"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tracksHeaderTextView"
+                    android:text="Trasy"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    app:layout_constraintTop_toBottomOf="@id/editProfileButton" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tracksRecyclerView"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tracksHeaderTextView"
+                    android:layout_marginTop="@dimen/default_half_margin" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/showAllTracksButton"
+                    android:text="Pokaż wszystkie"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    app:layout_constraintTop_toBottomOf="@id/tracksRecyclerView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

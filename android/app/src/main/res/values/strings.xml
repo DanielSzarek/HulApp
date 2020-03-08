@@ -37,6 +37,7 @@
     <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
 
     <!-- TrackingFragment -->
+    <string name="track_distance_value">%s km</string>
     <string name="track_distance_and_time">%1$s km w %2$s</string>
 
     <!-- TrackDetailsFragment -->
