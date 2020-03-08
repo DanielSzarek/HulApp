@@ -48,7 +48,7 @@ class User(AbstractUser):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     add_date = models.DateTimeField(auto_now_add=True)
     mod_date = models.DateTimeField(auto_now_add=True)
-    profile_img = models.ImageField(upload_to='images')
+    profile_img = models.ImageField(upload_to='images', default='images/default.png')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
