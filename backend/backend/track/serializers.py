@@ -18,7 +18,7 @@ class TrackSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['time_start'] > attrs['time_finish']:
-            raise serializers.ValidationError("Koniec musi wystąpić po starcie!")
+            raise serializers.ValidationError(detail="Koniec musi wystąpić po starcie!")
         if attrs['duration'] < 0:
-            raise serializers.ValidationError("Długość nie może być krótsza od 0!", "Bład")
+            raise serializers.ValidationError(detail="Długość nie może być krótsza od 0!")
         return attrs
