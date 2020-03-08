@@ -20,15 +20,15 @@ open class RefreshableDataSource<T>(
     private var data: LiveData<T> = UniqueLiveData()
 
     init {
-        getDataFromSource()
+        getSourceData()
     }
 
     fun refresh() {
         result.removeSource(data)
-        getDataFromSource()
+        getSourceData()
     }
 
-    private fun getDataFromSource() {
+    private fun getSourceData() {
         data = block()
         result.addSource(data) {
             result.value = it

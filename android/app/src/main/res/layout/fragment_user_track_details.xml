@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel" />
+            type="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/swipeRefreshLayout"
-        app:refreshing="@{viewModel.isLoading || viewModel.trackResource.isLoading}">
+        app:refreshing="@{viewModel.trackResource.isLoading}">
 
         <ScrollView
             android:layout_width="match_parent"

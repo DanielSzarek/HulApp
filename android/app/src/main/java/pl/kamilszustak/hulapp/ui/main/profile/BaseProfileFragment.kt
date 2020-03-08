@@ -6,7 +6,10 @@ import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 
-abstract class BaseProfileFragment(@LayoutRes layoutResource: Int) : BaseFragment(layoutResource) {
+abstract class BaseProfileFragment : BaseFragment {
+
+    constructor() : super()
+    constructor(@LayoutRes layoutResource: Int) : super(layoutResource)
 
     protected val trackModelAdapter: ModelAdapter<TrackEntity, TrackItem>
 

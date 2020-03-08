@@ -46,6 +46,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_trackingHistoryFragment"
+            app:destination="@id/trackingHistoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -92,13 +99,6 @@
         <argument
             android:name="userId"
             app:argType="long" />
-        <action
-            android:id="@+id/action_userProfileFragment_to_trackDetailsFragment"
-            app:destination="@id/trackDetailsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/trackDetailsFragment"
@@ -109,4 +109,9 @@
             android:name="trackId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/trackingHistoryFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryFragment"
+        android:label="TrackingHistoryFragment"
+        tools:layout="@layout/fragment_tracking_history" />
 </navigation>

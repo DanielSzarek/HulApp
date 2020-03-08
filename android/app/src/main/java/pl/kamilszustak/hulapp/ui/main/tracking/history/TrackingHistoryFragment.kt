@@ -81,7 +81,7 @@ class TrackingHistoryFragment : BaseFragment(R.layout.fragment_tracking_history)
     }
 
     private fun navigateToTrackDetailsFragment(trackId: Long) {
-        val direction = TrackingHistoryBottomSheetDirections.actionTrackingHistoryBottomSheetToTrackDetailsFragment(trackId)
+        val direction = TrackingHistoryFragmentDirections.actionTrackingHistoryBottomSheetToTrackDetailsFragment(trackId)
         navigateTo(direction)
     }
 }

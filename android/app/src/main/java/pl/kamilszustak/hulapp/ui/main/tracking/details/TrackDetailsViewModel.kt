@@ -6,25 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.mapNotNull
+import pl.kamilszustak.hulapp.ui.main.tracking.details.base.BaseTrackDetailsViewModel
 import javax.inject.Inject
 
 class TrackDetailsViewModel @Inject constructor(
     application: Application,
-    private val trackRepository: TrackRepository
-) : BaseViewModel(application) {
-
-    val trackResource: ResourceDataSource<TrackEntity> = ResourceDataSource()
-
-    val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull { track ->
-        120 * track.distance
-    }
+    trackRepository: TrackRepository
+) : BaseTrackDetailsViewModel(application, trackRepository) {
 
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -37,14 +28,6 @@ class TrackDetailsViewModel @Inject constructor(
 
     private val _sharedTrackIntent: SingleLiveData<ShareEvent> = SingleLiveData()
     val sharedTrackIntent: LiveData<ShareEvent> = _sharedTrackIntent
-
-    fun loadTrack(trackId: Long, force: Boolean = false) {
-        initialize(force) {
-            trackResource.changeFlowSource {
-                trackRepository.getById(trackId)
-            }
-        }
-    }
 
     fun onShareTrackButtonClick() {
         val track = trackResource.data.value

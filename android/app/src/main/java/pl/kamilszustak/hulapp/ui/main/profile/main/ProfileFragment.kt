@@ -20,7 +20,7 @@ import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
-class ProfileFragment : BaseProfileFragment(R.layout.fragment_profile) {
+class ProfileFragment : BaseProfileFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -177,6 +177,7 @@ class ProfileFragment : BaseProfileFragment(R.layout.fragment_profile) {
     }
 
     private fun navigateToTrackingHistoryFragment() {
-
+        val direction = ProfileFragmentDirections.actionProfileFragmentToTrackingHistoryFragment()
+        navigateTo(direction)
     }
 }

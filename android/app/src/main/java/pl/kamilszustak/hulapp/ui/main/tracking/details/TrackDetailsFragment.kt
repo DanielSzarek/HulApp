@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_track_details.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentTrackDetailsBinding
@@ -48,8 +49,9 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        setListeners()
         observeViewModel()
-        viewModel.loadTrack(args.trackId)
+        viewModel.loadData(args.trackId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,6 +74,12 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
             else -> {
                 super.onOptionsItemSelected(item)
             }
+        }
+    }
+
+    private fun setListeners() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
         }
     }
 
