@@ -30,11 +30,11 @@
             android:name="trackId"
             app:argType="long" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/trackingHistoryBottomSheet"
-        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryBottomSheet"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryFragment"
         android:label="TrackingHistoryBottomSheet"
-        tools:layout="@layout/bottom_sheet_tracking_history" >
+        tools:layout="@layout/fragment_tracking_history" >
         <action
             android:id="@+id/action_trackingHistoryBottomSheet_to_trackDetailsFragment"
             app:destination="@id/trackDetailsFragment"
@@ -42,5 +42,5 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-    </dialog>
+    </fragment>
 </navigation>

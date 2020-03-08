@@ -19,4 +19,8 @@ class TrackingHistoryViewModel @Inject constructor(
             trackRepository.getAllOfCurrentUser()
         }
     }
+
+    fun onRefresh() {
+        tracksResource.refresh()
+    }
 }

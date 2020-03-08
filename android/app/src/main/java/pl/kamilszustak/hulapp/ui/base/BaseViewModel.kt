@@ -5,12 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import pl.kamilszustak.hulapp.application.BaseApplication
 import pl.kamilszustak.hulapp.util.isInternetConnected
 
-open class BaseViewModel(application: Application) : AndroidViewModel(application) {
+abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _isInitialized = false
     protected val isInitialized = _isInitialized
 
-    fun initialize(force: Boolean = false, function: () -> Unit) {
+    protected fun initialize(force: Boolean = false, function: () -> Unit) {
         if (_isInitialized && !force) {
             return
         }
