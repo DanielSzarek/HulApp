@@ -1,6 +1,8 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from .serializers import TrackSerializer
 from .models import Track, User
 from .permissions import IsOwner, ReadOnly
@@ -15,8 +17,13 @@ class TrackView(generics.ListCreateAPIView):
         queryset = Track.objects.filter(user=self.request.user).order_by('add_date')
         return queryset
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+        # We give extra context to add automaticaly user
+        serializer = TrackSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class OtherUserTracksView(generics.ListAPIView):
