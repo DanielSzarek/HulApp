@@ -17,5 +17,8 @@ class TrackJson(
     var duration: Long,
 
     @Json(name = "track_length")
-    var distance: Double
+    var distance: Double,
+
+    @Json(name = "user_id")
+    var userId: Long
 ) : JsonModel()

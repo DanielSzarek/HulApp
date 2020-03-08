@@ -65,7 +65,7 @@ interface ApiService {
 
     @POST("/api/my-tracks/")
     @Authorize
-    suspend fun postTrack(@Body track: Track): Response<Track>
+    suspend fun postTrack(@Body track: Track): Response<TrackJson>
 
     @GET("/api/my-tracks/")
     @Authorize

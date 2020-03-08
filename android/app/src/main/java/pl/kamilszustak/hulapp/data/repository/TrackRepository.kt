@@ -18,11 +18,12 @@ import javax.inject.Singleton
 class TrackRepository @Inject constructor(
     private val trackDao: TrackDao,
     private val apiService: ApiService,
-    private val userDetailsRepository: UserDetailsRepository
+    private val userDetailsRepository: UserDetailsRepository,
+    private val trackMapper: TrackMapper
 ) {
     fun getAllOfCurrentUser(shouldFetch: Boolean = true): Flow<Resource<List<TrackEntity>>> {
-        val userId = userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
-        val mapper = TrackMapper(userId)
+        val userId =
+            userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
 
         return object : NetworkBoundResource<List<TrackJson>, List<TrackEntity>>() {
             override fun loadFromDatabase(): Flow<List<TrackEntity>> =
@@ -34,18 +35,16 @@ class TrackRepository @Inject constructor(
                 apiService.getCurrentUserTracks()
 
             override suspend fun saveFetchResult(result: List<TrackJson>) {
-                val tracks = result.map { json ->
-                    mapper.map(json)
-                }
-
+                val tracks = trackMapper.mapAll(result)
                 trackDao.replaceAllByUserId(userId, tracks)
             }
         }.asFlow()
     }
 
-    fun getAllByUserId(userId: Long, shouldFetch: Boolean = true): Flow<Resource<List<TrackEntity>>> {
-        val mapper = TrackMapper(userId)
-
+    fun getAllByUserId(
+        userId: Long,
+        shouldFetch: Boolean = true
+    ): Flow<Resource<List<TrackEntity>>> {
         return object : NetworkBoundResource<List<TrackJson>, List<TrackEntity>>() {
             override fun loadFromDatabase(): Flow<List<TrackEntity>> =
                 trackDao.getAllByUserId(userId)
@@ -56,10 +55,7 @@ class TrackRepository @Inject constructor(
                 apiService.getAllTracksByUserId(userId)
 
             override suspend fun saveFetchResult(result: List<TrackJson>) {
-                val tracks = result.map { json ->
-                    mapper.map(json)
-                }
-
+                val tracks = trackMapper.mapAll(result)
                 trackDao.replaceAllByUserId(userId, tracks)
             }
         }.asFlow()
@@ -76,20 +72,23 @@ class TrackRepository @Inject constructor(
                 apiService.getTrackById(id)
 
             override suspend fun saveFetchResult(result: TrackJson) {
-                TODO()
+                val track = trackMapper.map(result)
+                trackDao.insert(track)
             }
-        }
+        }.asFlow()
     }
 
-    suspend fun save(track: Track): Result<Track> {
-        return object : NetworkCall<Track, Track>() {
-            override suspend fun makeCall(): Response<Track> =
+    suspend fun save(track: Track): Result<TrackEntity> {
+        return object : NetworkCall<TrackJson, TrackEntity>() {
+            override suspend fun makeCall(): Response<TrackJson> =
                 apiService.postTrack(track)
 
-            override suspend fun mapResponse(response: Track): Track = response
+            override suspend fun mapResponse(response: TrackJson): TrackEntity =
+                trackMapper.map(response)
 
-            override suspend fun saveCallResult(result: Track) {
-                trackDao.insert(result)
+            override suspend fun saveCallResult(result: TrackJson) {
+                val entity = trackMapper.map(result)
+                trackDao.insert(entity)
             }
         }.callForResponse()
     }

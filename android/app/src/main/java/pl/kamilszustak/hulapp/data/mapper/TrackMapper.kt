@@ -1,19 +1,19 @@
 package pl.kamilszustak.hulapp.data.mapper
 
+import dagger.Reusable
 import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.model.track.TrackJson
+import javax.inject.Inject
 
-class TrackMapper(
-    private val userId: Long
-) : ModelMapper<TrackJson, TrackEntity> {
-
+@Reusable
+class TrackMapper @Inject constructor() : ModelMapper<TrackJson, TrackEntity>() {
     override fun map(model: TrackJson): TrackEntity {
         return TrackEntity(
             startDate = model.startDate,
             endDate = model.endDate,
             duration = model.duration,
             distance = model.distance,
-            userId = userId
+            userId = model.userId
         ).apply {
             this.id = model.id
         }

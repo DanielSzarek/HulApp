@@ -2,23 +2,11 @@ package pl.kamilszustak.hulapp.data.model.track
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import kotlinx.android.parcel.Parcelize
-import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.entity.DbEntity
 import java.util.*
 
-@Entity(
-    tableName = "tracks",
-    foreignKeys = [
-        ForeignKey(
-            entity = User::class,
-            childColumns = ["user_id"],
-            parentColumns = ["id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
-)
+@Entity(tableName = "tracks")
 @Parcelize
 data class TrackEntity(
     @ColumnInfo(name = "start_date")
