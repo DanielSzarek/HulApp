@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/swipeRefreshLayout"
-        app:refreshing="@{viewModel.userResource.isLoading}">
+        app:refreshing="@{viewModel.userResource.isLoading || viewModel.cityResource.isLoading || viewModel.countryResource.isLoading || viewModel.tracksResource.isLoading}">
 
         <ScrollView
             android:layout_width="match_parent"

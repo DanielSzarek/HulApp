@@ -17,7 +17,9 @@ import pl.kamilszustak.hulapp.ui.main.profile.search.SearchFragment
 import pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsFragment
-import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment
 
 @Module
 abstract class MainActivityModule {
@@ -81,4 +83,12 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeUserProfileFragment(): UserProfileFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserTrackDetailsFragment(): UserTrackDetailsFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserTrackingHistoryFragment(): UserTrackingHistoryFragment
 }

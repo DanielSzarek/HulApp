@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_user_track_details.*
 import org.jetbrains.anko.design.snackbar
-import androidx.lifecycle.observe
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentUserTrackDetailsBinding
 import pl.kamilszustak.hulapp.ui.main.tracking.details.base.BaseTrackDetailsFragment
@@ -23,6 +24,8 @@ class UserTrackDetailsFragment : BaseTrackDetailsFragment() {
     private val viewModel: UserTrackDetailsViewModel by viewModels {
         viewModelFactory
     }
+
+    private val args: UserTrackDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +50,7 @@ class UserTrackDetailsFragment : BaseTrackDetailsFragment() {
 
         setListeners()
         observeViewModel()
+        viewModel.loadData(args.trackId)
     }
 
     private fun setListeners() {

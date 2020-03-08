@@ -1,25 +1,24 @@
-package pl.kamilszustak.hulapp.ui.main.tracking.history
+package pl.kamilszustak.hulapp.ui.main.tracking.history.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import com.mikepenz.fastadapter.ClickListener
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.adapters.ModelAdapter
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_tracking_history.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.TrackItem
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
-import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.databinding.FragmentTrackingHistoryBinding
+import pl.kamilszustak.hulapp.ui.main.tracking.history.BaseTrackingHistoryFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
-class TrackingHistoryFragment : BaseFragment(R.layout.fragment_tracking_history) {
+class TrackingHistoryFragment : BaseTrackingHistoryFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -28,40 +27,32 @@ class TrackingHistoryFragment : BaseFragment(R.layout.fragment_tracking_history)
         viewModelFactory
     }
 
-    private lateinit var modelAdapter: ModelAdapter<TrackEntity, TrackItem>
+    override val recyclerView: RecyclerView
+        get() = tracksRecyclerView
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val dataBinding = DataBindingUtil.inflate<FragmentTrackingHistoryBinding>(
+            inflater,
+            R.layout.fragment_tracking_history,
+            container,
+            false
+        ).apply {
+            this.viewModel = this@TrackingHistoryFragment.viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+
+        return dataBinding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializeRecyclerView()
         setListeners()
         observeViewModel()
-    }
-
-    private fun initializeRecyclerView() {
-        modelAdapter = ModelAdapter {
-            TrackItem(it)
-        }
-
-        val listener = object : ClickListener<TrackItem> {
-            override fun invoke(
-                v: View?,
-                adapter: IAdapter<TrackItem>,
-                item: TrackItem,
-                position: Int
-            ): Boolean {
-                navigateToTrackDetailsFragment(item.model.id)
-
-                return true
-            }
-        }
-
-        val fastAdapter = FastAdapter.with(modelAdapter)
-        fastAdapter.onClickListener = listener
-
-        tracksRecyclerView.apply {
-            this.adapter = fastAdapter
-        }
     }
 
     private fun setListeners() {
@@ -80,7 +71,7 @@ class TrackingHistoryFragment : BaseFragment(R.layout.fragment_tracking_history)
         }
     }
 
-    private fun navigateToTrackDetailsFragment(trackId: Long) {
+    override fun navigateToTrackDetailsFragment(trackId: Long) {
         val direction = TrackingHistoryFragmentDirections.actionTrackingHistoryBottomSheetToTrackDetailsFragment(trackId)
         navigateTo(direction)
     }

@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/trackingHistoryBottomSheet"
-        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
         android:label="TrackingHistoryBottomSheet"
         tools:layout="@layout/fragment_tracking_history" >
         <action
