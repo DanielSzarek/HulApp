@@ -6,17 +6,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.mikepenz.fastadapter.ClickListener
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
-import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
-class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
+class ProfileFragment : BaseProfileFragment(R.layout.fragment_profile) {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -47,6 +51,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        initializeRecyclerView()
         setListeners()
         observeViewModel()
     }
@@ -84,6 +89,26 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
+    private fun initializeRecyclerView() {
+        val fastAdapter = FastAdapter.with(trackModelAdapter).apply {
+            this.onClickListener = object : ClickListener<TrackItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<TrackItem>,
+                    item: TrackItem,
+                    position: Int
+                ): Boolean {
+                    navigateToTrackDetailsFragment(item.model.id)
+                    return true
+                }
+            }
+        }
+
+        tracksRecyclerView.apply {
+            this.adapter = fastAdapter
+        }
+    }
+
     private fun setListeners() {
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
@@ -99,6 +124,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         editProfileButton.setOnClickListener {
             navigateToEditProfileFragment()
+        }
+
+        showAllTracksButton.setOnClickListener {
+            navigateToTrackingHistoryFragment()
         }
     }
 
@@ -140,5 +169,14 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun navigateToProfilePhotoFullscreenDialog(url: String) {
         val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(url)
         navigateTo(direction)
+    }
+
+    private fun navigateToTrackDetailsFragment(trackId: Long) {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToTrackDetailsFragment(trackId)
+        navigateTo(direction)
+    }
+
+    private fun navigateToTrackingHistoryFragment() {
+
     }
 }

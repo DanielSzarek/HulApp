@@ -21,13 +21,15 @@ class TrackRepository @Inject constructor(
     private val userDetailsRepository: UserDetailsRepository,
     private val trackMapper: TrackMapper
 ) {
-    fun getAllOfCurrentUser(shouldFetch: Boolean = true): Flow<Resource<List<TrackEntity>>> {
-        val userId =
-            userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
+    fun getAllOfCurrentUser(
+        limit: Int = Int.MAX_VALUE,
+        shouldFetch: Boolean = true
+    ): Flow<Resource<List<TrackEntity>>> {
+        val userId = userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
 
         return object : NetworkBoundResource<List<TrackJson>, List<TrackEntity>>() {
             override fun loadFromDatabase(): Flow<List<TrackEntity>> =
-                trackDao.getAllByUserId(userId)
+                trackDao.getAllByUserId(userId, limit)
 
             override fun shouldFetch(data: List<TrackEntity>?): Boolean = shouldFetch
 
@@ -43,11 +45,12 @@ class TrackRepository @Inject constructor(
 
     fun getAllByUserId(
         userId: Long,
+        limit: Int = Int.MAX_VALUE,
         shouldFetch: Boolean = true
     ): Flow<Resource<List<TrackEntity>>> {
         return object : NetworkBoundResource<List<TrackJson>, List<TrackEntity>>() {
             override fun loadFromDatabase(): Flow<List<TrackEntity>> =
-                trackDao.getAllByUserId(userId)
+                trackDao.getAllByUserId(userId, limit)
 
             override fun shouldFetch(data: List<TrackEntity>?): Boolean = shouldFetch
 

@@ -12,7 +12,7 @@ import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 
-open class BaseProfileViewModel(
+abstract class BaseProfileViewModel(
     application: Application,
     protected val userRepository: UserRepository,
     protected val cityRepository: CityRepository,
@@ -39,6 +39,12 @@ open class BaseProfileViewModel(
                 countryResource.changeFlowSource {
                     countryRepository.getById(id)
                 }
+            }
+        }
+
+        tracksResource.result.addSource(userResource.data) { user ->
+            tracksResource.changeFlowSource {
+                trackRepository.getAllByUserId(user.id, 3)
             }
         }
     }
