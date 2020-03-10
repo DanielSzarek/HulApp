@@ -44,7 +44,7 @@ abstract class BaseProfileViewModel(
 
         tracksResource.result.addSource(userResource.data) { user ->
             tracksResource.changeFlowSource {
-                trackRepository.getAllByUserId(user.id, 3)
+                trackRepository.getAllByUserId(user.id, 10)
             }
         }
     }

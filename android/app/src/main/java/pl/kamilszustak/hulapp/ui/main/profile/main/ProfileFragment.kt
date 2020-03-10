@@ -17,6 +17,8 @@ import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
+import pl.kamilszustak.hulapp.util.updateModels
+import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : BaseProfileFragment() {
@@ -144,6 +146,11 @@ class ProfileFragment : BaseProfileFragment() {
 
         viewModel.openProfilePhoto.observe(viewLifecycleOwner) { url ->
             navigateToProfilePhotoFullscreenDialog(url)
+        }
+
+        viewModel.tracksResource.data.observe(viewLifecycleOwner) { tracks ->
+            Timber.i(tracks.toString())
+            trackModelAdapter.updateModels(tracks)
         }
     }
 
