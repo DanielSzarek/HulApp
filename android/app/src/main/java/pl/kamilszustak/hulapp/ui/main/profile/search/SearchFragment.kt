@@ -13,7 +13,6 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
-import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.item.SearchPromptItem
@@ -24,7 +23,6 @@ import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.updateModels
-import timber.log.Timber
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment() {
@@ -35,6 +33,8 @@ class SearchFragment : BaseFragment() {
     private val viewModel: SearchViewModel by viewModels {
         viewModelFactory
     }
+
+    private lateinit var binding: FragmentSearchBinding
 
     private lateinit var userModelAdapter: ModelAdapter<User, UserSearchItem>
     private lateinit var searchPromptModelAdapter: ModelAdapter<SearchPrompt, SearchPromptItem>
@@ -47,7 +47,7 @@ class SearchFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentSearchBinding>(
+        binding = DataBindingUtil.inflate<FragmentSearchBinding>(
             inflater,
             R.layout.fragment_search,
             container,
@@ -57,7 +57,7 @@ class SearchFragment : BaseFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,16 +98,17 @@ class SearchFragment : BaseFragment() {
             UserSearchItem(user)
         }
 
-        userFastAdapter = FastAdapter.with(userModelAdapter)
-        userFastAdapter.onClickListener = object : ClickListener<UserSearchItem> {
-            override fun invoke(
-                v: View?,
-                adapter: IAdapter<UserSearchItem>,
-                item: UserSearchItem,
-                position: Int
-            ): Boolean {
-                navigateToUserProfileFragment(item.model.id)
-                return true
+        userFastAdapter = FastAdapter.with(userModelAdapter).apply {
+            this.onClickListener = object : ClickListener<UserSearchItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<UserSearchItem>,
+                    item: UserSearchItem,
+                    position: Int
+                ): Boolean {
+                    navigateToUserProfileFragment(item.model.id)
+                    return true
+                }
             }
         }
     }
@@ -117,30 +118,38 @@ class SearchFragment : BaseFragment() {
             SearchPromptItem(prompt)
         }
 
-        searchPromptFastAdapter = FastAdapter.with(searchPromptModelAdapter)
-        searchPromptFastAdapter.onClickListener = { view, adapter, item, position ->
-            searchView.setQuery(item.model.text, true)
-            true
-        }
-
-        val eventHook = object : ClickEventHook<SearchPromptItem>() {
-            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
-                return if (viewHolder is SearchPromptItem.ViewHolder) {
-                    viewHolder.deleteButton
-                } else {
-                    null
+        searchPromptFastAdapter = FastAdapter.with(searchPromptModelAdapter).apply {
+            this.onClickListener = object : ClickListener<SearchPromptItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<SearchPromptItem>,
+                    item: SearchPromptItem,
+                    position: Int
+                ): Boolean {
+                    binding.searchView.setQuery(item.model.text, true)
+                    return true
                 }
             }
-            override fun onClick(
-                v: View,
-                position: Int,
-                fastAdapter: FastAdapter<SearchPromptItem>,
-                item: SearchPromptItem
-            ) {
-                viewModel.onDeleteSearchPromptButtonClick(item.model.id)
+
+            val eventHook = object : ClickEventHook<SearchPromptItem>() {
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                    return if (viewHolder is SearchPromptItem.ViewHolder) {
+                        viewHolder.deleteButton
+                    } else {
+                        null
+                    }
+                }
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<SearchPromptItem>,
+                    item: SearchPromptItem
+                ) {
+                    viewModel.onDeleteSearchPromptButtonClick(item.model.id)
+                }
             }
+            this.addEventHook(eventHook)
         }
-        searchPromptFastAdapter.addEventHook(eventHook)
     }
 
     private fun initializeSearchView() {
@@ -160,12 +169,12 @@ class SearchFragment : BaseFragment() {
             }
         }
 
-        searchView.setOnQueryTextListener(queryListener)
+        binding.searchView.setOnQueryTextListener(queryListener)
     }
 
     private fun setListeners() {
-        searchButton.setOnClickListener {
-            searchView.setQuery(searchView.query, true)
+        binding.searchButton.setOnClickListener {
+            binding.searchView.setQuery(binding.searchView.query, true)
         }
     }
 
@@ -175,8 +184,7 @@ class SearchFragment : BaseFragment() {
      */
     private fun observeViewModel() {
         viewModel.adapterType.observe(viewLifecycleOwner) { type ->
-            Timber.i(type.toString())
-            recyclerView.adapter = when (type) {
+            binding.recyclerView.adapter = when (type) {
                 SearchViewModel.AdapterType.USERS -> {
                     userModelAdapter.clear()
                     userFastAdapter
@@ -193,9 +201,9 @@ class SearchFragment : BaseFragment() {
 
         viewModel.usersResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressBar.show()
+                binding.progressBar.show()
             } else {
-                progressBar.hide()
+                binding.progressBar.hide()
             }
         }
 

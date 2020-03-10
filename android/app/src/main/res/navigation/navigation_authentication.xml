@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_authorization"
+    android:id="@+id/navigation_authentication"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="pl.kamilszustak.hulapp.ui.authorization.login.LoginFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authentication.login.LoginFragment"
         android:label="Logowanie">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authentication.signup.SignUpFragment"
         android:label="Rejestracja" >
         <action
             android:id="@+id/action_signUpFragment_to_signUpCompleted"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordResetFragment"
-        android:name="pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authentication.passwordreset.PasswordResetFragment"
         android:label="Reset hasła" >
         <action
             android:id="@+id/action_passwordResetFragment_to_passwordResetCompletedFragment"
@@ -48,10 +48,10 @@
     </fragment>
     <fragment
         android:id="@+id/signUpCompleted"
-        android:name="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpCompletedFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authentication.signup.SignUpCompletedFragment"
         android:label="SignUpCompleted" />
     <fragment
         android:id="@+id/passwordResetCompletedFragment"
-        android:name="pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetCompletedFragment"
+        android:name="pl.kamilszustak.hulapp.ui.authentication.passwordreset.PasswordResetCompletedFragment"
         android:label="PasswordResetCompletedFragment" />
 </navigation>

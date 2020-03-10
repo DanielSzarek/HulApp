@@ -8,19 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import kotlinx.android.synthetic.main.bottom_sheet_country_choice.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
-import pl.kamilszustak.hulapp.data.item.CountryItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp
-import pl.kamilszustak.hulapp.util.set
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -33,6 +29,8 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         viewModelFactory
     }
 
+    private lateinit var binding: BottomSheetCountryChoiceBinding
+
     var listener: ClickListener<CountryItem>? = null
 
     private lateinit var modelAdapter: ModelAdapter<Country, CountryItem>
@@ -42,7 +40,7 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<BottomSheetCountryChoiceBinding>(
+        binding = DataBindingUtil.inflate<BottomSheetCountryChoiceBinding>(
             inflater,
             R.layout.bottom_sheet_country_choice,
             container,
@@ -52,13 +50,12 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        retainInstance = true
         initializeRecyclerView()
         setListeners()
         observeViewModel()
@@ -68,15 +65,18 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         modelAdapter = ModelAdapter {
             CountryItem(it)
         }
-        val fastAdapter = FastAdapter.with(modelAdapter)
-        fastAdapter.onClickListener = listener
-        countriesRecyclerView.apply {
+
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onClickListener = listener
+        }
+
+        binding.countriesRecyclerView.apply {
             this.adapter = fastAdapter
         }
     }
 
     private fun setListeners() {
-        closeButton.setOnClickListener {
+        binding.closeButton.setOnClickListener {
             navigateUp()
         }
     }
@@ -92,9 +92,9 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
         viewModel.countriesResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressBar.show()
+                binding.progressBar.show()
             } else {
-                progressBar.hide()
+                binding.progressBar.hide()
             }
         }
     }

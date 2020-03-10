@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_user_track_details.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentUserTrackDetailsBinding
@@ -27,12 +26,14 @@ class UserTrackDetailsFragment : BaseTrackDetailsFragment() {
 
     private val args: UserTrackDetailsFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentUserTrackDetailsBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentUserTrackDetailsBinding>(
+        binding = DataBindingUtil.inflate<FragmentUserTrackDetailsBinding>(
             inflater,
             R.layout.fragment_user_track_details,
             container,
@@ -42,7 +43,7 @@ class UserTrackDetailsFragment : BaseTrackDetailsFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +55,7 @@ class UserTrackDetailsFragment : BaseTrackDetailsFragment() {
     }
 
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
     }

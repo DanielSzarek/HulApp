@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_track_details.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentTrackDetailsBinding
@@ -16,7 +15,7 @@ import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
-class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
+class TrackDetailsFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -27,12 +26,14 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
 
     private val args: TrackDetailsFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentTrackDetailsBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentTrackDetailsBinding>(
+        binding = DataBindingUtil.inflate<FragmentTrackDetailsBinding>(
             inflater,
             R.layout.fragment_track_details,
             container,
@@ -42,7 +43,7 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,7 +79,7 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
     }
 
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
     }

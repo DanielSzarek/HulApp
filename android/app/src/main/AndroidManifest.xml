@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity"
+        <activity android:name="pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:exported="true" />

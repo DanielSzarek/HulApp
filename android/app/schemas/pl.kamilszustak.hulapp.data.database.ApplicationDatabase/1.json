@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a5fc2b378e96c258457e87c2465a5547",
+    "identityHash": "d647ef9114065007104333051a9f39dd",
     "entities": [
       {
         "tableName": "users",
@@ -161,8 +161,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Track",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`start_date` INTEGER NOT NULL, `end_date` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `distance` REAL NOT NULL)",
+        "tableName": "tracks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`start_date` INTEGER NOT NULL, `end_date` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `distance` REAL NOT NULL, `user_id` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "startDate",
@@ -187,10 +187,24 @@
             "columnName": "distance",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
-          "columnNames": [],
+          "columnNames": [
+            "id"
+          ],
           "autoGenerate": false
         },
         "indices": [],
@@ -232,7 +246,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5fc2b378e96c258457e87c2465a5547')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd647ef9114065007104333051a9f39dd')"
     ]
   }
 }

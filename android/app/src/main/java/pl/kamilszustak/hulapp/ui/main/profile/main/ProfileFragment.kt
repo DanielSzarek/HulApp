@@ -9,13 +9,12 @@ import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
-import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
+import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
@@ -29,12 +28,14 @@ class ProfileFragment : BaseProfileFragment() {
         viewModelFactory
     }
 
+    private lateinit var binding: FragmentProfileBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentProfileBinding>(
+        binding = DataBindingUtil.inflate<FragmentProfileBinding>(
             inflater,
             R.layout.fragment_profile,
             container,
@@ -44,7 +45,7 @@ class ProfileFragment : BaseProfileFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,36 +105,36 @@ class ProfileFragment : BaseProfileFragment() {
             }
         }
 
-        tracksRecyclerView.apply {
+        binding.tracksRecyclerView.apply {
             this.adapter = fastAdapter
         }
     }
 
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
 
-        profilePhotoImageView.setOnClickListener {
+        binding.profilePhotoImageView.setOnClickListener {
             viewModel.openProfilePhoto()
         }
 
-        addPhotoButton.setOnClickListener {
+        binding.addPhotoButton.setOnClickListener {
             navigateToProfilePhotoOptionsBottomSheet()
         }
 
-        editProfileButton.setOnClickListener {
+        binding.editProfileButton.setOnClickListener {
             navigateToEditProfileFragment()
         }
 
-        showAllTracksButton.setOnClickListener {
+        binding.showAllTracksButton.setOnClickListener {
             navigateToTrackingHistoryFragment()
         }
     }
 
     private fun observeViewModel() {
         viewModel.logoutEvent.observe(viewLifecycleOwner) {
-            startActivity<AuthorizationActivity>()
+            startActivity<AuthenticationActivity>()
             requireActivity().finish()
         }
 

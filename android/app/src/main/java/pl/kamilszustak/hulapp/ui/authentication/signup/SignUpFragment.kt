@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.authorization.signup
+package pl.kamilszustak.hulapp.ui.authentication.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,21 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.IAdapter
-import kotlinx.android.synthetic.main.fragment_sign_up.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.data.item.CountryItem
+import pl.kamilszustak.hulapp.databinding.FragmentSignUpBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.ui.base.State
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
-class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
+class SignUpFragment : BaseFragment() {
 
     private lateinit var countryChoiceBottomSheet: CountryChoiceBottomSheet
     private lateinit var cityChoiceBottomSheet: CityChoiceBottomSheet
@@ -36,12 +34,14 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         viewModelFactory
     }
 
+    private lateinit var binding: FragmentSignUpBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentSignUpBinding>(
+        binding = DataBindingUtil.inflate<FragmentSignUpBinding>(
             inflater,
             R.layout.fragment_sign_up,
             container,
@@ -51,7 +51,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,33 +101,33 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun setListeners() {
-        signUpButton.setOnClickListener {
+        binding.signUpButton.setOnClickListener {
             viewModel.onSignUpButtonClick()
         }
 
-        backToLoginPageButton.setOnClickListener {
+        binding.backToLoginPageButton.setOnClickListener {
             navigateUp()
         }
 
-        cityNameEditText.setOnClickListener {
+        binding.cityNameEditText.setOnClickListener {
             cityChoiceBottomSheet.show(
                 childFragmentManager,
                 CityChoiceBottomSheet.tag
             )
         }
 
-        clearCityButton.setOnClickListener {
+        binding.clearCityButton.setOnClickListener {
             viewModel.onClearCityButtonClick()
         }
 
-        countryNameEditText.setOnClickListener {
+        binding.countryNameEditText.setOnClickListener {
             countryChoiceBottomSheet.show(
                 childFragmentManager,
                 CountryChoiceBottomSheet.tag
             )
         }
 
-        clearCountryButton.setOnClickListener {
+        binding.clearCountryButton.setOnClickListener {
             viewModel.onClearCountryButtonClick()
         }
     }
@@ -135,13 +135,17 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun observeViewModel() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                motionLayout.transitionToEnd()
-                signUpButton.isEnabled = false
-                progressBar.show()
+                with(binding) {
+                    motionLayout.transitionToEnd()
+                    signUpButton.isEnabled = false
+                    progressBar.show()
+                }
             } else {
-                motionLayout.transitionToStart()
-                signUpButton.isEnabled = true
-                progressBar.hide()
+                with(binding) {
+                    motionLayout.transitionToStart()
+                    signUpButton.isEnabled = true
+                    progressBar.hide()
+                }
             }
         }
 
@@ -150,8 +154,12 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         }
 
         viewModel.completed.observe(viewLifecycleOwner) {
-            val direction = SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleted()
-            navigateTo(direction)
+            navigateToSignUpCompletedFragment()
         }
+    }
+
+    private fun navigateToSignUpCompletedFragment() {
+        val direction = SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleted()
+        navigateTo(direction)
     }
 }

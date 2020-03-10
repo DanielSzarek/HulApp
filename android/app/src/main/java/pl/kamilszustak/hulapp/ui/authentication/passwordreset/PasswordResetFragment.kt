@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.authorization.passwordreset
+package pl.kamilszustak.hulapp.ui.authentication.passwordreset
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_password_reset.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPasswordResetBinding
@@ -16,7 +15,7 @@ import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
-class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
+class PasswordResetFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -25,12 +24,14 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
         viewModelFactory
     }
 
+    private lateinit var binding: FragmentPasswordResetBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentPasswordResetBinding>(
+        binding = DataBindingUtil.inflate<FragmentPasswordResetBinding>(
             inflater,
             R.layout.fragment_password_reset,
             container,
@@ -40,7 +41,7 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +52,7 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
     }
 
     private fun setListeners() {
-        passwordResetButton.setOnClickListener {
+        binding.passwordResetButton.setOnClickListener {
             viewModel.onPasswordResetButtonClick()
         }
     }
@@ -63,19 +64,27 @@ class PasswordResetFragment : BaseFragment(R.layout.fragment_password_reset) {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                motionLayout.transitionToEnd()
-                passwordResetButton.isEnabled = false
-                progressBar.show()
+                with(binding) {
+                    motionLayout.transitionToEnd()
+                    passwordResetButton.isEnabled = false
+                    progressBar.show()
+                }
             } else {
-                motionLayout.transitionToStart()
-                passwordResetButton.isEnabled = true
-                progressBar.hide()
+                with(binding) {
+                    motionLayout.transitionToStart()
+                    passwordResetButton.isEnabled = true
+                    progressBar.hide()
+                }
             }
         }
 
         viewModel.completed.observe(viewLifecycleOwner) {
-            val direction = PasswordResetFragmentDirections.actionPasswordResetFragmentToPasswordResetCompletedFragment()
-            navigateTo(direction)
+            navigateToPasswordResetCompletedFragment()
         }
+    }
+
+    private fun navigateToPasswordResetCompletedFragment() {
+        val direction = PasswordResetFragmentDirections.actionPasswordResetFragmentToPasswordResetCompletedFragment()
+        navigateTo(direction)
     }
 }

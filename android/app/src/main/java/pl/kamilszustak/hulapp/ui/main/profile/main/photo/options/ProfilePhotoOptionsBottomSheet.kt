@@ -7,9 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.bottom_sheet_profile_photo_options.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.binding.view.viewBinding
+import pl.kamilszustak.hulapp.databinding.BottomSheetProfilePhotoOptionsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
@@ -23,6 +24,8 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
         viewModelFactory
     }
 
+    private val binding: BottomSheetProfilePhotoOptionsBinding by viewBinding(BottomSheetProfilePhotoOptionsBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,11 +34,11 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
     }
 
     private fun setListeners() {
-        changeProfilePhotoLayout.setOnClickListener {
+        binding.changeProfilePhotoLayout.setOnClickListener {
             openImagePicker()
         }
 
-        deleteProfilePhotoLayout.setOnClickListener {
+        binding.deleteProfilePhotoLayout.setOnClickListener {
             viewModel.onDeleteProfilePhotoButtonClick()
         }
     }

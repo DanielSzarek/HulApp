@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.authorization.login
+package pl.kamilszustak.hulapp.ui.authentication.login
 
 import android.app.Application
 import androidx.lifecycle.LiveData

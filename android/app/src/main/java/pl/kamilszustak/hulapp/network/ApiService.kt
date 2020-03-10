@@ -71,11 +71,11 @@ interface ApiService {
     @Authorize
     suspend fun getCurrentUserTracks(): Response<List<TrackJson>>
 
-    @GET("/api/tracks/{id}")
+    @GET("/api/track/{id}")
     @Authorize
     suspend fun getTrackById(@Path("id") id: Long): Response<TrackJson>
 
-    @DELETE("/api/tracks/{id}")
+    @DELETE("/api/track/{id}")
     @Authorize
     suspend fun deleteTrackById(@Path("id") id: Long): Response<Unit>
 
@@ -87,6 +87,6 @@ interface ApiService {
     @Authorize
     suspend fun getUserById(@Path("id") id: Long): Response<User>
 
-    @GET("/api/track/")
+    @GET("/api/tracks/")
     suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<TrackJson>>
 }

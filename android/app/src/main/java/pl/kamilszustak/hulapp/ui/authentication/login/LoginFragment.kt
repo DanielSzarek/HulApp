@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.authorization.login
+package pl.kamilszustak.hulapp.ui.authentication.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
@@ -18,7 +17,7 @@ import pl.kamilszustak.hulapp.ui.main.MainActivity
 import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
-class LoginFragment : BaseFragment(R.layout.fragment_login) {
+class LoginFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -27,12 +26,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         viewModelFactory
     }
 
+    private lateinit var binding: FragmentLoginBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentLoginBinding>(
+        binding = DataBindingUtil.inflate<FragmentLoginBinding>(
             inflater,
             R.layout.fragment_login,
             container,
@@ -42,7 +43,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,17 +54,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun setListeners() {
-        passwordResetButton.setOnClickListener {
-            val direction = LoginFragmentDirections.actionLoginFragmentToPasswordResetFragment()
-            navigateTo(direction)
+        binding.passwordResetButton.setOnClickListener {
+            navigateToPasswordResetFragment()
         }
 
-        signUpButton.setOnClickListener {
-            val direction = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
-            navigateTo(direction)
+        binding.signUpButton.setOnClickListener {
+            navigateToSignUpFragment()
         }
 
-        loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             viewModel.login()
         }
     }
@@ -76,18 +75,32 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                motionLayout.transitionToEnd()
-                loginButton.isEnabled = false
-                progressBar.show()
+                with(binding) {
+                    motionLayout.transitionToEnd()
+                    loginButton.isEnabled = false
+                    progressBar.show()
+                }
             } else {
-                motionLayout.transitionToStart()
-                loginButton.isEnabled = true
-                progressBar.hide()
+                with(binding) {
+                    motionLayout.transitionToStart()
+                    loginButton.isEnabled = true
+                    progressBar.hide()
+                }
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
+    }
+
+    private fun navigateToSignUpFragment() {
+        val direction = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToPasswordResetFragment() {
+        val direction = LoginFragmentDirections.actionLoginFragmentToPasswordResetFragment()
+        navigateTo(direction)
     }
 }

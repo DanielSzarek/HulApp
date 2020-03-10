@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_user_tracking_history.*
+import com.mikepenz.fastadapter.ClickListener
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentUserTrackingHistoryBinding
 import pl.kamilszustak.hulapp.ui.main.tracking.history.BaseTrackingHistoryFragment
 import pl.kamilszustak.hulapp.util.navigateTo
@@ -27,15 +29,14 @@ class UserTrackingHistoryFragment : BaseTrackingHistoryFragment() {
 
     private val args: UserTrackingHistoryFragmentArgs by navArgs()
 
-    override val recyclerView: RecyclerView
-        get() = tracksRecyclerView
+    private lateinit var binding: FragmentUserTrackingHistoryBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentUserTrackingHistoryBinding>(
+        binding = DataBindingUtil.inflate<FragmentUserTrackingHistoryBinding>(
             inflater,
             R.layout.fragment_user_tracking_history,
             container,
@@ -45,23 +46,44 @@ class UserTrackingHistoryFragment : BaseTrackingHistoryFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initializeRecyclerView()
         setListeners()
         viewModel.loadData(args.userId)
     }
 
+    private fun initializeRecyclerView() {
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onClickListener = object : ClickListener<TrackItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<TrackItem>,
+                    item: TrackItem,
+                    position: Int
+                ): Boolean {
+                    navigateToTrackDetailsFragment(item.model.id)
+                    return true
+                }
+            }
+        }
+
+        binding.tracksRecyclerView.apply {
+            this.adapter = fastAdapter
+        }
+    }
+
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
     }
 
-    override fun navigateToTrackDetailsFragment(trackId: Long) {
+    fun navigateToTrackDetailsFragment(trackId: Long) {
         val direction = UserTrackingHistoryFragmentDirections.actionUserTrackingHistoryFragmentToUserTrackDetailsFragment(trackId)
         navigateTo(direction)
     }

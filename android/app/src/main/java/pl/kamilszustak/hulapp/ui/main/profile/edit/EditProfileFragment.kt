@@ -1,14 +1,15 @@
 package pl.kamilszustak.hulapp.ui.main.profile.edit
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.IAdapter
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.item.CityItem
@@ -20,7 +21,7 @@ import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
-class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
+class EditProfileFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -28,6 +29,8 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     private val viewModel: EditProfileViewModel by viewModels {
         viewModelFactory
     }
+
+    private lateinit var binding: FragmentEditProfileBinding
 
     private lateinit var cityChoiceBottomSheet: CityChoiceBottomSheet
     private lateinit var countryChoiceBottomSheet: CountryChoiceBottomSheet
@@ -37,7 +40,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentEditProfileBinding>(
+        binding = DataBindingUtil.inflate<FragmentEditProfileBinding>(
             inflater,
             R.layout.fragment_edit_profile,
             container,
@@ -47,7 +50,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,29 +100,29 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setListeners() {
-        cityNameEditText.setOnClickListener {
+        binding.cityNameEditText.setOnClickListener {
             cityChoiceBottomSheet.show(
                 childFragmentManager,
                 CityChoiceBottomSheet.tag
             )
         }
 
-        clearCityButton.setOnClickListener {
+        binding.clearCityButton.setOnClickListener {
             viewModel.onClearCityButtonClick()
         }
 
-        countryNameEditText.setOnClickListener {
+        binding.countryNameEditText.setOnClickListener {
             countryChoiceBottomSheet.show(
                 childFragmentManager,
                 CountryChoiceBottomSheet.tag
             )
         }
 
-        clearCountryButton.setOnClickListener {
+        binding.clearCountryButton.setOnClickListener {
             viewModel.onClearCountryButtonClick()
         }
 
-        saveButton.setOnClickListener {
+        binding.saveButton.setOnClickListener {
             viewModel.onSaveButtonClick()
         }
     }
@@ -143,9 +146,9 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
 
         viewModel.isSaving.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressBar.show()
+                binding.progressBar.show()
             } else {
-                progressBar.hide()
+                binding.progressBar.hide()
             }
         }
 

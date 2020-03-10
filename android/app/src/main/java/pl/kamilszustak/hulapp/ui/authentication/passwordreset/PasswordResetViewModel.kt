@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.authorization.passwordreset
+package pl.kamilszustak.hulapp.ui.authentication.passwordreset
 
 import android.app.Application
 import androidx.lifecycle.LiveData

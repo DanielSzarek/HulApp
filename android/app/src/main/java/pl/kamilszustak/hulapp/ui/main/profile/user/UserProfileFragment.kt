@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_user_profile.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentUserProfileBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
@@ -25,12 +24,14 @@ class UserProfileFragment : BaseFragment() {
 
     private val args: UserProfileFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentUserProfileBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentUserProfileBinding>(
+        binding = DataBindingUtil.inflate<FragmentUserProfileBinding>(
             inflater,
             R.layout.fragment_user_profile,
             container,
@@ -40,7 +41,7 @@ class UserProfileFragment : BaseFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +52,7 @@ class UserProfileFragment : BaseFragment() {
     }
 
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.loadData(args.userId, true)
         }
     }
