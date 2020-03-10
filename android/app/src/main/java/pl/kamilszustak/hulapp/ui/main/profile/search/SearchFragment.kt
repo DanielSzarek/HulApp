@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
@@ -22,6 +23,8 @@ import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateTo
+import pl.kamilszustak.hulapp.util.setGone
+import pl.kamilszustak.hulapp.util.setVisible
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -38,9 +41,6 @@ class SearchFragment : BaseFragment() {
 
     private lateinit var userModelAdapter: ModelAdapter<User, UserSearchItem>
     private lateinit var searchPromptModelAdapter: ModelAdapter<SearchPrompt, SearchPromptItem>
-
-    private lateinit var userFastAdapter: FastAdapter<UserSearchItem>
-    private lateinit var searchPromptFastAdapter: FastAdapter<SearchPromptItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,14 +65,14 @@ class SearchFragment : BaseFragment() {
 
         setHasOptionsMenu(true)
         initializeSearchView()
-        initializeAdapters()
+        initializeRecyclerViews()
         setListeners()
         observeViewModel()
     }
 
-    private fun initializeAdapters() {
-        initializeUserAdapter()
-        initializeSearchPromptAdapter()
+    private fun initializeRecyclerViews() {
+        initializeUsersRecyclerView()
+        initializeSearchPromptsRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,12 +93,12 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun initializeUserAdapter() {
+    private fun initializeUsersRecyclerView() {
         userModelAdapter = ModelAdapter { user ->
             UserSearchItem(user)
         }
 
-        userFastAdapter = FastAdapter.with(userModelAdapter).apply {
+        val fastAdapter = FastAdapter.with(userModelAdapter).apply {
             this.onClickListener = object : ClickListener<UserSearchItem> {
                 override fun invoke(
                     v: View?,
@@ -111,14 +111,18 @@ class SearchFragment : BaseFragment() {
                 }
             }
         }
+
+        binding.usersRecyclerView.apply {
+            this.adapter = fastAdapter
+        }
     }
 
-    private fun initializeSearchPromptAdapter() {
+    private fun initializeSearchPromptsRecyclerView() {
         searchPromptModelAdapter = ModelAdapter { prompt ->
             SearchPromptItem(prompt)
         }
 
-        searchPromptFastAdapter = FastAdapter.with(searchPromptModelAdapter).apply {
+        val fastAdapter = FastAdapter.with(searchPromptModelAdapter).apply {
             this.onClickListener = object : ClickListener<SearchPromptItem> {
                 override fun invoke(
                     v: View?,
@@ -139,6 +143,7 @@ class SearchFragment : BaseFragment() {
                         null
                     }
                 }
+
                 override fun onClick(
                     v: View,
                     position: Int,
@@ -149,6 +154,34 @@ class SearchFragment : BaseFragment() {
                 }
             }
             this.addEventHook(eventHook)
+        }
+
+        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                when (direction) {
+                    ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT -> {
+                        val prompt = searchPromptModelAdapter.models[position]
+                        viewModel.onDeleteSearchPromptButtonClick(prompt.id)
+                    }
+                }
+            }
+        })
+        helper.attachToRecyclerView(binding.searchPromptsRecyclerView)
+
+        binding.searchPromptsRecyclerView.apply {
+            this.adapter = fastAdapter
         }
     }
 
@@ -178,19 +211,20 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    /**
-     * Ważna jest kolejność, gdyż najpierw ustawiony zostanie adapter,
-     * a następnie przypisane zostaną do niego modele.
-     */
     private fun observeViewModel() {
         viewModel.adapterType.observe(viewLifecycleOwner) { type ->
-            binding.recyclerView.adapter = when (type) {
+            when (type) {
                 SearchViewModel.AdapterType.USERS -> {
-                    userModelAdapter.clear()
-                    userFastAdapter
+                    with(binding) {
+                        searchPromptsRecyclerView.setGone()
+                        usersRecyclerView.setVisible()
+                    }
                 }
                 SearchViewModel.AdapterType.SEARCH_PROMPTS -> {
-                    searchPromptFastAdapter
+                    with(binding) {
+                        usersRecyclerView.setGone()
+                        searchPromptsRecyclerView.setVisible()
+                    }
                 }
             }
         }

@@ -1,6 +1,5 @@
 package pl.kamilszustak.hulapp.data.mapper
 
-@ExperimentalStdlibApi
 abstract class Mapper<T, R> {
     abstract fun map(model: T): R
 
@@ -32,6 +31,7 @@ abstract class Mapper<T, R> {
         }
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun mapElementsIf(models: Iterable<T>, condition: (T) -> Boolean): List<R> {
         return buildList {
             models.forEach { model ->
