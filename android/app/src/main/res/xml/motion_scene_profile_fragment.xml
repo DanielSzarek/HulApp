@@ -11,7 +11,7 @@
             app:touchAnchorId="@id/scrollView"
             app:touchAnchorSide="top"
             app:dragDirection="dragUp"
-            app:moveWhenScrollAtTop="true" />
+             />
     </Transition>
 
     <ConstraintSet

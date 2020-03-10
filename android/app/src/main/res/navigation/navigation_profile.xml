@@ -127,7 +127,15 @@
         android:id="@+id/trackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
         android:label="TrackingHistoryFragment"
-        tools:layout="@layout/fragment_tracking_history" />
+        tools:layout="@layout/fragment_tracking_history" >
+        <action
+            android:id="@+id/action_trackingHistoryFragment_to_trackDetailsFragment"
+            app:destination="@id/trackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/userTrackDetailsFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment"

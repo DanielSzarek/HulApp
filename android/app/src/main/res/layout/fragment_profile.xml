@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="android.view.View" />
-        <import type="android.text.Html" />
+        <import type="androidx.core.text.HtmlCompat" />
 
         <variable
             name="viewModel"
@@ -15,15 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/swipeRefreshLayout"
-        android:enabled="false"
+        android:enabled="true"
         app:refreshing="@{viewModel.userResource.isLoading || viewModel.cityResource.isLoading || viewModel.countryResource.isLoading || viewModel.tracksResource.isLoading}">
 
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/motionLayout"
-            android:clipToPadding="false"
             android:padding="@dimen/default_padding"
+            android:nestedScrollingEnabled="true"
+            android:clipToPadding="false"
             android:clipChildren="false"
             app:layoutDescription="@xml/motion_scene_profile_fragment">
 
@@ -67,13 +68,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/scrollView"
+                android:clipChildren="false"
                 app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="@dimen/default_margin">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false">
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -93,7 +96,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/userCityTextView"
-                                android:text="@{Html.fromHtml(@string/user_profile_city(viewModel.cityResource.data.name))}"
+                                android:text="@{HtmlCompat.fromHtml(@string/user_profile_city(viewModel.cityResource.data.name), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
                                 tools:text="Mieszka w: Gdynia"
                                 android:gravity="center_vertical"
                                 android:drawableStart="@drawable/icon_city"
@@ -105,7 +108,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/userCountryTextView"
-                                android:text="@{Html.fromHtml(@string/user_profile_country(viewModel.countryResource.data.name))}"
+                                android:text="@{HtmlCompat.fromHtml(@string/user_profile_country(viewModel.countryResource.data.name), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
                                 tools:text="Polska"
                                 android:gravity="center_vertical"
                                 android:drawableStart="@drawable/icon_flag"

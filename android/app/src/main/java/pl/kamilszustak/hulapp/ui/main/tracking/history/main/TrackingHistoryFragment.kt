@@ -94,7 +94,7 @@ class TrackingHistoryFragment : BaseTrackingHistoryFragment() {
     }
 
     fun navigateToTrackDetailsFragment(trackId: Long) {
-        val direction = TrackingHistoryFragmentDirections.actionTrackingHistoryBottomSheetToTrackDetailsFragment(trackId)
+        val direction = TrackingHistoryFragmentDirections.actionTrackingHistoryFragmentToTrackDetailsFragment(trackId)
         navigateTo(direction)
     }
 }
