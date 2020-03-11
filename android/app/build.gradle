@@ -187,9 +187,10 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // FastAdapter
-    def fast_adapter_version = '4.1.2'
+    def fast_adapter_version = '5.0.0'
     def materialize_version = '1.2.1'
     implementation "com.mikepenz:fastadapter:$fast_adapter_version"
+    implementation "com.mikepenz:fastadapter-extensions-binding:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-expandable:$fast_adapter_version"
     implementation "com.mikepenz:materialize:$materialize_version"
     implementation "com.mikepenz:fastadapter-extensions-diff:$fast_adapter_version"

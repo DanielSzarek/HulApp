@@ -1,16 +1,14 @@
 package pl.kamilszustak.hulapp.data.item
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.ModelAbstractItem
-import kotlinx.android.synthetic.main.item_user_search.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.databinding.ItemUserSearchBinding
 import pl.kamilszustak.hulapp.util.load
 
-class UserSearchItem(user: User) : ModelAbstractItem<User, UserSearchItem.ViewHolder>(user) {
+class UserSearchItem(user: User) : ModelAbstractBindingItem<User, ItemUserSearchBinding>(user) {
 
     override var identifier: Long
         get() = this.model.id
@@ -18,20 +16,21 @@ class UserSearchItem(user: User) : ModelAbstractItem<User, UserSearchItem.ViewHo
 
     override val type: Int = R.id.fastadapter_user_search_item_id
 
-    override val layoutRes: Int = R.layout.item_user_search
+    override fun createBinding(
+        inflater: LayoutInflater,
+        parent: ViewGroup?
+    ): ItemUserSearchBinding =
+        ItemUserSearchBinding.inflate(inflater, parent, false)
 
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
-
-    class ViewHolder(view: View) : FastAdapter.ViewHolder<UserSearchItem>(view) {
-        private val profilePhotoImageView: ImageView = view.profilePhotoImageView
-        private val nameTextView: TextView = view.nameTextView
-
-        override fun bindView(item: UserSearchItem, payloads: MutableList<Any>) {
-            profilePhotoImageView.load(item.model.profilePhotoUrl)
-            nameTextView.text = item.model.fullName
+    override fun bindView(binding: ItemUserSearchBinding, payloads: List<Any>) {
+        with(binding) {
+            profilePhotoImageView.load(model.profilePhotoUrl)
+            nameTextView.text = model.fullName
         }
+    }
 
-        override fun unbindView(item: UserSearchItem) {
+    override fun unbindView(binding: ItemUserSearchBinding) {
+        with(binding) {
             profilePhotoImageView.setImageDrawable(null)
             nameTextView.text = null
         }

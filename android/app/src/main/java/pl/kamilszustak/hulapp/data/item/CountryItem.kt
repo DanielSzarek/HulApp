@@ -1,14 +1,13 @@
 package pl.kamilszustak.hulapp.data.item
 
-import android.view.View
-import android.widget.TextView
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.ModelAbstractItem
-import kotlinx.android.synthetic.main.layout_countries_list_item.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.databinding.ItemCountriesListBinding
 
-class CountryItem(country: Country) : ModelAbstractItem<Country, CountryItem.ViewHolder>(country) {
+class CountryItem(country: Country) : ModelAbstractBindingItem<Country, ItemCountriesListBinding>(country) {
 
     override var identifier: Long
         get() = this.model.id
@@ -17,22 +16,17 @@ class CountryItem(country: Country) : ModelAbstractItem<Country, CountryItem.Vie
     override val type: Int
         get() = R.id.fastadapter_country_item_id
 
-    override val layoutRes: Int
-        get() = R.layout.layout_countries_list_item
+    override fun createBinding(
+        inflater: LayoutInflater,
+        parent: ViewGroup?
+    ): ItemCountriesListBinding =
+        ItemCountriesListBinding.inflate(inflater, parent, false)
 
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
+    override fun bindView(binding: ItemCountriesListBinding, payloads: List<Any>) {
+        binding.countryNameTextView.text = this.model.name
+    }
 
-
-    class ViewHolder(view: View) : FastAdapter.ViewHolder<CountryItem>(view) {
-
-        private val countryNameTextView: TextView = view.countryNameTextView
-
-        override fun bindView(item: CountryItem, payloads: MutableList<Any>) {
-            countryNameTextView.text = item.model.name
-        }
-
-        override fun unbindView(item: CountryItem) {
-            countryNameTextView.text = null
-        }
+    override fun unbindView(binding: ItemCountriesListBinding) {
+        binding.countryNameTextView.text = null
     }
 }

@@ -1,16 +1,15 @@
 package pl.kamilszustak.hulapp.data.item
 
-import android.view.View
-import android.widget.TextView
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.ModelAbstractItem
-import kotlinx.android.synthetic.main.item_tracks_history.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.date.DateFormats
 import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.databinding.ItemTracksHistoryBinding
 import pl.kamilszustak.hulapp.util.asTimeString
 
-class TrackItem(track: TrackEntity) : ModelAbstractItem<TrackEntity, TrackItem.ViewHolder>(track) {
+class TrackItem(track: TrackEntity) : ModelAbstractBindingItem<TrackEntity, ItemTracksHistoryBinding>(track) {
 
     override var identifier: Long
         get() = this.model.id
@@ -19,29 +18,26 @@ class TrackItem(track: TrackEntity) : ModelAbstractItem<TrackEntity, TrackItem.V
     override val type: Int
         get() = R.id.fastadapter_track_item_id
 
-    override val layoutRes: Int
-        get() = R.layout.item_tracks_history
+    override fun createBinding(
+        inflater: LayoutInflater,
+        parent: ViewGroup?
+    ): ItemTracksHistoryBinding =
+        ItemTracksHistoryBinding.inflate(inflater, parent, false)
 
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
-
-    class ViewHolder(
-        private val view: View
-    ) : FastAdapter.ViewHolder<TrackItem>(view) {
-
-        private val startDateTextView: TextView = view.startDateTextView
-        private val distanceAndTimeTextView: TextView = view.distanceAndTimeTextView
-
-        override fun bindView(item: TrackItem, payloads: MutableList<Any>) {
-            startDateTextView.text = DateFormats.dateFormat.format(item.model.startDate)
-            val distanceAndTime = view.context.getString(
+    override fun bindView(binding: ItemTracksHistoryBinding, payloads: List<Any>) {
+        with(binding) {
+            startDateTextView.text = DateFormats.dateFormat.format(model.startDate)
+            val distanceAndTime = distanceAndTimeTextView.context.getString(
                 R.string.track_distance_and_time,
-                item.model.distance.toString(),
-                item.model.duration.asTimeString()
+                model.distance.toString(),
+                model.duration.asTimeString()
             )
             distanceAndTimeTextView.text = distanceAndTime
         }
+    }
 
-        override fun unbindView(item: TrackItem) {
+    override fun unbindView(binding: ItemTracksHistoryBinding) {
+        with(binding) {
             startDateTextView.text = null
             distanceAndTimeTextView.text = null
         }
