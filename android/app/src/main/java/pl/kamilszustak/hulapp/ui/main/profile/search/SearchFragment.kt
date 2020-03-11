@@ -22,10 +22,7 @@ import pl.kamilszustak.hulapp.data.model.SearchPrompt
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.util.navigateTo
-import pl.kamilszustak.hulapp.util.setGone
-import pl.kamilszustak.hulapp.util.setVisible
-import pl.kamilszustak.hulapp.util.updateModels
+import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment() {
@@ -251,7 +248,12 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun navigateToUserProfileFragment(userId: Long) {
-        val direction = SearchFragmentDirections.actionSearchFragmentToUserProfileFragment(userId)
-        navigateTo(direction)
+        val isLoggedInUser = viewModel.isLoggedInUserId(userId)
+        if (isLoggedInUser) {
+            navigateUp()
+        } else {
+            val direction = SearchFragmentDirections.actionSearchFragmentToUserProfileFragment(userId)
+            navigateTo(direction)
+        }
     }
 }

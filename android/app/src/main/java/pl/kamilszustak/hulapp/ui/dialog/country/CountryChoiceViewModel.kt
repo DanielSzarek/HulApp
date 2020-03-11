@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.ui.dialog.country
 
 import android.app.Application
-import androidx.lifecycle.asLiveData
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.Country
@@ -19,6 +18,10 @@ class CountryChoiceViewModel @Inject constructor(
     val countryName: UniqueLiveData<String> = UniqueLiveData()
 
     fun loadCountriesByName(name: String) {
+        if (name.isBlank()) {
+            return
+        }
+
         countriesResource.changeFlowSource {
             countryRepository.getByName(name)
         }

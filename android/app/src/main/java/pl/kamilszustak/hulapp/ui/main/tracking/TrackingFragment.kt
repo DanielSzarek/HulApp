@@ -204,7 +204,7 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun navigateToTrackingHistoryBottomSheet() {
-        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryFragment()
         navigateTo(direction)
     }
 }

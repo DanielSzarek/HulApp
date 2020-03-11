@@ -18,8 +18,8 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_trackingFragment_to_trackingHistoryBottomSheet"
-            app:destination="@id/trackingHistoryBottomSheet"
+            android:id="@+id/action_trackingFragment_to_trackingHistoryFragment"
+            app:destination="@id/trackingHistoryFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -35,12 +35,12 @@
             app:argType="long" />
     </fragment>
     <fragment
-        android:id="@+id/trackingHistoryBottomSheet"
+        android:id="@+id/trackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
-        android:label="TrackingHistoryBottomSheet"
+        android:label="Historia tras"
         tools:layout="@layout/fragment_tracking_history" >
         <action
-            android:id="@+id/action_trackingHistoryBottomSheet_to_trackDetailsFragment"
+            android:id="@+id/action_trackingHistoryFragment_to_trackDetailsFragment"
             app:destination="@id/trackDetailsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"

@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.ui.dialog.city
 
 import android.app.Application
-import androidx.lifecycle.asLiveData
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.City
@@ -19,6 +18,10 @@ class CityChoiceViewModel @Inject constructor(
     val cityName: UniqueLiveData<String> = UniqueLiveData()
 
     fun loadCitiesByName(name: String) {
+        if (name.isBlank()) {
+            return
+        }
+
         citiesResource.changeFlowSource {
             cityRepository.getByName(name)
         }

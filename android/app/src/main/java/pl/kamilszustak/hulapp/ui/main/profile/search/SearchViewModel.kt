@@ -10,6 +10,7 @@ import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.SearchPrompt
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.data.repository.searchprompt.SearchPromptRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     application: Application,
     private val userRepository: UserRepository,
-    private val searchPromptRepository: SearchPromptRepository
+    private val searchPromptRepository: SearchPromptRepository,
+    private val userDetailsRepository: UserDetailsRepository
 ) : BaseViewModel(application) {
 
     private val _adapterType: UniqueLiveData<AdapterType> = UniqueLiveData()
@@ -61,6 +63,11 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             searchPromptRepository.deleteById(promptId)
         }
+    }
+
+    fun isLoggedInUserId(id: Long): Boolean {
+        val loggedInUserId = userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
+        return loggedInUserId == id
     }
 
     enum class AdapterType {
