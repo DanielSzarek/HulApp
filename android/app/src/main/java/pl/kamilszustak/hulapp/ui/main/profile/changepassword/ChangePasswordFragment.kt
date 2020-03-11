@@ -59,14 +59,6 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.isPasswordChanging.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                binding.progressBar.show()
-            } else {
-                binding.progressBar.hide()
-            }
-        }
-
         viewModel.passwordChangeError.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }

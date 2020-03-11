@@ -2,18 +2,18 @@ package pl.kamilszustak.hulapp.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
 import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
-import okhttp3.RequestBody.Companion.asRequestBody
-import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
 
 @Singleton
 class UserRepository @Inject constructor(
@@ -51,7 +51,7 @@ class UserRepository @Inject constructor(
             }
 
             override suspend fun mapResponse(response: User): Unit = Unit
-        }.call()
+        }.callForResponse()
     }
 
     fun getLoggedIn(shouldFetch: Boolean = true): Flow<Resource<User>> {

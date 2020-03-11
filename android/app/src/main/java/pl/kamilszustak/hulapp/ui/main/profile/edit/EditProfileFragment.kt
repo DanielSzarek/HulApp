@@ -140,19 +140,11 @@ class EditProfileFragment : BaseFragment() {
             viewModel.onCountryLoaded(country)
         }
 
-        viewModel.saveError.observe(viewLifecycleOwner) { message ->
+        viewModel.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 
-        viewModel.isSaving.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                binding.progressBar.show()
-            } else {
-                binding.progressBar.hide()
-            }
-        }
-
-        viewModel.saveCompleted.observe(viewLifecycleOwner) {
+        viewModel.completed.observe(viewLifecycleOwner) {
             navigateUp()
         }
     }

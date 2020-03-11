@@ -51,7 +51,7 @@ class ChangePasswordViewModel @Inject constructor(
     val passwordChangeCompleted: LiveData<Unit> = _completed
 
     private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isPasswordChanging: LiveData<Boolean> = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _error: SingleLiveData<String> = SingleLiveData()
     val passwordChangeError: LiveData<String> = _error
