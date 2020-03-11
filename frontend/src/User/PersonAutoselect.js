@@ -6,6 +6,8 @@ import AuthService from './AuthService';
 import '../Styles/UserProfile.css';
 import Avatar from 'react-avatar';
 import '../Styles/Navbar.css';
+import '../Styles/InputProps.css';
+
 
 
 export default class PersonAutoselect extends React.Component {
@@ -121,7 +123,7 @@ export default class PersonAutoselect extends React.Component {
 
 				
 				<AutoComplete
-					inputProps={{ style: { width:'400px' ,border: '1px solid #ced4da', padding:'5px' },
+					inputProps={{ style: { width:'350px' ,border: '1px solid #ced4da', padding:'.390rem' },
                      placeholder:'Szukaj...'
                      }}
                     getItemValue={this.getItemValue}

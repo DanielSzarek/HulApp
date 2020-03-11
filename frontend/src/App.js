@@ -15,7 +15,6 @@ import SearchUser from './User/SearchUser';
 class App extends React.Component {
   render(){
     return(
-      // <div className="row">
       <div>
         <BrowserRouter>
           <Switch>
@@ -29,7 +28,6 @@ class App extends React.Component {
             <Route path="/tracks" component={UserTracks} />
             <Route path="/track/:id" component={UserTrackDetail} />
             <Route path="/user/:userId" component={SearchUser} />
-
           </Switch>
         </BrowserRouter>
       </div>

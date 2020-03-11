@@ -19,6 +19,8 @@ export default class AuthService {
 			this.setRefreshidToken(res.refresh)
             return Promise.resolve(res);
         })
+
+        
     }
 	
 	refresh(){
@@ -91,9 +93,7 @@ export default class AuthService {
     logout() {
         localStorage.removeItem('id_token');
         localStorage.removeItem('id_refresh');
-
-
-        console.log("clean local storage");
+        console.log("clean local storage");        
     }
 
     getProfile() {
