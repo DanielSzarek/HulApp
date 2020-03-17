@@ -34,6 +34,14 @@ class CitySerializer(serializers.ModelSerializer):
         )
 
 
+class CityDetailsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = City
+        fields = '__all__'
+        depth = 2
+
+
 class ApiUserRegistrationSerializer(UserCreateSerializer):
 
     class Meta(UserCreateSerializer.Meta):

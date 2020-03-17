@@ -6,6 +6,7 @@ from .serializers import (
     ApiCurrentUserSerializer,
     CountrySerializer,
     CitySerializer,
+    CityDetailsSerializer,
     ProvinceSerializer,
 )
 
@@ -87,6 +88,15 @@ class ProvincePostView(generics.CreateAPIView):
 
 class CityListView(generics.ListAPIView):
     serializer_class = CitySerializer
+
+    def get_queryset(self):
+        city = self.kwargs['city']
+        city = city[0].upper() + city[1:]
+        return City.objects.filter(name__contains=city)
+
+
+class CityDetailsListView(generics.ListAPIView):
+    serializer_class = CityDetailsSerializer
 
     def get_queryset(self):
         city = self.kwargs['city']

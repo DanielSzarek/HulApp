@@ -5,6 +5,7 @@ urlpatterns = [
     path('users/', views.UserListView.as_view(), name="users"),
     path('users/<int:pk>', views.UserDetailView.as_view(), name="users"),
     re_path('cities/(?P<city>.+)/$', views.CityListView.as_view(), name="cities"),
+    re_path('cities-details/(?P<city>.+)/$', views.CityDetailsListView.as_view(), name="cities"),
     path('cities/', views.CityPostView.as_view(), name="cities"),
     path('cities/<int:pk>', views.CityDetailView.as_view(), name="cities"),
     re_path('countries/(?P<country>.+)/$', views.CountryListView.as_view(), name="countries"),
