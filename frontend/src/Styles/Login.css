@@ -2,10 +2,6 @@
     padding: 0 5%;
 }
 
-/* .input-in-form {
-    margin-top: 30px;
-} */
-
 .logging-form {
     margin-top: 25px;
 }
@@ -30,10 +26,9 @@
 }
 
 
-/* div.input-group {
-    width: 30%;
-} */
-
-/* input#formBasicEmail.form-control {
-    width: 30%;
-} */
+.result {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: red;
+}

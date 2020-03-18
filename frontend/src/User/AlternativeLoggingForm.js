@@ -43,7 +43,9 @@ class LoggingForm extends React.Component {
                 this.props.history.replace('/profile-edit');
             })
             .catch((error) => {
-                this.setState({ message: "ERROR " + error });
+                 this.setState({ message: "NIEPOPRAWNE DANE UŻYTKOWNIKA: BŁĘDNY LOGIN BĄDŹ HASŁO" });
+
+                // this.setState({ message: "ERROR " + error });
             });
     };
 
@@ -71,9 +73,10 @@ class LoggingForm extends React.Component {
         return (
             <div>
                 <img src={logo} alt={"logo"} />
-                {/* <QontoConnector/> */}
+                <div className="result">{this.state.message}</div>
 
                 <div className="offset-md-4 col-12 col-md-4">
+
 
                     <div className="logging-container">
                         <GoogleReCaptchaProvider
@@ -119,7 +122,7 @@ class LoggingForm extends React.Component {
                             </div>
                             </form>
 
-                            <div className="result">{this.state.message}</div>
+                            {/* <div className="result">{this.state.message}</div> */}
 
                             <Link to="/registration">
                             <div  className="logging-form-buttons" >
