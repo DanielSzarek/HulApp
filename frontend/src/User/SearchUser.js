@@ -1,15 +1,11 @@
 import React from 'react';
 import Navbarex from './Navbar';
 import LoadingSpinner from 'react-loader-spinner'
-// import { Form, Button, InputGroup } from 'react-bootstrap';
 import { Form, InputGroup } from 'react-bootstrap';
-
 import AuthService from './AuthService';
 import Avatar from 'react-avatar';
 import '../Styles/Navbar.css';
-// import SearchIcon from '@material-ui/icons/Search';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
-// import LanguageIcon from '@material-ui/icons/Language';
 import PublicIcon from '@material-ui/icons/Public';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Redirect } from 'react-router-dom';

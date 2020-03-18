@@ -1,9 +1,5 @@
 import React from 'react';
-// import logo from '../Images/logo.png';
-// import { Form, Button } from 'react-bootstrap';
-import { Form} from 'react-bootstrap';
-
-// import {Link} from 'react-router-dom';
+import { Form, InputGroup} from 'react-bootstrap';
 import '../Styles/App.css';
 import '../Styles/UserProfile.css';
 import AutoComplete from './SelectAutocomplete';
@@ -16,6 +12,10 @@ import {Alert } from "shards-react";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import CheckIcon from '@material-ui/icons/Check';
 import LoadingSpinner from 'react-loader-spinner'
+
+// import PublicIcon from '@material-ui/icons/Public';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import LocationCityIcon from '@material-ui/icons/LocationCity';
 
 
 
@@ -190,11 +190,25 @@ class ProfileEdition extends React.Component{
                     <form className="input-in-form" onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formEditName">
                         <Form.Label>Imię:</Form.Label>
+                         <InputGroup.Prepend>
+                                  <div className="inputgrouptext">
+                                      <InputGroup.Text>
+                                        <AccountCircleIcon/>
+                                      </InputGroup.Text>
+                                  </div>
                         <Form.Control name="name" type="text" value={this.state.name} onChange={this.handleChange} required/>
+                        </InputGroup.Prepend>
                     </Form.Group>
                     <Form.Group controlId="formEditSurname">
                         <Form.Label>Nazwisko:</Form.Label>
+                         <InputGroup.Prepend>
+                                  <div className="inputgrouptext">
+                                      <InputGroup.Text>
+                                        <AccountCircleIcon/>
+                                      </InputGroup.Text>
+                                  </div>
                         <Form.Control name="surname" type="text" value={this.state.surname} onChange={this.handleChange} required/>
+                        </InputGroup.Prepend>
                     </Form.Group>
                     <Form>
                     <div className="nameMiasto"> Miasto: </div>

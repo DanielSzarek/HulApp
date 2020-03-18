@@ -2,7 +2,7 @@ import React from 'react';
 import '../Styles/UserProfile.css';
 import AutoComplete from 'react-autocomplete';
 import {InputGroup} from 'react-bootstrap';
-import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
 
 export default class AutoCompleteForm extends React.Component {
 
@@ -117,7 +117,7 @@ export default class AutoCompleteForm extends React.Component {
             <div className='form-group'>
                         <InputGroup className='autocomplete-group'>
                         <InputGroup.Prepend className="icon-prepend">
-                        <InputGroup.Text> <PermIdentityOutlinedIcon/></InputGroup.Text>
+                        <InputGroup.Text> <LocationCityIcon/></InputGroup.Text>
                         </InputGroup.Prepend>
 				
 				<AutoComplete
