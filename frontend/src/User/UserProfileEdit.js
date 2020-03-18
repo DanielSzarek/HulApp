@@ -142,7 +142,8 @@ class ProfileEdition extends React.Component{
         const fd = new FormData();
         fd.append('profile_img', this.state.fileUploaded, this.state.fileUploaded.name);
 		fd.append('username', this.state.email);
-        this.setState({loading : true})
+        this.setState({loading : true,
+        showSubmit:false})
 		
 		axios(
 		{ 

@@ -34,7 +34,9 @@ h1 {
     background-color: #FF0000;
     font-size: 16px;
     color: #fff;
-    width: 101px;
+    width: 104px;
+    /* width: 31%; */
+
     text-align: center;
 }
 
