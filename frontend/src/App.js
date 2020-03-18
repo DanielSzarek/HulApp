@@ -10,6 +10,9 @@ import ResetPasswordConfirm from './User/ResetPasswordConfim';
 import UserTracks from './Track/UserTracks'
 import UserTrackDetail from './Track/UserTrackDetail';
 import SearchUser from './User/SearchUser';
+import CustomizedSteppers from './User/nowy';
+import RegistrationSuccess from './User/RegistrationSuccess';
+
 
 
 class App extends React.Component {
@@ -20,7 +23,10 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={AlternativeLoggingForm} />
             <Route path="/login" component={AlternativeLoggingForm} />
-            <Route path="/registration" component={Registration} />
+            {/* <Route path="/registration" component={Registration} /> */}
+            <Route path="/registration" component={CustomizedSteppers} />
+            <Route path="/success" component={RegistrationSuccess} />
+
             <Route path="/activate/:uid/:token" component={AccountActivation} /> 
             <Route path="/profile-edit" component={UserProfileEdit} /> 
             <Route path="/reset-password" component={ResetPassword} />

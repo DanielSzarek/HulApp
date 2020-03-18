@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Navbar,
-  NavbarToggler,
+  // NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
@@ -12,11 +12,13 @@ import { FiLogOut } from 'react-icons/fi';
 import AuthService from './AuthService';
 import logoNav from '../Images/logoNav.png';
 import '../Styles/Navbar.css';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import PersonAutoselect from '../User/PersonAutoselect';
 import SearchIcon from '@material-ui/icons/Search';
-import {Link} from 'react-router-dom';
-import {withRouter, Redirect} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
+// import {withRouter, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+
 import '../Styles/InputProps.css';
 import {InputGroup } from 'react-bootstrap';
 

@@ -1,0 +1,70 @@
+button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-button-2.MuiButton-containedPrimary {
+    margin-left: 15%;
+    border-radius: 0cm;
+    background-color: #DA190B;
+}
+
+.alt-reg-form {
+    width: 50%;
+    align-self: center;
+    margin-left: 25%;
+}
+
+.return-to-log {
+    margin-top: 3%;
+}
+
+.link-to-log {
+    color :#F70303;
+}
+
+.link-to-log:hover {
+    font-weight: bold;
+    color :#F70303;
+    text-decoration: none;
+
+}
+
+
+
+.blank-prof-pic-summary {
+    max-width:20%;
+    height:auto;
+}
+
+.summary-users-data {
+    /* width: 20%;
+    margin: 0 auto; */
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+    font-size: smaller;
+}
+
+
+  .third-step-reg {
+      background-color: #E4E6E7;
+      width: 20%;
+      margin: 0 auto;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .error-message {
+      text-align: center;
+      font-weight: bolder;
+      color: #F70303 ;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+  }
+  .registration-success-message {
+    text-align: center;
+    font-weight: bolder;
+    color: black ;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+.return-to-log-incase {
+    text-align: center;
+}

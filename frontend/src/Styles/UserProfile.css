@@ -70,3 +70,12 @@ input[type="file"] {
       margin-top: 10px;
       margin-bottom: 10px;
   }
+
+  .icon-prepend{
+	position:absolute;
+	height:100%;
+}
+
+.autocomplete-group{
+	position:relative;
+}

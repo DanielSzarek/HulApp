@@ -7,10 +7,12 @@ import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha
 import AuthService from './AuthService';
 
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-import {Col, Form, InputGroup, Button} from 'react-bootstrap';
+// import {Col, Form, InputGroup, Button} from 'react-bootstrap';
+import {Form, InputGroup} from 'react-bootstrap';
+
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-
+// import QontoConnector from "../User/nowy"
 
 
 
@@ -69,6 +71,7 @@ class LoggingForm extends React.Component {
         return (
             <div>
                 <img src={logo} alt={"logo"} />
+                {/* <QontoConnector/> */}
 
                 <div className="offset-md-4 col-12 col-md-4">
 

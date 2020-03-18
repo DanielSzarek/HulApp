@@ -1,7 +1,9 @@
 import React from 'react';
-import logo from '../Images/logo.png';
-import { Form, Button } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+// import logo from '../Images/logo.png';
+// import { Form, Button } from 'react-bootstrap';
+import { Form} from 'react-bootstrap';
+
+// import {Link} from 'react-router-dom';
 import '../Styles/App.css';
 import '../Styles/UserProfile.css';
 import AutoComplete from './SelectAutocomplete';
@@ -117,7 +119,7 @@ class ProfileEdition extends React.Component{
 
     handleCityChange(val){
 		console.log("city handleCityChange autocomplete changed "+val);
-		this.setState({city: val})
+		this.setState({city: val.id})
 	}
 	
 	cityChanged(val){
@@ -126,7 +128,7 @@ class ProfileEdition extends React.Component{
 	}
 	
 	handleCountryChange(val){
-		this.setState({countryId: val})
+		this.setState({countryId: val.id})
 	}
       
       fileSelectedHandler = (event)=>{

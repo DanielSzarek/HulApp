@@ -1,7 +1,7 @@
 import React from 'react';
 import AutoComplete from 'react-autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
-import InputAdornment from "@material-ui/core/InputAdornment";
+// import SearchIcon from '@material-ui/icons/Search';
+// import InputAdornment from "@material-ui/core/InputAdornment";
 import AuthService from './AuthService';
 import '../Styles/UserProfile.css';
 import Avatar from 'react-avatar';
