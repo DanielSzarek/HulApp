@@ -13,7 +13,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-
     @POST("/auth/jwt/create")
     fun createJwt(@Body createJwtRequest: CreateJwtRequest): Call<CreateJwtResponse>
 
@@ -88,5 +87,6 @@ interface ApiService {
     suspend fun getUserById(@Path("id") id: Long): Response<User>
 
     @GET("/api/tracks/")
+    @Authorize
     suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<TrackJson>>
 }

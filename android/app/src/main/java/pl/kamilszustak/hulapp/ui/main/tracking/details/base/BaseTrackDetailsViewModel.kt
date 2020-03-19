@@ -21,7 +21,7 @@ abstract class BaseTrackDetailsViewModel(
 
     fun loadData(trackId: Long) {
         initialize {
-            trackResource.changeFlowSource {
+            trackResource.setFlowSource {
                 trackRepository.getById(trackId)
             }
         }

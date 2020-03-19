@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
@@ -16,6 +17,7 @@ import pl.kamilszustak.hulapp.data.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentUserTrackingHistoryBinding
 import pl.kamilszustak.hulapp.ui.main.tracking.history.BaseTrackingHistoryFragment
 import pl.kamilszustak.hulapp.util.navigateTo
+import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
 class UserTrackingHistoryFragment : BaseTrackingHistoryFragment() {
@@ -54,6 +56,7 @@ class UserTrackingHistoryFragment : BaseTrackingHistoryFragment() {
 
         initializeRecyclerView()
         setListeners()
+        observeViewModel()
         viewModel.loadData(args.userId)
     }
 
@@ -80,6 +83,12 @@ class UserTrackingHistoryFragment : BaseTrackingHistoryFragment() {
     private fun setListeners() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.tracksResource.data.observe(viewLifecycleOwner) { tracks ->
+            modelAdapter.updateModels(tracks)
         }
     }
 

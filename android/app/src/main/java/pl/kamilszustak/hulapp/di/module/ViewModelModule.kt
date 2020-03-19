@@ -108,5 +108,5 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(UserTrackingHistoryViewModel::class)
-    abstract fun bindUserTrackingHistoryViewModel(userTrackDetailsViewModel: UserTrackDetailsViewModel): ViewModel
+    abstract fun bindUserTrackingHistoryViewModel(userTrackingHistoryViewModel: UserTrackingHistoryViewModel): ViewModel
 }

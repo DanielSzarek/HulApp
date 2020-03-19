@@ -22,7 +22,7 @@ class CountryChoiceViewModel @Inject constructor(
             return
         }
 
-        countriesResource.changeFlowSource {
+        countriesResource.setFlowSource {
             countryRepository.getByName(name)
         }
     }

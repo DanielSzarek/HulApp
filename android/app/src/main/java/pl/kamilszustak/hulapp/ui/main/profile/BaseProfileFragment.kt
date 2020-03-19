@@ -11,10 +11,8 @@ abstract class BaseProfileFragment : BaseFragment {
     constructor() : super()
     constructor(@LayoutRes layoutResource: Int) : super(layoutResource)
 
-    protected val trackModelAdapter: ModelAdapter<TrackEntity, TrackItem>
-
-    init {
-        trackModelAdapter = ModelAdapter { track ->
+    protected val trackModelAdapter: ModelAdapter<TrackEntity, TrackItem> by lazy {
+        ModelAdapter<TrackEntity, TrackItem> { track ->
             TrackItem(track)
         }
     }

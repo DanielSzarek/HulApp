@@ -46,10 +46,20 @@ android {
         enabled = true
     }
 
-    android {
-        kotlinOptions {
-            freeCompilerArgs = ["-Xallow-result-return-type"]
-        }
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type"]
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
     }
 }
 
@@ -74,12 +84,12 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_version"
 
     // Activity
-    def activity_version = '1.1.0'
+    def activity_version = '1.2.0-alpha02'
     implementation "androidx.activity:activity:$activity_version"
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.2.2'
+    def fragment_version = '1.2.3'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -89,12 +99,12 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.3.0-alpha03'
+    def navigation_version = '2.3.0-alpha04'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     // Android Jetpack Security
-    implementation 'androidx.security:security-crypto:1.0.0-alpha02'
+    implementation 'androidx.security:security-crypto:1.0.0-beta01'
 
     // Android Jetpack Lifecycle
     def lifecycle_version = '2.2.0'
@@ -120,7 +130,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Room
-    def room_version = '2.2.4'
+    def room_version = '2.2.5'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -146,7 +156,7 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
 
     // Dagger
-    def dagger_version = '2.26'
+    def dagger_version = '2.27'
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
@@ -172,7 +182,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     // Material Dialogs
-    def material_dialogs_version = '3.1.1'
+    def material_dialogs_version = '3.3.0'
     implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
     implementation "com.afollestad.material-dialogs:input:$material_dialogs_version"
     implementation "com.afollestad.material-dialogs:datetime:$material_dialogs_version"
