@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../Images/logo.png';
-import {Button } from 'react-bootstrap';
+// import {Button } from 'react-bootstrap';
 import {Link, Redirect} from 'react-router-dom';
 import AutoComplete from './SelectAutocompleteNoToken';
 import '../Styles/App.css';
@@ -8,10 +8,14 @@ import '../Styles/Registration.css';
 import '../Styles/Login.css';
 import AlertRegistrationSucces from './AlertRegistrationSucces';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-import {Col, Form, InputGroup} from 'react-bootstrap';
+// import {Col, Form, InputGroup} from 'react-bootstrap';
+import {Form, InputGroup} from 'react-bootstrap';
+
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+// import QontoConnector from "../User/nowy"
+
 
 
 
@@ -138,6 +142,7 @@ class Registration extends React.Component{
         return(
             <div>
     <div className="offset-md-4 col-12 col-md-4">
+    {/* <QontoConnector/> */}
             <div className="registration-container">
                 <img src={logo} alt={"logo"}/>
                 </div>

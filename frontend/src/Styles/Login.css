@@ -2,10 +2,6 @@
     padding: 0 5%;
 }
 
-/* .input-in-form {
-    margin-top: 30px;
-} */
-
 .logging-form {
     margin-top: 25px;
 }
@@ -27,4 +23,12 @@
 .mailSend {
     padding-bottom: 30px;
     text-align: center;
+}
+
+
+.result {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: red;
 }

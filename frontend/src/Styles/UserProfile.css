@@ -34,7 +34,9 @@ h1 {
     background-color: #FF0000;
     font-size: 16px;
     color: #fff;
-    width: 101px;
+    width: 104px;
+    /* width: 31%; */
+
     text-align: center;
 }
 
@@ -70,3 +72,19 @@ input[type="file"] {
       margin-top: 10px;
       margin-bottom: 10px;
   }
+
+  .icon-prepend{
+	position:absolute;
+	height:100%;
+}
+
+.autocomplete-group{
+	position:relative;
+}
+
+.result {
+    color: black;
+    /* font-size: 500; */
+    /* font-style: italic; */
+    font-size: xx-large;
+}

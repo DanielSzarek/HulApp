@@ -1,6 +1,8 @@
 import React from 'react';
 import '../Styles/UserProfile.css';
 import AutoComplete from 'react-autocomplete';
+import {InputGroup} from 'react-bootstrap';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
 
 export default class AutoCompleteForm extends React.Component {
 
@@ -77,7 +79,10 @@ export default class AutoCompleteForm extends React.Component {
         this.setState({
             value: event.split("-")[1]
         });
-		this.props.onSelect(event.split("-")[0]);
+        this.props.onSelect({
+            propname: this.props.name, 
+            id: event.split("-")[0], 
+            value: event.split("-")[1] });
     }
 
 	
@@ -110,11 +115,15 @@ export default class AutoCompleteForm extends React.Component {
     render() {
         return (
             <div className='form-group'>
-
+                        <InputGroup className='autocomplete-group'>
+                        <InputGroup.Prepend className="icon-prepend">
+                        <InputGroup.Text> <LocationCityIcon/></InputGroup.Text>
+                        </InputGroup.Prepend>
 				
 				<AutoComplete
-					placeholder={this.props.label}
-					inputProps={{ style: { width:'100%',  border: '1px solid #ced4da', padding:'5px'}, placeholder: this.props.defVal}}
+					inputProps={{ style: { width:'100%',  border: '1px solid #ced4da', padding:'7px', paddingLeft:'59px'}, placeholder: this.props.defVal }}
+                    menuStyle={{borderRadius: '3px',  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',  background: 'rgba(255, 255, 255, 0.9)',  padding: '2px 0',
+					fontSize: '90%',  position: 'fixed',  overflow: 'auto',  maxHeight: '50%', zIndex:'2'}}
                     getItemValue={this.getItemValue}
                     items={this.state.autocompleteData}
                     renderItem={this.renderItem}
@@ -123,7 +132,8 @@ export default class AutoCompleteForm extends React.Component {
                     onSelect={this.onSelect}
 					name={this.props.name}
                     wrapperStyle={{ width:  '100%'   }}
-                />            
+                />        
+                </InputGroup>    
             </div>
         );
     }

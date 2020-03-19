@@ -7,10 +7,12 @@ import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha
 import AuthService from './AuthService';
 
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-import {Col, Form, InputGroup, Button} from 'react-bootstrap';
+// import {Col, Form, InputGroup, Button} from 'react-bootstrap';
+import {Form, InputGroup} from 'react-bootstrap';
+
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-
+// import QontoConnector from "../User/nowy"
 
 
 
@@ -41,7 +43,9 @@ class LoggingForm extends React.Component {
                 this.props.history.replace('/profile-edit');
             })
             .catch((error) => {
-                this.setState({ message: "ERROR " + error });
+                 this.setState({ message: "NIEPOPRAWNE DANE UŻYTKOWNIKA: BŁĘDNY LOGIN BĄDŹ HASŁO" });
+
+                // this.setState({ message: "ERROR " + error });
             });
     };
 
@@ -69,8 +73,10 @@ class LoggingForm extends React.Component {
         return (
             <div>
                 <img src={logo} alt={"logo"} />
+                <div className="result">{this.state.message}</div>
 
                 <div className="offset-md-4 col-12 col-md-4">
+
 
                     <div className="logging-container">
                         <GoogleReCaptchaProvider
@@ -116,7 +122,7 @@ class LoggingForm extends React.Component {
                             </div>
                             </form>
 
-                            <div className="result">{this.state.message}</div>
+                            {/* <div className="result">{this.state.message}</div> */}
 
                             <Link to="/registration">
                             <div  className="logging-form-buttons" >
