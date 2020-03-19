@@ -26,4 +26,5 @@ fun <A : ModelAdapter<Model, Item>, Model, Item : GenericItem> FastAdapterDiffUt
 fun <Model, Item : GenericItem> ModelAdapter<Model, Item>.updateModels(models: List<Model>) {
     val result = FastAdapterDiffUtil.calculateDiff(this, models)
     FastAdapterDiffUtil.set(this, result)
+    this.fastAdapter?.notifyAdapterDataSetChanged()
 }

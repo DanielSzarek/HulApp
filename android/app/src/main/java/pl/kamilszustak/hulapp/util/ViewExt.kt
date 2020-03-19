@@ -1,10 +1,12 @@
 package pl.kamilszustak.hulapp.util
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.ImageView
+import androidx.appcompat.widget.PopupMenu
 import com.bumptech.glide.Glide
 
 fun View.animatePressed(duration: Long = 200, endAction: () -> Unit = {}) {
@@ -52,4 +54,14 @@ fun ImageView.load(url: String?) {
     Glide.with(this)
         .load(url)
         .into(this)
+}
+
+fun popupMenu(context: Context, view: View, initialization: PopupMenu.() -> Unit) {
+    PopupMenu(context, view).apply {
+        this.initialization()
+    }.show()
+}
+
+fun popupMenu(view: View, initialization: PopupMenu.() -> Unit) {
+    popupMenu(view.context, view, initialization)
 }

@@ -39,5 +39,11 @@ open class BaseBottomSheetDialogFragment(
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        this.retainInstance = true
+    }
+
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 }

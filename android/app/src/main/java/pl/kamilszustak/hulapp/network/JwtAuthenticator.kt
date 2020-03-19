@@ -10,7 +10,6 @@ import pl.kamilszustak.hulapp.data.model.network.RefreshJwtRequest
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.util.today
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 

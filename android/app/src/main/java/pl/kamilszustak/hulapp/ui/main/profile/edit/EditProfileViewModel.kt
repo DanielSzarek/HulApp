@@ -52,14 +52,14 @@ class EditProfileViewModel @Inject constructor(
         isNullable = true
     }
 
-    private val _isSaving: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isSaving: LiveData<Boolean> = _isSaving
+    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _saveError: SingleLiveData<String> = SingleLiveData()
-    val saveError: LiveData<String> = _saveError
+    private val _error: SingleLiveData<String> = SingleLiveData()
+    val error: LiveData<String> = _error
 
-    private val _saveCompleted: SingleLiveData<Unit> = SingleLiveData()
-    val saveCompleted: LiveData<Unit> = _saveCompleted
+    private val _completed: SingleLiveData<Unit> = SingleLiveData()
+    val completed: LiveData<Unit> = _completed
 
     val isSavingEnabled: LiveData<Boolean> = FormField.validateFields(
         userNameField,
@@ -69,14 +69,14 @@ class EditProfileViewModel @Inject constructor(
     )
 
     init {
-        userResource.changeFlowSource {
+        userResource.setFlowSource {
             userRepository.getLoggedIn(false)
         }
 
         cityResource.result.addSource(userResource.data) {
             val cityId = it.cityId
             if (cityId != null) {
-                cityResource.changeFlowSource {
+                cityResource.setFlowSource {
                     cityRepository.getById(cityId, false)
                 }
             } else {
@@ -87,7 +87,7 @@ class EditProfileViewModel @Inject constructor(
         countryResource.result.addSource(userResource.data) {
             val countryId = it.countryId
             if (countryId != null) {
-                countryResource.changeFlowSource {
+                countryResource.setFlowSource {
                     countryRepository.getById(countryId, false)
                 }
             } else {
@@ -127,7 +127,7 @@ class EditProfileViewModel @Inject constructor(
 
     fun onSaveButtonClick() {
         if (!isInternetConnected()) {
-            _saveError.value = "Brak dostępu do Internetu"
+            _error.value = "Brak dostępu do Internetu"
             return
         }
 
@@ -135,7 +135,7 @@ class EditProfileViewModel @Inject constructor(
         val surname = userSurnameField.data.value
 
         if (name == null || surname == null) {
-            _saveError.value = "Imię i nazwisko nie mogą być puste"
+            _error.value = "Imię i nazwisko nie mogą być puste"
             return
         }
 
@@ -147,16 +147,16 @@ class EditProfileViewModel @Inject constructor(
         )
 
         viewModelScope.launch(Dispatchers.IO) {
-            _isSaving.postValue(true)
+            _isLoading.postValue(true)
 
             val result = userRepository.update(request)
             result.onSuccess {
-                _saveCompleted.callAsync()
+                _completed.callAsync()
             }.onFailure {
-                _saveError.postValue("Wystąpił błąd podczas edycji profilu")
+                _error.postValue("Wystąpił błąd podczas edycji profilu")
             }
 
-            _isSaving.postValue(false)
+            _isLoading.postValue(false)
         }
     }
 }

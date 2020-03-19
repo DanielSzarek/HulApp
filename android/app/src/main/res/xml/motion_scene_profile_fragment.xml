@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Transition
+        android:id="@+id/profileTransition"
+        app:constraintSetStart="@layout/fragment_profile"
+        app:constraintSetEnd="@id/endConstraintSet"
+        app:duration="@integer/default_motion_scene_transition_duration">
+
+        <OnSwipe
+            app:touchAnchorId="@id/scrollView"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragUp"
+             />
+    </Transition>
+
+    <ConstraintSet
+        android:id="@+id/endConstraintSet">
+
+        <Constraint
+            android:id="@id/profilePhotoImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@null"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@id/addPhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/profilePhotoImageView"
+            app:layout_constraintEnd_toEndOf="@id/profilePhotoImageView"
+            app:layout_constraintTop_toTopOf="@id/profilePhotoImageView"
+            app:layout_constraintBottom_toBottomOf="@id/profilePhotoImageView" />
+
+        <Constraint
+            android:id="@id/userFullNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/profilePhotoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/profilePhotoImageView"
+            app:layout_constraintBottom_toBottomOf="@id/profilePhotoImageView"
+            android:layout_marginStart="@dimen/default_margin" />
+    </ConstraintSet>
+</MotionScene>

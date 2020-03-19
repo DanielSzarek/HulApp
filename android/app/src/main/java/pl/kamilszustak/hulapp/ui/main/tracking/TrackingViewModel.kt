@@ -17,6 +17,7 @@ import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.data.model.Track
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.round
@@ -79,8 +80,8 @@ class TrackingViewModel @Inject constructor(
     private val _error: SingleLiveData<String> = SingleLiveData()
     val error: LiveData<String> = _error
 
-    private val _trackSaved: SingleLiveData<Track> = SingleLiveData()
-    val trackSaved: LiveData<Track> = _trackSaved
+    private val _trackSaved: SingleLiveData<TrackEntity> = SingleLiveData()
+    val trackSaved: LiveData<TrackEntity> = _trackSaved
 
     init {
         initializeTracking()

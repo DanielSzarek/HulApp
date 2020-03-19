@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.fragment_tracking.*
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.LocationPoint
@@ -26,7 +25,7 @@ import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import javax.inject.Inject
 
-class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCallback {
+class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -34,6 +33,8 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
     private val viewModel: TrackingViewModel by viewModels {
         viewModelFactory
     }
+
+    private lateinit var binding: FragmentTrackingBinding
 
     private var googleMap: GoogleMap? = null
     private val mapZoomLevel: Float = 15F
@@ -43,7 +44,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentTrackingBinding>(
+        binding = DataBindingUtil.inflate<FragmentTrackingBinding>(
             inflater,
             R.layout.fragment_tracking,
             container,
@@ -53,7 +54,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,11 +107,11 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
     }
 
     private fun setListeners() {
-        startTrackingButton.setOnClickListener {
+        binding.startTrackingButton.setOnClickListener {
             viewModel.onStartTrackingButtonClick()
         }
 
-        endTrackingButton.setOnClickListener {
+        binding.endTrackingButton.setOnClickListener {
             dialog {
                 title(R.string.tracking_end_title)
                 message(R.string.tracking_end_message)
@@ -123,7 +124,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
             }
         }
 
-        mapTypeButton.setOnClickListener {
+        binding.mapTypeButton.setOnClickListener {
             viewModel.onMapTypeButtonClick()
         }
     }
@@ -132,14 +133,14 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
         viewModel.trackingState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is TrackingState.Started -> {
-                    motionLayout.transitionToEnd()
+                    binding.motionLayout.transitionToEnd()
                 }
 
                 is TrackingState.Paused -> {
                 }
 
                 is TrackingState.Ended -> {
-                    motionLayout.transitionToStart()
+                    binding.motionLayout.transitionToStart()
                 }
             }
         }
@@ -203,7 +204,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking), OnMapReadyCal
     }
 
     private fun navigateToTrackingHistoryBottomSheet() {
-        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryFragment()
         navigateTo(direction)
     }
 }

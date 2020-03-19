@@ -24,7 +24,7 @@
             android:id="@+id/motionLayout"
             app:layoutDescription="@xml/motion_scene_tracking_fragment">
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/mapFragment"
@@ -91,7 +91,7 @@
                         android:layout_marginTop="@dimen/default_margin" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/distanceTextView"
+                        android:id="@+id/distanceAndTimeTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{@string/track_distance_value(viewModel.distance)}"

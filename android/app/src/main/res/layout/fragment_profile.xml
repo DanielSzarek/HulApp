@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="android.view.View" />
-        <import type="android.text.Html" />
+        <import type="androidx.core.text.HtmlCompat" />
 
         <variable
             name="viewModel"
@@ -15,105 +15,145 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/swipeRefreshLayout"
-        app:refreshing="@{viewModel.userResource.isLoading}">
+        android:enabled="false"
+        app:refreshing="@{viewModel.userResource.isLoading || viewModel.cityResource.isLoading || viewModel.countryResource.isLoading || viewModel.tracksResource.isLoading}">
 
-        <ScrollView
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true">
+            android:id="@+id/motionLayout"
+            android:padding="@dimen/default_padding"
+            android:nestedScrollingEnabled="true"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:layoutDescription="@xml/motion_scene_profile_fragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:id="@+id/profilePhotoImageView"
+                app:profilePhoto="@{viewModel.userResource.data.profilePhotoUrl}"
+                android:src="@drawable/icon_profile"
+                app:civ_border_width="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:padding="@dimen/default_padding">
+                android:id="@+id/addPhotoButton"
+                android:src="@drawable/icon_add_photo_light"
+                app:fabSize="mini"
+                app:tint="@null"
+                app:layout_constraintCircle="@id/profilePhotoImageView"
+                app:layout_constraintCircleAngle="135"
+                app:layout_constraintCircleRadius="64dp"
+                tools:ignore="MissingConstraints" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:id="@+id/profilePhotoImageView"
-                    app:profilePhoto="@{viewModel.userResource.data.profilePhotoUrl}"
-                    android:src="@drawable/icon_profile"
-                    app:civ_border_width="1dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userFullNameTextView"
+                android:text="@{viewModel.userResource.data.fullName}"
+                tools:text="Jan Kowalski"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addPhotoButton"
-                    android:src="@drawable/icon_add_photo_light"
-                    app:fabSize="mini"
-                    app:tint="@null"
-                    app:layout_constraintCircle="@id/profilePhotoImageView"
-                    app:layout_constraintCircleAngle="135"
-                    app:layout_constraintCircleRadius="64dp"
-                    tools:ignore="MissingConstraints" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/scrollView"
+                android:clipChildren="false"
+                app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/default_margin">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/userFullNameTextView"
-                    android:text="@{viewModel.userResource.data.fullName}"
-                    tools:text="Jan Kowalski"
-                    android:textSize="32sp"
-                    android:fontFamily="sans-serif-light"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profilePhotoImageView" />
-
-                <com.google.android.material.card.MaterialCardView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/userDetailsCardView"
-                    app:cardCornerRadius="@dimen/default_radius"
-                    app:cardElevation="@dimen/default_half_elevation"
-                    app:contentPadding="@dimen/default_padding"
-                    app:layout_constraintTop_toBottomOf="@id/userFullNameTextView"
-                    android:layout_marginTop="@dimen/default_margin">
+                    android:clipChildren="false">
 
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:id="@+id/userDetailsCardView"
+                        app:cardCornerRadius="@dimen/default_radius"
+                        app:cardElevation="@dimen/default_half_elevation"
+                        app:contentPadding="@dimen/default_padding"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/userCityTextView"
-                            android:text="@{Html.fromHtml(@string/user_profile_city(viewModel.cityResource.data.name))}"
-                            tools:text="Mieszka w: Gdynia"
-                            android:gravity="center_vertical"
-                            android:drawableStart="@drawable/icon_city"
-                            android:drawablePadding="@dimen/default_half_margin"
-                            android:visibility="@{viewModel.cityResource.data != null ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintTop_toBottomOf="@id/userFullNameTextView" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/userCountryTextView"
-                            android:text="@{Html.fromHtml(@string/user_profile_country(viewModel.countryResource.data.name))}"
-                            tools:text="Polska"
-                            android:gravity="center_vertical"
-                            android:drawableStart="@drawable/icon_flag"
-                            android:drawablePadding="@dimen/default_half_margin"
-                            android:visibility="@{viewModel.countryResource.data != null ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintTop_toBottomOf="@id/userCityTextView"
-                            android:layout_marginTop="@dimen/default_half_margin" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/userCityTextView"
+                                android:text="@{HtmlCompat.fromHtml(@string/user_profile_city(viewModel.cityResource.data.name), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
+                                tools:text="Mieszka w: Gdynia"
+                                android:gravity="center_vertical"
+                                android:drawableStart="@drawable/icon_city"
+                                android:drawablePadding="@dimen/default_half_margin"
+                                android:visibility="@{viewModel.cityResource.data != null ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintTop_toBottomOf="@id/userFullNameTextView" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editProfileButton"
-                    android:text="Edytuj profil"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    app:layout_constraintTop_toBottomOf="@id/userDetailsCardView"
-                    android:layout_marginTop="@dimen/default_half_margin"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/userCountryTextView"
+                                android:text="@{HtmlCompat.fromHtml(@string/user_profile_country(viewModel.countryResource.data.name), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
+                                tools:text="Polska"
+                                android:gravity="center_vertical"
+                                android:drawableStart="@drawable/icon_flag"
+                                android:drawablePadding="@dimen/default_half_margin"
+                                android:visibility="@{viewModel.countryResource.data != null ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintTop_toBottomOf="@id/userCityTextView"
+                                android:layout_marginTop="@dimen/default_half_margin" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editProfileButton"
+                        android:text="Edytuj profil"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        app:layout_constraintTop_toBottomOf="@id/userDetailsCardView"
+                        android:layout_marginTop="@dimen/default_half_margin"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tracksHeaderTextView"
+                        android:text="Trasy"
+                        android:textAppearance="?textAppearanceHeadline5"
+                        app:layout_constraintTop_toBottomOf="@id/editProfileButton" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tracksRecyclerView"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@id/tracksHeaderTextView"
+                        android:layout_marginTop="@dimen/default_half_margin" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/showAllTracksButton"
+                        android:text="Pokaż wszystkie"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        app:layout_constraintTop_toBottomOf="@id/tracksRecyclerView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

@@ -1,7 +1,7 @@
 package pl.kamilszustak.hulapp.ui.main.profile.main
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.data.repository.*
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileViewModel
@@ -12,12 +12,14 @@ class ProfileViewModel @Inject constructor(
     userRepository: UserRepository,
     cityRepository: CityRepository,
     countryRepository: CountryRepository,
+    trackRepository: TrackRepository,
     private val settingsRepository: SettingsRepository
 ) : BaseProfileViewModel(
     application,
     userRepository,
     cityRepository,
-    countryRepository
+    countryRepository,
+    trackRepository
 ) {
     private val _logoutEvent: SingleLiveData<Unit> = SingleLiveData()
     val logoutEvent: LiveData<Unit> = _logoutEvent
@@ -26,7 +28,7 @@ class ProfileViewModel @Inject constructor(
     val openProfilePhoto: LiveData<String> = _openProfilePhoto
 
     init {
-        userResource.changeFlowSource {
+        userResource.setFlowSource {
             userRepository.getLoggedIn()
         }
     }

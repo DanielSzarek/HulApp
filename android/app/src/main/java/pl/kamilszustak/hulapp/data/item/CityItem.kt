@@ -1,14 +1,13 @@
 package pl.kamilszustak.hulapp.data.item
 
-import android.view.View
-import android.widget.TextView
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.ModelAbstractItem
-import kotlinx.android.synthetic.main.layout_cities_list_item.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.databinding.ItemCitiesListBinding
 
-class CityItem(city: City) : ModelAbstractItem<City, CityItem.ViewHolder>(city) {
+class CityItem(city: City) : ModelAbstractBindingItem<City, ItemCitiesListBinding>(city) {
 
     override var identifier: Long
         get() = this.model.id
@@ -17,21 +16,17 @@ class CityItem(city: City) : ModelAbstractItem<City, CityItem.ViewHolder>(city) 
     override val type: Int
         get() = R.id.fastadapter_city_item_id
 
-    override val layoutRes: Int
-        get() = R.layout.layout_cities_list_item
+    override fun createBinding(
+        inflater: LayoutInflater,
+        parent: ViewGroup?
+    ): ItemCitiesListBinding =
+        ItemCitiesListBinding.inflate(inflater, parent, false)
 
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
+    override fun bindView(binding: ItemCitiesListBinding, payloads: List<Any>) {
+        binding.cityNameTextView.text = this.model.name
+    }
 
-    class ViewHolder(view: View) : FastAdapter.ViewHolder<CityItem>(view) {
-
-        private val cityNameTextView: TextView = view.cityNameTextView
-
-        override fun bindView(item: CityItem, payloads: MutableList<Any>) {
-            cityNameTextView.text = item.model.name
-        }
-
-        override fun unbindView(item: CityItem) {
-            cityNameTextView.text = null
-        }
+    override fun unbindView(binding: ItemCitiesListBinding) {
+        binding.cityNameTextView.text = null
     }
 }

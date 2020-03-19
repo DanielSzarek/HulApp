@@ -3,7 +3,7 @@ package pl.kamilszustak.hulapp.di.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import pl.kamilszustak.hulapp.di.scope.ActivityScope
-import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
+import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.main.MainActivity
 import pl.kamilszustak.hulapp.ui.splashscreen.SplashScreenActivity
 
@@ -20,7 +20,7 @@ abstract class ActivityModule {
             AuthorizationActivityModule::class
         ]
     )
-    abstract fun contributeAuthorizationActivity(): AuthorizationActivity
+    abstract fun contributeAuthorizationActivity(): AuthenticationActivity
 
     @ActivityScope
     @ContributesAndroidInjector(

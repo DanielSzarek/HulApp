@@ -7,12 +7,12 @@ import pl.kamilszustak.hulapp.data.model.Country
 import pl.kamilszustak.hulapp.data.model.Track
 import pl.kamilszustak.hulapp.data.model.User
 import pl.kamilszustak.hulapp.data.model.network.*
+import pl.kamilszustak.hulapp.data.model.track.TrackJson
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-
     @POST("/auth/jwt/create")
     fun createJwt(@Body createJwtRequest: CreateJwtRequest): Call<CreateJwtResponse>
 
@@ -64,17 +64,17 @@ interface ApiService {
 
     @POST("/api/my-tracks/")
     @Authorize
-    suspend fun postTrack(@Body track: Track): Response<Track>
+    suspend fun postTrack(@Body track: Track): Response<TrackJson>
 
     @GET("/api/my-tracks/")
     @Authorize
-    suspend fun getAllTracks(): Response<List<Track>>
+    suspend fun getCurrentUserTracks(): Response<List<TrackJson>>
 
-    @GET("/api/tracks/{id}")
+    @GET("/api/track/{id}")
     @Authorize
-    suspend fun getTrackById(@Path("id") id: Long): Response<Track>
+    suspend fun getTrackById(@Path("id") id: Long): Response<TrackJson>
 
-    @DELETE("/api/tracks/{id}")
+    @DELETE("/api/track/{id}")
     @Authorize
     suspend fun deleteTrackById(@Path("id") id: Long): Response<Unit>
 
@@ -86,6 +86,7 @@ interface ApiService {
     @Authorize
     suspend fun getUserById(@Path("id") id: Long): Response<User>
 
-    @GET("/api/track/")
-    suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<Track>>
+    @GET("/api/tracks/")
+    @Authorize
+    suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<TrackJson>>
 }

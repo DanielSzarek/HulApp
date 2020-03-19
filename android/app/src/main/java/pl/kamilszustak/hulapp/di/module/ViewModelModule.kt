@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import pl.kamilszustak.hulapp.di.ViewModelKey
 import pl.kamilszustak.hulapp.common.AndroidViewModelFactory
-import pl.kamilszustak.hulapp.ui.authorization.login.LoginViewModel
-import pl.kamilszustak.hulapp.ui.authorization.passwordreset.PasswordResetViewModel
-import pl.kamilszustak.hulapp.ui.authorization.signup.SignUpViewModel
+import pl.kamilszustak.hulapp.di.ViewModelKey
+import pl.kamilszustak.hulapp.ui.authentication.login.LoginViewModel
+import pl.kamilszustak.hulapp.ui.authentication.passwordreset.PasswordResetViewModel
+import pl.kamilszustak.hulapp.ui.authentication.signup.SignUpViewModel
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceViewModel
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewModel
@@ -20,7 +20,9 @@ import pl.kamilszustak.hulapp.ui.main.profile.search.SearchViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel
-import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -97,4 +99,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserProfileViewModel::class)
     abstract fun bindUserProfileViewModel(userProfileViewModel: UserProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserTrackDetailsViewModel::class)
+    abstract fun bindUserTrackDetailsViewModel(userTrackDetailsViewModel: UserTrackDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserTrackingHistoryViewModel::class)
+    abstract fun bindUserTrackingHistoryViewModel(userTrackingHistoryViewModel: UserTrackingHistoryViewModel): ViewModel
 }

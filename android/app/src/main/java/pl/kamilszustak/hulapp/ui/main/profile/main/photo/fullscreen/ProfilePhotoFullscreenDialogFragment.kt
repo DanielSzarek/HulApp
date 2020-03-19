@@ -6,22 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.dialog_profile_photo_fullscreen.*
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.DialogProfilePhotoFullscreenBinding
 import pl.kamilszustak.hulapp.ui.base.BaseDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 
-class ProfilePhotoFullscreenDialogFragment : BaseDialogFragment(R.layout.dialog_profile_photo_fullscreen) {
+class ProfilePhotoFullscreenDialogFragment : BaseDialogFragment() {
 
     private val args: ProfilePhotoFullscreenDialogFragmentArgs by navArgs()
+
+    private lateinit var binding: DialogProfilePhotoFullscreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<DialogProfilePhotoFullscreenBinding>(
+        binding = DataBindingUtil.inflate<DialogProfilePhotoFullscreenBinding>(
             inflater,
             R.layout.dialog_profile_photo_fullscreen,
             container,
@@ -31,7 +32,7 @@ class ProfilePhotoFullscreenDialogFragment : BaseDialogFragment(R.layout.dialog_
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,12 +42,8 @@ class ProfilePhotoFullscreenDialogFragment : BaseDialogFragment(R.layout.dialog_
     }
 
     private fun setListeners() {
-        closeButton.setOnClickListener {
+        binding. closeButton.setOnClickListener {
             navigateUp()
         }
-    }
-
-    companion object {
-        const val sharedElementTransitionName: String = "PROFILE_PHOTO_FULLSCREEN_TRANSITION"
     }
 }

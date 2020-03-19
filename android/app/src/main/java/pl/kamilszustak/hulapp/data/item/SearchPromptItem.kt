@@ -19,13 +19,13 @@ class SearchPromptItem(searchPrompt: SearchPrompt) : ModelAbstractItem<SearchPro
 
     override val layoutRes: Int = R.layout.item_search_prompts_list
 
-    override fun getViewHolder(v: View): SearchPromptItem.ViewHolder = ViewHolder(v)
+    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     class ViewHolder(view: View) : FastAdapter.ViewHolder<SearchPromptItem>(view) {
         private val searchPromptTextView: TextView = view.searchPromptTextView
         val deleteButton: ImageButton = view.deleteButton
 
-        override fun bindView(item: SearchPromptItem, payloads: MutableList<Any>) {
+        override fun bindView(item: SearchPromptItem, payloads: List<Any>) {
             searchPromptTextView.text = item.model.text
         }
 

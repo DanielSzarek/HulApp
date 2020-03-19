@@ -13,8 +13,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:refreshing="@{viewModel.isLoading}"
-        android:enabled="false">
+        android:id="@+id/swipeRefreshLayout"
+        app:refreshing="@{viewModel.isLoading || viewModel.trackResource.isLoading}">
 
         <ScrollView
             android:layout_width="match_parent"

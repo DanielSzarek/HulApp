@@ -8,16 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import kotlinx.android.synthetic.main.bottom_sheet_city_choice.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.data.model.City
 import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
-import pl.kamilszustak.hulapp.data.item.CityItem
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.util.updateModels
@@ -32,6 +29,8 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         viewModelFactory
     }
 
+    private lateinit var binding: BottomSheetCityChoiceBinding
+
     var listener: ClickListener<CityItem>? = null
 
     private lateinit var modelAdapter: ModelAdapter<City, CityItem>
@@ -41,7 +40,7 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<BottomSheetCityChoiceBinding>(
+        binding = DataBindingUtil.inflate<BottomSheetCityChoiceBinding>(
             inflater,
             R.layout.bottom_sheet_city_choice,
             container,
@@ -51,13 +50,12 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        retainInstance = true
         initializeRecyclerView()
         setListeners()
         observeViewModel()
@@ -67,15 +65,18 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
         modelAdapter = ModelAdapter {
             CityItem(it)
         }
-        val fastAdapter = FastAdapter.with(modelAdapter)
-        fastAdapter.onClickListener = listener
-        citiesRecyclerView.apply {
+
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onClickListener = listener
+        }
+
+        binding.citiesRecyclerView.apply {
             this.adapter = fastAdapter
         }
     }
 
     private fun setListeners() {
-        closeButton.setOnClickListener {
+        binding.closeButton.setOnClickListener {
             navigateUp()
         }
     }
@@ -91,9 +92,9 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
         viewModel.citiesResource.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressBar.show()
+                binding.progressBar.show()
             } else {
-                progressBar.hide()
+                binding.progressBar.hide()
             }
         }
     }

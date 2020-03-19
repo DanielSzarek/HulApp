@@ -1,19 +1,26 @@
 package pl.kamilszustak.hulapp.data.database
 
 import android.app.Application
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.security.crypto.MasterKeys
 import com.commonsware.cwac.saferoom.SafeHelperFactory
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.database.dao.*
-import pl.kamilszustak.hulapp.data.model.*
+import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.data.model.SearchPrompt
+import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 
 @Database(
     entities = [
         User::class,
         City::class,
         Country::class,
-        Track::class,
+        TrackEntity::class,
         SearchPrompt::class
     ],
     version = 1,

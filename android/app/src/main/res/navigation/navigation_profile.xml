@@ -39,6 +39,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_trackDetailsFragment"
+            app:destination="@id/trackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_trackingHistoryFragment"
+            app:destination="@id/trackingHistoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -82,6 +96,67 @@
         android:name="pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment"
         android:label="Profil użytkownika"
         tools:layout="@layout/fragment_user_profile">
+        <argument
+            android:name="userId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_userTrackingHistoryFragment"
+            app:destination="@id/userTrackingHistoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_userTrackDetailsFragment"
+            app:destination="@id/userTrackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackDetailsFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsFragment"
+        android:label="Szczegóły trasy"
+        tools:layout="@layout/fragment_track_details">
+        <argument
+            android:name="trackId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackingHistoryFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
+        android:label="TrackingHistoryFragment"
+        tools:layout="@layout/fragment_tracking_history" >
+        <action
+            android:id="@+id/action_trackingHistoryFragment_to_trackDetailsFragment"
+            app:destination="@id/trackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userTrackDetailsFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment"
+        android:label="UserTrackDetailsFragment"
+        tools:layout="@layout/fragment_user_track_details">
+        <argument
+            android:name="trackId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/userTrackingHistoryFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment"
+        android:label="UserTrackingHistoryFragment"
+        tools:layout="@layout/fragment_user_tracking_history">
+        <action
+            android:id="@+id/action_userTrackingHistoryFragment_to_userTrackDetailsFragment"
+            app:destination="@id/userTrackDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="userId"
             app:argType="long" />

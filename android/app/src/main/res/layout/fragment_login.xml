@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.authorization.login.LoginViewModel" />
+            type="pl.kamilszustak.hulapp.ui.authentication.login.LoginViewModel" />
     </data>
 
     <ScrollView
