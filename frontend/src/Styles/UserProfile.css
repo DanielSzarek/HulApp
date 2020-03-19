@@ -65,3 +65,8 @@ input[type="file"] {
   .spinner {
       margin: 30%;
   }
+
+  .searchAvatar {
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }

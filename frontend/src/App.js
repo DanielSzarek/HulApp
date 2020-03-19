@@ -9,6 +9,7 @@ import ResetPassword from './User/ResetPassword';
 import ResetPasswordConfirm from './User/ResetPasswordConfim';
 import UserTracks from './Track/UserTracks'
 import UserTrackDetail from './Track/UserTrackDetail';
+import SearchUser from './User/SearchUser';
 
 
 class App extends React.Component {
@@ -27,6 +28,8 @@ class App extends React.Component {
             <Route path="/password/reset/confirm/:uid/:token" component={ResetPasswordConfirm} />
             <Route path="/tracks" component={UserTracks} />
             <Route path="/track/:id" component={UserTrackDetail} />
+            <Route path="/user/:userId" component={SearchUser} />
+
           </Switch>
         </BrowserRouter>
       </div>

@@ -24,3 +24,9 @@
 .navbar {
     background-color: red;
 }
+
+.person-autoselect > div > div{
+	position:absolute !important;
+	max-height: 200px !important;
+    z-index: 100;
+}

@@ -1,26 +1,21 @@
 import decode from 'jwt-decode';
 export default class AuthService {
-    // Initializing important variables
     constructor(domain) {
 
-        this.fetch = this.fetch.bind(this) // React binding stuff
+        this.fetch = this.fetch.bind(this) 
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
     }
 
     login(username, password) {
-        // Get a token from api server using the fetch api
         return this.fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
             method: 'POST',
-            //  'credentials': 'include',
             body: JSON.stringify({
-                // username,
-                // password
                 email: username,
                 password: password
             })
         }).then(res => {
-            this.setToken(res.access) // Setting the token in localStorage
+            this.setToken(res.access) 
 			this.setRefreshidToken(res.refresh)
             return Promise.resolve(res);
         })
@@ -39,7 +34,7 @@ export default class AuthService {
         })
 		.then(res => res.json())
 		.then(res => {
-            this.setToken(res.access) // Setting the token in localStorage
+            this.setToken(res.access) 
             return Promise.resolve(res);
         })
 		.catch((error) => {
@@ -48,14 +43,11 @@ export default class AuthService {
 	}
 
     async loggedIn() {
-        // Checks if there is a saved token and it's still valid
-        const token = this.getToken() // GEtting token from localstorage
-		//check if tokem expired
+        const token = this.getToken() 
 		if(!!token && token !== 'undefined' && !this.isTokenExpired(token)){
 			return true;
 		}
 		else{
-			//check if refresh token not expired
 			const refreshToken = this.getRefreshToken();
 			if(!!refreshToken && !this.isTokenExpired(refreshToken)){
 				await this.refresh();
@@ -69,7 +61,7 @@ export default class AuthService {
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. N
+            if (decoded.exp < Date.now() / 1000) { 
                 return true;
             }
             else
@@ -81,50 +73,41 @@ export default class AuthService {
     }
 
     setToken(idToken) {
-        // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
 	
 	setRefreshidToken(idToken) {
-        // Saves user token to localStorage
         localStorage.setItem('id_refresh', idToken)
     }
 
     getToken() {
-        // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
     }
 	
 	getRefreshToken() {
-        // Retrieves the refresh token from localStorage
         return localStorage.getItem('id_refresh')
     }
 
     logout() {
-        // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
         localStorage.removeItem('id_refresh');
-        // <Redirect to="/" />
-        // this.props.history.replace('/login');
+
 
         console.log("clean local storage");
     }
 
     getProfile() {
-        // Using jwt-decode npm package to decode the token
         return decode(this.getToken());
     }
 
 
     async fetch(url, options) {
-        // performs api calls sending the required authentication headers
         const headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
 
-        // Setting Authorization header
-        // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+
         if (await this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
         }
@@ -140,18 +123,8 @@ export default class AuthService {
             .then(response => response.json())
     }
 
-    // _checkStatus(response) {
-    //     // raises an error in case response status is not a success
-    //     if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
-    //         return response
-    //     } else {
-    //         var error = new Error(response.statusText)
-    //         error.response = response
-    //         throw error
-    //     }
-    // }
+
       _checkStatus(response) {
-        // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response
         }      
