@@ -4,9 +4,19 @@
 }
 
 .registration-container {
-    padding: 0 10%;
+    padding: 0 5%;
 }
 
 .x {
     margin-top: 20px;
+}
+
+
+
+  .button-return {
+      margin-top: 20px;
+  }
+
+  .registration-form {
+    margin-top: 25px;
 }

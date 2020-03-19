@@ -1,10 +1,22 @@
 .logging-container {
-    padding: 0 10%;
+    padding: 0 5%;
+}
+
+/* .input-in-form {
+    margin-top: 30px;
+} */
+
+.logging-form {
+    margin-top: 25px;
+}
+
+.logging-form-buttons {
+    margin-top: 20px;
 }
 
 .button-forgotten-pwd {
     margin-bottom: 10px;
-    margin-top:10px;
+    /* margin-top:10px; */
 }
 
 .forgotPwd {

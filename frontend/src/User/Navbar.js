@@ -26,11 +26,6 @@ export default class Navbarex extends React.Component {
     onClickLogOut = (event) => {
         event.preventDefault();
         this.Auth.logout();
-        // this.props.history.replace('/login');
-        // let path = `login`;
-        // let history = useHistory();
-        // history.push(path);
-        // return <Redirect to='/login' />
         window.location.reload();
 
     }

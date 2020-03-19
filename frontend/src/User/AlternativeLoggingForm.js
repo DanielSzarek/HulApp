@@ -1,11 +1,17 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
 import '../Styles/App.css';
 import '../Styles/Login.css';
 import { Link } from 'react-router-dom';
 import logo from '../Images/logo_hulapp.png';
 import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
 import AuthService from './AuthService';
+
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import {Col, Form, InputGroup, Button} from 'react-bootstrap';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+
+
 
 
 class LoggingForm extends React.Component {
@@ -15,7 +21,9 @@ class LoggingForm extends React.Component {
         this.state = {
             email: '',
             password: '',
-            message: ''
+            message: '',
+            passwordHidden : true,
+            counter : 1
 
         };
 
@@ -32,35 +40,8 @@ class LoggingForm extends React.Component {
             .then(res => {
                 this.props.history.replace('/profile-edit');
             })
-
-            // .catch(err =>{
-            //     alert(err);
-            // })
-            // .then((response) => {
-            //     if(response.status === 200 ){
-            //         console.log("SUCCESSS")
-            //         this.setState({message: "Jesteś zalogowany "});
-            //         return response.json();     
-            //     }
-            //     else if(response.status === 401){
-            //         console.log("UNAUTHORIZED")
-            //         this.setState({message: "Brak autoryzacji"});
-            //     }
-            //     else{
-            //         console.log("SOMETHING WENT WRONG")
-            //         this.setState({ message: "Something went wrong. Response status: "+response.status });
-            //     }
-            // })
-            // .then((resp)=>{ return resp.json() }).then((resp)=>{ console.log(resp) })
-            // .then(response => {
-            //     console.log(response);
-            //     return response.json()
-            // })
             .catch((error) => {
                 this.setState({ message: "ERROR " + error });
-
-                // return response.json();
-                // this.setState({resp : "yout problem: " +response});  
             });
     };
 
@@ -68,6 +49,15 @@ class LoggingForm extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
+
+    showPassword = () => {
+        this.setState({ counter : this.state.counter + 1 })
+        if (this.state.counter % 2 == 0){
+        this.setState({
+            passwordHidden : false
+        })
+        }else { this.setState({passwordHidden : true})}
     }
 
     async componentWillMount() {
@@ -87,28 +77,60 @@ class LoggingForm extends React.Component {
                             reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
                             <GoogleReCaptcha />
 
-                            <form className="input-in-form" onSubmit={this.handleSubmit}>
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label >Email:</Form.Label>
-                                    <Form.Control name="email" type="email" onChange={this.handleChange} required />
-                                </Form.Group>
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Hasło:</Form.Label>
-                                    <Form.Control name="password" type="password" onChange={this.handleChange} required />
-                                </Form.Group>
+                    <form className="input-in-form" onSubmit={this.handleSubmit}>
+                    <Form.Group className="logging-form"  controlId="formBasicEmail">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="inputGroupPrepend"><EmailOutlinedIcon/></InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                name="email"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
+                    </Form.Group>
+
+                     <Form.Group className="logging-form"  controlId="formBasicPassword">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text onClick={this.showPassword} >
+                                {this.state.passwordHidden ? <VisibilityOffOutlinedIcon/> : <VisibilityOutlinedIcon/>}
+                                </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type={this.state.passwordHidden ? "password" : "text"}
+                                placeholder="Hasło"
+                                name="password"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
+                    </Form.Group>
+                            <div  className="logging-form-buttons" >
                                 <button type="submit" className="button-login btn-red">
-                                    Zaloguj</button>
+                                    Zaloguj
+                                </button>
+                            </div>
                             </form>
 
                             <div className="result">{this.state.message}</div>
 
                             <Link to="/registration">
+                            <div  className="logging-form-buttons" >
                                 <button type="button" className="button-login" >
-                                    Załóż konto</button>
+                                    Załóż konto
+                                </button>
+                            </div>
                             </Link>
                             <Link to="/reset-password">
+                            <div  className="logging-form-buttons" >
                                 <button type="button" className="button-login button-forgotten-pwd" >
-                                    Nie pamiętam hasła</button>
+                                    Nie pamiętam hasła
+                                </button>
+                            </div>
                             </Link>
                         </GoogleReCaptchaProvider>
 

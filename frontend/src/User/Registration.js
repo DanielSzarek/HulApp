@@ -1,11 +1,18 @@
 import React from 'react';
 import logo from '../Images/logo.png';
-import { Form, Button } from 'react-bootstrap';
+import {Button } from 'react-bootstrap';
 import {Link, Redirect} from 'react-router-dom';
 import AutoComplete from './SelectAutocompleteNoToken';
 import '../Styles/App.css';
 import '../Styles/Registration.css';
+import '../Styles/Login.css';
 import AlertRegistrationSucces from './AlertRegistrationSucces';
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import {Col, Form, InputGroup} from 'react-bootstrap';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+
 
 
 class Registration extends React.Component{
@@ -23,8 +30,11 @@ class Registration extends React.Component{
                 message: '',
 				match: false,
                 visible: false,
-                success: false
-                // answear: []
+                success: false,
+                passwordHidden : true,
+                counterRepeated : 1,
+                passwordRepeatedHidden : true,
+                counter : 1
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,7 +67,6 @@ class Registration extends React.Component{
                 if(response.status >= 200 && response.status <300){
                     this.setState({ message: "" , visible: true});
                     {this.state.visible&&setTimeout(() => this.setState({ success: true }), 6000)}
-                    // return response.json(); 
                     
                 }else{
                     var json = response.json().then((obj) => {
@@ -103,6 +112,24 @@ class Registration extends React.Component{
 			this.setState({match:true});
         }
       };
+
+       showPassword = () => {
+        this.setState({ counter : this.state.counter + 1 })
+        if (this.state.counter % 2 == 0){
+        this.setState({
+            passwordHidden : false
+        })
+        }else { this.setState({passwordHidden : true})}
+    };
+
+    showPasswordRepeated = () => {
+        this.setState({ counterRepeated : this.state.counterRepeated + 1 })
+        if (this.state.counterRepeated % 2 == 0){
+        this.setState({
+            passwordRepeatedHidden : false
+        })
+        }else { this.setState({passwordRepeatedHidden : true})}
+    };
 	  
     render(){
         if (this.state.success){
@@ -125,27 +152,86 @@ class Registration extends React.Component{
           <div className="offset-md-4 col-12 col-md-4">
             <div className="registration-container">
                 <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label >Email:</Form.Label>
-                        <Form.Control name="email" type="email"  onChange={this.handleChange} required/>
+                    <Form.Group className="registration-form"  controlId="formBasicEmail">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="inputGroupPrepend"><EmailOutlinedIcon/></InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                name="email"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Hasło:</Form.Label>
-                        <Form.Control name="password" type="password"  onChange={this.handleChange} required/>
+
+                     <Form.Group  className="registration-form" controlId="formBasicPassword">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text onClick={this.showPassword} >
+                                {this.state.passwordHidden ? <VisibilityOffOutlinedIcon/> : <VisibilityOutlinedIcon/>}
+                                </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type={this.state.passwordHidden ? "password" : "text"}
+                                placeholder="Hasło"
+                                name="password"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId="formRepeatedPassword">
-                        <Form.Label>Powtórz hasło:</Form.Label>
-                        <Form.Control name="repeatedPassword" type="password"  onBlur={this.checkPassword} required/>
+
+                    <Form.Group className="registration-form" controlId="formRepeatedPassword">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text onClick={this.showPasswordRepeated}>
+                                {this.state.passwordRepeatedHidden ? <VisibilityOffOutlinedIcon/> : <VisibilityOutlinedIcon/>}
+                                </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type={this.state.passwordRepeatedHidden ? "password" : "text"}
+                                placeholder="Powtórz hasło"
+                                name="repeatedPassword"
+                                onBlur={this.checkPassword}
+                                required
+                            />
+                        </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Imię:</Form.Label>
-                        <Form.Control name="name" type="text"  onChange={this.handleChange} required/>
+
+                    <Form.Group className="registration-form"  controlId="formBasicName">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text ><PermIdentityOutlinedIcon/></InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="text"
+                                placeholder="Imię"
+                                name="name"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId="formBasicSurname">
-                        <Form.Label>Nazwisko:</Form.Label>
-                        <Form.Control name="surname" type="text"  onChange={this.handleChange} required/>
+
+                    <Form.Group className="registration-form"  controlId="formBasicSurname">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text ><PermIdentityOutlinedIcon/></InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="text"
+                                placeholder="Nazwisko"
+                                name="surname"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </InputGroup>
                     </Form.Group>
-					<AutoComplete 
+
+                    <AutoComplete 
                         controlId="formBasicCity" 
                         label="Miasto" dest="cities" 
                         name="city" required="true" 
@@ -163,16 +249,19 @@ class Registration extends React.Component{
                     <button type="submit" className="button-login btn-red" disabled={!this.state.match}>
                         Zarejestruj
                     </button>
+                    <Link to="/login">
+                    <div className = "button-return">
+                    <button type="button" className="button-login" >
+                            Powrót do logowania
+                    </button>
                     </div>
+                    </Link>
+                    </div>                
                 </form>
-
-                  
-
                 </div>   
-                                   
-         
             </div>
-            </div>
+             </div>
+        
         );
     }
 }
