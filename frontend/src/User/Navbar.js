@@ -17,6 +17,9 @@ import PersonAutoselect from '../User/PersonAutoselect';
 import SearchIcon from '@material-ui/icons/Search';
 import {Link} from 'react-router-dom';
 import {withRouter, Redirect} from 'react-router-dom';
+import '../Styles/InputProps.css';
+import {InputGroup } from 'react-bootstrap';
+
 
 
 
@@ -27,7 +30,8 @@ export default class Navbarex extends React.Component {
             this.state = {
               userId : '',
               userCriteria: '',
-              redirect: false
+              redirect: false,
+              redLogPage: false
             }
 
             this.onClickLogOut = this.onClickLogOut.bind(this);
@@ -39,7 +43,13 @@ export default class Navbarex extends React.Component {
     onClickLogOut = (event) => {
         event.preventDefault();
         this.Auth.logout();
+        console.log("Auth: weszło")
         window.location.reload();
+        this.setState({
+          redLogPage:true
+        })
+     
+
 
     }
 
@@ -48,6 +58,7 @@ export default class Navbarex extends React.Component {
 		    this.setState({
           userId: val,
           redirect: true})
+          {setTimeout(() => {window.location.reload()}, 500)}
     console.log("redirect" +this.state.redirect)
 	}
 
@@ -72,6 +83,12 @@ export default class Navbarex extends React.Component {
               </NavLink>
             </NavItem>
              <NavItem>
+             <InputGroup.Prepend>
+                                <div className="inputgrouptext">
+                                  <InputGroup.Text>
+                                      <SearchIcon/>
+                                  </InputGroup.Text>
+                                </div>
                 <PersonAutoselect
                         controlId="formUsersSearch" 
                         label="Przyjaciele" dest="users" 
@@ -83,8 +100,10 @@ export default class Navbarex extends React.Component {
                         onClick={this.clickHandler}
                         let url = {"/user/"+this.state.userId}
                         />
+            </InputGroup.Prepend>
+
             </NavItem>
-            {this.state.redirect&& <Redirect to={"/user/"+this.state.userId}/>}
+            {this.state.redirect&& <Redirect to={"/user/"+this.state.userId}/>  }
             <NavItem onClick={this.onClickLogOut}>
               <NavLink className="navLinkLogout" active href="/login">
                Wyloguj <FiLogOut />
