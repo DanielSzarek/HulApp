@@ -81,3 +81,10 @@ input[type="file"] {
 .autocomplete-group{
 	position:relative;
 }
+
+.result {
+    color: black;
+    /* font-size: 500; */
+    /* font-style: italic; */
+    font-size: xx-large;
+}

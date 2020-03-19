@@ -33,19 +33,14 @@ class AccountActivation extends React.Component {
         })
             .then((response) => {
                 if (response.status === 204) {
-                    console.log("SUCCESSS")
-                    this.setState({ message: "Dziekujemy, Twoje konto zostało aktywowane!" });
-                    //return response.json();     
+                    this.setState({ message: "Uff, w końcu! Witaj w naszym teamie - zaczynamy :)" });
                 }
                 else if (response.status >= 400) {
-                    console.log("FAILED: ")
-                    this.setState({ message: "Aktywacja niemożliwa!" });
+                    this.setState({ message: "Coś poszło nie tak :(" });
                 }
                 else {
-                    console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "Something went wrong." });
+                    this.setState({ message: "Coś poszło nie tak :(" });
                 }
-                // return response.json();
 
             })
             .then((data) => {
@@ -59,22 +54,22 @@ class AccountActivation extends React.Component {
     render() {
         return (
             <div>
+                <div>
+                    <img src={logo} alt={"logo"} />
+                </div>
                 <div className="activationText">
                     <div className="result">{this.state.message}</div>
-                    {/* <div style={{ fontSize: 16 }}>{this.state.res.uid}</div> */}
                 </div>
                 <br />
 
                 <div className="logging-container">
                     <Link to="/login">
-                        <button type="button" className="button-login button-forgotten-pwd">
+                        <button type="button" className="button-login btn-red confirm-activation">
                             Zaloguj się
                     </button>
                     </Link>
                 </div>
-                <div>
-                    <img src={logo} alt={"logo"} />
-                </div>
+                
             </div>
         )
     }
