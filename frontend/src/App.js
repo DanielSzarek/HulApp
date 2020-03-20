@@ -1,7 +1,6 @@
 import React from 'react';
 import './Styles/App.css';
-import AlternativeLoggingForm from './User/AlternativeLoggingForm';
-import Registration from './User/Registration';
+import LoggingForm from './User/LoggingForm';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AccountActivation from './User/AccountActivation';
 import UserProfileEdit from './User/UserProfileEdit';
@@ -10,7 +9,7 @@ import ResetPasswordConfirm from './User/ResetPasswordConfim';
 import UserTracks from './Track/UserTracks'
 import UserTrackDetail from './Track/UserTrackDetail';
 import SearchUser from './User/SearchUser';
-import CustomizedSteppers from './User/nowy';
+import CustomizedSteppers from './User/RegisterStepper';
 import RegistrationSuccess from './User/RegistrationSuccess';
 
 
@@ -21,8 +20,8 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={AlternativeLoggingForm} />
-            <Route path="/login" component={AlternativeLoggingForm} />
+            <Route exact path="/" component={LoggingForm} />
+            <Route path="/login" component={LoggingForm} />
             {/* <Route path="/registration" component={Registration} /> */}
             <Route path="/registration" component={CustomizedSteppers} />
             <Route path="/success" component={RegistrationSuccess} />

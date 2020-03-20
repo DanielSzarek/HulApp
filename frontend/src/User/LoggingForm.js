@@ -1,91 +1,142 @@
 import React from 'react';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import '../Styles/App.css';
+import '../Styles/Login.css';
+import { Link } from 'react-router-dom';
+import logo from '../Images/logo_hulapp.png';
+import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
+import AuthService from './AuthService';
 
-class LoggingForm extends React.Component{
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import { Form, InputGroup } from 'react-bootstrap';
+
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+
+
+class LoggingForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-                email: '',
-                password: '',
-                username: '',
-                message: ''
+            email: '',
+            password: '',
+            message: '',
+            passwordHidden: true,
+            counter: 1
         };
-      }
 
-      handleSubmit = (event) => {
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.Auth = new AuthService();
+    }
+
+    handleSubmit = (event) => {
         event.preventDefault();
-         console.log("email "+this.state.email)
-         fetch('http://hulapp.pythonanywhere.com/auth/jwt/create/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: this.state.email,
-                email: this.state.email,
-                password: this.state.password
-            })
-            })
-            .then((response) => {
-                if(response.status === 201 ){
-                    console.log("SUCCESSS")
-                    this.setState({message: "Jesteś zalogowany "});
-                }
-                else if(response.status === 401){
-                    console.log("UNAUTHORIZED")
-                    this.setState({message: "Brak autoryzacji"});
-                }
-                else{
-                    console.log("SOMETHING WENT WRONG")
-                    this.setState({ message: "Something went wrong. Response status: "+response.status });
-                }
+
+        this.Auth.login(this.state.email, this.state.password)
+            .then(res => {
+                this.props.history.replace('/profile-edit');
             })
             .catch((error) => {
-                this.setState({message: "ERROR " + error});
+                this.setState({ message: "NIEPOPRAWNE DANE UŻYTKOWNIKA: BŁĘDNY LOGIN BĄDŹ HASŁO" });
             });
     };
 
-const ReCaptchaComponent = () => {
-  const { executeRecaptcha } = useGoogleReCaptcha();
-  const token = executeRecaptcha("login_page");
- 
-  return (...)
-}
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
 
-    render(){
-        return(
+    showPassword = () => {
+        this.setState({ counter: this.state.counter + 1 })
+        if (this.state.counter % 2 == 0) {
+            this.setState({
+                passwordHidden: false
+            })
+        } else { this.setState({ passwordHidden: true }) }
+    }
+
+    async componentWillMount() {
+        if (await this.Auth.loggedIn())
+            this.props.history.replace('/profile-edit');
+    }
+
+    render() {
+        return (
             <div>
+                <img src={logo} alt={"logo"} />
+                <div className="results">{this.state.message}</div>
 
-        <GoogleReCaptchaProvider
-                reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf"
-            >
-            <GoogleReCaptcha onVerify={token => console.log(token)} />
-            <form onSubmit={this.handleSubmit}>
-                <input 
-                    type="text" 
-                    placeholder="E-mail"
-                    value={this.state.email}
-                    onChange={event => this.setState({ email: event.target.value })}
-                    required/>
-                <input 
-                    type="password" 
-                    placeholder="Hasło" 
-                    style={{marginLeft: "26px"}} 
-                    value={this.state.password}
-                    onChange={event => this.setState({ password: event.target.value })}
-                    required />
-                <div className="form-container-to-log-in-button">
-                    <button  type="submit" class="btn btn-primary active btn-lg" style={{marginLeft: "26px"}} >
-                        Zaloguj mnie!
-                    </button>
+                <div className="offset-md-4 col-12 col-md-4">
+
+                    <div className="logging-container">
+                        <GoogleReCaptchaProvider
+                            reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
+                            <GoogleReCaptcha />
+
+                            <form className="input-in-form" onSubmit={this.handleSubmit}>
+                                <Form.Group className="logging-form" controlId="formBasicEmail">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrepend"><EmailOutlinedIcon /></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Email"
+                                            name="email"
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+                                    </InputGroup>
+                                </Form.Group>
+
+                                <Form.Group className="logging-form" controlId="formBasicPassword">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text onClick={this.showPassword} >
+                                                {this.state.passwordHidden ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
+                                            </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type={this.state.passwordHidden ? "password" : "text"}
+                                            placeholder="Hasło"
+                                            name="password"
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+                                    </InputGroup>
+                                </Form.Group>
+                                <div className="logging-form-buttons" >
+                                    <button type="submit" className="button-login btn-red">
+                                        Zaloguj
+                                </button>
+                                </div>
+                            </form>
+
+                            {/* <div className="result">{this.state.message}</div> */}
+
+                            <Link to="/registration">
+                                <div className="logging-form-buttons" >
+                                    <button type="button" className="button-login" >
+                                        Załóż konto
+                                </button>
+                                </div>
+                            </Link>
+                            <Link to="/reset-password">
+                                <div className="logging-form-buttons" >
+                                    <button type="button" className="button-login button-forgotten-pwd" >
+                                        Nie pamiętam hasła
+                                </button>
+                                </div>
+                            </Link>
+                        </GoogleReCaptchaProvider>
+
+                    </div>
                 </div>
-            </form>
-            <div className="result">{ this.state.message }</div>   
-        </GoogleReCaptchaProvider>
-     </div>
+            </div>
         );
-  }  
+    }
 }
 export default LoggingForm;

@@ -1,4 +1,4 @@
-import React , {Component} from 'react';
+import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import '../Styles/App.css';
 import '../Styles/Login.css';
@@ -8,7 +8,7 @@ import AlertSendMailForgotPwd from './AlertSendMailForgotPwd';
 
 class ResetPassword extends Component {
 
-      constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             email: '',
@@ -19,9 +19,9 @@ class ResetPassword extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-     handleSubmit = (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
-         fetch('http://hulapp.pythonanywhere.com/auth/users/reset_password/', {
+        fetch('http://hulapp.pythonanywhere.com/auth/users/reset_password/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -29,24 +29,20 @@ class ResetPassword extends Component {
             },
             body: JSON.stringify({
                 email: this.state.email
-
             })
-            })
+        })
             .then((response) => {
-                if(response.status >= 200 && response.status <300){
-                    console.log("SUCCESSS")
-                    this.setState({visible:true})
+                if (response.status >= 200 && response.status < 300) {
+                    this.setState({ visible: true })
                     // return response.json(); 
-                    
-                }else{
-                    console.log("SOMETHING WENT WRONG")
+                } else {
                     // this.setState({ message: "Something went wrong. Response status: "+response.status });
                     // this.setState({ answear : response.map(request => ({ password : request}))})
                     // this.setState({answear : response.password})
                 }
             })
             .catch((error) => {
-                this.setState({message: "ERROR " + error});
+                this.setState({ message: "ERROR " + error });
             });
     };
 
@@ -56,24 +52,22 @@ class ResetPassword extends Component {
         });
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <div>
-                <img src={logo} alt={"logo"} />
-
-                <div className="offset-md-3 col-12 col-md-6">
-                    <div className="forgotPwd">
-                        <h2>Zapomniałeś hasła? </h2>
-                        <h2>Podaj nam swój e-mail na który zostanie wysłany link.</h2>
+                    <img src={logo} alt={"logo"} />
+                    <div className="offset-md-3 col-12 col-md-6">
+                        <div className="forgotPwd">
+                            <h2>Zapomniałeś hasła? </h2>
+                            <h2>Podaj nam swój e-mail na który zostanie wysłany link.</h2>
+                        </div>
+                        <div className="mailSend">
+                            {this.state.visible && <AlertSendMailForgotPwd />}
+                        </div>
                     </div>
-                    <div className="mailSend">
-                        {this.state.visible&& <AlertSendMailForgotPwd/>}
-                    </div>
-
-                </div>
-                <div className="offset-md-4 col-12 col-md-4">
-                    <div className="logging-container">
+                    <div className="offset-md-4 col-12 col-md-4">
+                        <div className="logging-container">
                             <form className="input-in-form" onSubmit={this.handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Control name="email" type="email" onChange={this.handleChange} placeholder="e-mail" required />
@@ -87,10 +81,9 @@ class ResetPassword extends Component {
                             </Link>
 
                             <div className="result">{this.state.message}</div>
-
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         )
     }

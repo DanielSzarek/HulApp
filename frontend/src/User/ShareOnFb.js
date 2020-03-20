@@ -1,17 +1,15 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { FacebookProvider, Share } from 'react-facebook';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 
-
- 
 export default class Example extends Component {
   render() {
     return (
       <FacebookProvider appId="2645722948997451">
         <Share href="http://localhost:3000/login">
           {({ handleClick, loading }) => (
-            <button  className="facebook-share-link-button" type="button" disabled={loading} onClick={handleClick}><div className="fb-icon"><FacebookIcon/></div></button>
+            <button className="facebook-share-link-button" type="button" disabled={loading} onClick={handleClick}><div className="fb-icon"><FacebookIcon /></div></button>
           )}
         </Share>
       </FacebookProvider>
