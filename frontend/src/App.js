@@ -10,7 +10,7 @@ import ResetPasswordConfirm from './User/ResetPasswordConfim';
 import UserTracks from './Track/UserTracks'
 import UserTrackDetail from './Track/UserTrackDetail';
 import SearchUser from './User/SearchUser';
-import CustomizedSteppers from './User/nowy';
+import CustomizedSteppers from './User/RegisterStepper';
 import RegistrationSuccess from './User/RegistrationSuccess';
 
 

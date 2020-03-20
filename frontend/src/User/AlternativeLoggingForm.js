@@ -12,8 +12,6 @@ import {Form, InputGroup} from 'react-bootstrap';
 
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-// import QontoConnector from "../User/nowy"
-
 
 
 class LoggingForm extends React.Component {

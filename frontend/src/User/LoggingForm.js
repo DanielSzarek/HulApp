@@ -30,15 +30,12 @@ class LoggingForm extends React.Component{
             })
             .then((response) => {
                 if(response.status === 201 ){
-                    console.log("SUCCESSS")
                     this.setState({message: "Jesteś zalogowany "});
                 }
                 else if(response.status === 401){
-                    console.log("UNAUTHORIZED")
                     this.setState({message: "Brak autoryzacji"});
                 }
                 else{
-                    console.log("SOMETHING WENT WRONG")
                     this.setState({ message: "Something went wrong. Response status: "+response.status });
                 }
             })
