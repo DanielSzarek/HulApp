@@ -4,10 +4,6 @@ import '../Styles/altReg.css';
 
 class RegistrationThirdStep extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="third-step-reg">

@@ -12,11 +12,8 @@ import { FiLogOut } from 'react-icons/fi';
 import AuthService from './AuthService';
 import logoNav from '../Images/logoNav.png';
 import '../Styles/Navbar.css';
-// import { useHistory } from 'react-router-dom';
 import PersonAutoselect from '../User/PersonAutoselect';
 import SearchIcon from '@material-ui/icons/Search';
-// import {Link} from 'react-router-dom';
-// import {withRouter, Redirect} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 
 import '../Styles/InputProps.css';
@@ -47,9 +44,6 @@ export default class Navbarex extends React.Component {
     this.setState({
       redLogPage: true
     })
-
-
-
   }
 
   handleUserChange(val) {

@@ -4,7 +4,7 @@ import '../Styles/index.css';
 import '../Styles/Login.css';
 import '../Styles/App.css';
 import { Link, Redirect } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import AlertNewPwdConfirmed from './AlertNewPwdConfirmed';
 import logo from '../Images/logo_hulapp.png';
 
@@ -51,11 +51,11 @@ class ResetPasswordConfirm extends React.Component {
                 if (response.status === 204) {
                     console.log("SUCCESSS")
                     this.setState({ message: "", visible: true });
-                    { this.state.visible && setTimeout(() => this.setState({ passwordChanged: true }), 6000) }
+                    this.state.visible && setTimeout(() => this.setState({ passwordChanged: true }), 6000)
                 }
                 else if (response.status >= 400) {
                     console.log("FAILED: ")
-                    var json = response.json().then((obj) => {
+                    response.json().then((obj) => {
                         var allPropertyNames = Object.keys(obj);
                         var err = "";
                         for (var j = 0; j < allPropertyNames.length; j++) {

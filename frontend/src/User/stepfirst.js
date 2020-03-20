@@ -54,7 +54,7 @@ class RegistrationFirstStep extends React.Component {
 
     showPassword = () => {
         this.setState({ counter: this.state.counter + 1 })
-        if (this.state.counter % 2 == 0) {
+        if (this.state.counter % 2 === 0) {
             this.setState({
                 passwordHidden: false
             })
@@ -63,7 +63,7 @@ class RegistrationFirstStep extends React.Component {
 
     showPasswordRepeated = () => {
         this.setState({ counterRepeated: this.state.counterRepeated + 1 })
-        if (this.state.counterRepeated % 2 == 0) {
+        if (this.state.counterRepeated % 2 === 0) {
             this.setState({
                 passwordRepeatedHidden: false
             })

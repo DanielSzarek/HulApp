@@ -177,7 +177,7 @@ class ProfileEdition extends React.Component {
                         <div className="row">
                             <div className="col-4">
                                 <div className="button-photo-wrapper">
-                                    <label className="new-button" for="upload"><PhotoCameraIcon /> zdjęcie </label>
+                                    <label className="new-button" htmlFor="upload"><PhotoCameraIcon /> zdjęcie </label>
                                     <input name="myfile" id="upload" type='file' onChange={this.fileSelectedHandler} accept="image/*" />
                                 </div>
                                 {this.state.loading ? <div className="spinner"><LoadingSpinner /></div> : <Avatar size='300' round="300px" name="H" src={this.state.src} />}
@@ -208,7 +208,7 @@ class ProfileEdition extends React.Component {
                                             <Form.Control name="surname" type="text" value={this.state.surname} onChange={this.handleChange} required />
                                         </InputGroup.Prepend>
                                     </Form.Group>
-                                    <Form>
+                                    <Form.Group>
                                         <div className="nameMiasto"> Miasto: </div>
                                         <AutoComplete
                                             controlId="formEditCity"
@@ -226,7 +226,7 @@ class ProfileEdition extends React.Component {
                                             value={this.state.countryId}
                                             defVal={this.state.countryName}
                                             onSelect={this.handleCountryChange} />
-                                    </Form>
+                                    </Form.Group>
 
                                     {this.state.showAlert &&
                                         <div className="y">
