@@ -244,7 +244,6 @@ export default function CustomizedSteppers() {
       })
     })
       .then((response) => {
-        let self = this;
         if (response.status >= 200 && response.status < 300) {
           setMessage("");
           setRegisterSuccess(true)

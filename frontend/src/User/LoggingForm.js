@@ -67,7 +67,7 @@ class LoggingForm extends React.Component {
         return (
             <div>
                 <img src={logo} alt={"logo"} />
-                <div className="result">{this.state.message}</div>
+                <div className="results">{this.state.message}</div>
 
                 <div className="offset-md-4 col-12 col-md-4">
 

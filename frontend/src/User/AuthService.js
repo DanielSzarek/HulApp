@@ -103,12 +103,8 @@ export default class AuthService {
             'Content-Type': 'application/json'
         }
 
-
         if (await this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
-        }
-        else {
-            console.log("not logged in");
         }
 
         return fetch(url, {
