@@ -29,7 +29,6 @@ class ResetPassword extends Component {
             },
             body: JSON.stringify({
                 email: this.state.email
-
             })
         })
             .then((response) => {

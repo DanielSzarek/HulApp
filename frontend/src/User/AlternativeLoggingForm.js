@@ -7,8 +7,7 @@ import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha
 import AuthService from './AuthService';
 
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-// import {Col, Form, InputGroup, Button} from 'react-bootstrap';
-import {Form, InputGroup} from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
 
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -22,9 +21,8 @@ class LoggingForm extends React.Component {
             email: '',
             password: '',
             message: '',
-            passwordHidden : true,
-            counter : 1
-
+            passwordHidden: true,
+            counter: 1
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -41,9 +39,7 @@ class LoggingForm extends React.Component {
                 this.props.history.replace('/profile-edit');
             })
             .catch((error) => {
-                 this.setState({ message: "NIEPOPRAWNE DANE UŻYTKOWNIKA: BŁĘDNY LOGIN BĄDŹ HASŁO" });
-
-                // this.setState({ message: "ERROR " + error });
+                this.setState({ message: "NIEPOPRAWNE DANE UŻYTKOWNIKA: BŁĘDNY LOGIN BĄDŹ HASŁO" });
             });
     };
 
@@ -54,12 +50,12 @@ class LoggingForm extends React.Component {
     }
 
     showPassword = () => {
-        this.setState({ counter : this.state.counter + 1 })
-        if (this.state.counter % 2 == 0){
-        this.setState({
-            passwordHidden : false
-        })
-        }else { this.setState({passwordHidden : true})}
+        this.setState({ counter: this.state.counter + 1 })
+        if (this.state.counter % 2 == 0) {
+            this.setState({
+                passwordHidden: false
+            })
+        } else { this.setState({ passwordHidden: true }) }
     }
 
     async componentWillMount() {
@@ -75,66 +71,65 @@ class LoggingForm extends React.Component {
 
                 <div className="offset-md-4 col-12 col-md-4">
 
-
                     <div className="logging-container">
                         <GoogleReCaptchaProvider
                             reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
                             <GoogleReCaptcha />
 
-                    <form className="input-in-form" onSubmit={this.handleSubmit}>
-                    <Form.Group className="logging-form"  controlId="formBasicEmail">
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="inputGroupPrepend"><EmailOutlinedIcon/></InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control
-                                type="email"
-                                placeholder="Email"
-                                name="email"
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </InputGroup>
-                    </Form.Group>
+                            <form className="input-in-form" onSubmit={this.handleSubmit}>
+                                <Form.Group className="logging-form" controlId="formBasicEmail">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrepend"><EmailOutlinedIcon /></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Email"
+                                            name="email"
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+                                    </InputGroup>
+                                </Form.Group>
 
-                     <Form.Group className="logging-form"  controlId="formBasicPassword">
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text onClick={this.showPassword} >
-                                {this.state.passwordHidden ? <VisibilityOffOutlinedIcon/> : <VisibilityOutlinedIcon/>}
-                                </InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control
-                                type={this.state.passwordHidden ? "password" : "text"}
-                                placeholder="Hasło"
-                                name="password"
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                            <div  className="logging-form-buttons" >
-                                <button type="submit" className="button-login btn-red">
-                                    Zaloguj
+                                <Form.Group className="logging-form" controlId="formBasicPassword">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text onClick={this.showPassword} >
+                                                {this.state.passwordHidden ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
+                                            </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type={this.state.passwordHidden ? "password" : "text"}
+                                            placeholder="Hasło"
+                                            name="password"
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+                                    </InputGroup>
+                                </Form.Group>
+                                <div className="logging-form-buttons" >
+                                    <button type="submit" className="button-login btn-red">
+                                        Zaloguj
                                 </button>
-                            </div>
+                                </div>
                             </form>
 
                             {/* <div className="result">{this.state.message}</div> */}
 
                             <Link to="/registration">
-                            <div  className="logging-form-buttons" >
-                                <button type="button" className="button-login" >
-                                    Załóż konto
+                                <div className="logging-form-buttons" >
+                                    <button type="button" className="button-login" >
+                                        Załóż konto
                                 </button>
-                            </div>
+                                </div>
                             </Link>
                             <Link to="/reset-password">
-                            <div  className="logging-form-buttons" >
-                                <button type="button" className="button-login button-forgotten-pwd" >
-                                    Nie pamiętam hasła
+                                <div className="logging-form-buttons" >
+                                    <button type="button" className="button-login button-forgotten-pwd" >
+                                        Nie pamiętam hasła
                                 </button>
-                            </div>
+                                </div>
                             </Link>
                         </GoogleReCaptchaProvider>
 

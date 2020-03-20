@@ -9,7 +9,7 @@ import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import RegistrationFirstStep from './stepfirst';
+import RegistrationFirstStep from './Stepfirst';
 import RegistrationSecondStep from './RegSecondStep';
 import { Redirect } from 'react-router-dom';
 import logo from '../Images/logo.png';
@@ -335,8 +335,6 @@ export default function CustomizedSteppers() {
                 <div className="return-to-log">
                   Masz już konto?  <Link className="link-to-log" to="/login">Zaloguj się!</Link>
                 </div>
-
-
               </div>
             </div>
           )}

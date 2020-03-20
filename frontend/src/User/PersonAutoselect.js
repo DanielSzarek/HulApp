@@ -1,13 +1,10 @@
 import React from 'react';
 import AutoComplete from 'react-autocomplete';
-// import SearchIcon from '@material-ui/icons/Search';
-// import InputAdornment from "@material-ui/core/InputAdornment";
 import AuthService from './AuthService';
 import '../Styles/UserProfile.css';
 import Avatar from 'react-avatar';
 import '../Styles/Navbar.css';
 import '../Styles/InputProps.css';
-
 
 
 export default class PersonAutoselect extends React.Component {
@@ -48,9 +45,6 @@ export default class PersonAutoselect extends React.Component {
  						})
  					}
  					else{
-						
-						console.log(res);
-						console.log("====");
  						this.setState({
  							autocompleteData: res
  						})
@@ -63,8 +57,6 @@ export default class PersonAutoselect extends React.Component {
      * @param {Event} e JavaScript Event
      * @return {Event} Event of JavaScript can be used as usual.
      */
-
-
 
     onChange(e){
         this.setState({
@@ -87,8 +79,6 @@ export default class PersonAutoselect extends React.Component {
         });
 		this.props.onSelect(event.split("-")[0]);
     }
-
-	
 
     /**
      * Define the markup of every rendered item of the autocomplete.
@@ -113,15 +103,11 @@ export default class PersonAutoselect extends React.Component {
      */
     getItemValue(item){
          return `${item.id} - ${item.first_name} ${item.last_name}`;
-                //  return `${item.id}`;
-
    }
 
     render() {
         return (
             <div className='form-group  person-autoselect'>
-
-				
 				<AutoComplete
 					inputProps={{ style: { width:'350px' ,border: '1px solid #ced4da', padding:'.390rem' },
                      placeholder:'Szukaj...'
@@ -138,4 +124,3 @@ export default class PersonAutoselect extends React.Component {
         );
     }
 }
-
