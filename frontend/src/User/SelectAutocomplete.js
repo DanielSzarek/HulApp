@@ -85,8 +85,6 @@ export default class AutoCompleteForm extends React.Component {
         });
     }
 
-
-
     /**
      * Define the markup of every rendered item of the autocomplete.
      * 

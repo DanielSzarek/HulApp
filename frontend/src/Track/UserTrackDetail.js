@@ -23,22 +23,22 @@ class UserTrackDetail extends React.Component {
         this.Auth = new AuthService();
     }
 
-    async componentDidMount(){
-        if ( await this.Auth.loggedIn()) {
-          this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/track/${this.state.id}`)
-          
-          .then((response) => {
-            this.setState({
-                track: response,
-                progressBarDisplayState: "none"
-            })
-        })
-        .catch((error) => {
-              console.log({message: "ERROR " + error});
-          });
+    async componentDidMount() {
+        if (await this.Auth.loggedIn()) {
+            this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/track/${this.state.id}`)
+
+                .then((response) => {
+                    this.setState({
+                        track: response,
+                        progressBarDisplayState: "none"
+                    })
+                })
+                .catch((error) => {
+                    console.log({ message: "ERROR " + error });
+                });
         }
-        else{
-            this.setState({auth: false});
+        else {
+            this.setState({ auth: false });
         }
     }
 
@@ -51,17 +51,17 @@ class UserTrackDetail extends React.Component {
         return length * 120;
     }
 
-     sharingButtons = () => {
-  const url = 'https://github.com/caspg/react-sharingbuttons'
-  const shareText = 'Check this site!'
+    sharingButtons = () => {
+        const url = 'https://github.com/caspg/react-sharingbuttons'
+        const shareText = 'Check this site!'
 
-  return (
-    <div>
-      <Facebook url={url} />
-      <Twitter url={url} shareText={shareText} />
-    </div>
-  )
-}
+        return (
+            <div>
+                <Facebook url={url} />
+                <Twitter url={url} shareText={shareText} />
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -69,19 +69,19 @@ class UserTrackDetail extends React.Component {
                 {(this.state.auth) ? '' : <Redirect to="/" />}
                 <Navbarex />
                 <div className="my-track-details">
-                <CircularProgress style={{display: this.state.progressBarDisplayState, position: "absolute", marginLeft: "50%", marginTop: "100px"}} />
-                { this.state && this.state.track.time_start &&
-                    <Card style={{padding: "16px", marginTop: "32px"}}>
-                        <h4>{this.formatDateTime(this.state.track.time_start)}</h4>
-                        <p>Czas trwania: <b>{this.state.track.duration}</b> sekund</p>
-                        <p>Odległość: <b>{this.state.track.track_length}</b> km</p>
-                        <p>Ilość zaoszczędzonych spalin: <b>{this.calculateAmountOfExhaustGas(this.state.track.track_length)}</b> gram</p>
-                        {/* <Example/> */}
-                    </Card>
-                }
+                    <CircularProgress style={{ display: this.state.progressBarDisplayState, position: "absolute", marginLeft: "50%", marginTop: "100px" }} />
+                    {this.state && this.state.track.time_start &&
+                        <Card style={{ padding: "16px", marginTop: "32px" }}>
+                            <h4>{this.formatDateTime(this.state.track.time_start)}</h4>
+                            <p>Czas trwania: <b>{this.state.track.duration}</b> sekund</p>
+                            <p>Odległość: <b>{this.state.track.track_length}</b> km</p>
+                            <p>Ilość zaoszczędzonych spalin: <b>{this.calculateAmountOfExhaustGas(this.state.track.track_length)}</b> gram</p>
+                            {/* <Example/> */}
+                        </Card>
+                    }
                 </div>
                 <div className="share-success">
-                <p>Podziel się sukcesem z przyjaciółmi </p>
+                    <p>Podziel się sukcesem z przyjaciółmi </p>
                 </div>
                 {/* <p>Udostępnij</p> */}
 
@@ -90,7 +90,7 @@ class UserTrackDetail extends React.Component {
                 <span class="react-sharing-button__text">Share me</span>
                 </a> */}
                 <div className="share-fb-mod">
-                 <Example/>
+                    <Example />
                 </div>
             </div>
         );

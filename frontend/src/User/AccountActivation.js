@@ -61,7 +61,6 @@ class AccountActivation extends React.Component {
                     <div className="result">{this.state.message}</div>
                 </div>
                 <br />
-
                 <div className="logging-container">
                     <Link to="/login">
                         <button type="button" className="button-login btn-red confirm-activation">
@@ -69,7 +68,6 @@ class AccountActivation extends React.Component {
                     </button>
                     </Link>
                 </div>
-                
             </div>
         )
     }

@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from '../Images/logo.png';
-// import {Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import AutoComplete from './SelectAutocompleteNoToken';
 import '../Styles/App.css';
@@ -8,7 +7,6 @@ import '../Styles/Registration.css';
 import '../Styles/Login.css';
 import AlertRegistrationSucces from './AlertRegistrationSucces';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-// import {Col, Form, InputGroup} from 'react-bootstrap';
 import { Form, InputGroup } from 'react-bootstrap';
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -68,7 +66,6 @@ class Registration extends React.Component {
                 if (response.status >= 200 && response.status < 300) {
                     this.setState({ message: "", visible: true });
                     { this.state.visible && setTimeout(() => this.setState({ success: true }), 6000) }
-
                 } else {
                     var json = response.json().then((obj) => {
                         var allPropertyNames = Object.keys(obj);
@@ -150,7 +147,6 @@ class Registration extends React.Component {
                     </div>
                     <div className="resultReg">{this.state.message}</div>
                 </div>
-
                 <div className="offset-md-4 col-12 col-md-4">
                     <div className="registration-container">
                         <form className="input-in-form" onSubmit={this.handleSubmit}>

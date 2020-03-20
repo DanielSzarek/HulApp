@@ -35,9 +35,7 @@ class ResetPassword extends Component {
                 if (response.status >= 200 && response.status < 300) {
                     this.setState({ visible: true })
                     // return response.json(); 
-
                 } else {
-                    console.log("SOMETHING WENT WRONG")
                     // this.setState({ message: "Something went wrong. Response status: "+response.status });
                     // this.setState({ answear : response.map(request => ({ password : request}))})
                     // this.setState({answear : response.password})
@@ -59,7 +57,6 @@ class ResetPassword extends Component {
             <div>
                 <div>
                     <img src={logo} alt={"logo"} />
-
                     <div className="offset-md-3 col-12 col-md-6">
                         <div className="forgotPwd">
                             <h2>Zapomniałeś hasła? </h2>
