@@ -9,13 +9,17 @@ import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import RegistrationFirstStep from './Stepfirst';
+import RegistrationFirstStep from './stepfirst';
 import RegistrationSecondStep from './RegSecondStep';
 import { Redirect } from 'react-router-dom';
 import logo from '../Images/logo.png';
 import '../Styles/altReg.css';
 import { Link } from 'react-router-dom';
 import RegistrationThirdStep from './RegThirdStep';
+
+// import Fab from '@material-ui/core/Fab';
+// import Tooltip from '@material-ui/core/Tooltip';
+
 
 
 const QontoConnector = withStyles({
@@ -97,7 +101,15 @@ const useStyles = makeStyles(theme => ({
   },
   center: {
     textAlign: 'center',
-  }
+  },
+  //   fab: {
+  //   margin: theme.spacing(2),
+  // },
+  // absolute: {
+  //   position: 'absolute',
+  //   bottom: theme.spacing(2),
+  //   right: theme.spacing(3),
+  // },
 }));
 
 function getSteps() {
@@ -168,24 +180,14 @@ export default function CustomizedSteppers() {
   const [countryName, setCountryName] = useState("")
   const [cityName, setCityName] = useState("")
   const [repeatedPassword, setRepeatedPassword] = useState("")
-
   const [message, setMessage] = useState("")
   const [visible, setVisible] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(true)
   const [passwordOk, setPasswordOk] = useState(false)
-
-  // const [redirect, setRedirect] = useState(false)
-
   const [registerSuccess, setRegisterSuccess] = useState(false)
 
-
   const values = { email, password, name, surname, city, countryId, cityName, countryName }
-
-  //  const handlePasswordCorrectness = () = {
-  //     setPasswordOk(true)
-  //   }
-
 
   const handleInputChange = (e) => {
     switch (e.currentTarget.name) {
