@@ -7,6 +7,7 @@ import pl.kamilszustak.hulapp.data.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.mapNotNull
+import pl.kamilszustak.hulapp.util.round
 
 abstract class BaseTrackDetailsViewModel(
     application: Application,
@@ -16,7 +17,7 @@ abstract class BaseTrackDetailsViewModel(
     val trackResource: ResourceDataSource<TrackEntity> = ResourceDataSource()
 
     val exhaustEmission: LiveData<Double> = trackResource.data.mapNotNull { track ->
-        120 * track.distance
+        (120 * track.distance).round()
     }
 
     fun loadData(trackId: Long) {
