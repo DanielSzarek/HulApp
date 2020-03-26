@@ -68,3 +68,46 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-button-2
 .return-to-log-incase {
     text-align: center;
 }
+
+.button-reactivate-disabled:disabled {
+    background-color: gray;
+    
+}
+
+
+.button-reactivate-disabled {
+    background-color: black;
+    border: none;
+    color: white;
+    width: 50%;
+    height: 40px;
+    align-self: center;
+    margin-left: 25%;
+    margin-top: 20px;
+}
+
+
+.button-reactivate-disabled:hover{
+    background-color: red;
+    font-weight: bold;
+}
+
+.button-reactivate-disabled:disabled:hover {
+    background-color: gray;
+    font-weight: normal;
+}
+
+.form-reactivate {
+    margin-top: 3%;
+}
+
+.span-reactivate {
+    width: 50%;
+    text-align: center;
+    /* margin-left: 33%; */
+    align-self: center;
+    /* margin-bottom: 20px; */
+    margin:auto;
+    display: block;
+    padding-bottom: 20px;
+}
