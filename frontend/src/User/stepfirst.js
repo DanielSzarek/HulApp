@@ -44,6 +44,15 @@ class RegistrationFirstStep extends React.Component {
         }
       }))
     }
+    if (this.props.value.password.length > 0) {
+		console.log("password resetting");
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          password: ''
+        }
+      }))
+    }
   }
 
   handleChange = event => {

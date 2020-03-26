@@ -120,7 +120,7 @@ function getStepContent (
   email,
   message,
   registerSuccess,
-  emptyCounter
+  // emptyCounter
 ) {
   switch (step) {
     case 0:
@@ -140,6 +140,7 @@ function getStepContent (
             onChange={handleChange}
             value={value}
             onSelect={handleSelect}
+            onValidated={validate}
           />
         </div>
       )
@@ -354,7 +355,7 @@ export default function CustomizedSteppers () {
                 email,
                 message,
                 registerSuccess,
-                emptyCounter
+                // emptyCounter
               )}
             </div>
             <div className={classes.center}>

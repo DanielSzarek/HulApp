@@ -23,16 +23,74 @@ class RegistrationSecondStep extends React.Component {
             counterRepeated: 1,
             counter: 1,
             isCityName: false,
-            isCountryName: false
+            isCountryName: false,
+            errors: {
+        name: 'should be filled',
+        surname: 'should be filled'
+      }
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCityChange = this.handleCityChange.bind(this);
         this.handleCountryChange = this.handleCountryChange.bind(this);
         this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.validate = this.validate.bind(this);
+
     }
+
+    componentDidMount () {
+
+    if (this.props.value.name.length > 0) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          name: ''
+        }
+      }))
+    }
+	if (this.props.value.surname.length > 0) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+		  surname: ''
+        }
+      }))
+    }
+
+	if(this.props.value.name.length > 0 && this.props.value.surname.length > 0){
+		this.props.onValidated(true);
+	}
+	else{
+		this.props.onValidated(false);
+	}
+  }
+
+    // handleChange = (event) => {
+    //     this.props.onChange(event);
+    // }
 
     handleChange = (event) => {
         this.props.onChange(event);
+		
+		const { name, value } = event.target
+
+    let errors = this.state.errors
+	switch (name) {
+      case 'name':
+        errors.name = value.length  > 0 ? '' : 'Must be filled!'
+        break
+      case 'surname':
+        errors.surname =
+          value.length > 0 ? '' : 'Must be filled'
+        break
+      default:
+        break
+    }
+	
+	this.setState({ errors, [name]: value }, () => {
+      console.log(errors)
+    })
+    this.props.onValidated(this.validate())
+	
     }
 
     handleCityChange(val) {
@@ -53,6 +111,13 @@ class RegistrationSecondStep extends React.Component {
         this.props.onSelect(event);
     }
 
+
+validate = () => {
+    return (
+      this.state.errors.name.length === 0 &&
+      this.state.errors.surname.length === 0
+    )
+  }
     render() {
         return (
             <div>
