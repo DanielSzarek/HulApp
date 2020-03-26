@@ -23,15 +23,66 @@ class RegistrationFirstStep extends React.Component {
       counterRepeated: 1,
       passwordRepeatedHidden: true,
       counter: 1,
-      passwordOk: false
+      errors: {
+        repeatedPassword: 'should be filled',
+        email: 'should be filled',
+        password: 'should be filled'
+      }
     }
 
     this.checkPassword = this.checkPassword.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.validate = this.validate.bind(this)
+  }
+
+  componentDidMount () {
+    if (this.props.value.email.length > 0) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          email: ''
+        }
+      }))
+    }
   }
 
   handleChange = event => {
     this.props.onChange(event)
+    const { name, value } = event.target
+
+    let errors = this.state.errors
+    const validEmailRegex = RegExp(
+      /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    )
+
+    switch (name) {
+      case 'email':
+        errors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!'
+        break
+      case 'password':
+        errors.password =
+          value.length < 8 ? 'Password must be 8 characters long!' : ''
+        break
+      case 'repeatedPassword':
+        errors.repeatedPassword =
+          value !== this.props.value.password ? 'does not match' : ''
+        break
+      default:
+        break
+    }
+
+    this.setState({ errors, [name]: value }, () => {
+      console.log(errors)
+    })
+    this.props.onValidated(this.validate())
+  }
+
+  validate = () => {
+    return (
+      this.state.errors.email.length === 0 &&
+      this.state.errors.password.length === 0 &&
+      this.state.errors.repeatedPassword.length === 0
+    )
   }
 
   checkPassword = event => {
@@ -121,7 +172,6 @@ class RegistrationFirstStep extends React.Component {
                     </span>
                   }
                   aria-label='add'
-                  // placement="right"
                   arrow
                 >
                   <Form.Control
@@ -150,16 +200,15 @@ class RegistrationFirstStep extends React.Component {
                     )}
                   </InputGroup.Text>
                 </InputGroup.Prepend>
-                  <Form.Control
-                    type={
-                      this.state.passwordRepeatedHidden ? 'password' : 'text'
-                    }
-                    placeholder='Powtórz hasło'
-                    name='repeatedPassword'
-                    onBlur={this.checkPassword}
-                    value={this.props.value.repeatedPassword}
-                    required
-                  />
+                <Form.Control
+                  type={this.state.passwordRepeatedHidden ? 'password' : 'text'}
+                  placeholder='Powtórz hasło'
+                  name='repeatedPassword'
+                  onBlur={this.checkPassword}
+                  value={this.props.value.repeatedPassword}
+                  onChange={this.handleChange}
+                  required
+                />
               </InputGroup>
             </Form.Group>
           </form>
