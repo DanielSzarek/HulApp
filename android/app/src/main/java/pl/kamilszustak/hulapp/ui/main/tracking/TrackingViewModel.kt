@@ -116,18 +116,18 @@ class TrackingViewModel @Inject constructor(
 
     private fun initializeDistance() {
         changeDistance(currentDistance)
-        _distance.addSource(location) {
+        _distance.addSource(location) { currentLocation ->
             if (currentTrackingState.isStarted) {
                 if (!isFirstLocationChange) {
-                    val newDistanceInMeters = lastLocation?.distanceTo(it) ?: 0F
+                    val newDistanceInMeters = lastLocation?.distanceTo(currentLocation) ?: 0F
                     currentDistance += newDistanceInMeters / 1000
                     _distance.value = currentDistance.round()
                 } else {
-                    lastLocation = it
                     isFirstLocationChange = false
                 }
 
-                addLocationPoint(it.toLocationPoint())
+                lastLocation = currentLocation
+                addLocationPoint(currentLocation.toLocationPoint())
             }
         }
     }
@@ -148,12 +148,12 @@ class TrackingViewModel @Inject constructor(
 
     private fun incrementDuration() {
         currentDuration++
-        _duration.setValue(currentDuration)
+        _duration.value = currentDuration
     }
 
     private fun changeTrackingState(trackingState: TrackingState) {
         currentTrackingState = trackingState
-        _trackingState.setValue(currentTrackingState)
+        _trackingState.value = currentTrackingState
     }
 
     private fun changeDistance(distance: Double) {
@@ -237,7 +237,7 @@ class TrackingViewModel @Inject constructor(
             currentMapTypeIndex++
         }
 
-        _mapType.setValue(mapTypes[currentMapTypeIndex])
+        _mapType.value = mapTypes[currentMapTypeIndex]
     }
 
     fun getCurrentMapType(): Int = mapTypes[currentMapTypeIndex]

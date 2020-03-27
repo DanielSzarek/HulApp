@@ -37,7 +37,7 @@ class TrackDetailsViewModel @Inject constructor(
         }
 
         val intent = Intent(Intent.ACTION_SEND).apply {
-            this.putExtra(Intent.EXTRA_TEXT, "test")
+            this.putExtra(Intent.EXTRA_TEXT, "http://hulapp.com/track/${track.id}")
             this.type = "text/plain"
         }
 
