@@ -20,3 +20,8 @@
   .registration-form {
     margin-top: 25px;
 }
+
+.hover-tooltip-register {
+    font-size: medium;
+    font-weight: bold;
+}

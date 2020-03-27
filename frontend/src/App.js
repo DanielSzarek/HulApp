@@ -24,7 +24,7 @@ class App extends React.Component {
             <Route path="/login" component={LoggingForm} />
             {/* <Route path="/registration" component={Registration} /> */}
             <Route path="/registration" component={CustomizedSteppers} />
-            <Route path="/success" component={RegistrationSuccess} />
+            <Route path="/success/:email" component={RegistrationSuccess} />
 
             <Route path="/activate/:uid/:token" component={AccountActivation} /> 
             <Route path="/profile-edit" component={UserProfileEdit} /> 
