@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+  
+  .sticky-button-container {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    /* align-self: flex-end; */
+    background-color: red;
+  }
+
+  .sticky-button {
+      background-color: red;
+      border: 0px;
+      color: white;
+      width: 150px;
+      height: 50px;
+  }
+  
+ 

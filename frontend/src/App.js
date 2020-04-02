@@ -11,6 +11,7 @@ import UserTrackDetail from './Track/UserTrackDetail';
 import SearchUser from './User/SearchUser';
 import CustomizedSteppers from './User/RegisterStepper';
 import RegistrationSuccess from './User/RegistrationSuccess';
+import PostsView from './Posts/PostsView.js'
 
 
 
@@ -22,7 +23,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={LoggingForm} />
             <Route path="/login" component={LoggingForm} />
-            {/* <Route path="/registration" component={Registration} /> */}
+            <Route path="/posts" component={PostsView} />
             <Route path="/registration" component={CustomizedSteppers} />
             <Route path="/success/:email" component={RegistrationSuccess} />
 

@@ -12,10 +12,7 @@ import { Alert } from "shards-react";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import CheckIcon from '@material-ui/icons/Check';
 import LoadingSpinner from 'react-loader-spinner'
-
-// import PublicIcon from '@material-ui/icons/Public';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-// import LocationCityIcon from '@material-ui/icons/LocationCity';
 
 
 class ProfileEdition extends React.Component {
