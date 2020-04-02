@@ -15,6 +15,7 @@ import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -70,11 +71,20 @@ class FeedFragment : BaseFragment() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
+
+        binding.addPostButton.setOnClickListener {
+            navigateToAddPostFragment()
+        }
     }
 
     private fun observeViewModel() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
         }
+    }
+
+    private fun navigateToAddPostFragment() {
+        val direction = FeedFragmentDirections.actionFeedFragmentToAddPostFragment()
+        navigateTo(direction)
     }
 }

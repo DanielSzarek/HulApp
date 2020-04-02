@@ -13,7 +13,7 @@ import pl.kamilszustak.hulapp.ui.authentication.signup.SignUpViewModel
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceViewModel
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.ui.main.feed.FeedViewModel
-import pl.kamilszustak.hulapp.ui.main.feed.add.AddPostViewModel
+import pl.kamilszustak.hulapp.ui.main.feed.add.NewPostViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
@@ -118,6 +118,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddPostViewModel::class)
-    abstract fun bindAddPostViewModel(addPostViewModel: AddPostViewModel): ViewModel
+    @ViewModelKey(NewPostViewModel::class)
+    abstract fun bindNewPostViewModel(newPostViewModel: NewPostViewModel): ViewModel
 }

@@ -95,7 +95,7 @@ interface ApiService {
     @Authorize
     suspend fun getAllPosts(): Response<List<PostJson>>
 
-    @POST("/api/post")
+    @POST("/api/post/")
     @Authorize
-    suspend fun addPost(@Body requestBody: AddPostRequstBody): Response<Unit>
+    suspend fun addPost(@Body requestBody: AddPostRequstBody): Response<PostJson>
 }

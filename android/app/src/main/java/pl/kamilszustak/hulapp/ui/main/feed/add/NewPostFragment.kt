@@ -13,10 +13,10 @@ import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
-class AddPostFragment : BaseFragment() {
+class NewPostFragment : BaseFragment() {
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-    private val viewModel: AddPostViewModel by viewModels {
+    private val viewModel: NewPostViewModel by viewModels {
         viewModelFactory
     }
 
@@ -33,7 +33,7 @@ class AddPostFragment : BaseFragment() {
             container,
             false
         ).apply {
-            this.viewModel = this@AddPostFragment.viewModel
+            this.viewModel = this@NewPostFragment.viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
 
@@ -61,6 +61,7 @@ class AddPostFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
         observeViewModel()
     }
 

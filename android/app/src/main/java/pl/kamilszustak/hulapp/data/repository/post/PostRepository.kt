@@ -52,11 +52,18 @@ class PostRepository @Inject constructor(
     }
 
     suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
-        return object : NetworkCall<Unit, Unit>() {
-            override suspend fun makeCall(): Response<Unit> =
+        return object : NetworkCall<PostJson, Unit>() {
+            override suspend fun makeCall(): Response<PostJson> =
                 apiService.addPost(requestBody)
 
-            override suspend fun mapResponse(response: Unit): Unit = response
-        }.call()
+            override suspend fun mapResponse(response: PostJson): Unit = Unit
+
+            override suspend fun saveCallResult(result: PostJson) {
+                userDao.insert(result.author)
+                postJsonMapper.onMap(result) { post ->
+                    postDao.insert(post)
+                }
+            }
+        }.callForResponse()
     }
 }

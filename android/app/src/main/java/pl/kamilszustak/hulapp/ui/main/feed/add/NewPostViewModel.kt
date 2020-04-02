@@ -17,7 +17,7 @@ import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.withIOContext
 import javax.inject.Inject
 
-class AddPostViewModel @Inject constructor(
+class NewPostViewModel @Inject constructor(
     application: Application,
     private val addPostUseCase: AddPostUseCase
 ) : BaseViewModel(application) {
@@ -38,8 +38,9 @@ class AddPostViewModel @Inject constructor(
     val error: LiveData<Int> = _error
 
     fun onAddPostButtonClick() {
-        val content = postContentField.data.value
+        val content = postContentField.data.value?.trim()
         if (content.isNullOrBlank()) {
+            _error.value = R.string.empty_post_error_message
             return
         }
 

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.main.feed.add.AddPostViewModel" />
+            type="pl.kamilszustak.hulapp.ui.main.feed.add.NewPostViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,8 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/inputLayout"
-            app:errorEnabled="@{!viewModel.postContentField.isValid}"
-            app:errorText="@{viewModel.postContentField.errorMessage}"
             style="@style/TextInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -28,6 +26,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/editText"
                 android:text="@={viewModel.postContentField.data}"
+                android:inputType="textMultiLine|textCapSentences"
                 android:hint="Treść"
                 android:gravity="start|top" />
         </com.google.android.material.textfield.TextInputLayout>

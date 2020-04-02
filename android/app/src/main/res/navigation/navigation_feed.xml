@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.FeedFragment"
-        android:label="FeedFragment"
+        android:label="Posty"
         tools:layout="@layout/fragment_feed" >
         <action
             android:id="@+id/action_feedFragment_to_addPostFragment"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="pl.kamilszustak.hulapp.ui.main.feed.add.AddPostFragment"
-        android:label="AddPostFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.add.NewPostFragment"
+        android:label="Nowy post"
         tools:layout="@layout/fragment_add_post" />
 </navigation>
