@@ -21,7 +21,7 @@ class PostRepository @Inject constructor(
     private val postJsonMapper: PostJsonMapper
 ) {
     fun getAllWithAuthors(
-        sortOrder: PostsSortOrder = PostsSortOrder.DATE_DESCENDING,
+        sortOrder: PostsSortOrder,
         shouldFetch: Boolean = true
     ): Flow<Resource<List<PostWithAuthor>>> {
         return object : NetworkBoundResource<List<PostJson>, List<PostWithAuthor>>() {
