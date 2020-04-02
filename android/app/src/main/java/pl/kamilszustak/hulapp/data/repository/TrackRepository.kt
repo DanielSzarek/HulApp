@@ -5,10 +5,10 @@ import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.TrackDao
-import pl.kamilszustak.hulapp.data.mapper.TrackMapper
-import pl.kamilszustak.hulapp.data.model.Track
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
-import pl.kamilszustak.hulapp.data.model.track.TrackJson
+import pl.kamilszustak.hulapp.domain.mapper.track.TrackMapper
+import pl.kamilszustak.hulapp.domain.model.Track
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.track.TrackJson
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject
@@ -37,8 +37,9 @@ class TrackRepository @Inject constructor(
                 apiService.getCurrentUserTracks()
 
             override suspend fun saveFetchResult(result: List<TrackJson>) {
-                val tracks = trackMapper.mapAll(result)
-                trackDao.replaceAllByUserId(userId, tracks)
+                trackMapper.onMapAll(result) { tracks ->
+                    trackDao.replaceAllByUserId(userId, tracks)
+                }
             }
         }.asFlow()
     }
@@ -58,8 +59,9 @@ class TrackRepository @Inject constructor(
                 apiService.getAllTracksByUserId(userId)
 
             override suspend fun saveFetchResult(result: List<TrackJson>) {
-                val tracks = trackMapper.mapAll(result)
-                trackDao.replaceAllByUserId(userId, tracks)
+                trackMapper.onMapAll(result) { tracks ->
+                    trackDao.replaceAllByUserId(userId, tracks)
+                }
             }
         }.asFlow()
     }
@@ -75,8 +77,9 @@ class TrackRepository @Inject constructor(
                 apiService.getTrackById(id)
 
             override suspend fun saveFetchResult(result: TrackJson) {
-                val track = trackMapper.map(result)
-                trackDao.insert(track)
+                trackMapper.onMap(result) { track ->
+                    trackDao.insert(track)
+                }
             }
         }.asFlow()
     }
@@ -90,8 +93,9 @@ class TrackRepository @Inject constructor(
                 trackMapper.map(response)
 
             override suspend fun saveCallResult(result: TrackJson) {
-                val entity = trackMapper.map(result)
-                trackDao.insert(entity)
+                trackMapper.onMap(result) { track ->
+                    trackDao.insert(track)
+                }
             }
         }.callForResponse()
     }

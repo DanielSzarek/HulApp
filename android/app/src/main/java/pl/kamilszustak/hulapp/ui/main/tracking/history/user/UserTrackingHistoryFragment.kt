@@ -13,7 +13,7 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.TrackItem
+import pl.kamilszustak.hulapp.domain.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentUserTrackingHistoryBinding
 import pl.kamilszustak.hulapp.ui.main.tracking.history.BaseTrackingHistoryFragment
 import pl.kamilszustak.hulapp.util.navigateTo

@@ -2,7 +2,7 @@ package pl.kamilszustak.hulapp.data.database.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.domain.model.User
 
 @Dao
 interface UserDao : BaseDao<User> {

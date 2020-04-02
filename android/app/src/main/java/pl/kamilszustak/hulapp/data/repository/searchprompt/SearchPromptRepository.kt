@@ -2,7 +2,7 @@ package pl.kamilszustak.hulapp.data.repository.searchprompt
 
 import kotlinx.coroutines.flow.*
 import pl.kamilszustak.hulapp.data.database.dao.SearchPromptDao
-import pl.kamilszustak.hulapp.data.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
 import javax.inject.Inject
 import javax.inject.Singleton
 

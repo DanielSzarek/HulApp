@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.form.Email
+import pl.kamilszustak.hulapp.domain.form.Email
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.SettingsRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository

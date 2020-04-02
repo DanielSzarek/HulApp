@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.SearchPrompt
-import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.data.repository.searchprompt.SearchPromptRepository

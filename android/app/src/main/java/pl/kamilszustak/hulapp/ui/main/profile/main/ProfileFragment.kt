@@ -13,7 +13,7 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.TrackItem
+import pl.kamilszustak.hulapp.domain.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
 import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment

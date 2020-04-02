@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.form.Email
+import pl.kamilszustak.hulapp.domain.form.Email
 import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.Rule

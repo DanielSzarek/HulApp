@@ -2,10 +2,10 @@ package pl.kamilszustak.hulapp.ui.main.profile
 
 import android.app.Application
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.TrackRepository

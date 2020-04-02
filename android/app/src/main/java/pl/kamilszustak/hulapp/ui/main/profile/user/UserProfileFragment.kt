@@ -14,7 +14,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.TrackItem
+import pl.kamilszustak.hulapp.domain.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentUserProfileBinding
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo

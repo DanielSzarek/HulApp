@@ -2,7 +2,7 @@ package pl.kamilszustak.hulapp.data.database.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.domain.model.City
 
 @Dao
 interface CityDao : BaseDao<City> {

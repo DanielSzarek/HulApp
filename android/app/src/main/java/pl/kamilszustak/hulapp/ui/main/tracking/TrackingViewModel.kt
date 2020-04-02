@@ -15,9 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.LocationPoint
-import pl.kamilszustak.hulapp.data.model.Track
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.LocationPoint
+import pl.kamilszustak.hulapp.domain.model.Track
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.round

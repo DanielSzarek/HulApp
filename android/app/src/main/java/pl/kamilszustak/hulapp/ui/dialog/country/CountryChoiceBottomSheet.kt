@@ -12,8 +12,8 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.CountryItem
-import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.domain.item.CountryItem
+import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
 import pl.kamilszustak.hulapp.util.navigateUp

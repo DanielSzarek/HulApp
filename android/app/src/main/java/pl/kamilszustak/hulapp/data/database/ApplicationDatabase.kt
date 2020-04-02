@@ -9,11 +9,11 @@ import androidx.security.crypto.MasterKeys
 import com.commonsware.cwac.saferoom.SafeHelperFactory
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.database.dao.*
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.SearchPrompt
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 
 @Database(
     entities = [

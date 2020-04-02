@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 
 @Dao
 interface TrackDao : BaseDao<TrackEntity> {

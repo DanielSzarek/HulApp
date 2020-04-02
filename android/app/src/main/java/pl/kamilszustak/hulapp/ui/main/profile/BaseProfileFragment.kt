@@ -2,8 +2,8 @@ package pl.kamilszustak.hulapp.ui.main.profile
 
 import androidx.annotation.LayoutRes
 import com.mikepenz.fastadapter.adapters.ModelAdapter
-import pl.kamilszustak.hulapp.data.item.TrackItem
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.item.TrackItem
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 
 abstract class BaseProfileFragment : BaseFragment {

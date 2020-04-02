@@ -12,8 +12,8 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.IAdapter
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.CityItem
-import pl.kamilszustak.hulapp.data.item.CountryItem
+import pl.kamilszustak.hulapp.domain.item.CityItem
+import pl.kamilszustak.hulapp.domain.item.CountryItem
 import pl.kamilszustak.hulapp.databinding.FragmentEditProfileBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet

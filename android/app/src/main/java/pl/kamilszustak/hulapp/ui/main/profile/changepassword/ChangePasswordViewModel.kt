@@ -12,7 +12,7 @@ import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.form.Password
+import pl.kamilszustak.hulapp.domain.form.Password
 import pl.kamilszustak.hulapp.manager.AuthorizationManager
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import javax.inject.Inject
