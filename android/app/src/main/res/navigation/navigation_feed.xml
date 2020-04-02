@@ -8,6 +8,19 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.FeedFragment"
-        android:label="FeedFragment"
-        tools:layout="@layout/fragment_feed" />
+        android:label="Posty"
+        tools:layout="@layout/fragment_feed" >
+        <action
+            android:id="@+id/action_feedFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.add.NewPostFragment"
+        android:label="Nowy post"
+        tools:layout="@layout/fragment_add_post" />
 </navigation>

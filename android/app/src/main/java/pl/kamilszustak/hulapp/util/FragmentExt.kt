@@ -62,3 +62,6 @@ inline fun Fragment.dialog(crossinline block: MaterialDialog.() -> Unit): Materi
         lifecycleOwner(this@dialog.viewLifecycleOwner)
     }
 }
+
+fun Fragment.copyToClipboard(label: CharSequence, text: CharSequence): Boolean =
+    this.context?.copyToClipboard(label, text) ?: false

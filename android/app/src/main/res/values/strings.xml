@@ -48,4 +48,8 @@
     <!-- ProfileFragment -->
     <string name="user_profile_city">Mieszka w: &lt;b>%1$s&lt;/b></string>
     <string name="user_profile_country">Z: &lt;b>%1$s&lt;/b></string>
+
+    <!-- AddPostFragment -->
+    <string name="adding_post_error_message">Wystąpił błąd podczas publikowania posta</string>
+    <string name="empty_post_error_message">Treść postu nie może być pusta</string>
 </resources>

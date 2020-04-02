@@ -1,5 +1,7 @@
 package pl.kamilszustak.hulapp.util
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -39,5 +41,13 @@ fun Context.isInternetConnected(): Boolean {
 
     }
     return false
+}
+
+fun Context.copyToClipboard(label: CharSequence, text: CharSequence): Boolean {
+    val clipboardManager = this.getSystemService<ClipboardManager>()
+    val clip = ClipData.newPlainText(label, text)
+    clipboardManager?.setPrimaryClip(clip)
+
+    return clipboardManager != null
 }
 
