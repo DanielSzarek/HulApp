@@ -13,6 +13,7 @@ import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.domain.model.SearchPrompt
 import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.post.PostEntity
 import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 
 @Database(
@@ -21,7 +22,8 @@ import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
         City::class,
         Country::class,
         TrackEntity::class,
-        SearchPrompt::class
+        SearchPrompt::class,
+        PostEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -34,6 +36,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
     abstract fun getCountryDao(): CountryDao
     abstract fun getTrackDao(): TrackDao
     abstract fun getSearchPromptDao(): SearchPromptDao
+    abstract fun getPostDao(): PostDao
 
     companion object {
         private var INSTANCE: ApplicationDatabase? = null

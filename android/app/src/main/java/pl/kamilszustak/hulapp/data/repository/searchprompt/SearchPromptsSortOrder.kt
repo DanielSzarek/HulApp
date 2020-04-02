@@ -1,6 +1,6 @@
 package pl.kamilszustak.hulapp.data.repository.searchprompt
 
-enum class SearchPromptSortOrder {
+enum class SearchPromptsSortOrder {
     DATE_ASCENDING,
     DATE_DESCENDING
 }
