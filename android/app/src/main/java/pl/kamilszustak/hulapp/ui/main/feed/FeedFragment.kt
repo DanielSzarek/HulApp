@@ -9,13 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
+import com.mikepenz.fastadapter.LongClickListener
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.copyToClipboard
 import pl.kamilszustak.hulapp.util.navigateTo
+import pl.kamilszustak.hulapp.util.popupMenu
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -60,7 +65,40 @@ class FeedFragment : BaseFragment() {
     }
 
     private fun initializeRecyclerView() {
-        val fastAdapter = FastAdapter.with(modelAdapter)
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onLongClickListener = object : LongClickListener<PostItem> {
+                override fun invoke(
+                    v: View,
+                    adapter: IAdapter<PostItem>,
+                    item: PostItem,
+                    position: Int
+                ): Boolean {
+                    popupMenu(v) {
+                        this.inflate(R.menu.menu_post_item)
+                        setOnMenuItemClickListener { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.copyContentItem -> {
+                                    val isCopied = copyToClipboard("Post content", item.model.post.content)
+                                    if (isCopied) {
+                                        toast("Treść posta została skopiowana do schowka")
+                                    } else {
+                                        toast("Nie udało się skopiować treści posta")
+                                    }
+
+                                    true
+                                }
+
+                                else -> {
+                                    false
+                                }
+                            }
+                        }
+                    }
+
+                    return true
+                }
+            }
+        }
 
         binding.feedRecyclerView.apply {
             this.adapter = fastAdapter
