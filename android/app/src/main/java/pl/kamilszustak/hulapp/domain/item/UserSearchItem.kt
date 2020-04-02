@@ -14,7 +14,7 @@ class UserSearchItem(user: User) : ModelAbstractBindingItem<User, ItemUserSearch
         get() = this.model.id
         set(value) {}
 
-    override val type: Int = R.id.fastadapter_user_search_item_id
+    override val type: Int = R.id.fastadapter_user_search_item
 
     override fun createBinding(
         inflater: LayoutInflater,

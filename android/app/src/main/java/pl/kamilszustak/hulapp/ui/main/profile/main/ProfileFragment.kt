@@ -13,8 +13,8 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.domain.item.TrackItem
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
+import pl.kamilszustak.hulapp.domain.item.TrackItem
 import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
@@ -23,10 +23,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : BaseProfileFragment() {
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: ProfileViewModel by viewModels {
         viewModelFactory
     }

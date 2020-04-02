@@ -11,7 +11,7 @@ class UserTrackingHistoryViewModel @Inject constructor(
 ) : BaseTrackingHistoryViewModel(application, trackRepository) {
 
     fun loadData(userId: Long) {
-        tracksResource.setFlowSource {
+        tracksResource.changeFlowSource {
             trackRepository.getAllByUserId(userId)
         }
     }

@@ -15,7 +15,7 @@ class SearchPromptItem(searchPrompt: SearchPrompt) : ModelAbstractItem<SearchPro
         get() = this.model.id
         set(value) {}
 
-    override val type: Int = R.id.fastadapter_search_prompt_id
+    override val type: Int = R.id.fastadapter_search_prompt_item
 
     override val layoutRes: Int = R.layout.item_search_prompts_list
 

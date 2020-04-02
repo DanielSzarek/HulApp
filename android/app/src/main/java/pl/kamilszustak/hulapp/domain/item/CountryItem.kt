@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.databinding.ItemCountriesListBinding
+import pl.kamilszustak.hulapp.domain.model.Country
 
 class CountryItem(country: Country) : ModelAbstractBindingItem<Country, ItemCountriesListBinding>(country) {
 
@@ -14,7 +14,7 @@ class CountryItem(country: Country) : ModelAbstractBindingItem<Country, ItemCoun
         set(value) {}
 
     override val type: Int
-        get() = R.id.fastadapter_country_item_id
+        get() = R.id.fastadapter_country_item
 
     override fun createBinding(
         inflater: LayoutInflater,

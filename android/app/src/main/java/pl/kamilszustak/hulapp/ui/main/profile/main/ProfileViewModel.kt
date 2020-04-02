@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(
     val openProfilePhoto: LiveData<String> = _openProfilePhoto
 
     init {
-        userResource.setFlowSource {
+        userResource.changeFlowSource {
             userRepository.getLoggedIn()
         }
     }

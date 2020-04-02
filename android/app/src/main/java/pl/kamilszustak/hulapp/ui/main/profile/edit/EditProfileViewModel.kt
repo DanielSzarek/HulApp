@@ -69,14 +69,14 @@ class EditProfileViewModel @Inject constructor(
     )
 
     init {
-        userResource.setFlowSource {
+        userResource.changeFlowSource {
             userRepository.getLoggedIn(false)
         }
 
         cityResource.result.addSource(userResource.data) {
             val cityId = it.cityId
             if (cityId != null) {
-                cityResource.setFlowSource {
+                cityResource.changeFlowSource {
                     cityRepository.getById(cityId, false)
                 }
             } else {
@@ -87,7 +87,7 @@ class EditProfileViewModel @Inject constructor(
         countryResource.result.addSource(userResource.data) {
             val countryId = it.countryId
             if (countryId != null) {
-                countryResource.setFlowSource {
+                countryResource.changeFlowSource {
                     countryRepository.getById(countryId, false)
                 }
             } else {

@@ -22,7 +22,7 @@ abstract class BaseTrackDetailsViewModel(
 
     fun loadData(trackId: Long) {
         initialize {
-            trackResource.setFlowSource {
+            trackResource.changeFlowSource {
                 trackRepository.getById(trackId)
             }
         }

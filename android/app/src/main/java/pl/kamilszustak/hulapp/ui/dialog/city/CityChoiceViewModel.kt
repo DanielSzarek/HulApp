@@ -22,7 +22,7 @@ class CityChoiceViewModel @Inject constructor(
             return
         }
 
-        citiesResource.setFlowSource {
+        citiesResource.changeFlowSource {
             cityRepository.getByName(name)
         }
     }

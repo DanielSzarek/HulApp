@@ -48,7 +48,7 @@ class SearchViewModel @Inject constructor(
 
         _adapterType.value = AdapterType.USERS
 
-        usersResource.setFlowSource {
+        usersResource.changeFlowSource {
             userRepository.searchFor(text)
         }
     }

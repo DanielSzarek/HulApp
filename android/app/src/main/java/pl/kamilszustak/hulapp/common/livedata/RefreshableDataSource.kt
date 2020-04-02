@@ -35,13 +35,13 @@ open class RefreshableDataSource<T>(
         }
     }
 
-    fun setLiveDataSource(block: () -> LiveData<T>) {
+    fun changeLiveDataSource(block: () -> LiveData<T>) {
         this.block = block
         refresh()
     }
 
-    fun setFlowSource(block: () -> Flow<T>) {
-        setLiveDataSource {
+    fun changeFlowSource(block: () -> Flow<T>) {
+        changeLiveDataSource {
             block().asLiveData()
         }
     }

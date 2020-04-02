@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.databinding.ItemCitiesListBinding
+import pl.kamilszustak.hulapp.domain.model.City
 
 class CityItem(city: City) : ModelAbstractBindingItem<City, ItemCitiesListBinding>(city) {
 
@@ -14,7 +14,7 @@ class CityItem(city: City) : ModelAbstractBindingItem<City, ItemCitiesListBindin
         set(value) {}
 
     override val type: Int
-        get() = R.id.fastadapter_city_item_id
+        get() = R.id.fastadapter_city_item
 
     override fun createBinding(
         inflater: LayoutInflater,

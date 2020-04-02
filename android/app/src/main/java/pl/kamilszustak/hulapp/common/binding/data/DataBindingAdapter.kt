@@ -26,7 +26,7 @@ object DataBindingAdapter {
     @BindingAdapter("android:text")
     fun TextView.setDate(date: Date?) {
         this.text = if (date != null) {
-            DateFormats.dateFormat.format(date)
+            DateFormats.fullDateFormat.format(date)
         } else {
             ""
         }

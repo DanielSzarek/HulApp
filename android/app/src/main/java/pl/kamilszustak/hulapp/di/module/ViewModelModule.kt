@@ -12,6 +12,7 @@ import pl.kamilszustak.hulapp.ui.authentication.passwordreset.PasswordResetViewM
 import pl.kamilszustak.hulapp.ui.authentication.signup.SignUpViewModel
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceViewModel
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
+import pl.kamilszustak.hulapp.ui.main.feed.FeedViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
@@ -109,4 +110,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserTrackingHistoryViewModel::class)
     abstract fun bindUserTrackingHistoryViewModel(userTrackingHistoryViewModel: UserTrackingHistoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FeedViewModel::class)
+    abstract fun bindFeedViewModel(feedViewModel: FeedViewModel): ViewModel
 }
