@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.CityDao
-import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject

@@ -16,10 +16,10 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.item.SearchPromptItem
-import pl.kamilszustak.hulapp.data.item.UserSearchItem
-import pl.kamilszustak.hulapp.data.model.SearchPrompt
-import pl.kamilszustak.hulapp.data.model.User
+import pl.kamilszustak.hulapp.domain.item.SearchPromptItem
+import pl.kamilszustak.hulapp.domain.item.UserSearchItem
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.databinding.FragmentSearchBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.*

@@ -11,10 +11,10 @@ import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.network.UpdateUserRequest
 import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
@@ -69,14 +69,14 @@ class EditProfileViewModel @Inject constructor(
     )
 
     init {
-        userResource.setFlowSource {
+        userResource.changeFlowSource {
             userRepository.getLoggedIn(false)
         }
 
         cityResource.result.addSource(userResource.data) {
             val cityId = it.cityId
             if (cityId != null) {
-                cityResource.setFlowSource {
+                cityResource.changeFlowSource {
                     cityRepository.getById(cityId, false)
                 }
             } else {
@@ -87,7 +87,7 @@ class EditProfileViewModel @Inject constructor(
         countryResource.result.addSource(userResource.data) {
             val countryId = it.countryId
             if (countryId != null) {
-                countryResource.setFlowSource {
+                countryResource.changeFlowSource {
                     countryRepository.getById(countryId, false)
                 }
             } else {

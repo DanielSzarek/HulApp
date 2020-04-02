@@ -1,8 +1,8 @@
 package pl.kamilszustak.hulapp.data.repository.searchprompt
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.data.database.dao.SearchPromptDao
-import pl.kamilszustak.hulapp.data.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,10 +26,10 @@ class SearchPromptRepository @Inject constructor(
         searchPromptDao.insertAll(prompts)
     }
 
-    fun getAll(sortOrder: SearchPromptSortOrder = SearchPromptSortOrder.DATE_DESCENDING): Flow<List<SearchPrompt>> {
+    fun getAll(sortOrder: SearchPromptsSortOrder = SearchPromptsSortOrder.DATE_DESCENDING): Flow<List<SearchPrompt>> {
         return when (sortOrder) {
-            SearchPromptSortOrder.DATE_ASCENDING -> searchPromptDao.getAllOrderedByDateAscending()
-            SearchPromptSortOrder.DATE_DESCENDING -> searchPromptDao.getAllOrderedByDateDescending()
+            SearchPromptsSortOrder.DATE_ASCENDING -> searchPromptDao.getAllOrderedByDateAscending()
+            SearchPromptsSortOrder.DATE_DESCENDING -> searchPromptDao.getAllOrderedByDateDescending()
         }
     }
 }

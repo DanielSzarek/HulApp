@@ -23,7 +23,7 @@ class UserProfileViewModel @Inject constructor(
 ) {
     fun loadData(userId: Long, force: Boolean = false) {
         initialize(force) {
-            userResource.setFlowSource {
+            userResource.changeFlowSource {
                 userRepository.getById(userId)
             }
         }

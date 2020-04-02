@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import pl.kamilszustak.hulapp.data.model.network.ApiServiceHolder
+import pl.kamilszustak.hulapp.domain.model.network.ApiServiceHolder
 import pl.kamilszustak.hulapp.network.BASE_URL
 import pl.kamilszustak.hulapp.network.ApiService
 import pl.kamilszustak.hulapp.network.JwtAuthenticator

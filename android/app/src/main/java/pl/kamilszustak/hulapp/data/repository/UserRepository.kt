@@ -7,8 +7,8 @@ import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.network.UpdateUserRequest
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import java.io.File

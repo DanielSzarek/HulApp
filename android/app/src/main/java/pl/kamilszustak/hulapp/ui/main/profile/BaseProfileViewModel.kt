@@ -2,10 +2,10 @@ package pl.kamilszustak.hulapp.ui.main.profile
 
 import android.app.Application
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
@@ -28,7 +28,7 @@ abstract class BaseProfileViewModel(
     init {
         cityResource.result.addSource(userResource.data) { user ->
             user?.cityId?.let { id ->
-                cityResource.setFlowSource {
+                cityResource.changeFlowSource {
                     cityRepository.getById(id)
                 }
             }
@@ -36,14 +36,14 @@ abstract class BaseProfileViewModel(
 
        countryResource.result.addSource(userResource.data) { user ->
             user?.countryId?.let { id ->
-                countryResource.setFlowSource {
+                countryResource.changeFlowSource {
                     countryRepository.getById(id)
                 }
             }
         }
 
         tracksResource.result.addSource(userResource.data) { user ->
-            tracksResource.setFlowSource {
+            tracksResource.changeFlowSource {
                 trackRepository.getAllByUserId(user.id, 3)
             }
         }

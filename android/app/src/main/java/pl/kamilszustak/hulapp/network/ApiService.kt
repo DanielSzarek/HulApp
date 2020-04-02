@@ -2,12 +2,13 @@ package pl.kamilszustak.hulapp.network
 
 import okhttp3.MultipartBody
 import pl.kamilszustak.hulapp.common.annotation.Authorize
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.Track
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.network.*
-import pl.kamilszustak.hulapp.data.model.track.TrackJson
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.Track
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.network.*
+import pl.kamilszustak.hulapp.domain.model.post.PostJson
+import pl.kamilszustak.hulapp.domain.model.track.TrackJson
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -89,4 +90,8 @@ interface ApiService {
     @GET("/api/tracks/")
     @Authorize
     suspend fun getAllTracksByUserId(@Query("id") userId: Long): Response<List<TrackJson>>
+
+    @GET("/api/post/")
+    @Authorize
+    suspend fun getAllPosts(): Response<List<PostJson>>
 }

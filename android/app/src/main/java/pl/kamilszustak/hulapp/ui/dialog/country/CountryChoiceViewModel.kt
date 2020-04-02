@@ -3,7 +3,7 @@ package pl.kamilszustak.hulapp.ui.dialog.country
 import android.app.Application
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class CountryChoiceViewModel @Inject constructor(
             return
         }
 
-        countriesResource.setFlowSource {
+        countriesResource.changeFlowSource {
             countryRepository.getByName(name)
         }
     }

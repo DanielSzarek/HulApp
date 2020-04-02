@@ -4,9 +4,9 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import pl.kamilszustak.hulapp.data.model.network.ApiServiceHolder
-import pl.kamilszustak.hulapp.data.model.network.CreateJwtRequest
-import pl.kamilszustak.hulapp.data.model.network.RefreshJwtRequest
+import pl.kamilszustak.hulapp.domain.model.network.ApiServiceHolder
+import pl.kamilszustak.hulapp.domain.model.network.CreateJwtRequest
+import pl.kamilszustak.hulapp.domain.model.network.RefreshJwtRequest
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.util.today

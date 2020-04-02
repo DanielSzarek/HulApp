@@ -1,8 +1,8 @@
 package pl.kamilszustak.hulapp.common.form
 
 import android.util.Patterns
-import pl.kamilszustak.hulapp.data.form.Email
-import pl.kamilszustak.hulapp.data.form.Password
+import pl.kamilszustak.hulapp.domain.form.Email
+import pl.kamilszustak.hulapp.domain.form.Password
 import java.util.regex.Pattern
 import javax.inject.Inject
 

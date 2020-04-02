@@ -16,7 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.model.LocationPoint
+import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog

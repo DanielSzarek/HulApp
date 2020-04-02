@@ -39,4 +39,9 @@ class DatabaseModule {
     @Singleton
     fun provideSearchPromptDao(applicationDatabase: ApplicationDatabase): SearchPromptDao =
         applicationDatabase.getSearchPromptDao()
+
+    @Provides
+    @Singleton
+    fun providePostDao(applicationDatabase: ApplicationDatabase): PostDao =
+        applicationDatabase.getPostDao()
 }
