@@ -9,6 +9,7 @@ import androidx.lifecycle.observe
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
+import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
@@ -109,6 +110,7 @@ class ProfileFragment : BaseProfileFragment() {
 
         binding.tracksRecyclerView.apply {
             this.adapter = fastAdapter
+            this.itemAnimator = FadeInAnimator()
         }
     }
 
