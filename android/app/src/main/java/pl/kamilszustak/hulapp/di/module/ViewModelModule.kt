@@ -13,6 +13,7 @@ import pl.kamilszustak.hulapp.ui.authentication.signup.SignUpViewModel
 import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceViewModel
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceViewModel
 import pl.kamilszustak.hulapp.ui.main.feed.FeedViewModel
+import pl.kamilszustak.hulapp.ui.main.feed.add.AddPostViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileViewModel
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileViewModel
@@ -27,7 +28,6 @@ import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryV
 
 @Module
 abstract class ViewModelModule {
-
     @Binds
     abstract fun bindAndroidViewModelFactory(factory: AndroidViewModelFactory): ViewModelProvider.AndroidViewModelFactory
 
@@ -115,4 +115,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FeedViewModel::class)
     abstract fun bindFeedViewModel(feedViewModel: FeedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddPostViewModel::class)
+    abstract fun bindAddPostViewModel(addPostViewModel: AddPostViewModel): ViewModel
 }

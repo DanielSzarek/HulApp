@@ -7,6 +7,7 @@ import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.main.event.EventsFragment
 import pl.kamilszustak.hulapp.ui.main.feed.FeedFragment
+import pl.kamilszustak.hulapp.ui.main.feed.add.AddPostFragment
 import pl.kamilszustak.hulapp.ui.main.message.MessagesFragment
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordFragment
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileFragment
@@ -23,7 +24,6 @@ import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryF
 
 @Module
 abstract class MainActivityModule {
-
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
@@ -91,4 +91,8 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeUserTrackingHistoryFragment(): UserTrackingHistoryFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeAddPostFragment(): AddPostFragment
 }

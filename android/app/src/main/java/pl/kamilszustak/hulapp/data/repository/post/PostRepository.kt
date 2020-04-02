@@ -2,10 +2,12 @@ package pl.kamilszustak.hulapp.data.repository.post
 
 import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
+import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.PostDao
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
 import pl.kamilszustak.hulapp.domain.mapper.post.PostJsonMapper
+import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
 import pl.kamilszustak.hulapp.domain.model.post.PostJson
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.network.ApiService
@@ -47,5 +49,14 @@ class PostRepository @Inject constructor(
                 }
             }
         }.asFlow()
+    }
+
+    suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
+        return object : NetworkCall<Unit, Unit>() {
+            override suspend fun makeCall(): Response<Unit> =
+                apiService.addPost(requestBody)
+
+            override suspend fun mapResponse(response: Unit): Unit = response
+        }.call()
     }
 }
