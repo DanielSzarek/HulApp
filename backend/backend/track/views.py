@@ -18,7 +18,7 @@ class TrackView(generics.ListCreateAPIView):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        # We give extra context to add automaticaly user
+        # We give extra context to add automatically user
         serializer = TrackSerializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
