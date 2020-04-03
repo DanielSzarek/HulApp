@@ -91,8 +91,8 @@ export default function SinglePost (props) {
       /> */}
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
-            <p>
-              <b>{post.text}</b>
+            <p style={{maxWidth:'900px'}}>
+            <b>{post.text}</b>              
             </p>
           </Typography>
         </CardContent>

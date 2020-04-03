@@ -4,7 +4,6 @@ import AuthService from '../User/AuthService'
 import { ListGroup } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 import { CircularProgress } from '@material-ui/core'
-import '../Styles/Tracks.css'
 import '../Styles/PostView.css'
 import SinglePost from './SinglePost.js'
 
@@ -56,7 +55,9 @@ class PostsView extends React.Component {
         />
         <div class='container'>
           <div className='sticky-button-container'>
+          <Link to='/add-post'>
             <button className='sticky-button'> NAPISZ POST</button>
+            </Link>
           </div>
           <div>
             <ListGroup style={{ marginTop: '32px' }}>
