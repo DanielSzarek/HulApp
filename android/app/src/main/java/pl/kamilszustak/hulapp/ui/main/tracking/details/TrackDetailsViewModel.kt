@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.ui.main.tracking.details
 
 import android.app.Application
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -26,8 +25,8 @@ class TrackDetailsViewModel @Inject constructor(
     private val _deletingCompleted: SingleLiveData<Unit> = SingleLiveData()
     val deletingCompleted: LiveData<Unit> = _deletingCompleted
 
-    private val _sharedTrackIntent: SingleLiveData<ShareEvent> = SingleLiveData()
-    val sharedTrackIntent: LiveData<ShareEvent> = _sharedTrackIntent
+    private val _sharedTrack: SingleLiveData<ShareEvent> = SingleLiveData()
+    val sharedTrack: LiveData<ShareEvent> = _sharedTrack
 
     fun onShareTrackButtonClick() {
         val track = trackResource.data.value
@@ -36,12 +35,13 @@ class TrackDetailsViewModel @Inject constructor(
             return
         }
 
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            this.putExtra(Intent.EXTRA_TEXT, "http://hulapp.com/track/${track.id}")
-            this.type = "text/plain"
-        }
+        val event = ShareEvent(
+            "http://hulapp.com/track/${track.id}",
+            "Udostępniona trasa",
+            "Udostępnij trasę"
+        )
 
-        _sharedTrackIntent.value = ShareEvent(intent, "Udostępnij trasę")
+        _sharedTrack.value = event
     }
 
     fun onDeleteTrackButtonClick() {

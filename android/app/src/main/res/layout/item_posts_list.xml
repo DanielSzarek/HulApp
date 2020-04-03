@@ -7,7 +7,8 @@
     app:cardElevation="@dimen/default_half_elevation"
     app:cardCornerRadius="@dimen/default_half_radius"
     app:contentPadding="@dimen/default_padding"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -53,7 +54,44 @@
             android:layout_height="wrap_content"
             android:id="@+id/contentTextView"
             tools:text="@string/lorem_ipsum"
+            android:maxLines="5"
+            android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/authorProfilePhotoImageView"
             android:layout_marginTop="@dimen/default_half_margin" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/likeButton"
+            android:src="@drawable/icon_heart_outlined_dark"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/commentButton"
+            app:layout_constraintTop_toBottomOf="@id/contentTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            android:layout_marginTop="@dimen/default_margin" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentButton"
+            android:src="@drawable/icon_comment_outlined_dark"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@id/likeButton"
+            app:layout_constraintEnd_toStartOf="@id/shareButton"
+            app:layout_constraintTop_toTopOf="@id/likeButton"
+            app:layout_constraintBottom_toBottomOf="@id/likeButton" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shareButton"
+            android:src="@drawable/icon_share_dark"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@id/commentButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/likeButton"
+            app:layout_constraintBottom_toBottomOf="@id/likeButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

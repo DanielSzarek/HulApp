@@ -8,20 +8,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.LongClickListener
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.listeners.ClickEventHook
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.util.copyToClipboard
-import pl.kamilszustak.hulapp.util.navigateTo
-import pl.kamilszustak.hulapp.util.popupMenu
-import pl.kamilszustak.hulapp.util.updateModels
+import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class FeedFragment : BaseFragment() {
@@ -98,10 +98,32 @@ class FeedFragment : BaseFragment() {
                     return true
                 }
             }
+
+            val expandEventHook = object : ClickEventHook<PostItem>() {
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                    return if (viewHolder is PostItem.ViewHolder) {
+                        viewHolder.binding.shareButton
+                    } else {
+                        null
+                    }
+                }
+
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<PostItem>,
+                    item: PostItem
+                ) {
+                    share(item.model.post.content, "Udostępniony post", "Udostępnij post")
+                }
+            }
+
+            this.addEventHook(expandEventHook)
         }
 
         binding.feedRecyclerView.apply {
             this.adapter = fastAdapter
+            (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
     }
 

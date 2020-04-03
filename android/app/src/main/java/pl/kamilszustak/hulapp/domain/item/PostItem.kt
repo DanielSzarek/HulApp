@@ -2,6 +2,7 @@ package pl.kamilszustak.hulapp.domain.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.BindingViewHolder
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.date.DateFormats
@@ -31,9 +32,15 @@ class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWi
     override fun unbindView(binding: ItemPostsListBinding) {
         with(binding) {
             authorProfilePhotoImageView.setImageDrawable(null)
+            contentTextView.ellipsize
             authorFullNameTextView.text = null
             dateTextView.text = null
             contentTextView.text = null
         }
     }
+
+    override fun getViewHolder(viewBinding: ItemPostsListBinding): BindingViewHolder<ItemPostsListBinding> =
+        ViewHolder(viewBinding)
+
+    inner class ViewHolder(binding: ItemPostsListBinding) : BindingViewHolder<ItemPostsListBinding>(binding)
 }

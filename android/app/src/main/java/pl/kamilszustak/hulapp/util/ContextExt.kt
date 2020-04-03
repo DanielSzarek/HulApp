@@ -1,9 +1,6 @@
 package pl.kamilszustak.hulapp.util
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.provider.Settings
@@ -34,10 +31,10 @@ fun Context.isInternetConnected(): Boolean {
         val connection = connectivityManager.getNetworkCapabilities(network)
 
         return (connection != null && (
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                        connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
                 )
-        )
+                )
 
     }
     return false
@@ -51,3 +48,26 @@ fun Context.copyToClipboard(label: CharSequence, text: CharSequence): Boolean {
     return clipboardManager != null
 }
 
+fun Context.share(
+    text: CharSequence,
+    subject: CharSequence = "",
+    chooserTitle: CharSequence = ""
+): Boolean {
+    return try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        val chooser = Intent.createChooser(intent, chooserTitle)
+        if (chooser != null) {
+            startActivity(chooser)
+            true
+        } else {
+            false
+        }
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+        false
+    }
+}
