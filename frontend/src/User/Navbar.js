@@ -77,6 +77,11 @@ export default class Navbarex extends React.Component {
             </NavLink>
           </NavItem>
           <NavItem>
+            <NavLink className="navLink" active href="/posts" style={{paddingRight: '40px'}}>
+              Tablica <FaUser />
+            </NavLink>
+          </NavItem>
+          <NavItem>
             <InputGroup.Prepend>
               <div className="inputgrouptext">
                 <InputGroup.Text>

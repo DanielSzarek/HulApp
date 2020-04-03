@@ -119,8 +119,7 @@ function getStepContent (
   countryName,
   email,
   message,
-  registerSuccess,
-  // emptyCounter
+  registerSuccess
 ) {
   switch (step) {
     case 0:
@@ -160,7 +159,7 @@ function getStepContent (
               />
             </div>
           ) : (
-            <Redirect to={'/success/'+email}/>
+            <Redirect to={'/success/' + email} />
           )}
         </div>
       )
@@ -209,14 +208,14 @@ export default function CustomizedSteppers () {
 
       case 'name':
         setName(e.currentTarget.value)
-        if(e.currentTarget.value.length>0){
-          setEmptyCounter(emptyCounter-1)
+        if (e.currentTarget.value.length > 0) {
+          setEmptyCounter(emptyCounter - 1)
         }
         break
       case 'surname':
         setSurname(e.currentTarget.value)
-        if(e.currentTarget.value.length>0){
-          setEmptyCounter(emptyCounter-1)
+        if (e.currentTarget.value.length > 0) {
+          setEmptyCounter(emptyCounter - 1)
         }
         break
       default:
@@ -230,15 +229,15 @@ export default function CustomizedSteppers () {
       case 'city':
         setCity(e.id)
         setCityName(e.value)
-        if(e.propname.length<1){
-          setEmptyCounter(emptyCounter+1)
+        if (e.propname.length < 1) {
+          setEmptyCounter(emptyCounter + 1)
         }
         break
       case 'countryId':
         setCountry(e.id)
         setCountryName(e.value)
-         if(e.propname.length<1){
-          setEmptyCounter(emptyCounter+1)
+        if (e.propname.length < 1) {
+          setEmptyCounter(emptyCounter + 1)
         }
         break
       default:
@@ -248,16 +247,10 @@ export default function CustomizedSteppers () {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
-    // if(activeStep===1){
-    //   // setEmptyCounter(4)
-    //   setEnabled(false)
-    // }
   }
 
   const validate = isValid => {
-    console.log('isValid: ' + isValid)
     setEnabled(isValid)
-    // setEmptyCounter(4)
   }
 
   const handleSubmit = event => {
@@ -354,8 +347,7 @@ export default function CustomizedSteppers () {
                 countryName,
                 email,
                 message,
-                registerSuccess,
-                // emptyCounter
+                registerSuccess
               )}
             </div>
             <div className={classes.center}>
@@ -378,7 +370,7 @@ export default function CustomizedSteppers () {
                 </Button>
               ) : (
                 <Button
-                  disabled={(!isEnabled) }
+                  disabled={!isEnabled}
                   variant='contained'
                   color='primary'
                   onClick={handleNext}
