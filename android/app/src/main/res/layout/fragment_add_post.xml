@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.main.feed.add.NewPostViewModel" />
+            type="pl.kamilszustak.hulapp.ui.main.feed.post.add.AddPostViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

@@ -27,17 +27,15 @@ fun Context.isInternetConnected(): Boolean {
     val connectivityManager = this.getSystemService<ConnectivityManager>()
     val network = connectivityManager?.activeNetwork
 
-    if (connectivityManager != null && network != null) {
-        val connection = connectivityManager.getNetworkCapabilities(network)
-
-        return (connection != null && (
-                connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                )
-                )
-
+    if (connectivityManager == null || network == null) {
+        return false
     }
-    return false
+
+    val connection = connectivityManager.getNetworkCapabilities(network)
+    val hasCellularTransport = connection?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
+    val hasWifiTransport = connection?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
+
+    return (connection != null && (hasCellularTransport || hasWifiTransport))
 }
 
 fun Context.copyToClipboard(label: CharSequence, text: CharSequence): Boolean {

@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.main.feed.add
+package pl.kamilszustak.hulapp.ui.main.feed.post.add
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -17,7 +17,7 @@ import pl.kamilszustak.hulapp.ui.base.BaseViewModel
 import pl.kamilszustak.hulapp.util.withIOContext
 import javax.inject.Inject
 
-class NewPostViewModel @Inject constructor(
+class AddPostViewModel @Inject constructor(
     application: Application,
     private val addPostUseCase: AddPostUseCase
 ) : BaseViewModel(application) {

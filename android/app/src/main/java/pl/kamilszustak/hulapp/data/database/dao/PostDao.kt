@@ -24,6 +24,9 @@ interface PostDao : BaseDao<PostEntity> {
     @Query("SELECT * FROM posts ORDER BY created_at DESC")
     fun getAllWithAuthorsOrderedByDateDescending(): Flow<List<PostWithAuthor>>
 
+    @Query("SELECT * FROM posts WHERE id = :id")
+    fun getByIdWithAuthor(id: Long): Flow<PostWithAuthor>
+
     @Query("SELECT * FROM posts ORDER BY created_at ASC")
     fun getAllOrderedByDateAscending(): Flow<List<PostEntity>>
 

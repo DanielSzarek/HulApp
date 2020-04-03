@@ -51,6 +51,27 @@ class PostRepository @Inject constructor(
         }.asFlow()
     }
 
+    fun getByIdWithAuthor(
+        postId: Long,
+        shouldFetch: Boolean = true
+    ): Flow<Resource<PostWithAuthor>> {
+        return object : NetworkBoundResource<List<PostJson>, PostWithAuthor>() {
+            override fun loadFromDatabase(): Flow<PostWithAuthor> =
+                postDao.getByIdWithAuthor(postId)
+
+            override fun shouldFetch(data: PostWithAuthor?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<List<PostJson>> =
+                apiService.getAllPosts()
+
+            override suspend fun saveFetchResult(result: List<PostJson>) {
+                postJsonMapper.onMapAll(result) { posts ->
+                    postDao.replaceAll(posts)
+                }
+            }
+        }.asFlow()
+    }
+
     suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
         return object : NetworkCall<PostJson, Unit>() {
             override suspend fun makeCall(): Response<PostJson> =

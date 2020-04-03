@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
+import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.LongClickListener
@@ -66,6 +66,18 @@ class FeedFragment : BaseFragment() {
 
     private fun initializeRecyclerView() {
         val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onClickListener = object : ClickListener<PostItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<PostItem>,
+                    item: PostItem,
+                    position: Int
+                ): Boolean {
+                    navigateToPostDetailsFragment(item.model.post.id)
+                    return true
+                }
+            }
+
             this.onLongClickListener = object : LongClickListener<PostItem> {
                 override fun invoke(
                     v: View,
@@ -99,7 +111,7 @@ class FeedFragment : BaseFragment() {
                 }
             }
 
-            val expandEventHook = object : ClickEventHook<PostItem>() {
+            val shareEventHook = object : ClickEventHook<PostItem>() {
                 override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
                     return if (viewHolder is PostItem.ViewHolder) {
                         viewHolder.binding.shareButton
@@ -117,13 +129,11 @@ class FeedFragment : BaseFragment() {
                     share(item.model.post.content, "Udostępniony post", "Udostępnij post")
                 }
             }
-
-            this.addEventHook(expandEventHook)
+            this.addEventHook(shareEventHook)
         }
 
         binding.feedRecyclerView.apply {
             this.adapter = fastAdapter
-            (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
     }
 
@@ -141,6 +151,11 @@ class FeedFragment : BaseFragment() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
         }
+    }
+
+    private fun navigateToPostDetailsFragment(postId: Long) {
+        val direction = FeedFragmentDirections.actionFeedFragmentToPostDetailsFragment(postId)
+        navigateTo(direction)
     }
 
     private fun navigateToAddPostFragment() {
