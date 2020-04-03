@@ -19,7 +19,7 @@ import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
@@ -32,8 +32,8 @@ class FeedFragment : BaseFragment() {
     }
 
     private lateinit var binding: FragmentFeedBinding
-    private val modelAdapter: ModelAdapter<PostWithAuthor, PostItem> by lazy {
-        ModelAdapter<PostWithAuthor, PostItem> { postWithAuthor ->
+    private val modelAdapter: ModelAdapter<PostWithAuthorEntity, PostItem> by lazy {
+        ModelAdapter<PostWithAuthorEntity, PostItem> { postWithAuthor ->
             PostItem(postWithAuthor)
         }
     }

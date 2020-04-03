@@ -5,12 +5,13 @@
     <data>
         <variable
             name="postWithAuthor"
-            type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor" />
+            type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardView"
         app:cardElevation="@dimen/default_half_elevation"
         app:cardCornerRadius="@dimen/default_half_radius"
         app:contentPadding="@dimen/default_padding"

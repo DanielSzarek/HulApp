@@ -6,9 +6,9 @@ import com.mikepenz.fastadapter.binding.BindingViewHolder
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.ItemPostsListBinding
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 
-class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWithAuthor, ItemPostsListBinding>(postWithAuthor) {
+class PostItem(postWithAuthor: PostWithAuthorEntity) : ModelAbstractBindingItem<PostWithAuthorEntity, ItemPostsListBinding>(postWithAuthor) {
     override var identifier: Long
         get() = this.model.post.id
         set(value) {}

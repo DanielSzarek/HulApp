@@ -3,7 +3,7 @@ package pl.kamilszustak.hulapp.domain.usecase.post
 import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.repository.post.PostRepository
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,6 +12,6 @@ class GetPostByIdWithAuthorUseCaseImpl @Inject constructor(
     private val postRepository: PostRepository
 ) : GetPostByIdWithAuthorUseCase {
 
-    override fun invoke(postId: Long): Flow<Resource<PostWithAuthor>> =
+    override fun invoke(postId: Long): Flow<Resource<PostWithAuthorEntity>> =
         postRepository.getByIdWithAuthor(postId)
 }
