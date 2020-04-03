@@ -50,7 +50,9 @@ class PostDetailsFragment : BaseFragment() {
     }
 
     private fun setListeners() {
-
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
     }
 
     private fun observeViewModel() {

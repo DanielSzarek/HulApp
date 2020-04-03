@@ -19,4 +19,8 @@ class PostDetailsViewModel @Inject constructor(
             getPostByIdWithAuthorUseCase(postId)
         }
     }
+
+    fun onRefresh() {
+        postWithAuthorResource.refresh()
+    }
 }

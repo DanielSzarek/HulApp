@@ -28,7 +28,8 @@
                 android:text="@={viewModel.postContentField.data}"
                 android:inputType="textMultiLine|textCapSentences"
                 android:hint="Treść"
-                android:gravity="start|top" />
+                android:gravity="start|top"
+                android:minLines="5" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

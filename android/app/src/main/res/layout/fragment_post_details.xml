@@ -8,14 +8,21 @@
             type="pl.kamilszustak.hulapp.ui.main.feed.post.details.PostDetailsViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/swipeRefreshLayout"
+        app:refreshing="@{viewModel.postWithAuthorResource.isLoading}">
 
-        <include layout="@layout/item_posts_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:postWithAuthor="@{viewModel.postWithAuthorResource.data}" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_posts_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:postWithAuthor="@{viewModel.postWithAuthorResource.data}" />
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
