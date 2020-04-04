@@ -7,6 +7,6 @@ data class PostWithAuthor(
     val id: Long,
     val createdAt: Date,
     val content: String,
-    val isMine: Boolean,
-    val author: User
+    val author: User,
+    val isMine: Boolean
 )

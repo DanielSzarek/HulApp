@@ -5,7 +5,7 @@
     <data>
         <variable
             name="postWithAuthor"
-            type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity" />
+            type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -41,7 +41,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/menuButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/dateTextView"
                 android:layout_marginHorizontal="@dimen/default_margin"
@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/dateTextView"
-                android:text="@{postWithAuthor.post.createdAt}"
+                android:text="@{postWithAuthor.createdAt}"
                 tools:text="2020-01-01 15:20"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -60,11 +60,22 @@
                 app:layout_constraintTop_toBottomOf="@id/authorFullNameTextView"
                 app:layout_constraintBottom_toBottomOf="@id/authorProfilePhotoImageView" />
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/menuButton"
+                android:src="@drawable/icon_more_dark"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/authorProfilePhotoImageView"
+                app:layout_constraintVertical_bias="0.0" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/contentTextView"
-                android:text="@{postWithAuthor.post.content}"
+                android:text="@{postWithAuthor.content}"
                 tools:text="@string/lorem_ipsum"
                 app:layout_constraintTop_toBottomOf="@id/authorProfilePhotoImageView"
                 android:layout_marginTop="@dimen/default_half_margin" />

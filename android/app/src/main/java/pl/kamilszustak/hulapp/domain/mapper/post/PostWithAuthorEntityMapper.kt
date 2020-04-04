@@ -12,7 +12,13 @@ class PostWithAuthorEntityMapper @Inject constructor(
     private val userDetailsRepository: UserDetailsRepository
 ) : Mapper<PostWithAuthorEntity, PostWithAuthor>() {
 
-    override fun map(model: PostWithAuthorEntity): PostWithAuthor {
-        TODO("Not yet implemented")
-    }
+    val myId: Long = userDetailsRepository.getValue(UserDetailsRepository.UserDetailsKey.USER_ID)
+
+    override fun map(model: PostWithAuthorEntity): PostWithAuthor = PostWithAuthor(
+        id = model.post.id,
+        createdAt = model.post.createdAt,
+        content = model.post.content,
+        author = model.author,
+        isMine = (model.author.id == myId)
+    )
 }

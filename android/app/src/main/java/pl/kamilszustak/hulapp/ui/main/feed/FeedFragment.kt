@@ -19,9 +19,10 @@ import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class FeedFragment : BaseFragment() {
@@ -32,8 +33,8 @@ class FeedFragment : BaseFragment() {
     }
 
     private lateinit var binding: FragmentFeedBinding
-    private val modelAdapter: ModelAdapter<PostWithAuthorEntity, PostItem> by lazy {
-        ModelAdapter<PostWithAuthorEntity, PostItem> { postWithAuthor ->
+    private val modelAdapter: ModelAdapter<PostWithAuthor, PostItem> by lazy {
+        ModelAdapter<PostWithAuthor, PostItem> { postWithAuthor ->
             PostItem(postWithAuthor)
         }
     }
@@ -73,7 +74,7 @@ class FeedFragment : BaseFragment() {
                     item: PostItem,
                     position: Int
                 ): Boolean {
-                    navigateToPostDetailsFragment(item.model.post.id)
+                    navigateToPostDetailsFragment(item.model.id)
                     return true
                 }
             }
@@ -90,7 +91,7 @@ class FeedFragment : BaseFragment() {
                         setOnMenuItemClickListener { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.copyContentItem -> {
-                                    val isCopied = copyToClipboard("Post content", item.model.post.content)
+                                    val isCopied = copyToClipboard("Post content", item.model.content)
                                     if (isCopied) {
                                         toast("Treść posta została skopiowana do schowka")
                                     } else {
@@ -126,7 +127,7 @@ class FeedFragment : BaseFragment() {
                     fastAdapter: FastAdapter<PostItem>,
                     item: PostItem
                 ) {
-                    share(item.model.post.content, "Udostępniony post", "Udostępnij post")
+                    share(item.model.content, "Udostępniony post", "Udostępnij post")
                 }
             }
             this.addEventHook(shareEventHook)
@@ -150,6 +151,7 @@ class FeedFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
+            Timber.i(postsWithAuthors.toString())
         }
     }
 

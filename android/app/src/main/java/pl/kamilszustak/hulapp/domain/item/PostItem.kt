@@ -6,11 +6,11 @@ import com.mikepenz.fastadapter.binding.BindingViewHolder
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.ItemPostsListBinding
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 
-class PostItem(postWithAuthor: PostWithAuthorEntity) : ModelAbstractBindingItem<PostWithAuthorEntity, ItemPostsListBinding>(postWithAuthor) {
+class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWithAuthor, ItemPostsListBinding>(postWithAuthor) {
     override var identifier: Long
-        get() = this.model.post.id
+        get() = this.model.id
         set(value) {}
 
     override val type: Int = R.id.fastadapter_post_item
