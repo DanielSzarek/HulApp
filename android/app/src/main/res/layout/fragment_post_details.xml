@@ -22,6 +22,7 @@
             <include layout="@layout/item_posts_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/postLayout"
                 app:postWithAuthor="@{viewModel.postWithAuthorResource.data}" />
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

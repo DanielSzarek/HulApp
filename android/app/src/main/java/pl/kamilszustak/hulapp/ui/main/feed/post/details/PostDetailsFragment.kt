@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPostDetailsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.share
 import javax.inject.Inject
 
 class PostDetailsFragment : BaseFragment() {
@@ -53,9 +55,19 @@ class PostDetailsFragment : BaseFragment() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
+
+        binding.postLayout.shareButton.setOnClickListener {
+            viewModel.onShareButtonClick()
+        }
     }
 
     private fun observeViewModel() {
-
+        viewModel.sharePostEvent.observe(viewLifecycleOwner) { event ->
+            share(
+                event.content,
+                event.subject,
+                event.chooserTitle
+            )
+        }
     }
 }

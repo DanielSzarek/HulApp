@@ -98,7 +98,7 @@ class TrackDetailsFragment : BaseFragment() {
         }
 
         viewModel.sharedTrack.observe(viewLifecycleOwner) { event ->
-            share(event.title, event.subject, event.chooserTitle)
+            share(event.content, event.subject, event.chooserTitle)
         }
     }
 }

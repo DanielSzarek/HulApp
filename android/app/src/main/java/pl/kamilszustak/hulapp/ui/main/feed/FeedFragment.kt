@@ -91,7 +91,8 @@ class FeedFragment : BaseFragment() {
                         setOnMenuItemClickListener { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.copyContentItem -> {
-                                    val isCopied = copyToClipboard("Post content", item.model.content)
+                                    val isCopied =
+                                        copyToClipboard("Post content", item.model.content)
                                     if (isCopied) {
                                         toast("Treść posta została skopiowana do schowka")
                                     } else {
@@ -127,7 +128,11 @@ class FeedFragment : BaseFragment() {
                     fastAdapter: FastAdapter<PostItem>,
                     item: PostItem
                 ) {
-                    share(item.model.content, "Udostępniony post", "Udostępnij post")
+                    share(
+                        "http://hulapp.com/posts/${item.model.id}",
+                        "Shared post",
+                        "Udostępnij post"
+                    )
                 }
             }
             this.addEventHook(shareEventHook)
