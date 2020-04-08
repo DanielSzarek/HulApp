@@ -1,10 +1,13 @@
 package pl.kamilszustak.hulapp.ui.main.feed.post.details
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.domain.usecase.post.GetPostByIdWithAuthorUseCase
 import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.details.ShareEvent
 import javax.inject.Inject
 
 class PostDetailsViewModel @Inject constructor(
@@ -14,6 +17,9 @@ class PostDetailsViewModel @Inject constructor(
 
     val postWithAuthorResource: ResourceDataSource<PostWithAuthor> = ResourceDataSource()
 
+    private val _sharePostEvent: SingleLiveData<ShareEvent> = SingleLiveData()
+    val sharePostEvent: LiveData<ShareEvent> = _sharePostEvent
+
     fun loadData(postId: Long) {
         postWithAuthorResource.changeFlowSource {
             getPostByIdWithAuthorUseCase(postId)
@@ -22,5 +28,18 @@ class PostDetailsViewModel @Inject constructor(
 
     fun onRefresh() {
         postWithAuthorResource.refresh()
+    }
+
+    fun onShareButtonClick() {
+        val post = postWithAuthorResource.data.value
+        if (post == null) {
+            return
+        }
+
+        _sharePostEvent.value = ShareEvent(
+            "http://hulapp.com/posts/${post.id}",
+            "Shared post",
+            "Udostępnij post"
+        )
     }
 }

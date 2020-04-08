@@ -91,7 +91,8 @@ class FeedFragment : BaseFragment() {
                         setOnMenuItemClickListener { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.copyContentItem -> {
-                                    val isCopied = copyToClipboard("Post content", item.model.content)
+                                    val isCopied =
+                                        copyToClipboard("Post content", item.model.content)
                                     if (isCopied) {
                                         toast("Treść posta została skopiowana do schowka")
                                     } else {
@@ -127,7 +128,7 @@ class FeedFragment : BaseFragment() {
                     fastAdapter: FastAdapter<PostItem>,
                     item: PostItem
                 ) {
-                    share(item.model.content, "Udostępniony post", "Udostępnij post")
+                    viewModel.onShareButtonClick(item.model.id)
                 }
             }
             this.addEventHook(shareEventHook)
@@ -152,6 +153,14 @@ class FeedFragment : BaseFragment() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
             Timber.i(postsWithAuthors.toString())
+        }
+
+        viewModel.sharePostEvent.observe(viewLifecycleOwner) { event ->
+            share(
+                event.content,
+                event.subject,
+                event.chooserTitle
+            )
         }
     }
 
