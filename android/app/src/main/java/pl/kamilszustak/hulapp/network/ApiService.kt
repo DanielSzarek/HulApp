@@ -102,4 +102,8 @@ interface ApiService {
     @POST("/api/post/")
     @Authorize
     suspend fun addPost(@Body requestBody: AddPostRequstBody): Response<PostJson>
+
+    @DELETE("/api/post/{id}")
+    @Authorize
+    suspend fun deletePostById(@Path("id") id: Long): Response<Unit>
 }

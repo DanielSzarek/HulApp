@@ -30,14 +30,9 @@ class PostDetailsViewModel @Inject constructor(
         postWithAuthorResource.refresh()
     }
 
-    fun onShareButtonClick() {
-        val post = postWithAuthorResource.data.value
-        if (post == null) {
-            return
-        }
-
+    fun onShareButtonClick(postId: Long) {
         _sharePostEvent.value = ShareEvent(
-            "http://hulapp.com/posts/${post.id}",
+            "http://hulapp.com/posts/$postId",
             "Shared post",
             "Udostępnij post"
         )
