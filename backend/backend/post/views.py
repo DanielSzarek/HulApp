@@ -4,6 +4,8 @@ from rest_framework.response import Response
 
 from .models import Post
 from .serializers import PostSerializer
+from .permissions import IsOwner, ReadOnly
+from django.utils import timezone
 
 
 class PostView(generics.ListCreateAPIView):
@@ -21,3 +23,19 @@ class PostView(generics.ListCreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, (IsOwner | ReadOnly),)
+    serializer_class = PostSerializer
+
+    queryset = Post.objects.all()
+
+    def perform_update(self, serializer):
+        # I set new modification date
+        serializer.save(mod_date=timezone.now())
+
+    def perform_destroy(self, instance):
+        # Here I just set published flag on false to archive our post
+        instance.published = False
+        instance.save()
