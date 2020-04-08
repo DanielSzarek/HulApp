@@ -128,11 +128,7 @@ class FeedFragment : BaseFragment() {
                     fastAdapter: FastAdapter<PostItem>,
                     item: PostItem
                 ) {
-                    share(
-                        "http://hulapp.com/posts/${item.model.id}",
-                        "Shared post",
-                        "Udostępnij post"
-                    )
+                    viewModel.onShareButtonClick(item.model.id)
                 }
             }
             this.addEventHook(shareEventHook)
@@ -157,6 +153,14 @@ class FeedFragment : BaseFragment() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
             Timber.i(postsWithAuthors.toString())
+        }
+
+        viewModel.sharePostEvent.observe(viewLifecycleOwner) { event ->
+            share(
+                event.content,
+                event.subject,
+                event.chooserTitle
+            )
         }
     }
 
