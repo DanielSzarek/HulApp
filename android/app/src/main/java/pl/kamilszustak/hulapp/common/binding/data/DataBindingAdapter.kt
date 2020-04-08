@@ -1,34 +1,23 @@
 package pl.kamilszustak.hulapp.common.binding.data
 
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
-import pl.kamilszustak.hulapp.common.date.DateFormats
 import pl.kamilszustak.hulapp.util.load
-import java.util.*
 
 object DataBindingAdapter {
+    private const val IMAGE_URL_PROPERTY: String = "app:imageUrl"
+    private const val ERROR_TEXT_PROPERTY: String = "app:errorText"
 
-    @BindingAdapter("app:profilePhoto")
+    @BindingAdapter(IMAGE_URL_PROPERTY)
     @JvmStatic
     fun ImageView.setImage(url: String?) {
         this.load(url)
     }
 
-    @BindingAdapter("app:errorText")
+    @BindingAdapter(ERROR_TEXT_PROPERTY)
     @JvmStatic
     fun TextInputLayout.setErrorMessage(errorMessage: String?) {
         this.error = errorMessage
-    }
-
-    @JvmStatic
-    @BindingAdapter("android:text")
-    fun TextView.setDate(date: Date?) {
-        this.text = if (date != null) {
-            DateFormats.fullDateFormat.format(date)
-        } else {
-            ""
-        }
     }
 }

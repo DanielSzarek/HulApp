@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.main.feed.add
+package pl.kamilszustak.hulapp.ui.main.feed.post.add
 
 import android.os.Bundle
 import android.view.*
@@ -13,10 +13,10 @@ import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
-class NewPostFragment : BaseFragment() {
+class AddPostFragment : BaseFragment() {
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-    private val viewModel: NewPostViewModel by viewModels {
+    private val viewModel: AddPostViewModel by viewModels {
         viewModelFactory
     }
 
@@ -33,7 +33,7 @@ class NewPostFragment : BaseFragment() {
             container,
             false
         ).apply {
-            this.viewModel = this@NewPostFragment.viewModel
+            this.viewModel = this@AddPostFragment.viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
 

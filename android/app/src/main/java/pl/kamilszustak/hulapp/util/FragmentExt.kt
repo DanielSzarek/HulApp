@@ -65,3 +65,9 @@ inline fun Fragment.dialog(crossinline block: MaterialDialog.() -> Unit): Materi
 
 fun Fragment.copyToClipboard(label: CharSequence, text: CharSequence): Boolean =
     this.context?.copyToClipboard(label, text) ?: false
+
+fun Fragment.share(
+    text: CharSequence,
+    subject: CharSequence = "",
+    chooserTitle: CharSequence = ""
+): Boolean = this.activity?.share(text, subject, chooserTitle) ?: false

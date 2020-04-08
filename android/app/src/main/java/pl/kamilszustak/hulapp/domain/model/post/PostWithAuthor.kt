@@ -1,17 +1,12 @@
 package pl.kamilszustak.hulapp.domain.model.post
 
-import androidx.room.Embedded
-import androidx.room.Relation
 import pl.kamilszustak.hulapp.domain.model.User
+import java.util.*
 
 data class PostWithAuthor(
-    @Embedded
-    val post: PostEntity,
-
-    @Relation(
-        entity = User::class,
-        parentColumn = "author_id",
-        entityColumn = "id"
-    )
-    val author: User
+    val id: Long,
+    val createdAt: Date,
+    val content: String,
+    val author: User,
+    val isMine: Boolean
 )

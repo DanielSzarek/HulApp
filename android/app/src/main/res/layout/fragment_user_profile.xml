@@ -33,7 +33,7 @@
                     android:layout_width="128dp"
                     android:layout_height="128dp"
                     android:id="@+id/profilePhotoImageView"
-                    app:profilePhoto="@{viewModel.userResource.data.profilePhotoUrl}"
+                    app:imageUrl="@{viewModel.userResource.data.profilePhotoUrl}"
                     android:src="@drawable/icon_profile"
                     app:civ_border_width="1dp"
                     app:layout_constraintStart_toStartOf="parent"

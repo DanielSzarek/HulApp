@@ -1,6 +1,5 @@
 package pl.kamilszustak.hulapp.ui.main.tracking.details
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -13,6 +12,7 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentTrackDetailsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateUp
+import pl.kamilszustak.hulapp.util.share
 import javax.inject.Inject
 
 class TrackDetailsFragment : BaseFragment() {
@@ -97,11 +97,8 @@ class TrackDetailsFragment : BaseFragment() {
             view?.snackbar(message)
         }
 
-        viewModel.sharedTrackIntent.observe(viewLifecycleOwner) { event ->
-            val chooser = Intent.createChooser(event.intent, event.chooserText)
-            chooser?.let { intent ->
-                startActivity(intent)
-            }
+        viewModel.sharedTrack.observe(viewLifecycleOwner) { event ->
+            share(event.title, event.subject, event.chooserTitle)
         }
     }
 }
