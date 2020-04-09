@@ -2,16 +2,15 @@ package pl.kamilszustak.hulapp.domain.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.BindingViewHolder
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.common.date.DateFormats
 import pl.kamilszustak.hulapp.databinding.ItemPostsListBinding
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
-import pl.kamilszustak.hulapp.util.load
 
 class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWithAuthor, ItemPostsListBinding>(postWithAuthor) {
     override var identifier: Long
-        get() = this.model.post.id
+        get() = this.model.id
         set(value) {}
 
     override val type: Int = R.id.fastadapter_post_item
@@ -20,12 +19,7 @@ class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWi
         ItemPostsListBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: ItemPostsListBinding, payloads: List<Any>) {
-        with(binding) {
-            authorProfilePhotoImageView.load(model.author.profilePhotoUrl)
-            authorFullNameTextView.text = model.author.fullName
-            dateTextView.text = DateFormats.dateFormat.format(model.post.createdAt)
-            contentTextView.text = model.post.content
-        }
+        binding.postWithAuthor = model
     }
 
     override fun unbindView(binding: ItemPostsListBinding) {
@@ -36,4 +30,9 @@ class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWi
             contentTextView.text = null
         }
     }
+
+    override fun getViewHolder(viewBinding: ItemPostsListBinding): BindingViewHolder<ItemPostsListBinding> =
+        ViewHolder(viewBinding)
+
+    inner class ViewHolder(binding: ItemPostsListBinding) : BindingViewHolder<ItemPostsListBinding>(binding)
 }

@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.domain.model.post.PostEntity
-import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
+import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 
 @Dao
 interface PostDao : BaseDao<PostEntity> {
@@ -18,11 +18,17 @@ interface PostDao : BaseDao<PostEntity> {
     @Query("DELETE FROM posts")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM posts WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("SELECT * FROM posts ORDER BY created_at ASC")
-    fun getAllWithAuthorsOrderedByDateAscending(): Flow<List<PostWithAuthor>>
+    fun getAllWithAuthorsOrderedByDateAscending(): Flow<List<PostWithAuthorEntity>>
 
     @Query("SELECT * FROM posts ORDER BY created_at DESC")
-    fun getAllWithAuthorsOrderedByDateDescending(): Flow<List<PostWithAuthor>>
+    fun getAllWithAuthorsOrderedByDateDescending(): Flow<List<PostWithAuthorEntity>>
+
+    @Query("SELECT * FROM posts WHERE id = :id")
+    fun getByIdWithAuthor(id: Long): Flow<PostWithAuthorEntity>
 
     @Query("SELECT * FROM posts ORDER BY created_at ASC")
     fun getAllOrderedByDateAscending(): Flow<List<PostEntity>>

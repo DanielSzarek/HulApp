@@ -5,7 +5,7 @@ import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 class CountryChoiceViewModel @Inject constructor(

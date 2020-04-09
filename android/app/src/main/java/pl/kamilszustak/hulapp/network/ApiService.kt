@@ -95,7 +95,15 @@ interface ApiService {
     @Authorize
     suspend fun getAllPosts(): Response<List<PostJson>>
 
+    @GET("/api/post/{id}")
+    @Authorize
+    suspend fun getPostById(@Path("id") id: Long): Response<PostJson>
+
     @POST("/api/post/")
     @Authorize
     suspend fun addPost(@Body requestBody: AddPostRequstBody): Response<PostJson>
+
+    @DELETE("/api/post/{id}")
+    @Authorize
+    suspend fun deletePostById(@Path("id") id: Long): Response<Unit>
 }

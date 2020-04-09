@@ -52,7 +52,7 @@ class ProfilePhotoOptionsBottomSheet : BaseBottomSheetDialogFragment(R.layout.bo
             navigateUp()
         }
 
-        viewModel.uploadError.observe(viewLifecycleOwner) { message ->
+        viewModel.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
     }

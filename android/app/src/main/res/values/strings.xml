@@ -4,6 +4,9 @@
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
+    <!-- Error -->
+    <string name="no_internet_connection_error_message">Brak połączenia z Internetem</string>
+
     <!-- FastAdapter -->
     <string name="country_item_id">country_item_id</string>
 
@@ -28,6 +31,18 @@
     <string name="open">Otwórz</string>
     <string name="retry">Powtórz</string>
 
+    <!-- LoginFragment -->
+    <string name="authentication_failed_error_message">Nie udało się zalogować</string>
+
+    <!-- SignUpFragment -->
+    <string name="sign_up_error_message">Wystąpił błąd podczas tworzenia konta</string>
+
+    <!-- PasswordResetFragment -->
+    <string name="empty_email_error_message">Nie wpisano adresu email</string>
+    <string name="password_reset_error_message">Nie udało się zresetować hasła</string>
+
+    <!-- ChangePasswordFragment -->
+    <string name="password_change_error_message">Wystąpił błąd podczas zmiany hasła</string>
     <string name="password_reset_info">Aby zresetować swoje hasło wpisz adres email, który został podany podczas rejestracji w HulApp. W ciągu kilku minut zostanie na niego wysłany link, który przekieruje Cię do strony resetu hasła.</string>
     <string name="password_reset_title">Hasło zresetowane</string>
     <string name="password_reset_message">Hasło zostało zresetowane. Na podany adres email otrzymasz link do resetu hasła.</string>
@@ -35,19 +50,30 @@
     <string name="user_signed_up_title">Utworzono konto</string>
     <string name="user_signed_up_message">Twoje konto zostało utworzono. Na podany adres email został wysłany link aktywujący. Kliknij go, by móc zalogować się do HulApp.</string>
 
-    <string name="tracking_end_title">Koniec</string>
-    <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
+    <!-- EditProfileFragment -->
+    <string name="empty_name_or_surname_error_message">Imię i nazwisko nie mogą być puste</string>
+    <string name="profile_editing_error_message">Wystąpił błąd podczas edycji profilu</string>
+
+    <!-- ProfilePhotoOptionsBottomSheet -->
+    <string name="changing_profile_photo_error_message">Wystąpił błąd podczas zmiany zdjęcia profilowego</string>
 
     <!-- TrackingFragment -->
+    <string name="tracking_end_title">Koniec</string>
+    <string name="tracking_end_message">Czy na pewno chcesz zakończyć śledzenie trasy?</string>
+    <string name="track_saving_error_message">Wystąpił błąd poczas zapisywania trasy</string>
     <string name="track_distance_value">%s km</string>
     <string name="track_distance_and_time">%1$s km w %2$s</string>
 
     <!-- TrackDetailsFragment -->
     <string name="exhaust_emission_value">%s g</string>
+    <string name="track_deleting_error_message">Wystąpił błąd podczas usuwania trasy</string>
 
     <!-- ProfileFragment -->
     <string name="user_profile_city">Mieszka w: &lt;b>%1$s&lt;/b></string>
     <string name="user_profile_country">Z: &lt;b>%1$s&lt;/b></string>
+
+    <!-- FeedFragment -->
+    <string name="deleting_post_error_message">Wystąpił błąd podczas usuwania posta</string>
 
     <!-- AddPostFragment -->
     <string name="adding_post_error_message">Wystąpił błąd podczas publikowania posta</string>

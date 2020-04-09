@@ -59,11 +59,11 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.passwordChangeError.observe(viewLifecycleOwner) { message ->
+        viewModel.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 
-        viewModel.passwordChangeCompleted.observe(viewLifecycleOwner) {
+        viewModel.completed.observe(viewLifecycleOwner) {
             startActivity<AuthenticationActivity>()
             requireActivity().finish()
         }

@@ -10,7 +10,7 @@ import pl.kamilszustak.hulapp.data.repository.CityRepository
 import pl.kamilszustak.hulapp.data.repository.CountryRepository
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
 
 abstract class BaseProfileViewModel(
     application: Application,

@@ -8,20 +8,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.RecyclerView
+import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.LongClickListener
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.listeners.ClickEventHook
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
 import pl.kamilszustak.hulapp.domain.item.PostItem
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.util.copyToClipboard
-import pl.kamilszustak.hulapp.util.navigateTo
-import pl.kamilszustak.hulapp.util.popupMenu
-import pl.kamilszustak.hulapp.util.updateModels
+import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class FeedFragment : BaseFragment() {
@@ -66,25 +66,49 @@ class FeedFragment : BaseFragment() {
 
     private fun initializeRecyclerView() {
         val fastAdapter = FastAdapter.with(modelAdapter).apply {
-            this.onLongClickListener = object : LongClickListener<PostItem> {
+            this.onClickListener = object : ClickListener<PostItem> {
                 override fun invoke(
-                    v: View,
+                    v: View?,
                     adapter: IAdapter<PostItem>,
                     item: PostItem,
                     position: Int
                 ): Boolean {
+                    navigateToPostDetailsFragment(item.model.id)
+                    return true
+                }
+            }
+
+            object : ClickEventHook<PostItem>() {
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                    return if (viewHolder is PostItem.ViewHolder) {
+                        viewHolder.binding.menuButton
+                    } else {
+                        null
+                    }
+                }
+
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<PostItem>,
+                    item: PostItem
+                ) {
                     popupMenu(v) {
-                        this.inflate(R.menu.menu_post_item)
+                        if (item.model.isMine) {
+                            inflate(R.menu.menu_my_post_item)
+                        } else {
+                            inflate(R.menu.menu_post_item)
+                        }
+
                         setOnMenuItemClickListener { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.copyContentItem -> {
-                                    val isCopied = copyToClipboard("Post content", item.model.post.content)
-                                    if (isCopied) {
-                                        toast("Treść posta została skopiowana do schowka")
-                                    } else {
-                                        toast("Nie udało się skopiować treści posta")
-                                    }
+                                    copyPost(item.model)
+                                    true
+                                }
 
+                                R.id.deleteItem -> {
+                                    viewModel.onDeleteButtonClick(item.model.id)
                                     true
                                 }
 
@@ -94,9 +118,30 @@ class FeedFragment : BaseFragment() {
                             }
                         }
                     }
-
-                    return true
                 }
+            }.also { hook ->
+                this.addEventHook(hook)
+            }
+
+            object : ClickEventHook<PostItem>() {
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                    return if (viewHolder is PostItem.ViewHolder) {
+                        viewHolder.binding.shareButton
+                    } else {
+                        null
+                    }
+                }
+
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<PostItem>,
+                    item: PostItem
+                ) {
+                    viewModel.onShareButtonClick(item.model.id)
+                }
+            }.also { hook ->
+                this.addEventHook(hook)
             }
         }
 
@@ -119,6 +164,32 @@ class FeedFragment : BaseFragment() {
         viewModel.postsWithAuthorsResource.data.observe(viewLifecycleOwner) { postsWithAuthors ->
             modelAdapter.updateModels(postsWithAuthors)
         }
+
+        viewModel.sharePostEvent.observe(viewLifecycleOwner) { event ->
+            share(
+                event.content,
+                event.subject,
+                event.chooserTitle
+            )
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+            view?.snackbar(messageResource)
+        }
+    }
+
+    private fun copyPost(post: PostWithAuthor) {
+        val isCopied = copyToClipboard("Post content", post.content)
+        if (isCopied) {
+            toast("Treść posta została skopiowana do schowka")
+        } else {
+            toast("Nie udało się skopiować treści posta")
+        }
+    }
+
+    private fun navigateToPostDetailsFragment(postId: Long) {
+        val direction = FeedFragmentDirections.actionFeedFragmentToPostDetailsFragment(postId)
+        navigateTo(direction)
     }
 
     private fun navigateToAddPostFragment() {
