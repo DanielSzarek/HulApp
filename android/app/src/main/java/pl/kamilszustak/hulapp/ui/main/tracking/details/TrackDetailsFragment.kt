@@ -16,10 +16,8 @@ import pl.kamilszustak.hulapp.util.share
 import javax.inject.Inject
 
 class TrackDetailsFragment : BaseFragment() {
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: TrackDetailsViewModel by viewModels {
         viewModelFactory
     }
@@ -63,12 +61,12 @@ class TrackDetailsFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.shareTrackItem -> {
-                viewModel.onShareTrackButtonClick()
+                viewModel.onShareTrackButtonClick(args.trackId)
                 true
             }
 
             R.id.deleteTrackItem -> {
-                viewModel.onDeleteTrackButtonClick()
+                viewModel.onDeleteTrackButtonClick(args.trackId)
                 true
             }
 

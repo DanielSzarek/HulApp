@@ -16,20 +16,20 @@ interface BaseDao<E> {
     suspend fun insertAll(entities: Collection<E>): List<Long>
 
     @Update
-    suspend fun update(entity: E)
+    suspend fun update(entity: E): Int
 
     @Update
-    suspend fun update(vararg entities: E)
+    suspend fun update(vararg entities: E): Int
 
     @Update
-    suspend fun updateAll(entities: Iterable<E>)
+    suspend fun updateAll(entities: Iterable<E>): Int
 
     @Delete
-    suspend fun delete(entity: E)
+    suspend fun delete(entity: E): Int
 
     @Delete
-    suspend fun delete(vararg entities: E)
+    suspend fun delete(vararg entities: E): Int
 
     @Delete
-    suspend fun deleteAll(entities: Iterable<E>)
+    suspend fun deleteAll(entities: Iterable<E>): Int
 }

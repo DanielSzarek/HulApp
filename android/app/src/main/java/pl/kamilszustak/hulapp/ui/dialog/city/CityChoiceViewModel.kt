@@ -5,7 +5,7 @@ import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.data.repository.CityRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 class CityChoiceViewModel @Inject constructor(

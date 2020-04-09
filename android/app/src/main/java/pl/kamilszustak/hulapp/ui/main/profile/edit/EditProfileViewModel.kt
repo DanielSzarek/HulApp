@@ -5,20 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
-import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
+import pl.kamilszustak.hulapp.data.repository.CityRepository
+import pl.kamilszustak.hulapp.data.repository.CountryRepository
+import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.domain.model.network.UpdateUserRequest
-import pl.kamilszustak.hulapp.data.repository.CityRepository
-import pl.kamilszustak.hulapp.data.repository.CountryRepository
-import pl.kamilszustak.hulapp.data.repository.UserRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
+import pl.kamilszustak.hulapp.util.withIOContext
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
@@ -26,7 +26,7 @@ class EditProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val cityRepository: CityRepository,
     private val countryRepository: CountryRepository
-) : BaseViewModel(application) {
+) : StateViewModel(application) {
 
     val userResource: ResourceDataSource<User> = ResourceDataSource()
     val cityResource: ResourceDataSource<City?> = ResourceDataSource()
@@ -51,15 +51,6 @@ class EditProfileViewModel @Inject constructor(
     val userCountryField: FormField<Country?> = formField {
         isNullable = true
     }
-
-    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error: SingleLiveData<String> = SingleLiveData()
-    val error: LiveData<String> = _error
-
-    private val _completed: SingleLiveData<Unit> = SingleLiveData()
-    val completed: LiveData<Unit> = _completed
 
     val isSavingEnabled: LiveData<Boolean> = FormField.validateFields(
         userNameField,
@@ -127,7 +118,7 @@ class EditProfileViewModel @Inject constructor(
 
     fun onSaveButtonClick() {
         if (!isInternetConnected()) {
-            _error.value = "Brak dostępu do Internetu"
+            _error.value = R.string.no_internet_connection_error_message
             return
         }
 
@@ -135,7 +126,7 @@ class EditProfileViewModel @Inject constructor(
         val surname = userSurnameField.data.value
 
         if (name == null || surname == null) {
-            _error.value = "Imię i nazwisko nie mogą być puste"
+            _error.value = R.string.empty_name_or_surname_error_message
             return
         }
 
@@ -146,17 +137,19 @@ class EditProfileViewModel @Inject constructor(
             userCountryField.data.value?.id
         )
 
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.Main) {
+            _isLoading.value = true
 
-            val result = userRepository.update(request)
+            val result = withIOContext {
+                userRepository.update(request)
+            }
             result.onSuccess {
-                _completed.callAsync()
+                _completed.call()
             }.onFailure {
-                _error.postValue("Wystąpił błąd podczas edycji profilu")
+                _error.value = R.string.profile_editing_error_message
             }
 
-            _isLoading.postValue(false)
+            _isLoading.value = false
         }
     }
 }

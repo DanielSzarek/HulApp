@@ -13,7 +13,7 @@ import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.data.repository.UserRepository
 import pl.kamilszustak.hulapp.data.repository.searchprompt.SearchPromptRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(

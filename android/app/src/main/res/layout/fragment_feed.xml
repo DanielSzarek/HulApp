@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipeRefreshLayout"
-        app:refreshing="@{viewModel.postsWithAuthorsResource.isLoading}">
+        app:refreshing="@{viewModel.postsWithAuthorsResource.isLoading || viewModel.isLoading}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

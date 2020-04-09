@@ -71,8 +71,7 @@ class AddPostFragment : BaseFragment() {
         }
 
         viewModel.error.observe(viewLifecycleOwner) { messageResource ->
-            val message = getString(messageResource)
-            view?.snackbar(message)
+            view?.snackbar(messageResource)
         }
     }
 }

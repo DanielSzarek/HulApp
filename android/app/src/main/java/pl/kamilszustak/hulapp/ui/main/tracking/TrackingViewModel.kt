@@ -13,13 +13,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.yashovardhan99.timeit.Stopwatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
+import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.domain.model.Track
 import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
-import pl.kamilszustak.hulapp.data.repository.TrackRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import pl.kamilszustak.hulapp.util.round
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import pl.kamilszustak.hulapp.util.withIOContext
@@ -30,7 +31,7 @@ import javax.inject.Inject
 class TrackingViewModel @Inject constructor(
     application: Application,
     private val trackRepository: TrackRepository
-) : BaseViewModel(application) {
+) : StateViewModel(application) {
 
     val location: LocationLiveData = LocationLiveData.create(
         context = application,
@@ -73,12 +74,6 @@ class TrackingViewModel @Inject constructor(
 
     private val _duration: UniqueLiveData<Long> = UniqueLiveData(currentDuration)
     val duration: LiveData<Long> = _duration
-
-    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error: SingleLiveData<String> = SingleLiveData()
-    val error: LiveData<String> = _error
 
     private val _trackSaved: SingleLiveData<TrackEntity> = SingleLiveData()
     val trackSaved: LiveData<TrackEntity> = _trackSaved
@@ -223,7 +218,7 @@ class TrackingViewModel @Inject constructor(
                     _trackSaved.value = resultTrack
                 }
             } else {
-                _error.value = "Wystąpił błąd podczas zapisywania trasy"
+                _error.value = R.string.track_saving_error_message
             }
 
             _isLoading.value = false
