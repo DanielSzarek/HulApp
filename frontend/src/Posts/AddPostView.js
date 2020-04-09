@@ -96,7 +96,7 @@ class AddPostView extends React.Component {
                   <Row style={{ width: '600px' }}>
                     <Avatar
                       src={this.state.src}
-                      style={{ width: '100px', height: '100px' }}
+                      style={{ width: '10%', height: '10%' }}
                     ></Avatar>
 
                     <p style={{ paddingTop: '5%', marginLeft: '5%' }}>
@@ -104,7 +104,7 @@ class AddPostView extends React.Component {
                     </p>
                   </Row>
                   <Row>
-                    <input
+                    <textarea
                       type='text'
                       name='content'
                       placeholder='Napisz post...'
@@ -112,7 +112,11 @@ class AddPostView extends React.Component {
                       style={{
                         width: '100%',
                         height: '100px',
-                        marginTop: '20px'
+                        marginTop: '10px',
+                        alignContent: 'flex-start',
+                        textAlign: 'left',
+                        verticalAlign: 'top',
+                        display: 'table-cell',
                       }}
                     />
                   </Row>

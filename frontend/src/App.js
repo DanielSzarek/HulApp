@@ -13,6 +13,10 @@ import CustomizedSteppers from './User/RegisterStepper';
 import RegistrationSuccess from './User/RegistrationSuccess';
 import PostsView from './Posts/PostsView.js'
 import AddPostView from './Posts/AddPostView.js'
+import SimplePersonalPost from './Posts/SimplePersonalPost.js'
+import EditPost from './Posts/EditPost.js'
+import DeletePost from './Posts/DeletePost.js'
+
 
 
 class App extends React.Component {
@@ -23,10 +27,13 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={LoggingForm} />
             <Route path="/login" component={LoggingForm} />
-            <Route path="/posts" component={PostsView} />
+            <Route path="/posts/:usersId" component={PostsView} />
             <Route path="/registration" component={CustomizedSteppers} />
             <Route path="/success/:email" component={RegistrationSuccess} />
             <Route path="/add-post" component={AddPostView} />
+            <Route path="/simple/personal/post/:usersId/:postId" component={SimplePersonalPost} />
+            <Route path="/edit/my-post/:usersId/:postId" component={EditPost} />
+            <Route path="/delete/post/:postId" component={DeletePost} /> 
 
             <Route path="/activate/:uid/:token" component={AccountActivation} /> 
             <Route path="/profile-edit" component={UserProfileEdit} /> 
