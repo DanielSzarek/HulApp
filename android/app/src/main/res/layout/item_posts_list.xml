@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="pl.kamilszustak.hulapp.common.date.DateFormats" />
+
         <variable
             name="postWithAuthor"
             type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor" />
@@ -51,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/dateTextView"
-                android:text="@{postWithAuthor.creationDate}"
+                android:text='@{postWithAuthor.isEdited ? @string/post_edit_date(DateFormats.INSTANCE.dateFormat.format(postWithAuthor.editDate)) : postWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(postWithAuthor.creationDate) : ""}'
                 tools:text="2020-01-01 15:20"
                 android:maxLines="1"
                 android:ellipsize="end"
