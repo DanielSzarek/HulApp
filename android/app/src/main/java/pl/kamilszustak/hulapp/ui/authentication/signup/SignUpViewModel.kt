@@ -2,11 +2,7 @@ package pl.kamilszustak.hulapp.ui.authentication.signup
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.form.Rule
@@ -123,20 +119,8 @@ class SignUpViewModel @Inject constructor(
             country?.id
         )
 
-        viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.value = true
-
-            val result = authorizationManager.signUp(user)
-            result.onSuccess {
-                _completed.call()
-            }.onFailure { throwable ->
-                _error.value = when (throwable) {
-                    is NoInternetConnectionException -> R.string.no_internet_connection_error_message
-                    else -> R.string.sign_up_error_message
-                }
-            }
-
-            _isLoading.value = false
+        performAction(R.string.sign_up_error_message) {
+            authorizationManager.signUp(user)
         }
     }
 }
