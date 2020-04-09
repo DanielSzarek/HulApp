@@ -18,6 +18,7 @@ import { Redirect } from 'react-router-dom';
 
 import '../Styles/InputProps.css';
 import { InputGroup } from 'react-bootstrap';
+import TogglePostsMenu from '../Posts/TogglePostsMenu.js'
 
 
 export default class Navbarex extends React.Component {
@@ -25,6 +26,7 @@ export default class Navbarex extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedUsersId: '',
       userId: '',
       userCriteria: '',
       redirect: false,
@@ -35,6 +37,22 @@ export default class Navbarex extends React.Component {
     this.Auth = new AuthService();
     this.handleUserChange = this.handleUserChange.bind(this);
     this.userChanged = this.userChanged.bind(this);
+  }
+
+   async componentDidMount () {
+    if (await this.Auth.loggedIn()) {
+      this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
+        .then(response => {
+          this.setState({
+            loggedUsersId: response.id,
+          })
+        })
+        .catch(error => {
+          console.log({ message: 'ERROR ' + error })
+        })
+    } else {
+      this.setState({ auth: false })
+    }
   }
 
   onClickLogOut = (event) => {
@@ -77,8 +95,10 @@ export default class Navbarex extends React.Component {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink" active href="/posts" style={{paddingRight: '40px'}}>
+            <NavLink className="navLink" active href={"/posts/" +this.state.loggedUsersId} style={{paddingRight: '40px'}}>
               Tablica <FaUser />
+              {/* <TogglePostsMenu/>
+              Posty */}
             </NavLink>
           </NavItem>
           <NavItem>

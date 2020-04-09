@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -49,8 +50,13 @@ export default function SinglePost (props) {
     name: props.data.author.first_name,
     surname: props.data.author.last_name,
     src: props.data.author.profile_img,
-    date: props.data.add_date
+    date: props.data.add_date,
+    id: props.data.author.id,
+    postId: props.data.id
+    // usersId: props.data.usersId,
   })
+
+  const [usersId, setUsersId] = useState(props.usersId)
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -100,6 +106,11 @@ export default function SinglePost (props) {
           <IconButton aria-label='add to favorites'>
             <FavoriteIcon />
           </IconButton>
+
+          <Link to={"/simple/personal/post/" + usersId +"/" +post.postId}>
+          {(post.id === usersId) ?  "" : <text>Pokaż </text>}
+          </Link>
+          {/* <text>Pokaż </text> */}
           {/* <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}

@@ -11,7 +11,10 @@ class PostsView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      // posts: [],
       posts: [],
+
+      usersId: this.props.match.params.usersId,
       auth: true,
       progressBarDisplayState: 'visible'
     }
@@ -23,9 +26,16 @@ class PostsView extends React.Component {
       this.Auth.fetch('http://hulapp.pythonanywhere.com/api/post')
         .then(response => {
           this.setState({
-            posts: response,
+            // posts: [...response ,this.state.usersId],
+            // posts: response,
+            posts:  response,
             progressBarDisplayState: 'none'
           })
+          this.state.posts.push(this.state.usersId);
+          console.log(this.props.match.params.usersId)
+          //  this.setState({
+          //   posts: [...this.state.posts, this.state.usersId],
+          // })
         })
         .catch(error => {
           console.log({ message: 'ERROR ' + error })
@@ -60,10 +70,10 @@ class PostsView extends React.Component {
             </Link>
           </div>
           <div>
-            <ListGroup style={{ marginTop: '32px' }}>
+            <ListGroup style={{ marginTop: '32px', border: '0px' }}>
               {this.state.posts.map(post => (
                 <ListGroup.Item style={{ color: 'black' }}>
-                  <SinglePost data={post} />
+                  <SinglePost data={post} usersId={this.props.match.params.usersId}/>
                 </ListGroup.Item>
               ))}
             </ListGroup>
