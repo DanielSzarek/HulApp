@@ -52,7 +52,8 @@ export default function SinglePost (props) {
     src: props.data.author.profile_img,
     date: props.data.add_date,
     id: props.data.author.id,
-    postId: props.data.id
+    postId: props.data.id,
+    modDate: props.data.mod_date,
     // usersId: props.data.usersId,
   })
 
@@ -88,7 +89,8 @@ export default function SinglePost (props) {
               {post.name} {post.surname}
             </div>
           }
-          subheader={<div> {formatDateTime(post.date)} </div>}
+          // subheader={<div> {formatDateTime(post.date)} </div>}
+          subheader={(post.modDate==null && post.modDate==='')?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
         />
         {/* <CardMedia
         className={classes.media}
