@@ -10,7 +10,9 @@ import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
+import pl.kamilszustak.hulapp.domain.model.network.EditPostRequestBody
 import pl.kamilszustak.hulapp.domain.usecase.post.AddPostUseCase
+import pl.kamilszustak.hulapp.domain.usecase.post.EditPostUseCase
 import pl.kamilszustak.hulapp.domain.usecase.post.GetPostByIdWithAuthorUseCase
 import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import javax.inject.Inject
@@ -18,11 +20,12 @@ import javax.inject.Inject
 class AddPostViewModel @Inject constructor(
     application: Application,
     private val addPostUseCase: AddPostUseCase,
+    private val editPostUseCase: EditPostUseCase,
     private val getPostByIdWithAuthorUseCase: GetPostByIdWithAuthorUseCase
 ) : StateViewModel(application) {
 
     val postContentField: FormField<String> = formField {
-        +Rule<String>("Treść postu nie może być pusta") {
+        +Rule<String>("Treść posta nie może być pusta") {
             !it.isBlank()
         }
     }
@@ -39,16 +42,23 @@ class AddPostViewModel @Inject constructor(
         }
     }
 
-    fun onAddPostButtonClick() {
+    fun onAddPostButtonClick(postId: Long) {
         val content = postContentField.data.value?.trim()
         if (content.isNullOrBlank()) {
             _error.value = R.string.empty_post_error_message
             return
         }
 
-        val requestBody = AddPostRequstBody(content)
-        performAction(R.string.adding_post_error_message) {
-            addPostUseCase(requestBody)
+        if (inEditMode) {
+            val requestBody = EditPostRequestBody(content)
+            performAction(R.string.post_editing_error_message) {
+                editPostUseCase(postId, requestBody)
+            }
+        } else {
+            val requestBody = AddPostRequstBody(content)
+            performAction(R.string.post_adding_error_message) {
+                addPostUseCase(requestBody)
+            }
         }
     }
 }

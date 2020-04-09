@@ -16,5 +16,8 @@ abstract class UseCaseModule {
     abstract fun bindGetPostByIdWithAuthorUseCase(useCaseImpl: GetPostByIdWithAuthorUseCaseImpl): GetPostByIdWithAuthorUseCase
 
     @Binds
+    abstract fun bindEditPostUseCase(useCaseImpl: EditPostUseCaseImpl): EditPostUseCase
+
+    @Binds
     abstract fun bindDeletePostByIdUseCase(useCaseImpl: DeletePostByIdUseCaseImpl): DeletePostByIdUseCase
 }

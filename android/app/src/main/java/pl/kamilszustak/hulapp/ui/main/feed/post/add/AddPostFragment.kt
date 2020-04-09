@@ -48,13 +48,22 @@ class AddPostFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_add_post_fragment, menu)
+
+        menu.findItem(R.id.postActionItem)?.apply {
+            this.title = if (inEditMode) {
+                getString(R.string.edit_post_button_text)
+            } else {
+                getString(R.string.add_post_button_text)
+            }
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.addPostItem -> {
-                viewModel.onAddPostButtonClick()
+            R.id.postActionItem -> {
+                viewModel.onAddPostButtonClick(args.postId)
                 true
             }
 
@@ -67,11 +76,20 @@ class AddPostFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setActionBarTitle()
         setHasOptionsMenu(true)
         observeViewModel()
 
         if (inEditMode) {
             viewModel.loadData(args.postId)
+        }
+    }
+
+    private fun setActionBarTitle() {
+        actionBarTitle = if (inEditMode) {
+            getString(R.string.edit_post_action_bar_title)
+        } else {
+            getString(R.string.add_post_action_bar_title)
         }
     }
 
