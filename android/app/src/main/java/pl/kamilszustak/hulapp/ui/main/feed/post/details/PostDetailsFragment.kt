@@ -82,7 +82,7 @@ class PostDetailsFragment : BaseFragment() {
                             true
                         }
 
-                        R.id.deleteItem -> {
+                        R.id.deletePostItem -> {
                             viewModel.onDeleteButtonClick(args.postId)
                             true
                         }

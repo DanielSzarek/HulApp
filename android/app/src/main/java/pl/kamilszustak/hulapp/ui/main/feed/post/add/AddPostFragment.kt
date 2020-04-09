@@ -24,7 +24,9 @@ class AddPostFragment : BaseFragment() {
     private lateinit var binding: FragmentAddPostBinding
     private val args: AddPostFragmentArgs by navArgs()
 
-    private val inEditMode: Boolean = (args.postId != -1L)
+    private val inEditMode: Boolean by lazy {
+        args.postId != -1L
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +69,10 @@ class AddPostFragment : BaseFragment() {
 
         setHasOptionsMenu(true)
         observeViewModel()
+
+        if (inEditMode) {
+            viewModel.loadData(args.postId)
+        }
     }
 
     private fun observeViewModel() {

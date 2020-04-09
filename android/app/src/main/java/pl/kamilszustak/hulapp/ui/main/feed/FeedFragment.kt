@@ -107,7 +107,12 @@ class FeedFragment : BaseFragment() {
                                     true
                                 }
 
-                                R.id.deleteItem -> {
+                                R.id.editPostItem -> {
+                                    navigateToAddPostFragment(item.model.id)
+                                    true
+                                }
+
+                                R.id.deletePostItem -> {
                                     viewModel.onDeleteButtonClick(item.model.id)
                                     true
                                 }
@@ -192,8 +197,8 @@ class FeedFragment : BaseFragment() {
         navigateTo(direction)
     }
 
-    private fun navigateToAddPostFragment() {
-        val direction = FeedFragmentDirections.actionFeedFragmentToAddPostFragment()
+    private fun navigateToAddPostFragment(postId: Long = -1) {
+        val direction = FeedFragmentDirections.actionFeedFragmentToAddPostFragment(postId)
         navigateTo(direction)
     }
 }

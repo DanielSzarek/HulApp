@@ -8,7 +8,12 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/deleteItem"
+        android:id="@+id/editPostItem"
+        android:title="Edytuj post"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/deletePostItem"
         android:title="Usuń post"
         app:showAsAction="always" />
 </menu>
