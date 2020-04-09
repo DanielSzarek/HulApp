@@ -8,12 +8,12 @@ import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class PostJson(
+    @Json(name = "mod_date")
+    var editDate: Date?,
+
     @Json(name = "author")
     var author: User,
 
     @Json(name = "text")
-    var content: String,
-
-    @Json(name = "mod_date")
-    var modificationDate: Date?
+    var content: String
 ) : JsonModel()
