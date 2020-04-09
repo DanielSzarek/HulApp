@@ -5,8 +5,12 @@ import java.util.*
 
 data class PostWithAuthor(
     val id: Long,
-    val createdAt: Date,
+    val creationDate: Date,
+    val editDate: Date?,
     val content: String,
     val author: User,
     val isMine: Boolean
-)
+) {
+    val isEdited: Boolean
+        get() = (editDate != null)
+}

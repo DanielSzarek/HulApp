@@ -21,18 +21,18 @@ interface PostDao : BaseDao<PostEntity> {
     @Query("DELETE FROM posts WHERE id = :id")
     suspend fun deleteById(id: Long)
 
-    @Query("SELECT * FROM posts ORDER BY created_at ASC")
+    @Query("SELECT * FROM posts ORDER BY creation_date ASC")
     fun getAllWithAuthorsOrderedByDateAscending(): Flow<List<PostWithAuthorEntity>>
 
-    @Query("SELECT * FROM posts ORDER BY created_at DESC")
+    @Query("SELECT * FROM posts ORDER BY creation_date DESC")
     fun getAllWithAuthorsOrderedByDateDescending(): Flow<List<PostWithAuthorEntity>>
 
     @Query("SELECT * FROM posts WHERE id = :id")
     fun getByIdWithAuthor(id: Long): Flow<PostWithAuthorEntity>
 
-    @Query("SELECT * FROM posts ORDER BY created_at ASC")
+    @Query("SELECT * FROM posts ORDER BY creation_date ASC")
     fun getAllOrderedByDateAscending(): Flow<List<PostEntity>>
 
-    @Query("SELECT * FROM posts ORDER BY created_at DESC")
+    @Query("SELECT * FROM posts ORDER BY creation_date DESC")
     fun getAllOrderedByDateDescending(): Flow<List<PostEntity>>
 }

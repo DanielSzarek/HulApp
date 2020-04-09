@@ -2,6 +2,7 @@ package pl.kamilszustak.hulapp.ui.base
 
 import android.content.Context
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -25,11 +26,20 @@ open class BaseFragment : Fragment, HasAndroidInjector {
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
+    private val actionBar: ActionBar?
+        get() = (activity as? BaseActivity)?.supportActionBar
+
+    protected var actionBarTitle: CharSequence?
+        get() = actionBar?.title
+        set(value) {
+            actionBar?.title = value
+        }
+
     protected fun hideActionBar() {
-        (activity as? BaseActivity)?.supportActionBar?.hide()
+        actionBar?.hide()
     }
 
     protected fun showActionBar() {
-        (activity as? BaseActivity)?.supportActionBar?.show()
+        actionBar?.show()
     }
 }

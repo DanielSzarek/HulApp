@@ -2,9 +2,6 @@ package pl.kamilszustak.hulapp.ui.main.profile.edit
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.Rule
@@ -137,19 +134,10 @@ class EditProfileViewModel @Inject constructor(
             userCountryField.data.value?.id
         )
 
-        viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.value = true
-
-            val result = withIOContext {
+        performAction(R.string.profile_editing_error_message) {
+            withIOContext {
                 userRepository.update(request)
             }
-            result.onSuccess {
-                _completed.call()
-            }.onFailure {
-                _error.value = R.string.profile_editing_error_message
-            }
-
-            _isLoading.value = false
         }
     }
 }

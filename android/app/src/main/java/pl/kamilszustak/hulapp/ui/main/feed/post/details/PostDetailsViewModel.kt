@@ -46,18 +46,8 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     fun onDeleteButtonClick(postId: Long) {
-        viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.value = true
-
-            val result = withIOContext {
-                deletePostByIdUseCase(postId)
-            }
-
-            result.onFailure {
-                _error.value = R.string.deleting_post_error_message
-            }
-
-            _isLoading.value = false
+        performAction(R.string.deleting_post_error_message) {
+            deletePostByIdUseCase(postId)
         }
     }
 }

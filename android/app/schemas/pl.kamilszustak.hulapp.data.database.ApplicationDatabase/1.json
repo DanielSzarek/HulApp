@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0c7c09149bed7b22744d7dceb3f3643d",
+    "identityHash": "51c830aaacb32cbc5d24a917af0c52c6",
     "entities": [
       {
         "tableName": "users",
@@ -244,8 +244,14 @@
       },
       {
         "tableName": "posts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`author_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`edit_date` INTEGER, `author_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `creation_date` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
+          {
+            "fieldPath": "editDate",
+            "columnName": "edit_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
           {
             "fieldPath": "authorId",
             "columnName": "author_id",
@@ -259,8 +265,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
-            "columnName": "created_at",
+            "fieldPath": "creationDate",
+            "columnName": "creation_date",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -284,7 +290,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c7c09149bed7b22744d7dceb3f3643d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '51c830aaacb32cbc5d24a917af0c52c6')"
     ]
   }
 }

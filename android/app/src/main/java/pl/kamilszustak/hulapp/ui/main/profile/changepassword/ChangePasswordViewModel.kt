@@ -60,7 +60,7 @@ class ChangePasswordViewModel @Inject constructor(
             val result = authorizationManager.changePassword(currentPassword, newPassword)
             result.onSuccess {
                 authorizationManager.logout()
-                _completed.call()
+                _actionCompleted.call()
             }.onFailure { throwable ->
                 _error.value = when (throwable) {
                     is NoInternetConnectionException -> R.string.no_internet_connection_error_message

@@ -29,13 +29,26 @@
         android:id="@+id/addPostFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.post.add.AddPostFragment"
         android:label="Nowy post"
-        tools:layout="@layout/fragment_add_post" />
+        tools:layout="@layout/fragment_add_post">
+        <argument
+            android:name="postId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.post.details.PostDetailsFragment"
-        android:label="Szczegóły posta" >
+        android:label="Szczegóły posta"
+        tools:layout="@layout/fragment_post_details">
         <argument
             android:name="postId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

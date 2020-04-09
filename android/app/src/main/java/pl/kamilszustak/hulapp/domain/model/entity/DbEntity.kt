@@ -4,6 +4,6 @@ import androidx.room.ColumnInfo
 import java.util.*
 
 abstract class DbEntity : IdentifiedDatabaseEntity() {
-    @ColumnInfo(name = "created_at")
-    var createdAt: Date = Date()
+    @ColumnInfo(name = "creation_date")
+    var creationDate: Date = Date()
 }

@@ -103,6 +103,13 @@ interface ApiService {
     @Authorize
     suspend fun addPost(@Body requestBody: AddPostRequstBody): Response<PostJson>
 
+    @PATCH("/api/post/{id}")
+    @Authorize
+    suspend fun editPost(
+        @Path("id") postId: Long,
+        @Body requestBody: EditPostRequestBody
+    ): Response<PostJson>
+
     @DELETE("/api/post/{id}")
     @Authorize
     suspend fun deletePostById(@Path("id") id: Long): Response<Unit>

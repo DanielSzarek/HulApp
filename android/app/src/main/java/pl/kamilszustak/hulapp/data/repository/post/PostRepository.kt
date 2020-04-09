@@ -8,6 +8,7 @@ import pl.kamilszustak.hulapp.data.database.dao.PostDao
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
 import pl.kamilszustak.hulapp.domain.mapper.post.PostJsonMapper
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
+import pl.kamilszustak.hulapp.domain.model.network.EditPostRequestBody
 import pl.kamilszustak.hulapp.domain.model.post.PostJson
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 import pl.kamilszustak.hulapp.network.ApiService
@@ -65,6 +66,8 @@ class PostRepository @Inject constructor(
                 apiService.getPostById(id)
 
             override suspend fun saveFetchResult(result: PostJson) {
+                userDao.insert(result.author)
+
                 postJsonMapper.onMap(result) { post ->
                     postDao.insert(post)
                 }
@@ -88,8 +91,24 @@ class PostRepository @Inject constructor(
         }.callForResponse()
     }
 
+    suspend fun editPost(postId: Long, requestBody: EditPostRequestBody): Result<Unit> {
+        return object : NetworkCall<PostJson, Unit>() {
+            override suspend fun makeCall(): Response<PostJson> =
+                apiService.editPost(postId, requestBody)
+
+            override suspend fun mapResponse(response: PostJson): Unit = Unit
+
+            override suspend fun saveCallResult(result: PostJson) {
+                postJsonMapper.onMap(result) { post ->
+                    postDao.update(post)
+                }
+            }
+        }.callForResponse()
+    }
+
+
     suspend fun deleteById(id: Long): Result<Unit> {
-        return object : NetworkCall<Unit, Unit> () {
+        return object : NetworkCall<Unit, Unit>() {
             override suspend fun makeCall(): Response<Unit> =
                 apiService.deletePostById(id)
 

@@ -5,5 +5,5 @@ import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 
 interface GetPostByIdWithAuthorUseCase {
-    operator fun invoke(postId: Long): Flow<Resource<PostWithAuthor>>
+    operator fun invoke(postId: Long, shouldFetch: Boolean = true): Flow<Resource<PostWithAuthor>>
 }

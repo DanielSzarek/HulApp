@@ -75,7 +75,15 @@
     <!-- FeedFragment -->
     <string name="deleting_post_error_message">Wystąpił błąd podczas usuwania posta</string>
 
+    <!-- PostItem -->
+    <string name="post_edit_date">Edytowany %1$s</string>
+
     <!-- AddPostFragment -->
-    <string name="adding_post_error_message">Wystąpił błąd podczas publikowania posta</string>
-    <string name="empty_post_error_message">Treść postu nie może być pusta</string>
+    <string name="add_post_action_bar_title">Nowy post</string>
+    <string name="edit_post_action_bar_title">Edycja posta</string>
+    <string name="add_post_button_text">Opublikuj</string>
+    <string name="edit_post_button_text">Edytuj</string>
+    <string name="post_adding_error_message">Wystąpił błąd podczas publikowania posta</string>
+    <string name="post_editing_error_message">Wystąpił błąd podczas edytowania posta</string>
+    <string name="empty_post_error_message">Treść posta nie może być pusta</string>
 </resources>

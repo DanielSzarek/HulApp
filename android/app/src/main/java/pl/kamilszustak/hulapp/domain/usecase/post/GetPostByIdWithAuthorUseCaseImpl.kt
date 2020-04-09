@@ -15,8 +15,8 @@ class GetPostByIdWithAuthorUseCaseImpl @Inject constructor(
     private val mapper: PostWithAuthorEntityMapper
 ) : GetPostByIdWithAuthorUseCase {
 
-    override fun invoke(postId: Long): Flow<Resource<PostWithAuthor>> =
-        postRepository.getByIdWithAuthor(postId).map { resource ->
+    override fun invoke(postId: Long, shouldFetch: Boolean): Flow<Resource<PostWithAuthor>> =
+        postRepository.getByIdWithAuthor(postId, shouldFetch).map { resource ->
             resource.mapData { post ->
                 mapper.map(post)
             }

@@ -78,7 +78,7 @@ class PasswordResetFragment : BaseFragment() {
             }
         }
 
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
             navigateToPasswordResetCompletedFragment()
         }
     }

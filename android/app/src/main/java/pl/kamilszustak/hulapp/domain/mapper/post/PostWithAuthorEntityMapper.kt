@@ -16,7 +16,8 @@ class PostWithAuthorEntityMapper @Inject constructor(
 
     override fun map(model: PostWithAuthorEntity): PostWithAuthor = PostWithAuthor(
         id = model.post.id,
-        createdAt = model.post.createdAt,
+        creationDate = model.post.creationDate,
+        editDate = model.post.editDate,
         content = model.post.content,
         author = model.author,
         isMine = (model.author.id == myId)

@@ -2,9 +2,6 @@ package pl.kamilszustak.hulapp.ui.main.tracking.details
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
@@ -34,19 +31,10 @@ class TrackDetailsViewModel @Inject constructor(
     }
 
     fun onDeleteTrackButtonClick(trackId: Long) {
-        viewModelScope.launch(Dispatchers.Main) {
-            _isLoading.value = true
-
-            val result = withIOContext {
+        performAction(R.string.track_deleting_error_message) {
+            withIOContext {
                 trackRepository.deleteById(trackId)
             }
-            result.onSuccess {
-                _deletingCompleted.call()
-            }.onFailure {
-                _error.value = R.string.track_deleting_error_message
-            }
-
-            _isLoading.value = false
         }
     }
 }
