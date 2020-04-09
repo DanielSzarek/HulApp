@@ -10,12 +10,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var _isInitialized = false
     protected val isInitialized = _isInitialized
 
-    protected fun initialize(force: Boolean = false, function: () -> Unit) {
+    protected fun initialize(force: Boolean = false, action: () -> Unit) {
         if (_isInitialized && !force) {
             return
         }
 
-        function()
+        action()
         _isInitialized = true
     }
 

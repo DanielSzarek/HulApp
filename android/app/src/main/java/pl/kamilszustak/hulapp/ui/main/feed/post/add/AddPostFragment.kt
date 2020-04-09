@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.navArgs
 import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentAddPostBinding
@@ -21,6 +22,9 @@ class AddPostFragment : BaseFragment() {
     }
 
     private lateinit var binding: FragmentAddPostBinding
+    private val args: AddPostFragmentArgs by navArgs()
+
+    private val inEditMode: Boolean = (args.postId != -1L)
 
     override fun onCreateView(
         inflater: LayoutInflater,

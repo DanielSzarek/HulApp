@@ -21,6 +21,8 @@ class AddPostViewModel @Inject constructor(
         }
     }
 
+    private var inEditMode: Boolean = false
+
     fun onAddPostButtonClick() {
         val content = postContentField.data.value?.trim()
         if (content.isNullOrBlank()) {
