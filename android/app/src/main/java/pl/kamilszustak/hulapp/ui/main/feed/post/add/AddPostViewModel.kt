@@ -13,29 +13,21 @@ import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
 import pl.kamilszustak.hulapp.domain.usecase.post.AddPostUseCase
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import pl.kamilszustak.hulapp.util.withIOContext
 import javax.inject.Inject
 
 class AddPostViewModel @Inject constructor(
     application: Application,
     private val addPostUseCase: AddPostUseCase
-) : BaseViewModel(application) {
+) : StateViewModel(application) {
 
     val postContentField: FormField<String> = formField {
         +Rule<String>("Treść postu nie może być pusta") {
             !it.isBlank()
         }
     }
-
-    private val _completed: SingleLiveData<Unit> = SingleLiveData()
-    val completed: LiveData<Unit> = _completed
-
-    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error: SingleLiveData<Int> = SingleLiveData()
-    val error: LiveData<Int> = _error
 
     fun onAddPostButtonClick() {
         val content = postContentField.data.value?.trim()

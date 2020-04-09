@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.ui.base
+package pl.kamilszustak.hulapp.ui.base.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

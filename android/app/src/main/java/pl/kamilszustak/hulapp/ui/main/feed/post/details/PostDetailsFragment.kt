@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPostDetailsBinding
@@ -82,6 +83,7 @@ class PostDetailsFragment : BaseFragment() {
                         }
 
                         R.id.deleteItem -> {
+                            viewModel.onDeleteButtonClick(args.postId)
                             true
                         }
 
@@ -101,6 +103,10 @@ class PostDetailsFragment : BaseFragment() {
                 event.subject,
                 event.chooserTitle
             )
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+            view?.snackbar(messageResource)
         }
     }
 

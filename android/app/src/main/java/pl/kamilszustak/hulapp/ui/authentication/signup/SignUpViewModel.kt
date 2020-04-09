@@ -1,30 +1,30 @@
 package pl.kamilszustak.hulapp.ui.authentication.signup
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
-import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.domain.form.Email
-import pl.kamilszustak.hulapp.domain.form.Password
-import pl.kamilszustak.hulapp.domain.model.User
-import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
+import pl.kamilszustak.hulapp.domain.form.Email
+import pl.kamilszustak.hulapp.domain.form.Password
 import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.manager.AuthorizationManager
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
     application: Application,
     private val validator: FormValidator,
     private val authorizationManager: AuthorizationManager
-) : BaseViewModel(application) {
+) : StateViewModel(application) {
 
     val userEmailField: FormField<String> = formField {
         +Rule<String>("Nieprawidłowy format") {
@@ -74,15 +74,6 @@ class SignUpViewModel @Inject constructor(
         userCountryField
     )
 
-    private val _completed: SingleLiveData<Unit> = SingleLiveData()
-    val completed: LiveData<Unit> = _completed
-
-    private val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error: SingleLiveData<String> = SingleLiveData()
-    val error: LiveData<String> = _error
-
     fun onCityChoosen(city: City) {
         userCityField.data.value = city
     }
@@ -109,7 +100,7 @@ class SignUpViewModel @Inject constructor(
         val country = userCountryField.data.value
 
         if (!isInternetConnected()) {
-            _error.value = "Brak połączenia z Internetem"
+            _error.value = R.string.no_internet_connection_error_message
             return
         }
 
@@ -140,8 +131,8 @@ class SignUpViewModel @Inject constructor(
                 _completed.call()
             }.onFailure { throwable ->
                 _error.value = when (throwable) {
-                    is NoInternetConnectionException -> "Brak połączenia z Internetem"
-                    else -> "Wystąpił błąd podczas tworzenia konta"
+                    is NoInternetConnectionException -> R.string.no_internet_connection_error_message
+                    else -> R.string.sign_up_error_message
                 }
             }
 
