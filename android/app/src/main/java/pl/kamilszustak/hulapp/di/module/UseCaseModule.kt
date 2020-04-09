@@ -7,11 +7,14 @@ import pl.kamilszustak.hulapp.domain.usecase.post.*
 @Module
 abstract class UseCaseModule {
     @Binds
-    abstract fun bindGetAllPostsWithAuthorsUseCase(getAllPostsWithAuthorsUseCaseImpl: GetAllPostsWithAuthorsUseCaseImpl): GetAllPostsWithAuthorsUseCase
+    abstract fun bindGetAllPostsWithAuthorsUseCase(useCaseImpl: GetAllPostsWithAuthorsUseCaseImpl): GetAllPostsWithAuthorsUseCase
 
     @Binds
-    abstract fun bindAddPostUseCase(addPostUseCaseImpl: AddPostUseCaseImpl): AddPostUseCase
+    abstract fun bindAddPostUseCase(useCaseImpl: AddPostUseCaseImpl): AddPostUseCase
 
     @Binds
-    abstract fun bindGetPostByIdWithAuthorUseCase(getPostByIdWithAuthorUseCaseImpl: GetPostByIdWithAuthorUseCaseImpl): GetPostByIdWithAuthorUseCase
+    abstract fun bindGetPostByIdWithAuthorUseCase(useCaseImpl: GetPostByIdWithAuthorUseCaseImpl): GetPostByIdWithAuthorUseCase
+
+    @Binds
+    abstract fun bindDeletePostByIdUseCase(useCaseImpl: DeletePostByIdUseCaseImpl): DeletePostByIdUseCase
 }

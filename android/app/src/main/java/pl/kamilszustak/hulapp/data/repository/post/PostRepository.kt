@@ -87,4 +87,17 @@ class PostRepository @Inject constructor(
             }
         }.callForResponse()
     }
+
+    suspend fun deleteById(id: Long): Result<Unit> {
+        return object : NetworkCall<Unit, Unit> () {
+            override suspend fun makeCall(): Response<Unit> =
+                apiService.deletePostById(id)
+
+            override suspend fun mapResponse(response: Unit): Unit = Unit
+
+            override suspend fun onResponseSuccess() {
+                postDao.deleteById(id)
+            }
+        }.call()
+    }
 }
