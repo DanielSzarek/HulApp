@@ -15,6 +15,8 @@ import '../Styles/Navbar.css';
 import PersonAutoselect from '../User/PersonAutoselect';
 import SearchIcon from '@material-ui/icons/Search';
 import { Redirect } from 'react-router-dom';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 import '../Styles/InputProps.css';
 import { InputGroup } from 'react-bootstrap';
@@ -96,7 +98,7 @@ export default class Navbarex extends React.Component {
           </NavItem>
           <NavItem>
             <NavLink className="navLink" active href={"/posts/" +this.state.loggedUsersId} style={{paddingRight: '40px'}}>
-              Tablica <FaUser />
+              Tablica <InfoIcon />
               {/* <TogglePostsMenu/>
               Posty */}
             </NavLink>

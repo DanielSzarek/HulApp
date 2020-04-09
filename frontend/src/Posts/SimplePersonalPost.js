@@ -116,6 +116,7 @@ class SimplePersonalPost extends React.Component {
                       Edytuj
                     </button>{' '}
                   </Link>{' '}
+                  <Link to={'/delete/post/' +this.props.match.params.postId}>
                   <button
                     style={{
                       backgroundColor: 'red',
@@ -126,6 +127,7 @@ class SimplePersonalPost extends React.Component {
                   >
                     usuń
                   </button>
+                  </Link>
                 </div>
               ) : (
                 ''
