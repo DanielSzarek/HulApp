@@ -12,6 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
             'id',
             'author',
             'add_date',
+            'mod_date',
             'published',
             'text',
         )

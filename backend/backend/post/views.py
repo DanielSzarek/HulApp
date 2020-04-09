@@ -13,7 +13,7 @@ class PostView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        queryset = Post.objects.filter(published=True).order_by('add_date')
+        queryset = Post.objects.filter(published=True).order_by('-add_date')
         return queryset
 
     def create(self, request, *args, **kwargs):
