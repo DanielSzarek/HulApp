@@ -14,6 +14,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentFeedBinding
@@ -107,6 +108,7 @@ class FeedFragment : BaseFragment() {
                                 }
 
                                 R.id.deleteItem -> {
+                                    viewModel.onDeleteButtonClick(item.model.id)
                                     true
                                 }
 
@@ -169,6 +171,11 @@ class FeedFragment : BaseFragment() {
                 event.subject,
                 event.chooserTitle
             )
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+            val message = getString(messageResource)
+            view?.snackbar(message)
         }
     }
 
