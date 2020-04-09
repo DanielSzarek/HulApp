@@ -36,7 +36,7 @@ class AddPostViewModel @Inject constructor(
         inEditMode = true
 
         viewModelScope.launch(Dispatchers.Main) {
-            getPostByIdWithAuthorUseCase(postId).collect {
+            getPostByIdWithAuthorUseCase(postId, false).collect {
                 postContentField.data.value = it.data?.content
             }
         }

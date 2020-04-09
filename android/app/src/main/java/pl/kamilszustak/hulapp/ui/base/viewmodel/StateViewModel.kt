@@ -10,8 +10,8 @@ import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 
 abstract class StateViewModel(application: Application) : BaseViewModel(application) {
-    protected val _completed: SingleLiveData<Unit> = SingleLiveData()
-    val completed: LiveData<Unit> = _completed
+    protected val _actionCompleted: SingleLiveData<Unit> = SingleLiveData()
+    val actionCompleted: LiveData<Unit> = _actionCompleted
 
     protected val _isLoading: UniqueLiveData<Boolean> = UniqueLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -27,7 +27,7 @@ abstract class StateViewModel(application: Application) : BaseViewModel(applicat
             _isLoading.value = true
 
             action().onSuccess {
-                _completed.call()
+                _actionCompleted.call()
             }.onFailure {
                 _error.value = errorMessageResource
             }

@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
         val isUserLoggedIn: Boolean = settingsRepository.getValue(SettingsRepository.SettingsKey.IS_USER_LOGGED_IN)
 
         if (isUserLoggedIn) {
-            _completed.call()
+            _actionCompleted.call()
         } else {
             clearData()
         }

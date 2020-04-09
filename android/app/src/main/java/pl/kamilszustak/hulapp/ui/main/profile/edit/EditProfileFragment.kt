@@ -144,7 +144,7 @@ class EditProfileFragment : BaseFragment() {
             view?.snackbar(message)
         }
 
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
             navigateUp()
         }
     }

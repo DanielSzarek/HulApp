@@ -75,6 +75,9 @@
     <!-- FeedFragment -->
     <string name="deleting_post_error_message">Wystąpił błąd podczas usuwania posta</string>
 
+    <!-- PostItem -->
+    <string name="post_modification_date">Edytowany %1$s</string>
+
     <!-- AddPostFragment -->
     <string name="add_post_action_bar_title">Nowy post</string>
     <string name="edit_post_action_bar_title">Edycja posta</string>

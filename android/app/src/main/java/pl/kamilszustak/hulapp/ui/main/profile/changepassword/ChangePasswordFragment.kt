@@ -63,7 +63,7 @@ class ChangePasswordFragment : BaseFragment() {
             view?.snackbar(message)
         }
 
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
             startActivity<AuthenticationActivity>()
             requireActivity().finish()
         }

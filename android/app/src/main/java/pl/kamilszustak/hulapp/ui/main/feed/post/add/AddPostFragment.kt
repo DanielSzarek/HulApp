@@ -94,7 +94,7 @@ class AddPostFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
             navigateUp()
         }
 

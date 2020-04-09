@@ -15,9 +15,7 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPostDetailsBinding
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.util.copyToClipboard
-import pl.kamilszustak.hulapp.util.popupMenu
-import pl.kamilszustak.hulapp.util.share
+import pl.kamilszustak.hulapp.util.*
 import javax.inject.Inject
 
 class PostDetailsFragment : BaseFragment() {
@@ -82,6 +80,11 @@ class PostDetailsFragment : BaseFragment() {
                             true
                         }
 
+                        R.id.editPostItem -> {
+                            navigateToAddPostFragment(args.postId)
+                            true
+                        }
+
                         R.id.deletePostItem -> {
                             viewModel.onDeleteButtonClick(args.postId)
                             true
@@ -105,6 +108,10 @@ class PostDetailsFragment : BaseFragment() {
             )
         }
 
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+            navigateUp()
+        }
+
         viewModel.error.observe(viewLifecycleOwner) { messageResource ->
             view?.snackbar(messageResource)
         }
@@ -117,5 +124,10 @@ class PostDetailsFragment : BaseFragment() {
         } else {
             toast("Nie udało się skopiować treści posta")
         }
+    }
+
+    private fun navigateToAddPostFragment(postId: Long = -1) {
+        val direction = PostDetailsFragmentDirections.actionPostDetailsFragmentToAddPostFragment(postId)
+        navigateTo(direction)
     }
 }

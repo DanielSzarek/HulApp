@@ -66,6 +66,8 @@ class PostRepository @Inject constructor(
                 apiService.getPostById(id)
 
             override suspend fun saveFetchResult(result: PostJson) {
+                userDao.insert(result.author)
+
                 postJsonMapper.onMap(result) { post ->
                     postDao.insert(post)
                 }

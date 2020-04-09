@@ -68,7 +68,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.actionCompleted.observe(viewLifecycleOwner) {
             startActivity<MainActivity>()
             requireActivity().finish()
         }
