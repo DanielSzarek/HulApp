@@ -90,7 +90,9 @@ export default function SinglePost (props) {
             </div>
           }
           // subheader={<div> {formatDateTime(post.date)} </div>}
-          subheader={(post.modDate==null && post.modDate==='')?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
+          // subheader={(post.modDate==null && post.modDate==='')?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
+        subheader={(post.modDate==null)?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
+
         />
         {/* <CardMedia
         className={classes.media}
