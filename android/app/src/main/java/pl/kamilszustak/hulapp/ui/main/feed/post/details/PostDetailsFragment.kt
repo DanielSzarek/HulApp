@@ -49,9 +49,14 @@ class PostDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initializeRecyclerView()
         setListeners()
         observeViewModel()
         viewModel.loadData(args.postId)
+    }
+
+    private fun initializeRecyclerView() {
+
     }
 
     private fun setListeners() {
