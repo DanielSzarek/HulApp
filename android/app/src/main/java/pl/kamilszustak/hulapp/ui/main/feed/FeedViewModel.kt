@@ -24,7 +24,7 @@ class FeedViewModel @Inject constructor(
     val sharePostEvent: LiveData<ShareEvent> = _sharePostEvent
 
     init {
-        postsWithAuthorsResource.changeFlowSource {
+        postsWithAuthorsResource.setFlowSource {
             getAllPostsWithAuthorsUseCase()
         }
     }

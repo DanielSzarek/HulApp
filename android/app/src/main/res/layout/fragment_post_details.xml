@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/swipeRefreshLayout"
-            app:refreshing="@{viewModel.postWithAuthorResource.isLoading || viewModel.isLoading}"
+            app:refreshing="@{viewModel.postWithAuthorResource.isLoading || viewModel.commentsWithAuthorsResource.isLoading || viewModel.isLoading}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/commentInputLayout"
             android:layout_marginBottom="@dimen/default_margin">
@@ -35,10 +35,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/commentsRecyclerView"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_marginTop="@dimen/default_margin"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

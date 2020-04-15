@@ -28,7 +28,7 @@ abstract class BaseProfileViewModel(
     init {
         cityResource.result.addSource(userResource.data) { user ->
             user?.cityId?.let { id ->
-                cityResource.changeFlowSource {
+                cityResource.setFlowSource {
                     cityRepository.getById(id)
                 }
             }
@@ -36,14 +36,14 @@ abstract class BaseProfileViewModel(
 
        countryResource.result.addSource(userResource.data) { user ->
             user?.countryId?.let { id ->
-                countryResource.changeFlowSource {
+                countryResource.setFlowSource {
                     countryRepository.getById(id)
                 }
             }
         }
 
         tracksResource.result.addSource(userResource.data) { user ->
-            tracksResource.changeFlowSource {
+            tracksResource.setFlowSource {
                 trackRepository.getAllByUserId(user.id, 3)
             }
         }

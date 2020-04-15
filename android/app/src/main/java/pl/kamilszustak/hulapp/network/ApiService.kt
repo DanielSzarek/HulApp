@@ -116,5 +116,6 @@ interface ApiService {
     suspend fun deletePostById(@Path("id") id: Long): Response<Unit>
 
     @GET("/api/comment/")
+    @Authorize
     suspend fun getAllCommentsByPostId(@Query("post") postId: Long): Response<List<CommentJson>>
 }

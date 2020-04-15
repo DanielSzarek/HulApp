@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
-import pl.kamilszustak.hulapp.ui.base.viewmodel.BaseViewModel
 import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import pl.kamilszustak.hulapp.util.mapNotNull
 import pl.kamilszustak.hulapp.util.round
@@ -23,7 +22,7 @@ abstract class BaseTrackDetailsViewModel(
 
     fun loadData(trackId: Long) {
         initialize {
-            trackResource.changeFlowSource {
+            trackResource.setFlowSource {
                 trackRepository.getById(trackId)
             }
         }

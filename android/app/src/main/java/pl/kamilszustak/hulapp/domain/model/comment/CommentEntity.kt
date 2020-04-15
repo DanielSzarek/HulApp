@@ -13,7 +13,7 @@ data class CommentEntity(
     val postId: Long,
 
     @ColumnInfo(name = "edit_date")
-    val editDate: Date,
+    val editDate: Date?,
 
     @ColumnInfo(name = "author_id")
     val authorId: Long,

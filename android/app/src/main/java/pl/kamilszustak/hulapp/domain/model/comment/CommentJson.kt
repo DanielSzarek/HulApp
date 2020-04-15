@@ -12,7 +12,7 @@ data class CommentJson(
     val postId: Long,
 
     @Json(name = "mod_date")
-    val editDate: Date,
+    val editDate: Date?,
 
     @Json(name = "author")
     val author: User,
