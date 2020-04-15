@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "51c830aaacb32cbc5d24a917af0c52c6",
+    "identityHash": "5a429769f36f60e0d64884c439e0fddc",
     "entities": [
       {
         "tableName": "users",
@@ -285,12 +285,62 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "comments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`post_id` INTEGER NOT NULL, `edit_date` INTEGER NOT NULL, `author_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `creation_date` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "postId",
+            "columnName": "post_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "editDate",
+            "columnName": "edit_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorId",
+            "columnName": "author_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "creationDate",
+            "columnName": "creation_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '51c830aaacb32cbc5d24a917af0c52c6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5a429769f36f60e0d64884c439e0fddc')"
     ]
   }
 }

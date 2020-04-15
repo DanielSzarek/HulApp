@@ -6,6 +6,7 @@ import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.domain.model.Country
 import pl.kamilszustak.hulapp.domain.model.Track
 import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.comment.CommentJson
 import pl.kamilszustak.hulapp.domain.model.network.*
 import pl.kamilszustak.hulapp.domain.model.post.PostJson
 import pl.kamilszustak.hulapp.domain.model.track.TrackJson
@@ -113,4 +114,7 @@ interface ApiService {
     @DELETE("/api/post/{id}")
     @Authorize
     suspend fun deletePostById(@Path("id") id: Long): Response<Unit>
+
+    @GET("/api/comment/")
+    suspend fun getAllCommentsByPostId(@Query("post") postId: Long): Response<List<CommentJson>>
 }
