@@ -148,6 +148,27 @@ class FeedFragment : BaseFragment() {
             }.also { hook ->
                 this.addEventHook(hook)
             }
+
+            object : ClickEventHook<PostItem>() {
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                    return if (viewHolder is PostItem.ViewHolder) {
+                        viewHolder.binding.commentButton
+                    } else {
+                        null
+                    }
+                }
+
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<PostItem>,
+                    item: PostItem
+                ) {
+                    navigateToPostDetailsFragment(item.model.id, true)
+                }
+            }.also { hook ->
+                this.addEventHook(hook)
+            }
         }
 
         binding.feedRecyclerView.apply {
@@ -192,8 +213,8 @@ class FeedFragment : BaseFragment() {
         }
     }
 
-    private fun navigateToPostDetailsFragment(postId: Long) {
-        val direction = FeedFragmentDirections.actionFeedFragmentToPostDetailsFragment(postId)
+    private fun navigateToPostDetailsFragment(postId: Long, showKeyboard: Boolean = false) {
+        val direction = FeedFragmentDirections.actionFeedFragmentToPostDetailsFragment(postId, showKeyboard)
         navigateTo(direction)
     }
 

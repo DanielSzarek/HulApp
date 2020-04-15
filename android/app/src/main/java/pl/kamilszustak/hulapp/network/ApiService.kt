@@ -118,4 +118,8 @@ interface ApiService {
     @GET("/api/comment/")
     @Authorize
     suspend fun getAllCommentsByPostId(@Query("post") postId: Long): Response<List<CommentJson>>
+
+    @POST("/api/comment/")
+    @Authorize
+    suspend fun addComment(@Body requestBody: AddCommentRequestBody): Response<CommentJson>
 }

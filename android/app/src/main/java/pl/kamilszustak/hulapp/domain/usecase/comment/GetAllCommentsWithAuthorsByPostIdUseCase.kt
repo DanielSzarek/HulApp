@@ -8,7 +8,7 @@ import pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthor
 interface GetAllCommentsWithAuthorsByPostIdUseCase {
     operator fun invoke(
         postId: Long,
-        sortOrder: CommentsSortOrder = CommentsSortOrder.DATE_DESCENDING,
+        sortOrder: CommentsSortOrder = CommentsSortOrder.DATE_ASCENDING,
         shouldFetch: Boolean = true
     ): Flow<Resource<List<CommentWithAuthor>>>
 }

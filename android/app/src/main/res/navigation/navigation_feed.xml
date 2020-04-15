@@ -43,6 +43,10 @@
         <argument
             android:name="postId"
             app:argType="long" />
+        <argument
+            android:name="showKeyboard"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_postDetailsFragment_to_addPostFragment"
             app:destination="@id/addPostFragment"

@@ -62,6 +62,10 @@ class PostDetailsFragment : BaseFragment() {
         setListeners()
         observeViewModel()
         viewModel.loadData(args.postId)
+
+        if (args.showKeyboard) {
+            binding.commentEditText.showKeyboard()
+        }
     }
 
     private fun initializeRecyclerView() {
@@ -79,6 +83,14 @@ class PostDetailsFragment : BaseFragment() {
 
         binding.postLayout.shareButton.setOnClickListener {
             viewModel.onShareButtonClick(args.postId)
+        }
+
+        binding.addCommentButton.setOnClickListener {
+            viewModel.onAddCommentButtonClick(args.postId)
+        }
+
+        binding.postLayout.commentButton.setOnClickListener {
+            binding.commentEditText.showKeyboard()
         }
 
         binding.postLayout.menuButton.setOnClickListener {
@@ -136,6 +148,14 @@ class PostDetailsFragment : BaseFragment() {
 
         viewModel.commentsWithAuthorsResource.data.observe(viewLifecycleOwner) { commentsWithAuthors ->
             modelAdapter.updateModels(commentsWithAuthors)
+        }
+
+        viewModel.commentAdded.observe(viewLifecycleOwner) {
+            binding.scrollView.fullScroll(View.FOCUS_DOWN)
+        }
+
+        viewModel.hideKeyboard.observe(viewLifecycleOwner) {
+            binding.commentEditText.hideKeyboard()
         }
     }
 
