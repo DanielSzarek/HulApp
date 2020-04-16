@@ -19,16 +19,16 @@ class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWi
         ItemPostsListBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: ItemPostsListBinding, payloads: List<Any>) {
-        binding.postWithAuthor = model
+        binding.postWithAuthor = this.model
     }
 
     override fun unbindView(binding: ItemPostsListBinding) {
         with(binding) {
-            authorProfilePhotoImageView.setImageDrawable(null)
-            authorFullNameTextView.text = null
-            dateTextView.text = null
-            contentTextView.text = null
+            postWithAuthor = null
+            executePendingBindings()
         }
+        binding.postWithAuthor = null
+        binding.executePendingBindings()
     }
 
     override fun getViewHolder(viewBinding: ItemPostsListBinding): BindingViewHolder<ItemPostsListBinding> =

@@ -43,6 +43,6 @@ data class User(
     var profilePhotoUrl: String? = null
 ) : DatabaseEntity() {
 
-    @Transient
-    val fullName: String = "$name $surname"
+    val fullName: String
+        get() = "$name $surname"
 }

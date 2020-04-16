@@ -2,6 +2,10 @@ package pl.kamilszustak.hulapp.di.module
 
 import dagger.Binds
 import dagger.Module
+import pl.kamilszustak.hulapp.domain.usecase.comment.AddCommentUseCase
+import pl.kamilszustak.hulapp.domain.usecase.comment.AddCommentUseCaseImpl
+import pl.kamilszustak.hulapp.domain.usecase.comment.GetAllCommentsWithAuthorsByPostIdUseCase
+import pl.kamilszustak.hulapp.domain.usecase.comment.GetAllCommentsWithAuthorsByPostIdUseCaseImpl
 import pl.kamilszustak.hulapp.domain.usecase.post.*
 
 @Module
@@ -20,4 +24,10 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindDeletePostByIdUseCase(useCaseImpl: DeletePostByIdUseCaseImpl): DeletePostByIdUseCase
+
+    @Binds
+    abstract fun bindGetAllCommentsWithAuthorsByPostIdUseCase(useCaseImpl: GetAllCommentsWithAuthorsByPostIdUseCaseImpl): GetAllCommentsWithAuthorsByPostIdUseCase
+
+    @Binds
+    abstract fun bindAddCommentUseCase(useCaseImpl: AddCommentUseCaseImpl): AddCommentUseCase
 }

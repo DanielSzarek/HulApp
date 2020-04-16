@@ -9,10 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentPostDetailsBinding
+import pl.kamilszustak.hulapp.domain.item.CommentItem
+import pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthor
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.*
@@ -27,6 +31,11 @@ class PostDetailsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentPostDetailsBinding
     private val args: PostDetailsFragmentArgs by navArgs()
+    private val modelAdapter: ModelAdapter<CommentWithAuthor, CommentItem> by lazy {
+        ModelAdapter<CommentWithAuthor, CommentItem> { commentWithAuthor ->
+            CommentItem(commentWithAuthor)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,9 +58,22 @@ class PostDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initializeRecyclerView()
         setListeners()
         observeViewModel()
         viewModel.loadData(args.postId)
+
+        if (args.showKeyboard) {
+            binding.commentEditText.showKeyboard()
+        }
+    }
+
+    private fun initializeRecyclerView() {
+        val fastAdapter = FastAdapter.with(modelAdapter)
+
+        binding.commentsRecyclerView.apply {
+            this.adapter = fastAdapter
+        }
     }
 
     private fun setListeners() {
@@ -61,6 +83,14 @@ class PostDetailsFragment : BaseFragment() {
 
         binding.postLayout.shareButton.setOnClickListener {
             viewModel.onShareButtonClick(args.postId)
+        }
+
+        binding.addCommentButton.setOnClickListener {
+            viewModel.onAddCommentButtonClick(args.postId)
+        }
+
+        binding.postLayout.commentButton.setOnClickListener {
+            binding.commentEditText.showKeyboard()
         }
 
         binding.postLayout.menuButton.setOnClickListener {
@@ -114,6 +144,18 @@ class PostDetailsFragment : BaseFragment() {
 
         viewModel.error.observe(viewLifecycleOwner) { messageResource ->
             view?.snackbar(messageResource)
+        }
+
+        viewModel.commentsWithAuthorsResource.data.observe(viewLifecycleOwner) { commentsWithAuthors ->
+            modelAdapter.updateModels(commentsWithAuthors)
+        }
+
+        viewModel.commentAdded.observe(viewLifecycleOwner) {
+            binding.scrollView.fullScroll(View.FOCUS_DOWN)
+        }
+
+        viewModel.hideKeyboard.observe(viewLifecycleOwner) {
+            binding.commentEditText.hideKeyboard()
         }
     }
 

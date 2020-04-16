@@ -11,7 +11,7 @@ class TrackingHistoryViewModel @Inject constructor(
 ) : BaseTrackingHistoryViewModel(application, trackRepository) {
 
     init {
-        tracksResource.changeFlowSource {
+        tracksResource.setFlowSource {
             trackRepository.getAllOfCurrentUser()
         }
     }

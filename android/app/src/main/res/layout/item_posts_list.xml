@@ -39,7 +39,8 @@
                 android:id="@+id/authorFullNameTextView"
                 android:text="@{postWithAuthor.author.fullName}"
                 tools:text="Jan Kowalski"
-                android:textAppearance="?textAppearanceSubtitle1"
+                android:textAppearance="?textAppearanceSubtitle2"
+                android:textStyle="bold"
                 android:maxLines="1"
                 android:ellipsize="end"
                 app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
@@ -55,6 +56,7 @@
                 android:id="@+id/dateTextView"
                 android:text='@{postWithAuthor.isEdited ? @string/post_edit_date(DateFormats.INSTANCE.dateFormat.format(postWithAuthor.editDate)) : postWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(postWithAuthor.creationDate) : ""}'
                 tools:text="2020-01-01 15:20"
+                android:textAppearance="?textAppearanceCaption"
                 android:maxLines="1"
                 android:ellipsize="end"
                 app:layout_constraintStart_toStartOf="@id/authorFullNameTextView"
@@ -79,6 +81,7 @@
                 android:id="@+id/contentTextView"
                 android:text="@{postWithAuthor.content}"
                 tools:text="@string/lorem_ipsum"
+                android:textAppearance="?textAppearanceBody2"
                 app:layout_constraintTop_toBottomOf="@id/authorProfilePhotoImageView"
                 android:layout_marginTop="@dimen/default_half_margin" />
 

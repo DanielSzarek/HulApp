@@ -44,4 +44,9 @@ class DatabaseModule {
     @Singleton
     fun providePostDao(applicationDatabase: ApplicationDatabase): PostDao =
         applicationDatabase.getPostDao()
+
+    @Provides
+    @Singleton
+    fun provideCommentdao(applicationDatabase: ApplicationDatabase): CommentDao =
+        applicationDatabase.getCommentDao()
 }
