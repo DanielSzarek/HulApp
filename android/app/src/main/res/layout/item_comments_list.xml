@@ -28,7 +28,8 @@
             android:id="@+id/authorFullNameTextView"
             android:text="@{commentWithAuthor.author.fullName}"
             tools:text="Jan Kowalski"
-            android:textAppearance="?textAppearanceSubtitle1"
+            android:textAppearance="?textAppearanceSubtitle2"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/authorProfilePhotoImageView"
@@ -40,9 +41,21 @@
             android:id="@+id/contentTextView"
             android:text="@{commentWithAuthor.content}"
             tools:text="@string/lorem_ipsum"
+            android:textAppearance="?textAppearanceBody2"
             app:layout_constraintStart_toStartOf="@id/authorFullNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorFullNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/authorFullNameTextView" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTextView"
+            android:text="@{commentWithAuthor.creationDate}"
+            tools:text="2020-01-01 10:15"
+            android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintStart_toStartOf="@id/contentTextView"
+            app:layout_constraintEnd_toEndOf="@id/contentTextView"
+            app:layout_constraintTop_toBottomOf="@id/contentTextView"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
