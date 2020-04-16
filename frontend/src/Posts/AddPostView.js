@@ -67,6 +67,7 @@ class AddPostView extends React.Component {
         return response.json()
       }
     })
+    .then(alert("Twój post został dodany!"))
   }
 
   render () {
