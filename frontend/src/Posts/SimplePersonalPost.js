@@ -3,10 +3,16 @@ import Navbarex from '../User/Navbar'
 import AuthService from '../User/AuthService'
 import { ListGroup, Card, ListGroupItem } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, IconButton } from '@material-ui/core'
 import '../Styles/PostView.css'
-import Avatar from '@material-ui/core/Avatar'
+// import Avatar from '@material-ui/core/Avatar'
 import { Container, Row, Col } from 'react-bootstrap'
+import Comments from './Comments.js'
+import { Divider, Avatar, Grid, Paper } from '@material-ui/core'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
 
 class SimplePersonalPost extends React.Component {
   constructor (props) {
@@ -23,14 +29,23 @@ class SimplePersonalPost extends React.Component {
       postAuthorName: '',
       postAuthorSurname: '',
       postAuthorProfPic: '',
-      authorIsAccountOwner: false
+      authorIsAccountOwner: false,
+      comments: [],
+      usernameOfComment: '',
+      commentText: '',
+      accountOwnerId: this.props.match.params.usersId,
+      commentToDelete: ''
     }
     this.Auth = new AuthService()
+    this.commentAddHandler = this.commentAddHandler.bind(this)
+    this.onCommentChange = this.onCommentChange.bind(this)
+        this.commentDeleteHandler = this.commentDeleteHandler.bind(this)
+
   }
 
   async componentDidMount () {
     if (await this.Auth.loggedIn()) {
-      this.Auth.fetch(
+      await this.Auth.fetch(
         `http://hulapp.pythonanywhere.com/api/post/${this.props.match.params.postId}`
       )
         .then(response => {
@@ -49,11 +64,63 @@ class SimplePersonalPost extends React.Component {
     } else {
       this.setState({ auth: false })
     }
+    await this.Auth.fetch(
+      `http://hulapp.pythonanywhere.com/api/comment?post=${this.props.match.params.postId}`
+    )
+      .then(response => {
+        this.setState({
+          comments: response
+        })
+      })
+    await this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
+      method: 'GET'
+    }).then(response => {
+      this.setState({ usernameOfComment: response.username })
+    })
   }
 
   formatDateTime = dateString => {
     const date = new Date(dateString)
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
+  }
+
+  commentAddHandler = event => {
+    event.preventDefault()
+    this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/comment/`, {
+      method: 'POST',
+
+      body: JSON.stringify({
+        username: this.state.usernameOfComment,
+        text: this.state.commentText,
+        post: this.props.match.params.postId
+      })
+    })
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json()
+        }
+      })
+      .then(alert('edytowałeś swój post!'))
+  }
+
+  onCommentChange (event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  commentDeleteHandler = (event)=> {
+    event.preventDefault()
+    this.setState({commentToDelete: event.target.value})
+    this.Auth.fetch(`http://hulapp.pythonanywhere.com/api/comment/${this.state.commentToDelete}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json()
+        }
+      })
+      .then(alert('edytowałeś swój post!'))
   }
 
   render () {
@@ -71,8 +138,7 @@ class SimplePersonalPost extends React.Component {
         />
 
         <div>
-          <Card style={{ width: '60%' , marginLeft:'20%', marginTop:'30px'}}>
-            {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+          <Card style={{ width: '60%', marginLeft: '20%', marginTop: '30px' }}>
             <Card.Body>
               <Card.Title>
                 <div style={{ display: 'inline-block' }}>
@@ -85,7 +151,15 @@ class SimplePersonalPost extends React.Component {
                       marginTop: '20px'
                     }}
                   />
-                  {this.state.postAuthorName} {this.state.postAuthorSurname}
+                  <div
+                    style={{
+                      fontSize: '30px',
+                      display: 'inline-block',
+                      marginLeft: '10px'
+                    }}
+                  >
+                    {this.state.postAuthorName} {this.state.postAuthorSurname}
+                  </div>
                   <div>
                     {this.formatDateTime(this.state.post.add_date)}{' '}
                     Opublikowano:{' '}
@@ -93,7 +167,9 @@ class SimplePersonalPost extends React.Component {
                   </div>
                 </div>
               </Card.Title>
-              <Card.Text>{this.state.post.text}</Card.Text>
+              <Card.Text>
+                <div style={{ fontSize: '40px' }}>{this.state.post.text}</div>
+              </Card.Text>
               {Number(this.props.match.params.usersId) ===
               Number(this.state.postAuthorId) ? (
                 <div>
@@ -116,160 +192,81 @@ class SimplePersonalPost extends React.Component {
                       Edytuj
                     </button>{' '}
                   </Link>{' '}
-                  <Link to={'/delete/post/' +this.props.match.params.postId}>
-                  <button
-                    style={{
-                      backgroundColor: 'red',
-                      border: '0px',
-                      color: 'white',
-                      height: '35px'
-                    }}
-                  >
-                    usuń
-                  </button>
+                  <Link to={'/delete/post/' + this.props.match.params.postId}>
+                    <button
+                      style={{
+                        backgroundColor: 'red',
+                        border: '0px',
+                        color: 'white',
+                        height: '35px'
+                      }}
+                    >
+                      usuń
+                    </button>
                   </Link>
                 </div>
               ) : (
                 ''
               )}
-              {/* <Button variant="primary">Go somewhere</Button> */}
+              <IconButton aria-label='add to favorites'>
+                <FavoriteIcon />
+              </IconButton>
             </Card.Body>
+            <form class='ui reply form'>
+              <div class='field'>
+                <textarea
+                  rows='1'
+                  cols='70'
+                  onChange={this.onCommentChange}
+                  name='commentText'
+                ></textarea>
+              </div>
+              <button
+                style={{
+                  backgroundColor: 'red',
+                  color: 'white',
+                  border: '0px',
+                  marginLeft: '40%',
+                  marginTop: '15px',
+                  marginBottom: '15px',
+                  height: '30px'
+                }}
+                onClick={this.commentAddHandler}
+              >
+                Skomentuj
+              </button>
+            </form>
           </Card>
         </div>
+
+        {this.state.comments.map(comment => (
+          <Paper
+            style={{
+              padding: '40px 20px',
+              marginTop: 10,
+              width: '60%',
+              marginLeft: '20%'
+            }}
+          >
+            <Grid container wrap='nowrap' spacing={2}>
+              <Grid item>
+                <Avatar alt='User' src={comment.author.profile_img} />
+              </Grid>
+              <Grid justifyContent='left' item xs zeroMinWidth>
+                <h4 style={{ margin: 0, textAlign: 'left' }}>
+                  {comment.author.first_name} {comment.author.last_name}
+                </h4>
+                <p style={{ textAlign: 'left' }}>{comment.text}</p>
+                <p style={{ textAlign: 'left', color: 'gray' }}>
+                  opublikowano: {comment.add_date}
+                </p>
+              </Grid>
+                {(Number(this.state.accountOwnerId)===Number(comment.author.id)) ?<IconButton style={{height:'40px'}} value={comment.id} onClick={this.commentDeleteHandler}> <DeleteIcon/></IconButton> : ""}
+            </Grid>
+          </Paper>
+        ))}
       </div>
     )
   }
 }
 export default SimplePersonalPost
-
-//I SAVE THIS COMMENT BECAUSE IT SHOULD WORKS BUT THE ERROR IS RESPONSE.JSON() IS NOT A FUNCTION.
-//BUT...
-//IT WOULD LOOK NICER WITH THAT SO LATER TO WORK ON IT
-
-// import React, { useState, useEffect } from 'react'
-// import { makeStyles } from '@material-ui/core/styles'
-// import clsx from 'clsx'
-// import Card from '@material-ui/core/Card'
-// import CardHeader from '@material-ui/core/CardHeader'
-// import CardMedia from '@material-ui/core/CardMedia'
-// import CardContent from '@material-ui/core/CardContent'
-// import CardActions from '@material-ui/core/CardActions'
-// import Collapse from '@material-ui/core/Collapse'
-// import Avatar from '@material-ui/core/Avatar'
-// import IconButton from '@material-ui/core/IconButton'
-// import Typography from '@material-ui/core/Typography'
-// import { red } from '@material-ui/core/colors'
-// import FavoriteIcon from '@material-ui/icons/Favorite'
-// import ShareIcon from '@material-ui/icons/Share'
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-// import MoreVertIcon from '@material-ui/icons/MoreVert'
-// import AuthService from '../User/AuthService'
-
-// const useStyles = makeStyles(theme => ({
-//   card: {
-//     maxWidth: '60%'
-//   },
-//   media: {
-//     height: 0,
-//     paddingTop: '56.25%'
-//   },
-//   expand: {
-//     transform: 'rotate(0deg)',
-//     marginLeft: 'auto',
-//     transition: theme.transitions.create('transform', {
-//       duration: theme.transitions.duration.shortest
-//     })
-//   },
-//   expandOpen: {
-//     transform: 'rotate(180deg)'
-//   },
-//   avatar: {
-//     width: '100px',
-//     height: 'auto'
-//   }
-// }))
-
-// export default function SimplePersonalPost (props) {
-//   const classes = useStyles()
-//   const [expanded, setExpanded] = React.useState(false)
-
-//   const [post, setPost] = useState([])
-
-//   const handleExpandClick = () => {
-//     setExpanded(!expanded)
-//   }
-
-//   const formatDateTime = dateString => {
-//     const date = new Date(dateString)
-//     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
-//   }
-
-//   const Auth = new AuthService()
-
-//   //   async function fetchData() {
-//   const fetchData = async () => {
-//     if (Auth.loggedIn()) {
-//       //   const res = await Auth.fetch(`http://hulapp.pythonanywhere.com/api/post/${props.match.params.postId}`);
-
-//       const response = await Auth.fetch(
-//         `http://hulapp.pythonanywhere.com/api/post/${props.match.params.postId}`
-//       )
-//       //    res
-//       //   .json()
-//       //   .then(response => setPost(response))
-//       //   .catch(err => setErrors(err))
-//       const json = await response.json()
-//       setPost(json)
-//     }
-//   }
-
-//   useEffect(() => {
-//     fetchData()
-//   })
-
-//   return (
-//     <div>
-//       <Card className={classes.card} style={{ marginLeft: '20%' }}>
-//         <CardHeader
-//           avatar={
-//             <Avatar
-//               aria-label='recipe'
-//               className={classes.avatar}
-//               src={post.src}
-//             ></Avatar>
-//           }
-//           action={
-//             <IconButton aria-label='settings'>
-//               <MoreVertIcon />
-//             </IconButton>
-//           }
-//           title={
-//             <div>
-//               {post.name} {post.surname}
-//             </div>
-//           }
-//           subheader={<div> {formatDateTime(post.date)} </div>}
-//         />
-//         {/* <CardMedia
-//         className={classes.media}
-//         image="src"
-//         title="title"
-//       /> */}
-//         <CardContent>
-//           <Typography variant='body2' color='textSecondary' component='p'>
-//             <p style={{ maxWidth: '900px' }}>
-//               <b>{post.text}</b>
-//             </p>
-//           </Typography>
-//         </CardContent>
-//         <CardActions disableSpacing>
-//           <IconButton aria-label='add to favorites'>
-//             <FavoriteIcon />
-//           </IconButton>
-
-//           {post.id === post.usersId ? '' : <text>Pokaż </text>}
-//         </CardActions>
-//       </Card>
-//     </div>
-//   )
-// }
