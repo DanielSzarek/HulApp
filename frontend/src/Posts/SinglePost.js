@@ -89,11 +89,11 @@ export default function SinglePost (props) {
               src={post.src}
             ></Avatar>
           }
-          action={
-            <IconButton aria-label='settings'>
-              <MoreVertIcon />
-            </IconButton>
-          }
+          // action={
+          //   <IconButton aria-label='settings'>
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
           title={
             <div>
               {post.name} {post.surname}

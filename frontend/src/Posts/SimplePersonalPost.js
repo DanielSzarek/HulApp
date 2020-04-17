@@ -11,7 +11,7 @@ import Comments from './Comments.js'
 import { Divider, Avatar, Grid, Paper } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 class SimplePersonalPost extends React.Component {
@@ -34,7 +34,10 @@ class SimplePersonalPost extends React.Component {
       usernameOfComment: '',
       commentText: '',
       accountOwnerId: this.props.match.params.usersId,
-      commentToDelete: ''
+      commentToDelete: '',
+      // progressBarDisplayState: "visible",
+      waiter: true
+
     }
     this.Auth = new AuthService()
     this.commentAddHandler = this.commentAddHandler.bind(this)
@@ -55,9 +58,10 @@ class SimplePersonalPost extends React.Component {
             postAuthorSurname: response.author.last_name,
             postAuthorProfPic: response.author.profile_img,
             postAuthorId: response.author.id,
-            progressBarDisplayState: 'none'
+            waiter: false
           })
         })
+        
         .catch(error => {
           console.log({ message: 'ERROR ' + error })
         })
@@ -72,6 +76,7 @@ class SimplePersonalPost extends React.Component {
           comments: response
         })
       })
+
     await this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/', {
       method: 'GET'
     }).then(response => {
@@ -79,10 +84,6 @@ class SimplePersonalPost extends React.Component {
     })
   }
 
-  formatDateTime = dateString => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
-  }
 
   commentAddHandler = event => {
     event.preventDefault()
@@ -100,7 +101,8 @@ class SimplePersonalPost extends React.Component {
           return response.json()
         }
       })
-      .then(alert('edytowałeś swój post!'))
+      .then(alert('Twój komentarz został dodany'))
+      .then(window.location.reload())
   }
 
   onCommentChange (event) {
@@ -120,7 +122,7 @@ class SimplePersonalPost extends React.Component {
           return response.json()
         }
       })
-      .then(alert('edytowałeś swój post!'))
+      .then(alert('usunąłeś swój komentarz!'))
   }
 
   render () {
@@ -128,15 +130,9 @@ class SimplePersonalPost extends React.Component {
       <div>
         {this.state.auth ? '' : <Redirect to='/' />}
         <Navbarex />
-        <CircularProgress
-          style={{
-            display: this.state.progressBarDisplayState,
-            position: 'absolute',
-            marginLeft: '50%',
-            marginTop: '100px'
-          }}
-        />
-
+        
+       
+{(this.state.waiter)? <LinearProgress color="secondary" style={{marginTop: '20px', height:'15px'}} />: 
         <div>
           <Card style={{ width: '60%', marginLeft: '20%', marginTop: '30px' }}>
             <Card.Body>
@@ -161,8 +157,8 @@ class SimplePersonalPost extends React.Component {
                     {this.state.postAuthorName} {this.state.postAuthorSurname}
                   </div>
                   <div>
-                    {this.formatDateTime(this.state.post.add_date)}{' '}
-                    Opublikowano:{' '}
+                  {this.state.post.add_date.substr(0,10)} {(this.state.post.add_date.substr(11,12).substr(0,5))} {" "}
+                     Opublikowano:{' '}
                     {this.state.post.published === true ? 'tak' : 'nie'}
                   </div>
                 </div>
@@ -238,7 +234,7 @@ class SimplePersonalPost extends React.Component {
             </form>
           </Card>
         </div>
-
+  }
         {this.state.comments.map(comment => (
           <Paper
             style={{
@@ -256,9 +252,9 @@ class SimplePersonalPost extends React.Component {
                 <h4 style={{ margin: 0, textAlign: 'left' }}>
                   {comment.author.first_name} {comment.author.last_name}
                 </h4>
-                <p style={{ textAlign: 'left' }}>{comment.text}</p>
+                <div style={{  maxWidth: '900px' }}><p style={{ textAlign: 'left', maxWidth: '900px', maxLength:'100'}}>{comment.text}</p></div>
                 <p style={{ textAlign: 'left', color: 'gray' }}>
-                  opublikowano: {comment.add_date}
+                  opublikowano: {comment.add_date.substr(0,10)} {(comment.add_date.substr(11,12).substr(0,5))}
                 </p>
               </Grid>
                 {(Number(this.state.accountOwnerId)===Number(comment.author.id)) ?<IconButton style={{height:'40px'}} value={comment.id} onClick={this.commentDeleteHandler}> <DeleteIcon/></IconButton> : ""}
@@ -266,6 +262,7 @@ class SimplePersonalPost extends React.Component {
           </Paper>
         ))}
       </div>
+  
     )
   }
 }
