@@ -13,6 +13,7 @@ import pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthor
 import pl.kamilszustak.hulapp.domain.model.network.AddCommentRequestBody
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor
 import pl.kamilszustak.hulapp.domain.usecase.comment.AddCommentUseCase
+import pl.kamilszustak.hulapp.domain.usecase.comment.DeleteCommentByIdUseCase
 import pl.kamilszustak.hulapp.domain.usecase.comment.GetAllCommentsWithAuthorsByPostIdUseCase
 import pl.kamilszustak.hulapp.domain.usecase.post.DeletePostByIdUseCase
 import pl.kamilszustak.hulapp.domain.usecase.post.GetPostByIdWithAuthorUseCase
@@ -25,7 +26,8 @@ class PostDetailsViewModel @Inject constructor(
     private val getPostByIdWithAuthorUseCase: GetPostByIdWithAuthorUseCase,
     private val deletePostByIdUseCase: DeletePostByIdUseCase,
     private val getAllCommentsWithAuthorsByPostId: GetAllCommentsWithAuthorsByPostIdUseCase,
-    private val addComment: AddCommentUseCase
+    private val addComment: AddCommentUseCase,
+    private val deleteCommentById: DeleteCommentByIdUseCase
 ) : StateViewModel(application) {
 
     val postWithAuthorResource: ResourceDataSource<PostWithAuthor> = ResourceDataSource()
@@ -92,6 +94,18 @@ class PostDetailsViewModel @Inject constructor(
                 commentContent.value = null
             }.onFailure {
                 _errorEvent.value = R.string.adding_comment_error_message
+            }
+
+            _isLoading.value = false
+        }
+    }
+
+    fun onDeleteCommentButtonClick(commentId: Long) {
+        viewModelScope.launch(Dispatchers.Main) {
+            _isLoading.value = true
+
+            deleteCommentById(commentId).onFailure {
+                _errorEvent.value = R.string.deleting_comment_error_message
             }
 
             _isLoading.value = false

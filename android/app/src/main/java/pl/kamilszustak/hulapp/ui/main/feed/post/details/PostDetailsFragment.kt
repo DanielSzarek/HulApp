@@ -79,7 +79,40 @@ class PostDetailsFragment : BaseFragment() {
                     item: CommentItem,
                     position: Int
                 ): Boolean {
-                    navigateToEditCommentFragment(item.model.id)
+                    if (!item.model.isMine) {
+                        return false
+                    }
+
+                    popupMenu(v) {
+                        inflate(R.menu.menu_my_comment_item)
+                        setOnMenuItemClickListener { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.editCommentItem -> {
+                                    navigateToEditCommentFragment(item.model.id)
+                                    true
+                                }
+
+                                R.id.deleteCommentItem -> {
+                                    dialog {
+                                        title(R.string.delete_comment_dialog_message)
+                                        positiveButton(R.string.yes) {
+                                            viewModel.onDeleteCommentButtonClick(item.model.id)
+                                        }
+
+                                        negativeButton(R.string.no) {
+                                            it.dismiss()
+                                        }
+                                    }
+                                    true
+                                }
+
+                                else -> {
+                                    false
+                                }
+                            }
+                        }
+                    }
+
                     return true
                 }
             }

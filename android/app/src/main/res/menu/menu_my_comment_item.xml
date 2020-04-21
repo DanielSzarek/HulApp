@@ -3,9 +3,9 @@
 
     <item
         android:id="@+id/editCommentItem"
-        android:title="Edytuj" />
+        android:title="@string/edit" />
 
     <item
         android:id="@+id/deleteCommentItem"
-        android:title="Usuń" />
+        android:title="@string/delete" />
 </menu>

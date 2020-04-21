@@ -65,7 +65,6 @@ class EditCommentFragment : BaseFragment() {
                     it.dismiss()
                 }
             }
-
         }
 
         binding.editCommentButton.setOnClickListener {
