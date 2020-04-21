@@ -26,6 +26,9 @@ abstract class UseCaseModule {
     abstract fun bindGetAllCommentsWithAuthorsByPostIdUseCase(useCaseImpl: GetAllCommentsWithAuthorsByPostIdUseCaseImpl): GetAllCommentsWithAuthorsByPostIdUseCase
 
     @Binds
+    abstract fun bindGetCommentByIdWithAuthorUseCase(useCaseImpl: GetCommentByIdWithAuthorUseCaseImpl): GetCommentByIdWithAuthorUseCase
+
+    @Binds
     abstract fun bindAddCommentUseCase(useCaseImpl: AddCommentUseCaseImpl): AddCommentUseCase
 
     @Binds
