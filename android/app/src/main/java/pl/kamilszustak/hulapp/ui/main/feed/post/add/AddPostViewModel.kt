@@ -12,7 +12,7 @@ import pl.kamilszustak.hulapp.common.form.formField
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
 import pl.kamilszustak.hulapp.domain.model.network.EditPostRequestBody
 import pl.kamilszustak.hulapp.domain.usecase.post.AddPostUseCase
-import pl.kamilszustak.hulapp.domain.usecase.post.EditPostUseCase
+import pl.kamilszustak.hulapp.domain.usecase.post.EditPostByIdUseCase
 import pl.kamilszustak.hulapp.domain.usecase.post.GetPostByIdWithAuthorUseCase
 import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class AddPostViewModel @Inject constructor(
     application: Application,
     private val addPostUseCase: AddPostUseCase,
-    private val editPostUseCase: EditPostUseCase,
+    private val editPostByIdUseCase: EditPostByIdUseCase,
     private val getPostByIdWithAuthorUseCase: GetPostByIdWithAuthorUseCase
 ) : StateViewModel(application) {
 
@@ -52,7 +52,7 @@ class AddPostViewModel @Inject constructor(
         if (inEditMode) {
             val requestBody = EditPostRequestBody(content)
             performAction(R.string.post_editing_error_message) {
-                editPostUseCase(postId, requestBody)
+                editPostByIdUseCase(postId, requestBody)
             }
         } else {
             val requestBody = AddPostRequstBody(content)

@@ -91,10 +91,10 @@ class PostRepository @Inject constructor(
         }.callForResponse()
     }
 
-    suspend fun editPost(postId: Long, requestBody: EditPostRequestBody): Result<Unit> {
+    suspend fun editById(id: Long, requestBody: EditPostRequestBody): Result<Unit> {
         return object : NetworkCall<PostJson, Unit>() {
             override suspend fun makeCall(): Response<PostJson> =
-                apiService.editPost(postId, requestBody)
+                apiService.editPostById(id, requestBody)
 
             override suspend fun mapResponse(response: PostJson): Unit = Unit
 
@@ -105,7 +105,6 @@ class PostRepository @Inject constructor(
             }
         }.callForResponse()
     }
-
 
     suspend fun deleteById(id: Long): Result<Unit> {
         return object : NetworkCall<Unit, Unit>() {

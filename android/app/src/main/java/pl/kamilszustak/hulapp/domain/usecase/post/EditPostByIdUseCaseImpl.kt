@@ -6,10 +6,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EditPostUseCaseImpl @Inject constructor(
+class EditPostByIdUseCaseImpl @Inject constructor(
     private val postRepository: PostRepository
-) : EditPostUseCase {
+) : EditPostByIdUseCase {
 
     override suspend fun invoke(postId: Long, requestBody: EditPostRequestBody): Result<Unit> =
-        postRepository.editPost(postId, requestBody)
+        postRepository.editById(postId, requestBody)
 }

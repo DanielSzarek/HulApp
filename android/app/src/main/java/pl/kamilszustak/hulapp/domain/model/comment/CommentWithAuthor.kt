@@ -9,5 +9,6 @@ data class CommentWithAuthor(
     val editDate: Date?,
     val postId: Long,
     val author: User,
-    val content: String
+    val content: String,
+    val isMine: Boolean
 )

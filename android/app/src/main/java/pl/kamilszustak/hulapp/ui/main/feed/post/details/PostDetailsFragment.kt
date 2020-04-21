@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
+import com.mikepenz.fastadapter.LongClickListener
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
@@ -69,7 +71,19 @@ class PostDetailsFragment : BaseFragment() {
     }
 
     private fun initializeRecyclerView() {
-        val fastAdapter = FastAdapter.with(modelAdapter)
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onLongClickListener = object : LongClickListener<CommentItem> {
+                override fun invoke(
+                    v: View,
+                    adapter: IAdapter<CommentItem>,
+                    item: CommentItem,
+                    position: Int
+                ): Boolean {
+                    navigateToEditCommentFragment(item.model.id)
+                    return true
+                }
+            }
+        }
 
         binding.commentsRecyclerView.apply {
             this.adapter = fastAdapter
@@ -170,6 +184,11 @@ class PostDetailsFragment : BaseFragment() {
 
     private fun navigateToAddPostFragment(postId: Long = -1) {
         val direction = PostDetailsFragmentDirections.actionPostDetailsFragmentToAddPostFragment(postId)
+        navigateTo(direction)
+    }
+
+    private fun navigateToEditCommentFragment(commentId: Long) {
+        val direction = PostDetailsFragmentDirections.actionPostDetailsFragmentToEditCommentFragment(commentId)
         navigateTo(direction)
     }
 }

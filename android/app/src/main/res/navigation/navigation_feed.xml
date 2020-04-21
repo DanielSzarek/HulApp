@@ -54,5 +54,21 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_editCommentFragment"
+            app:destination="@id/editCommentFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCommentFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.post.details.comment.EditCommentFragment"
+        android:label="EditCommentFragment"
+        tools:layout="@layout/fragment_edit_comment">
+        <argument
+            android:name="commentId"
+            app:argType="long" />
     </fragment>
 </navigation>
