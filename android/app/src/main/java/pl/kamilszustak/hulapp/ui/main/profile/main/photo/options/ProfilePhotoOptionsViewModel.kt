@@ -32,7 +32,7 @@ class ProfilePhotoOptionsViewModel @Inject constructor(
             if (result.isSuccess) {
                 _uploadCompleted.call()
             } else {
-                _error.value = R.string.changing_profile_photo_error_message
+                _errorEvent.value = R.string.changing_profile_photo_error_message
             }
 
             _isLoading.setValue(true)

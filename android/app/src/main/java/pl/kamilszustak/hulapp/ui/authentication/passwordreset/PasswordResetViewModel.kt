@@ -30,7 +30,7 @@ class PasswordResetViewModel @Inject constructor(
         val email = userEmail.data.value
 
         if (email == null) {
-            _error.value = R.string.empty_email_error_message
+            _errorEvent.value = R.string.empty_email_error_message
             return
         }
 

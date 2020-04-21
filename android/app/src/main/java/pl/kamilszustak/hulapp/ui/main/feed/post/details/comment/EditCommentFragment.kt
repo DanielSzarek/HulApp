@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentEditCommentBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.dialog
+import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
 class EditCommentFragment : BaseFragment() {
@@ -39,5 +43,44 @@ class EditCommentFragment : BaseFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setListeners()
+        observeViewModel()
+        viewModel.loadData(args.commentId)
+    }
+
+    private fun setListeners() {
+        binding.deleteCommentButton.setOnClickListener {
+            dialog {
+                title(R.string.delete_comment_dialog_message)
+                positiveButton(R.string.yes) {
+                    viewModel.onDeleteCommentButtonClick(args.commentId)
+                }
+
+                negativeButton(R.string.no) {
+                    it.dismiss()
+                }
+            }
+
+        }
+
+        binding.editCommentButton.setOnClickListener {
+            viewModel.onEditCommentButtonClick(args.commentId)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
+            navigateUp()
+        }
+
+        viewModel.errorEvent.observe(viewLifecycleOwner) { messageResource ->
+            val message = getString(messageResource)
+            view?.snackbar(message)
+        }
     }
 }

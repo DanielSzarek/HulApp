@@ -152,11 +152,11 @@ class PostDetailsFragment : BaseFragment() {
             )
         }
 
-        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateUp()
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { messageResource ->
             view?.snackbar(messageResource)
         }
 

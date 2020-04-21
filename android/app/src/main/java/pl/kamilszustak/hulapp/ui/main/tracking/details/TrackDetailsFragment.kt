@@ -87,7 +87,7 @@ class TrackDetailsFragment : BaseFragment() {
             navigateUp()
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { message ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 

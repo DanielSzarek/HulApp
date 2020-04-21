@@ -68,7 +68,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             startActivity<MainActivity>()
             requireActivity().finish()
         }
@@ -89,7 +89,7 @@ class LoginFragment : BaseFragment() {
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { message ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
     }

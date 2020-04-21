@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="pl.kamilszustak.hulapp.common.date.DateFormats" />
         <variable
             name="commentWithAuthor"
             type="pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthor" />
@@ -50,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/dateTextView"
-            android:text="@{commentWithAuthor.creationDate}"
+            android:text='@{commentWithAuthor.isEdited ? @string/post_comment_edit_date(DateFormats.INSTANCE.dateFormat.format(commentWithAuthor.editDate)) : commentWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(commentWithAuthor.creationDate) : ""}'
             tools:text="2020-01-01 10:15"
             android:textAppearance="?textAppearanceCaption"
             app:layout_constraintStart_toStartOf="@id/contentTextView"

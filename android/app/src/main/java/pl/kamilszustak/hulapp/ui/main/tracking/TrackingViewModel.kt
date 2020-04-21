@@ -218,7 +218,7 @@ class TrackingViewModel @Inject constructor(
                     _trackSaved.value = resultTrack
                 }
             } else {
-                _error.value = R.string.track_saving_error_message
+                _errorEvent.value = R.string.track_saving_error_message
             }
 
             _isLoading.value = false

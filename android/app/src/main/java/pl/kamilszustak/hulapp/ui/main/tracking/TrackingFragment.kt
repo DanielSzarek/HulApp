@@ -162,7 +162,7 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
             googleMap?.addPolyline(polyline)
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { message ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 

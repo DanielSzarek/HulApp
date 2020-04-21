@@ -45,7 +45,7 @@ class AddPostViewModel @Inject constructor(
     fun onAddPostButtonClick(postId: Long) {
         val content = postContentField.data.value?.trim()
         if (content.isNullOrBlank()) {
-            _error.value = R.string.empty_post_error_message
+            _errorEvent.value = R.string.empty_post_error_message
             return
         }
 

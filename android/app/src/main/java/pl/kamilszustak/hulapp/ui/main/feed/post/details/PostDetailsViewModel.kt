@@ -76,7 +76,7 @@ class PostDetailsViewModel @Inject constructor(
     fun onAddCommentButtonClick(postId: Long) {
         val content = commentContent.value
         if (content.isNullOrBlank()) {
-            _error.value = R.string.empty_comment_content_error_message
+            _errorEvent.value = R.string.empty_comment_content_error_message
             return
         }
 
@@ -91,7 +91,7 @@ class PostDetailsViewModel @Inject constructor(
                 _commentAdded.call()
                 commentContent.value = null
             }.onFailure {
-                _error.value = R.string.adding_comment_error_message
+                _errorEvent.value = R.string.adding_comment_error_message
             }
 
             _isLoading.value = false

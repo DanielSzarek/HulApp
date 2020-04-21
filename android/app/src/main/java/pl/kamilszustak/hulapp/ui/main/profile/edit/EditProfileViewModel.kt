@@ -115,7 +115,7 @@ class EditProfileViewModel @Inject constructor(
 
     fun onSaveButtonClick() {
         if (!isInternetConnected()) {
-            _error.value = R.string.no_internet_connection_error_message
+            _errorEvent.value = R.string.no_internet_connection_error_message
             return
         }
 
@@ -123,7 +123,7 @@ class EditProfileViewModel @Inject constructor(
         val surname = userSurnameField.data.value
 
         if (name == null || surname == null) {
-            _error.value = R.string.empty_name_or_surname_error_message
+            _errorEvent.value = R.string.empty_name_or_surname_error_message
             return
         }
 

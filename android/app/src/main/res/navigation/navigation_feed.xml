@@ -65,7 +65,7 @@
     <fragment
         android:id="@+id/editCommentFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.post.details.comment.EditCommentFragment"
-        android:label="EditCommentFragment"
+        android:label="Edytuj komentarz"
         tools:layout="@layout/fragment_edit_comment">
         <argument
             android:name="commentId"

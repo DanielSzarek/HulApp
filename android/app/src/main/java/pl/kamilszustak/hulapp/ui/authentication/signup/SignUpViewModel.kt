@@ -96,7 +96,7 @@ class SignUpViewModel @Inject constructor(
         val country = userCountryField.data.value
 
         if (!isInternetConnected()) {
-            _error.value = R.string.no_internet_connection_error_message
+            _errorEvent.value = R.string.no_internet_connection_error_message
             return
         }
 

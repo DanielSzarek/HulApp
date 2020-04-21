@@ -11,4 +11,7 @@ data class CommentWithAuthor(
     val author: User,
     val content: String,
     val isMine: Boolean
-)
+) {
+    val isEdited: Boolean
+        get() = (editDate != null)
+}

@@ -199,7 +199,7 @@ class FeedFragment : BaseFragment() {
             )
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { messageResource ->
             view?.snackbar(messageResource)
         }
     }
