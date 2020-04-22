@@ -13,6 +13,7 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 class EditPost extends React.Component {
   constructor (props) {
@@ -33,7 +34,9 @@ class EditPost extends React.Component {
       content: '',
       postAuthorEmail: '',
       redirectToPost: false,
-      published: ''
+      published: '',
+      waiter: true
+
     }
     this.Auth = new AuthService()
     this.handleChange = this.handleChange.bind(this)
@@ -55,7 +58,8 @@ class EditPost extends React.Component {
             postAuthorId: response.author.id,
             progressBarDisplayState: 'none',
             postAuthorEmail: response.author.username,
-            published: response.published
+            published: response.published,
+             waiter: false
           })
           console.log('publish value: ' + this.state.published)
         })
@@ -128,7 +132,7 @@ class EditPost extends React.Component {
             marginTop: '100px'
           }}
         />
-
+{(this.state.waiter)? <LinearProgress color="secondary" style={{marginTop: '20px', height:'15px'}} />: 
         <div>
           <Card style={{ width: '60%', marginLeft: '20%' }}>
             {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
@@ -193,7 +197,9 @@ class EditPost extends React.Component {
             </Card.Body>
           </Card>
         </div>
+  }
       </div>
+  
     )
   }
 }

@@ -13,6 +13,8 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 class DeletePost extends React.Component {
   constructor (props) {
@@ -33,7 +35,9 @@ class DeletePost extends React.Component {
       content: '',
       postAuthorEmail: '',
       redirectToPost: false,
-      published: ''
+      published: '',
+            waiter: true
+
     }
     this.Auth = new AuthService()
     // this.handleChange = this.handleChange.bind(this)
@@ -55,7 +59,9 @@ class DeletePost extends React.Component {
             postAuthorId: response.author.id,
             progressBarDisplayState: 'none',
             postAuthorEmail: response.author.username,
-            published: response.published
+            published: response.published,
+                         waiter: false
+
           })
           console.log('publish value: ' + this.state.published)
         })
@@ -112,16 +118,18 @@ class DeletePost extends React.Component {
         {this.state.auth ? '' : <Redirect to='/' />}
         {/* {!(this.state.redirectToPost) ? '' : <Redirect to={'/posts/'+this.props.match.params.usersId} />} */}
         <Navbarex />
-        <CircularProgress
+        {/* <CircularProgress
           style={{
             display: this.state.progressBarDisplayState,
             position: 'absolute',
             marginLeft: '50%',
             marginTop: '100px'
           }}
-        />
+        /> */}
+{(this.state.waiter)? <LinearProgress color="secondary" style={{marginTop: '20px', height:'15px'}} />: 
 
         <div>
+        
         <h1> CZY NAPEWNO CHCESZ USUNĄĆ TEN POST? </h1>
           <Card style={{ width: '60%', marginLeft: '20%' }}>
             {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
@@ -186,6 +194,7 @@ class DeletePost extends React.Component {
             </Card.Body>
           </Card>
         </div>
+  }
       </div>
     )
   }
