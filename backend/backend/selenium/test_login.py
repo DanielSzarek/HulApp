@@ -16,6 +16,7 @@ class WebDriver:
     def load_page_and_login(self):
         self.web_driver.get("http://localhost:3000")
         sleep(0.5)
+
         self.web_driver.find_element_by_id('formBasicEmail').send_keys('swistak7171@wp.pl')
         password = self.web_driver.find_element_by_id('formBasicPassword')
         password.send_keys('Hulapp123!')
@@ -33,10 +34,6 @@ class WebDriver:
         sleep(8)
         self.web_driver.find_element_by_id('logout').click()
 
-    def posts(self):
-        self.web_driver.find_element('posts')
-
 
 web = WebDriver()
 web.load_page_and_login()
-# web.posts()
