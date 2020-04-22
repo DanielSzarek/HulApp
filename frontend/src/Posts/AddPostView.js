@@ -121,6 +121,7 @@ class AddPostView extends React.Component {
                     />
                   </Row>
                   <button
+                    id='addButton'
                     type='submit'
                     style={{
                       backgroundColor: 'red',

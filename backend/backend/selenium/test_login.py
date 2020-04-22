@@ -16,11 +16,27 @@ class WebDriver:
     def load_page_and_login(self):
         self.web_driver.get("http://localhost:3000")
         sleep(0.5)
-        self.web_driver.find_element_by_id('formBasicEmail').send_keys('login')
+        self.web_driver.find_element_by_id('formBasicEmail').send_keys('swistak7171@wp.pl')
         password = self.web_driver.find_element_by_id('formBasicPassword')
-        password.send_keys('haslo')
+        password.send_keys('Hulapp123!')
         password.send_keys(Keys.ENTER)
+        sleep(5)
+        self.web_driver.find_element_by_id('posts').click()
+        sleep(5)
+        self.web_driver.find_element_by_class_name('sticky-button').click()
+        sleep(2)
+        self.web_driver.find_element_by_name('content').send_keys('SUPER próbny post dodany przy pomocy selenium :)')
+        sleep(2)
+        self.web_driver.find_element_by_id('addButton').click()
+        sleep(2)
+        self.web_driver.find_element_by_id('posts').click()
+        sleep(8)
+        self.web_driver.find_element_by_id('logout').click()
+
+    def posts(self):
+        self.web_driver.find_element('posts')
 
 
 web = WebDriver()
 web.load_page_and_login()
+# web.posts()
