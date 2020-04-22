@@ -5,7 +5,7 @@ import { ListGroup, Card, ListGroupItem } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 import { CircularProgress, IconButton } from '@material-ui/core'
 import '../Styles/PostView.css'
-// import Avatar from '@material-ui/core/Avatar'
+import '../Styles/SimplePersonalPost.css'
 import { Container, Row, Col } from 'react-bootstrap'
 import Comments from './Comments.js'
 import { Divider, Avatar, Grid, Paper } from '@material-ui/core'
@@ -36,7 +36,9 @@ class SimplePersonalPost extends React.Component {
       commentText: '',
       accountOwnerId: this.props.match.params.usersId,
       commentToDelete: '',
-      // progressBarDisplayState: "visible",
+      commentToEdit: '',
+      editFormVisible: false,
+      commentTextEdit: '',
       waiter: true,
       submitFormVisible: false
     }
@@ -45,6 +47,7 @@ class SimplePersonalPost extends React.Component {
     this.onCommentChange = this.onCommentChange.bind(this)
     this.commentDeleteHandler = this.commentDeleteHandler.bind(this)
     this.onRemoveItem = this.onRemoveItem.bind(this)
+    this.onEditItem = this.onEditItem.bind(this)
   }
 
   async componentDidMount () {
@@ -126,10 +129,35 @@ class SimplePersonalPost extends React.Component {
       })
       .then(window.location.reload())
   }
+  commentEditHandler = event => {
+    event.preventDefault()
+    console.log('comment to edit: ' + this.state.commentToEdit)
+    this.Auth.fetch(
+      `http://hulapp.pythonanywhere.com/api/comment/${this.state.commentToEdit}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          username: this.state.usernameOfComment,
+          text: this.state.commentTextEdit,
+          post: this.props.match.params.postId
+        })
+      }
+    )
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json()
+        }
+      })
+      .then(window.location.reload())
+  }
 
   onRemoveItem = commentId => {
     this.setState({ commentToDelete: commentId, submitFormVisible: true })
     console.log(this.state.commentToDelete)
+  }
+  onEditItem = commentId => {
+    this.setState({ commentToEdit: commentId, editFormVisible: true })
+    console.log(this.state.commentToEdit)
   }
 
   render () {
@@ -139,36 +167,18 @@ class SimplePersonalPost extends React.Component {
         <Navbarex />
 
         {this.state.waiter ? (
-          <LinearProgress
-            color='secondary'
-            style={{ marginTop: '20px', height: '15px' }}
-          />
+          <LinearProgress color='secondary' id='linear-progress' />
         ) : (
           <div>
-            <Card
-              style={{ width: '60%', marginLeft: '20%', marginTop: '30px' }}
-            >
+            <Card id='post-card'>
               <Card.Body>
                 <Card.Title>
                   <div style={{ display: 'inline-block' }}>
                     <Avatar
                       src={this.state.postAuthorProfPic}
-                      style={{
-                        width: '50px',
-                        height: '50px',
-                        display: 'inline-block',
-                        marginTop: '20px'
-                      }}
+                      id='post-avatar'
                     />
-                    <div
-                      style={{
-                        fontSize: '30px',
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        color: 'red',
-                        fontWeight: 'bold'
-                      }}
-                    >
+                    <div id='post-author-name'>
                       {this.state.postAuthorName} {this.state.postAuthorSurname}
                     </div>
                     <div>
@@ -193,26 +203,12 @@ class SimplePersonalPost extends React.Component {
                         this.props.match.params.postId
                       }
                     >
-                      <button
-                        style={{
-                          backgroundColor: 'red',
-                          border: '0px',
-                          color: 'white',
-                          height: '35px'
-                        }}
-                      >
+                      <button id='post-edit-button' className='post-buttons'>
                         Edytuj
                       </button>{' '}
                     </Link>{' '}
                     <Link to={'/delete/post/' + this.props.match.params.postId}>
-                      <button
-                        style={{
-                          backgroundColor: 'red',
-                          border: '0px',
-                          color: 'white',
-                          height: '35px'
-                        }}
-                      >
+                      <button id='post-delete-button' className='post-buttons'>
                         usuń
                       </button>
                     </Link>
@@ -224,26 +220,17 @@ class SimplePersonalPost extends React.Component {
                   <FavoriteIcon />
                 </IconButton>
               </Card.Body>
-              <form class='ui reply form'>
-                <div class='field'>
+              <form>
+                <div>
                   <textarea
-                    rows='1'
-                    cols='70'
                     style={{ width: '100%' }}
                     onChange={this.onCommentChange}
                     name='commentText'
                   ></textarea>
                 </div>
                 <button
-                  style={{
-                    backgroundColor: 'red',
-                    color: 'white',
-                    border: '0px',
-                    marginLeft: '40%',
-                    marginTop: '15px',
-                    marginBottom: '15px',
-                    height: '30px'
-                  }}
+                  id='comment-add-button'
+                  className='comment-buttons'
                   onClick={this.commentAddHandler}
                 >
                   Skomentuj
@@ -255,15 +242,7 @@ class SimplePersonalPost extends React.Component {
         {!this.state.submitFormVisible ? (
           ''
         ) : (
-          <div
-            style={{
-              width: '70%',
-              marginLeft: '15%',
-              marginTop: '10px',
-              marginBottom: '10px',
-              paddingRight: '40px'
-            }}
-          >
+          <div id='comment-add-alert'>
             <Alert
               severity='error'
               action={
@@ -283,52 +262,43 @@ class SimplePersonalPost extends React.Component {
           </div>
         )}
         {this.state.comments.map((comment, index) => (
-          <Paper
-            style={{
-              padding: '20px 20px',
-              marginTop: 10,
-              width: '60%',
-              marginLeft: '20%'
-            }}
-            key={comment.id}
-          >
+          <Paper id='comments-paper' key={comment.id}>
             <Grid container wrap='nowrap' spacing={2}>
               <Grid item>
                 <Avatar alt='User' src={comment.author.profile_img} />
               </Grid>
               <Grid justifyContent='left' item xs zeroMinWidth>
-                <h4
-                  style={{
-                    margin: 0,
-                    textAlign: 'left',
-                    color: 'red',
-                    fontWeight: 'bold',
-                    display: 'inline-block'
-                  }}
-                >
+                <h4 id='comments-author-names'>
                   {comment.author.first_name} {comment.author.last_name}
                 </h4>
-                <div
-                  style={{
-                    maxWidth: '900px',
-                    display: 'inline-block',
-                    paddingLeft: '20px'
-                  }}
-                >
+                <div id='comments-text-container'>
+                  <p id='comments-text-paragraph'>{comment.text}</p>
+                </div>
+                <div>
                   <p
                     style={{
                       textAlign: 'left',
-                      maxWidth: '900px',
-                      maxLength: '100'
+                      color: 'gray',
+                      display: 'inline'
                     }}
                   >
-                    {comment.text}
+                    opublikowano: {comment.add_date.substr(0, 10)}{' '}
+                    {comment.add_date.substr(11, 12).substr(0, 5)}
                   </p>
+
+                  {Number(this.state.accountOwnerId) ===
+                  Number(comment.author.id) ? (
+                    <div
+                      value={comment.id}
+                      id='comments-edit-ref'
+                      onClick={() => this.onEditItem(comment.id)}
+                    >
+                      Edytuj
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
-                <p style={{ textAlign: 'left', color: 'gray' }}>
-                  opublikowano: {comment.add_date.substr(0, 10)}{' '}
-                  {comment.add_date.substr(11, 12).substr(0, 5)}
-                </p>
               </Grid>
               {Number(this.state.accountOwnerId) ===
               Number(comment.author.id) ? (
@@ -345,6 +315,34 @@ class SimplePersonalPost extends React.Component {
                 ''
               )}
             </Grid>
+            {!(Number(this.state.commentToEdit) === Number(comment.id)) ? (
+              ''
+            ) : (
+              <div>
+                {!this.state.editFormVisible ? (
+                  ''
+                ) : (
+                  <form>
+                    <div>
+                      <textarea
+                        defaultValue={comment.text}
+                        id='comments-edit-textarea'
+                        onChange={this.onCommentChange}
+                        name='commentTextEdit'
+                      ></textarea>
+                    </div>
+                    <div style={{ diplay: 'inline' }}>
+                      <button
+                        id='comments-edit-button'
+                        onClick={this.commentEditHandler}
+                      >
+                        Edytuj
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
           </Paper>
         ))}
       </div>
