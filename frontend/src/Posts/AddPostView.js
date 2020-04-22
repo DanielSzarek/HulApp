@@ -7,6 +7,8 @@ import { CircularProgress } from '@material-ui/core'
 import '../Styles/PostView.css'
 import Avatar from '@material-ui/core/Avatar'
 import { Container, Row, Col } from 'react-bootstrap'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 class AddPostView extends React.Component {
   constructor (props) {
@@ -18,7 +20,11 @@ class AddPostView extends React.Component {
       auth: true,
       progressBarDisplayState: 'visible',
       content: '',
-      username: ''
+      alertSuccessVisible: false,
+      username: '',
+      waiter: true,
+      success: false,
+      id: ''
     }
     this.Auth = new AuthService()
     this.handleChange = this.handleChange.bind(this)
@@ -34,7 +40,9 @@ class AddPostView extends React.Component {
             surname: response.last_name,
             src: response.profile_img,
             progressBarDisplayState: 'none',
-            username: response.username
+            username: response.username,
+            id: response.id,
+            waiter: false
           })
         })
         .catch(error => {
@@ -62,85 +70,105 @@ class AddPostView extends React.Component {
         text: this.state.content,
         username: this.state.username
       })
-    }).then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json()
-      }
     })
-    .then(alert("Twój post został dodany!"))
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json()
+        }
+      })
+      .then(this.setState({ alertSuccessVisible: true }))
+      .then(setTimeout(() => this.setState({ success: true }), 2000))
   }
 
   render () {
+    if (this.state.success) {
+      return <Redirect to={'/posts/' + this.state.id} />
+    }
     return (
       <div>
         {this.state.auth ? '' : <Redirect to='/' />}
         <Navbarex />
-        <div>
-          <h1>dodaj post</h1>
-          <hr />
-        </div>
 
-        <CircularProgress
-          style={{
-            display: this.state.progressBarDisplayState,
-            position: 'absolute',
-            marginLeft: '50%',
-            marginTop: '100px'
-          }}
-        />
+        {this.state.waiter ? (
+          <LinearProgress color='secondary' id='linear-progress' />
+        ) : (
+          <div>
+            <div>
+              <h1>dodaj post</h1>
+              <hr />
+            </div>
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <Container style={{ width: '700px' }}>
+                  <ListGroup style={{ marginTop: '32px' }}>
+                    <form>
+                      <Row style={{ width: '600px' }}>
+                        <Avatar
+                          src={this.state.src}
+                          style={{ width: '10%', height: '10%' }}
+                        ></Avatar>
 
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <Container style={{ width: '700px' }}>
-              <ListGroup style={{ marginTop: '32px' }}>
-                <form>
-                  <Row style={{ width: '600px' }}>
-                    <Avatar
-                      src={this.state.src}
-                      style={{ width: '10%', height: '10%' }}
-                    ></Avatar>
-
-                    <p style={{ paddingTop: '5%', marginLeft: '5%' }}>
-                      {this.state.name} {this.state.surname}
-                    </p>
-                  </Row>
-                  <Row>
-                    <textarea
-                      type='text'
-                      name='content'
-                      placeholder='Napisz post...'
-                      onChange={this.handleChange}
-                      style={{
-                        width: '100%',
-                        height: '100px',
-                        marginTop: '10px',
-                        alignContent: 'flex-start',
-                        textAlign: 'left',
-                        verticalAlign: 'top',
-                        display: 'table-cell',
-                      }}
-                    />
-                  </Row>
-                  <button
-                    type='submit'
-                    style={{
-                      backgroundColor: 'red',
-                      color: 'white',
-                      border: '0px',
-                      marginTop: '20px',
-                      width: '200px',
-                      height: '40px',
-                      marginLeft: '30%'
-                    }}
-                  >
-                    Dodaj
-                  </button>
-                  <Row></Row>
-                </form>
-              </ListGroup>
-            </Container>
-          </form>
-        </div>
+                        <p
+                          style={{
+                            paddingTop: '5%',
+                            marginLeft: '5%',
+                            color: 'red',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {this.state.name} {this.state.surname}
+                        </p>
+                      </Row>
+                      <Row>
+                        <textarea
+                          type='text'
+                          name='content'
+                          placeholder='Napisz post...'
+                          onChange={this.handleChange}
+                          style={{
+                            width: '100%',
+                            height: '100px',
+                            marginTop: '10px',
+                            alignContent: 'flex-start',
+                            textAlign: 'left',
+                            verticalAlign: 'top',
+                            display: 'table-cell'
+                          }}
+                        />
+                      </Row>
+                      {!this.state.alertSuccessVisible ? (
+                        ''
+                      ) : (
+                        <div id='comment-add-alert'>
+                          <Alert severity='success'>
+                            <AlertTitle>
+                              <strong>Twój post został dodany :)</strong>
+                            </AlertTitle>
+                          </Alert>
+                        </div>
+                      )}
+                      <button
+                        type='submit'
+                        style={{
+                          backgroundColor: 'red',
+                          color: 'white',
+                          border: '0px',
+                          marginTop: '20px',
+                          width: '200px',
+                          height: '40px',
+                          marginLeft: '30%'
+                        }}
+                      >
+                        Dodaj
+                      </button>
+                      <Row></Row>
+                    </form>
+                  </ListGroup>
+                </Container>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     )
   }

@@ -16,7 +16,7 @@ import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom'
-// import Comments from './Comments.js'
+import ModeCommentIcon from '@material-ui/icons/ModeComment'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -95,7 +95,7 @@ export default function SinglePost (props) {
           //   </IconButton>
           // }
           title={
-            <div>
+            <div style={{ color: 'red', fontWeight: 'bold' }}>
               {post.name} {post.surname}
             </div>
           }
@@ -130,7 +130,13 @@ export default function SinglePost (props) {
           </IconButton>
 
           <Link to={'/simple/personal/post/' + usersId + '/' + post.postId}>
-            {post.id === usersId ? '' : <text>Pokaż </text>}
+            {post.id === usersId ? (
+              ''
+            ) : (
+              <IconButton aria-label='share'>
+                <ModeCommentIcon />
+              </IconButton>
+            )}
           </Link>
           {/* <text>Pokaż </text> */}
           {/* <IconButton aria-label="share">

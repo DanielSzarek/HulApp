@@ -40,7 +40,8 @@ class SimplePersonalPost extends React.Component {
       editFormVisible: false,
       commentTextEdit: '',
       waiter: true,
-      submitFormVisible: false
+      submitFormVisible: false,
+      alertAddSuccessVisible: false
     }
     this.Auth = new AuthService()
     this.commentAddHandler = this.commentAddHandler.bind(this)
@@ -103,8 +104,8 @@ class SimplePersonalPost extends React.Component {
           return response.json()
         }
       })
-      .then(alert('Twój komentarz został dodany'))
-      .then(window.location.reload())
+      .then(this.setState({ alertAddSuccessVisible: true }))
+      .then(setTimeout(() => (window.location.reload()), 1000))
   }
 
   onCommentChange (event) {
@@ -182,10 +183,17 @@ class SimplePersonalPost extends React.Component {
                       {this.state.postAuthorName} {this.state.postAuthorSurname}
                     </div>
                     <div>
-                      {this.state.post.add_date.substr(0, 10)}{' '}
-                      {this.state.post.add_date.substr(11, 12).substr(0, 5)}{' '}
-                      Opublikowano:{' '}
-                      {this.state.post.published === true ? 'tak' : 'nie'}
+                      {!(this.state.post.mod_date === null) ? (
+                        <div>
+                          edytowano: {this.state.post.mod_date.substr(0, 10)}{' '}
+                          {this.state.post.mod_date.substr(11, 12).substr(0, 5)}{' '}
+                        </div>
+                      ) : (
+                        <div>
+                          dodano: {this.state.post.add_date.substr(0, 10)}{' '}
+                          {this.state.post.add_date.substr(11, 12).substr(0, 5)}{' '}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Card.Title>
@@ -228,6 +236,17 @@ class SimplePersonalPost extends React.Component {
                     name='commentText'
                   ></textarea>
                 </div>
+                {!this.state.alertAddSuccessVisible ? (
+                  ''
+                ) : (
+                  <div id='comment-add-alert'>
+                    <Alert severity='success'>
+                      <AlertTitle>
+                        <strong>Ok</strong>
+                      </AlertTitle>
+                    </Alert>
+                  </div>
+                )}
                 <button
                   id='comment-add-button'
                   className='comment-buttons'
@@ -275,17 +294,25 @@ class SimplePersonalPost extends React.Component {
                   <p id='comments-text-paragraph'>{comment.text}</p>
                 </div>
                 <div>
-                  <p
+                  <div
                     style={{
                       textAlign: 'left',
                       color: 'gray',
-                      display: 'inline'
+                      display: 'inline-block'
                     }}
                   >
-                    opublikowano: {comment.add_date.substr(0, 10)}{' '}
-                    {comment.add_date.substr(11, 12).substr(0, 5)}
-                  </p>
-
+                    {!(comment.mod_date === null) ? (
+                      <div>
+                        edytowano: {comment.mod_date.substr(0, 10)}{' '}
+                        {comment.mod_date.substr(11, 12).substr(0, 5)}{' '}
+                      </div>
+                    ) : (
+                      <div>
+                        dodano: {comment.add_date.substr(0, 10)}{' '}
+                        {comment.add_date.substr(11, 12).substr(0, 5)}{' '}
+                      </div>
+                    )}
+                  </div>
                   {Number(this.state.accountOwnerId) ===
                   Number(comment.author.id) ? (
                     <div
