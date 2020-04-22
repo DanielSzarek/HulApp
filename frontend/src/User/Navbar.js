@@ -87,17 +87,17 @@ export default class Navbarex extends React.Component {
         <NavbarBrand href="/"> <img className="logoNav" src={logoNav} alt={"logo"} /></NavbarBrand>
         <Nav>
           <NavItem>
-            <NavLink className="navLink" active href="/tracks">
+            <NavLink id="tracks" className="navLink" active href="/tracks">
               Trasy <FaRoute />
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink" active href="/">
+            <NavLink id="profile" className="navLink" active href="/">
               Profil <FaUser />
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink" active href={"/posts/" +this.state.loggedUsersId} style={{paddingRight: '40px'}}>
+            <NavLink id="posts" className="navLink" active href={"/posts/" +this.state.loggedUsersId} style={{paddingRight: '40px'}}>
               Tablica <InfoIcon />
               {/* <TogglePostsMenu/>
               Posty */}
@@ -111,6 +111,7 @@ export default class Navbarex extends React.Component {
                 </InputGroup.Text>
               </div>
               <PersonAutoselect
+                id="searchUsers"
                 controlId="formUsersSearch"
                 label="Przyjaciele" dest="users"
                 name="userId" required="true"
@@ -126,7 +127,7 @@ export default class Navbarex extends React.Component {
           </NavItem>
           {this.state.redirect && <Redirect to={"/user/" + this.state.userId} />}
           <NavItem onClick={this.onClickLogOut}>
-            <NavLink className="navLinkLogout" active href="/login">
+            <NavLink id="logout" className="navLinkLogout" active href="/login">
               Wyloguj <FiLogOut />
             </NavLink>
           </NavItem>
