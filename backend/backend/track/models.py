@@ -13,6 +13,10 @@ class Track(models.Model):
 
     class Meta:
         verbose_name_plural = "Tracks"
+        indexes = [
+            models.Index(fields=['user', 'time_start', 'time_finish', 'duration', 'track_length'],
+                         name='track_idx')
+        ]
 
     def __str__(self):
         return f"Track of {self.user.email} on {self.time_start} with {self.track_length} just in {self.duration}"
