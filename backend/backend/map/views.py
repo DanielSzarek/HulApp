@@ -34,8 +34,3 @@ class PointDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         # I set new modification date
         serializer.save(mod_date=timezone.now())
-
-    def perform_destroy(self, instance):
-        # Here I just set published flag on false to archive our post
-        instance.published = False
-        instance.save()
