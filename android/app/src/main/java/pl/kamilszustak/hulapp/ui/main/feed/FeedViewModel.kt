@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 class FeedViewModel @Inject constructor(
     application: Application,
-    private val getAllPostsWithAuthorsUseCase: GetAllPostsWithAuthorsUseCase,
-    private val deletePostByIdUseCase: DeletePostByIdUseCase
+    private val getAllPostsWithAuthors: GetAllPostsWithAuthorsUseCase,
+    private val deletePostById: DeletePostByIdUseCase
 ) : StateViewModel(application) {
 
     val postsWithAuthorsResource: ResourceDataSource<List<PostWithAuthor>> = ResourceDataSource()
@@ -25,7 +25,7 @@ class FeedViewModel @Inject constructor(
 
     init {
         postsWithAuthorsResource.setFlowSource {
-            getAllPostsWithAuthorsUseCase()
+            getAllPostsWithAuthors()
         }
     }
 
@@ -43,7 +43,7 @@ class FeedViewModel @Inject constructor(
 
     fun onDeleteButtonClick(postId: Long) {
         performAction(R.string.deleting_post_error_message) {
-            deletePostByIdUseCase(postId)
+            deletePostById(postId)
         }
     }
 }

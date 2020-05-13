@@ -16,7 +16,6 @@ open class RefreshableDataSource<T>(
 ) {
 
     val result: MediatorLiveData<T> = MediatorLiveData()
-
     private var data: LiveData<T> = UniqueLiveData()
 
     init {
