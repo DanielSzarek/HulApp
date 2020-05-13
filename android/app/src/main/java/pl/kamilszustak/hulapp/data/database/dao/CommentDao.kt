@@ -20,9 +20,15 @@ interface CommentDao : BaseDao<CommentEntity> {
     @Query("DELETE FROM comments WHERE post_id = :postId")
     suspend fun deleteAllByPostId(postId: Long)
 
+    @Query("DELETE FROM comments WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("SELECT * FROM comments WHERE post_id = :postId ORDER BY creation_date ASC")
     fun getAllWithAuthorsByPostIdOrderedByDateAscending(postId: Long): Flow<List<CommentWithAuthorEntity>>
 
     @Query("SELECT * FROM comments WHERE post_id = :postId ORDER BY creation_date DESC")
     fun getAllWithAuthorsByPostIdOrderedByDateDescending(postId: Long): Flow<List<CommentWithAuthorEntity>>
+
+    @Query("SELECT * FROM comments WHERE id = :id")
+    fun getByIdWithAuthor(id: Long): Flow<CommentWithAuthorEntity>
 }

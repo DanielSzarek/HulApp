@@ -149,11 +149,11 @@ class SignUpFragment : BaseFragment() {
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { message ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 
-        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateToSignUpCompletedFragment()
         }
     }

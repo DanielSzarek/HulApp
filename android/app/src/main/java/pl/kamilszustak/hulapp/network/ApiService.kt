@@ -106,7 +106,7 @@ interface ApiService {
 
     @PATCH("/api/post/{id}")
     @Authorize
-    suspend fun editPost(
+    suspend fun editPostById(
         @Path("id") postId: Long,
         @Body requestBody: EditPostRequestBody
     ): Response<PostJson>
@@ -119,7 +119,19 @@ interface ApiService {
     @Authorize
     suspend fun getAllCommentsByPostId(@Query("post") postId: Long): Response<List<CommentJson>>
 
+    @GET("/api/comment/{id}")
+    @Authorize
+    suspend fun getCommentById(@Path("id") id: Long): Response<CommentJson>
+
     @POST("/api/comment/")
     @Authorize
     suspend fun addComment(@Body requestBody: AddCommentRequestBody): Response<CommentJson>
+
+    @PATCH("/api/comment/{id}")
+    @Authorize
+    suspend fun editCommentById(@Path("id") id: Long, @Body requestBody: EditCommentRequestBody): Response<CommentJson>
+
+    @DELETE("/api/comment/{id}")
+    @Authorize
+    suspend fun deleteCommentById(@Path("id") id: Long): Response<Unit>
 }

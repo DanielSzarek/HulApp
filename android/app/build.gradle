@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha06'
 
     // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta5'
 
     // Core
     def core_version = '1.3.0-rc01'
@@ -90,12 +90,12 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_version"
 
     // Activity
-    def activity_version = '1.2.0-alpha03'
+    def activity_version = '1.2.0-alpha04'
     implementation "androidx.activity:activity:$activity_version"
     implementation "androidx.activity:activity-ktx:$activity_version"
 
     // Fragment
-    def fragment_version = '1.3.0-alpha03'
+    def fragment_version = '1.3.0-alpha04'
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.fragment:fragment:$fragment_version"
 
@@ -105,7 +105,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     // Android Jetpack Navigation
-    def navigation_version = '2.3.0-alpha05'
+    def navigation_version = '2.3.0-alpha06'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -140,6 +140,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
+    // WorkManager
+    def work_manager_version = '2.4.0-alpha03'
+    implementation "androidx.work:work-runtime:$work_manager_version"
+    implementation "androidx.work:work-runtime-ktx:$work_manager_version"
+
     // CWAC-SafeRoom
     implementation 'com.commonsware.cwac:saferoom.x:1.3.0'
 
@@ -149,7 +154,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // OkHttp
-    def ok_http_version = '4.5.0'
+    def ok_http_version = '4.6.0'
     implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
 
@@ -170,7 +175,7 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
 
     // Moshi
     def moshi_version = '1.9.2'
@@ -195,7 +200,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // FastAdapter
-    def fast_adapter_version = '5.0.0'
+    def fast_adapter_version = '5.0.2'
     def materialize_version = '1.2.1'
     implementation "com.mikepenz:fastadapter:$fast_adapter_version"
     implementation "com.mikepenz:fastadapter-extensions-binding:$fast_adapter_version"

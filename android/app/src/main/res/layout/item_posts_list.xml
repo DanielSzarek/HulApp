@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/dateTextView"
-                android:text='@{postWithAuthor.isEdited ? @string/post_edit_date(DateFormats.INSTANCE.dateFormat.format(postWithAuthor.editDate)) : postWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(postWithAuthor.creationDate) : ""}'
+                android:text='@{postWithAuthor.isEdited ? @string/post_comment_edit_date(DateFormats.INSTANCE.dateFormat.format(postWithAuthor.editDate)) : postWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(postWithAuthor.creationDate) : ""}'
                 tools:text="2020-01-01 15:20"
                 android:textAppearance="?textAppearanceCaption"
                 android:maxLines="1"

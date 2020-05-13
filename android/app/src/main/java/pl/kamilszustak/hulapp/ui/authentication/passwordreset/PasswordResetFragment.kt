@@ -58,7 +58,7 @@ class PasswordResetFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.error.observe(viewLifecycleOwner) { message ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
         }
 
@@ -78,7 +78,7 @@ class PasswordResetFragment : BaseFragment() {
             }
         }
 
-        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateToPasswordResetCompletedFragment()
         }
     }

@@ -10,6 +10,7 @@ import pl.kamilszustak.hulapp.domain.mapper.comment.CommentJsonMapper
 import pl.kamilszustak.hulapp.domain.model.comment.CommentJson
 import pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthorEntity
 import pl.kamilszustak.hulapp.domain.model.network.AddCommentRequestBody
+import pl.kamilszustak.hulapp.domain.model.network.EditCommentRequestBody
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject
@@ -51,6 +52,28 @@ class CommentRepository @Inject constructor(
         }.asFlow()
     }
 
+    fun getByIdWithAuthor(
+        id: Long,
+        shouldFetch: Boolean
+    ): Flow<Resource<CommentWithAuthorEntity>> {
+        return object : NetworkBoundResource<CommentJson, CommentWithAuthorEntity>() {
+            override fun loadFromDatabase(): Flow<CommentWithAuthorEntity> =
+                commentDao.getByIdWithAuthor(id)
+
+            override fun shouldFetch(data: CommentWithAuthorEntity?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<CommentJson> =
+                apiService.getCommentById(id)
+
+            override suspend fun saveFetchResult(result: CommentJson) {
+                userDao.insert(result.author)
+                commentJsonMapper.onMap(result) { comment ->
+                    commentDao.insert(comment)
+                }
+            }
+        }.asFlow()
+    }
+
     suspend fun add(requestBody: AddCommentRequestBody): Result<Unit> {
         return object : NetworkCall<CommentJson, Unit>() {
             override suspend fun makeCall(): Response<CommentJson> =
@@ -65,5 +88,34 @@ class CommentRepository @Inject constructor(
                 }
             }
         }.callForResponse()
+    }
+
+    suspend fun editById(id: Long, requestBody: EditCommentRequestBody): Result<Unit> {
+        return object : NetworkCall<CommentJson, Unit>() {
+            override suspend fun makeCall(): Response<CommentJson> =
+                apiService.editCommentById(id, requestBody)
+
+            override suspend fun mapResponse(response: CommentJson): Unit = Unit
+
+            override suspend fun saveCallResult(result: CommentJson) {
+                userDao.insert(result.author)
+                commentJsonMapper.onMap(result) { comment ->
+                    commentDao.update(comment)
+                }
+            }
+        }.callForResponse()
+    }
+
+    suspend fun deleteById(id: Long): Result<Unit> {
+        return object : NetworkCall<Unit, Unit>() {
+            override suspend fun makeCall(): Response<Unit> =
+                apiService.deleteCommentById(id)
+
+            override suspend fun mapResponse(response: Unit): Unit = Unit
+
+            override suspend fun onResponseSuccess() {
+                commentDao.deleteById(id)
+            }
+        }.call()
     }
 }

@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
+import com.mikepenz.fastadapter.LongClickListener
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.toast
@@ -69,7 +71,52 @@ class PostDetailsFragment : BaseFragment() {
     }
 
     private fun initializeRecyclerView() {
-        val fastAdapter = FastAdapter.with(modelAdapter)
+        val fastAdapter = FastAdapter.with(modelAdapter).apply {
+            this.onLongClickListener = object : LongClickListener<CommentItem> {
+                override fun invoke(
+                    v: View,
+                    adapter: IAdapter<CommentItem>,
+                    item: CommentItem,
+                    position: Int
+                ): Boolean {
+                    if (!item.model.isMine) {
+                        return false
+                    }
+
+                    popupMenu(v) {
+                        inflate(R.menu.menu_my_comment_item)
+                        setOnMenuItemClickListener { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.editCommentItem -> {
+                                    navigateToEditCommentFragment(item.model.id)
+                                    true
+                                }
+
+                                R.id.deleteCommentItem -> {
+                                    dialog {
+                                        title(R.string.delete_comment_dialog_message)
+                                        positiveButton(R.string.yes) {
+                                            viewModel.onDeleteCommentButtonClick(item.model.id)
+                                        }
+
+                                        negativeButton(R.string.no) {
+                                            it.dismiss()
+                                        }
+                                    }
+                                    true
+                                }
+
+                                else -> {
+                                    false
+                                }
+                            }
+                        }
+                    }
+
+                    return true
+                }
+            }
+        }
 
         binding.commentsRecyclerView.apply {
             this.adapter = fastAdapter
@@ -138,11 +185,11 @@ class PostDetailsFragment : BaseFragment() {
             )
         }
 
-        viewModel.actionCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateUp()
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { messageResource ->
+        viewModel.errorEvent.observe(viewLifecycleOwner) { messageResource ->
             view?.snackbar(messageResource)
         }
 
@@ -170,6 +217,11 @@ class PostDetailsFragment : BaseFragment() {
 
     private fun navigateToAddPostFragment(postId: Long = -1) {
         val direction = PostDetailsFragmentDirections.actionPostDetailsFragmentToAddPostFragment(postId)
+        navigateTo(direction)
+    }
+
+    private fun navigateToEditCommentFragment(commentId: Long) {
+        val direction = PostDetailsFragmentDirections.actionPostDetailsFragmentToEditCommentFragment(commentId)
         navigateTo(direction)
     }
 }

@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
         val isUserLoggedIn: Boolean = settingsRepository.getValue(SettingsRepository.SettingsKey.IS_USER_LOGGED_IN)
 
         if (isUserLoggedIn) {
-            _actionCompleted.call()
+            _actionCompletedEvent.call()
         } else {
             clearData()
         }
@@ -62,7 +62,7 @@ class LoginViewModel @Inject constructor(
         val password = userPasswordField.data.value
 
         if (!isInternetConnected()) {
-            _error.value = R.string.no_internet_connection_error_message
+            _errorEvent.value = R.string.no_internet_connection_error_message
             return
         }
 
