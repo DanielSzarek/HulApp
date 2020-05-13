@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(('backend.api.urls', "api"), namespace="api")),
     url(r'^api/', include(('backend.track.urls', "track"), namespace="tracks")),
-    url(r'^api/', include(('backend.post.urls', "track"), namespace="posts")),
+    url(r'^api/', include(('backend.post.urls', "post"), namespace="posts")),
+    url(r'^api/', include(('backend.map.urls', "map"), namespace="map")),
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.jwt')),
     # Swagger
