@@ -21,6 +21,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import '../Styles/InputProps.css';
 import { InputGroup } from 'react-bootstrap';
 import TogglePostsMenu from '../Posts/TogglePostsMenu.js'
+import ToggleMenuNavbar from '../Map/ToggleMenuNavbar.js'
 
 
 export default class Navbarex extends React.Component {
@@ -102,6 +103,11 @@ export default class Navbarex extends React.Component {
               {/* <TogglePostsMenu/>
               Posty */}
             </NavLink>
+          </NavItem>
+          <NavItem  className="navLink">
+          <div  className="navLink" active>
+              <ToggleMenuNavbar  className="navLink"/>
+              </div>
           </NavItem>
           <NavItem>
             <InputGroup.Prepend>
