@@ -128,6 +128,11 @@ class TrackingViewModel @Inject constructor(
         }
     }
 
+    fun isMapPointMine(pointId: Long): Boolean {
+        val mapPoint = mapPointsResource.data.value?.firstOrNull { it.id == pointId}
+        return mapPoint?.isMine ?: false
+    }
+
     private fun getOnErrorCallback(): LocationLiveData.OnErrorCallback {
         return object : LocationLiveData.OnErrorCallback {
             override fun onLocationSettingsException(e: ApiException) {

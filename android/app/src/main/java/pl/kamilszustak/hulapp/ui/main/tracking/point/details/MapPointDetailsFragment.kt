@@ -43,7 +43,10 @@ class MapPointDetailsFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_my_map_point, menu)
+        if (args.isMapPointMine) {
+            inflater.inflate(R.menu.menu_my_map_point, menu)
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 

@@ -78,5 +78,8 @@
         <argument
             android:name="mapPointId"
             app:argType="long" />
+        <argument
+            android:name="isMapPointMine"
+            app:argType="boolean" />
     </fragment>
 </navigation>

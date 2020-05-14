@@ -250,7 +250,8 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun navigateToMapPointDetailsFragment(mapPointId: Long) {
-        val direction = TrackingFragmentDirections.actionTrackingFragmentToMapPointDetailsFragment(mapPointId)
+        val isMine = viewModel.isMapPointMine(mapPointId)
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToMapPointDetailsFragment(mapPointId, isMine)
         navigateTo(direction)
     }
 }

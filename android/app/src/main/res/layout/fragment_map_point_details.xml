@@ -27,9 +27,24 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/name"
+                    android:text="@string/author"
                     android:textAppearance="?textAppearanceBody2"
                     android:textColor="@color/colorPrimary" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.mapPointResource.data.author.fullName}"
+                    tools:text="Jan Kowalski"
+                    android:textAppearance="?textAppearanceHeadline5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"

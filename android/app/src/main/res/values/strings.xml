@@ -34,6 +34,7 @@
     <string name="delete">Usuń</string>
     <string name="name">Nazwa</string>
     <string name="description">Opis</string>
+    <string name="author">Autor</string>
 
     <!-- LoginFragment -->
     <string name="authentication_failed_error_message">Nie udało się zalogować</string>
