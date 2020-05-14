@@ -9,6 +9,8 @@ const mapStyles = {
   height: '86%'
 }
 
+const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+
 export class MapMainView extends Component {
   constructor (props) {
     super(props)
@@ -76,5 +78,5 @@ export class MapMainView extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'xxx'
+  apiKey: GOOGLE_MAPS_API_KEY
 })(MapMainView)

@@ -12,6 +12,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
+const RECAPTCHA_API_KEY = process.env.REACT_APP_RECAPTCHA_API_KEY
 
 class LoggingForm extends React.Component {
 
@@ -22,7 +23,6 @@ class LoggingForm extends React.Component {
             password: '',
             message: '',
             passwordHidden: true,
-            counter: 1
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -73,7 +73,7 @@ class LoggingForm extends React.Component {
 
                     <div className="logging-container">
                         <GoogleReCaptchaProvider
-                            reCaptchaKey="6Lfxoc4UAAAAAAt8MKjQQdAhGR_Z_cEDI8XqNyJf">
+                            reCaptchaKey={RECAPTCHA_API_KEY}>
                             <GoogleReCaptcha />
 
                             <form className="input-in-form" onSubmit={this.handleSubmit}>
