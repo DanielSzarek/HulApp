@@ -20,6 +20,6 @@ data class MapPointEntity(
     @ColumnInfo(name = "latitude")
     val latitude: Double,
 
-    @ColumnInfo(name = "longtitude")
-    val longtitude: Double
+    @ColumnInfo(name = "longitude")
+    val longitude: Double
 ) : DatabaseEntity()

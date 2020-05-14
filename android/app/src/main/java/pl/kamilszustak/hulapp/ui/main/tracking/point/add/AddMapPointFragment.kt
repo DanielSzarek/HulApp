@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentAddMapPointBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
 class AddMapPointFragment : BaseFragment() {
@@ -39,5 +41,24 @@ class AddMapPointFragment : BaseFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setListeners()
+        observeViewModel()
+    }
+
+    private fun setListeners() {
+        binding.addPointButton.setOnClickListener {
+            viewModel.onAddButtonClick(args.latLng)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
+            navigateUp()
+        }
     }
 }

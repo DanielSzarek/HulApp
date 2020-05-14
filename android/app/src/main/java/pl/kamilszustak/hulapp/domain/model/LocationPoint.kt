@@ -7,8 +7,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LocationPoint(
     val latitude: Double,
-    val longtitue: Double
+    val longitue: Double
 ) : Parcelable {
 
-    fun toLatLng(): LatLng = LatLng(this.latitude, this.longtitue)
+    fun toLatLng(): LatLng = LatLng(this.latitude, this.longitue)
 }

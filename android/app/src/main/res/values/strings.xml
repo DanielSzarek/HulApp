@@ -102,4 +102,7 @@
 
     <!-- AddMapPointFragment -->
     <string name="add_point_button_text">Dodaj punkt</string>
+    <string name="empty_map_point_name_error_message">Pusta nazwa punktu</string>
+    <string name="empty_map_point_description_error_message">Pusty opis punktu</string>
+    <string name="adding_map_point_error_message">Wystąpił błąd podczas dodawania punktu</string>
 </resources>

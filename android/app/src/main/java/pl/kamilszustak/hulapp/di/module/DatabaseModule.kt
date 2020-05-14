@@ -49,4 +49,9 @@ class DatabaseModule {
     @Singleton
     fun provideCommentdao(applicationDatabase: ApplicationDatabase): CommentDao =
         applicationDatabase.getCommentDao()
+
+    @Provides
+    @Singleton
+    fun provideMapPointDao(applicationDatabase: ApplicationDatabase): MapPointDao =
+        applicationDatabase.getMapPointDao()
 }

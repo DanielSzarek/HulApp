@@ -14,7 +14,7 @@ class MapPointJsonMapper @Inject constructor() : Mapper<MapPointJson, MapPointEn
             name = model.name,
             description = model.description,
             latitude = model.latitude,
-            longtitude = model.longtitude
+            longitude = model.longitude
         ).apply {
             this.id = model.id
         }

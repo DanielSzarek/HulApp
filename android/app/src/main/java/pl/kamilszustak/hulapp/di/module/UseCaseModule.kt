@@ -3,6 +3,8 @@ package pl.kamilszustak.hulapp.di.module
 import dagger.Binds
 import dagger.Module
 import pl.kamilszustak.hulapp.domain.usecase.comment.*
+import pl.kamilszustak.hulapp.domain.usecase.point.AddMapPointUseCase
+import pl.kamilszustak.hulapp.domain.usecase.point.AddMapPointUseCaseImpl
 import pl.kamilszustak.hulapp.domain.usecase.post.*
 
 @Module
@@ -36,4 +38,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindDeleteCommentByIdUseCase(useCaseImpl: DeleteCommentByIdUseCaseImpl): DeleteCommentByIdUseCase
+
+    @Binds
+    abstract fun bindAddMapPointUseCase(useCaseImpl: AddMapPointUseCaseImpl): AddMapPointUseCase
 }

@@ -19,6 +19,6 @@ data class MapPointJson(
     @Json(name = "latitude")
     val latitude: Double,
 
-    @Json(name = "longtitude")
-    val longtitude: Double
+    @Json(name = "longitude")
+    val longitude: Double
 ) : IdentifiedJsonModel()
