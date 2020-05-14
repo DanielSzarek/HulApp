@@ -20,24 +20,6 @@ export class MapMainView extends Component {
     this.Auth = new AuthService()
   }
 
-  //    async componentDidMount() {
-  //     if (await this.Auth.loggedIn()) {
-  //         this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
-  //             .then((res) => {
-  //                 this.setState({
-  //                     userId: res.id,
-  //                 });
-  //             })
-  //             .catch((error) => {
-  //                 console.log({ message: "ERROR " + error });
-  //             });
-  //     }
-  //     else {
-  //         this.setState({ auth: false });
-  //     }
-
-  // }
-
   async componentDidMount () {
     if (await this.Auth.loggedIn()) {
       this.Auth.fetch('http://hulapp.pythonanywhere.com/auth/users/me/')
@@ -79,14 +61,13 @@ export class MapMainView extends Component {
         >
           {this.state.points.map(point => (
             <Marker
-              title={point.latitude}
-              name={'SOMA'}
+              title={point.name}
+              name={point.name}
               position={{
-                lat: parseFloat(point.latitude),
-                lng: parseFloat(point.longitude)
+                lat: point.latitude,
+                lng: point.longitude
               }}
             />
-            // position={{lat: 54.52158, lng: 18.538301}} />
           ))}
         </Map>
       </div>
