@@ -13,8 +13,9 @@ class PointSerializer(serializers.ModelSerializer):
             'author',
             'name',
             'description',
+            'rating',
+            'latitude',
             'longitude',
-            'latitude'
         )
 
     def create(self, validated_data):

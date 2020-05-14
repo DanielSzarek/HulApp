@@ -4,18 +4,18 @@ from ..api.models import User
 
 class Point(models.Model):
     # TODO Think about GeoDjango
+    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     add_date = models.DateTimeField(auto_now_add=True)
     mod_date = models.DateTimeField(auto_now=True)
     longitude = models.FloatField(null=False)
     latitude = models.FloatField(null=False)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    rating = models.IntegerField()  # TODO need to be change when we will let every person add points
 
     class Meta:
         indexes = [
-            models.Index(fields=['name', 'description'], name='name_desc_idx'),
-            models.Index(fields=['longitude', 'latitude'], name='longitude_latitude_idx')
+            models.Index(fields=['author', 'name', 'description', 'rating', 'longitude', 'latitude'], name='point_idx'),
         ]
 
     def __str__(self):
