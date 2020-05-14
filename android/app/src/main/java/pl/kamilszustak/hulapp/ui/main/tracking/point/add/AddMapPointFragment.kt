@@ -48,6 +48,7 @@ class AddMapPointFragment : BaseFragment() {
 
         setListeners()
         observeViewModel()
+        binding.ratingBar.rating
     }
 
     private fun setListeners() {

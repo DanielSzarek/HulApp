@@ -16,6 +16,7 @@ class AddMapPointViewModel @Inject constructor(
 
     val pointName: UniqueLiveData<String> = UniqueLiveData()
     val pointDescription: UniqueLiveData<String> = UniqueLiveData()
+    val pointRating: UniqueLiveData<Float> = UniqueLiveData()
 
     fun onAddButtonClick(latLng: LatLng) {
         val name = pointName.value?.trim()
