@@ -147,4 +147,8 @@ interface ApiService {
     @POST("/api/point/")
     @Authorize
     suspend fun addMapPoint(@Body requestBody: AddMapPointRequestBody): Response<MapPointJson>
+
+    @DELETE("/api/point/{id}")
+    @Authorize
+    suspend fun deleteMapPointById(@Path("id") id: Long): Response<MapPointJson>
 }

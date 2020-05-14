@@ -5,10 +5,13 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentMapPointDetailsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
+import pl.kamilszustak.hulapp.util.dialog
+import pl.kamilszustak.hulapp.util.navigateUp
 import javax.inject.Inject
 
 class MapPointDetailsFragment : BaseFragment() {
@@ -47,6 +50,7 @@ class MapPointDetailsFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.deleteItem -> {
+                onDeleteButtonClick()
                 true
             }
 
@@ -59,6 +63,23 @@ class MapPointDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+        observeViewModel()
         viewModel.loadData(args.mapPointId)
+    }
+
+    private fun onDeleteButtonClick() {
+        dialog {
+            title(R.string.delete)
+            message(R.string.delete_map_point_dialog_message)
+            positiveButton(R.string.yes) { viewModel.onDeleteButtonClick(args.mapPointId) }
+            negativeButton(R.string.no) { it.dismiss() }
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
+            navigateUp()
+        }
     }
 }

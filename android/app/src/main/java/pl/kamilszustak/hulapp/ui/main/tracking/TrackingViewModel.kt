@@ -7,6 +7,7 @@ import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yashovardhan99.timeit.Stopwatch
 import kotlinx.coroutines.Dispatchers
@@ -80,6 +81,7 @@ class TrackingViewModel @Inject constructor(
     private val _trackSaved: SingleLiveData<TrackEntity> = SingleLiveData()
     val trackSaved: LiveData<TrackEntity> = _trackSaved
 
+    private val markers: MutableList<Marker> = mutableListOf()
     private val mapPointsResource: ResourceDataSource<List<MapPoint>> = ResourceDataSource()
     val mapPointsMarkers: LiveData<List<MarkerOptions>> = mapPointsResource.data.map { points ->
         createMarkers(points)
@@ -101,6 +103,11 @@ class TrackingViewModel @Inject constructor(
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun createMarkers(points: List<MapPoint>): List<MarkerOptions> {
+        markers.run {
+            forEach { it.remove() }
+            clear()
+        }
+
         val markers = buildList<MarkerOptions> {
             points.forEach { point ->
                 val marker = MarkerOptions()
@@ -112,6 +119,13 @@ class TrackingViewModel @Inject constructor(
         }
 
         return markers
+    }
+
+    fun onMarkerAdded(marker: Marker) {
+        markers.run {
+            removeAll { it.snippet == marker.snippet }
+            add(marker)
+        }
     }
 
     private fun getOnErrorCallback(): LocationLiveData.OnErrorCallback {

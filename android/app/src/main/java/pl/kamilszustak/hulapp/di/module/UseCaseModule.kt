@@ -46,4 +46,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindGetMapPointByIdUseCase(useCaseImpl: GetMapPointByIdUseCaseImpl): GetMapPointByIdUseCase
+
+    @Binds
+    abstract fun bindDeleteMapPointByIdUseCase(useCaseImpl: DeleteMapPointByIdUseCaseImpl): DeleteMapPointByIdUseCase
 }

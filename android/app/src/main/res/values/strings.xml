@@ -106,4 +106,9 @@
     <string name="empty_map_point_description_error_message">Pusty opis punktu</string>
     <string name="empty_map_point_rating_error_message">Pusta ocena punktu</string>
     <string name="adding_map_point_error_message">Wystąpił błąd podczas dodawania punktu</string>
+
+    <!-- MapPointDetailsFragment -->
+    <string name="deleting_map_point_error_message">Wystąpił błąd podczas usuwania punktu</string>
+    <string name="delete_map_point_dialog_title">Usuwanie punktu</string>
+    <string name="delete_map_point_dialog_message">Czy na pewno chcesz usunąć ten punkt?</string>
 </resources>

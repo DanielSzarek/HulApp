@@ -25,7 +25,6 @@ import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.navigateTo
 import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 class TrackingFragment : BaseFragment(), OnMapReadyCallback {
@@ -186,9 +185,11 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun observeMarkers() {
         viewModel.mapPointsMarkers.observe(viewLifecycleOwner) { markers ->
-            Timber.i(markers.size.toString())
             markers.forEach { marker ->
-                googleMap?.addMarker(marker)
+                val addedMarker = googleMap?.addMarker(marker)
+                if (addedMarker != null) {
+                    viewModel.onMarkerAdded(addedMarker)
+                }
             }
         }
     }
