@@ -31,9 +31,7 @@ class Registration extends React.Component {
             visible: false,
             success: false,
             passwordHidden: true,
-            counterRepeated: 1,
             passwordRepeatedHidden: true,
-            counter: 1
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -112,21 +110,11 @@ class Registration extends React.Component {
     };
 
     showPassword = () => {
-        this.setState({ counter: this.state.counter + 1 })
-        if (this.state.counter % 2 == 0) {
-            this.setState({
-                passwordHidden: false
-            })
-        } else { this.setState({ passwordHidden: true }) }
-    };
+        this.setState({ passwordHidden: !this.state.passwordHidden })
+    }
 
     showPasswordRepeated = () => {
-        this.setState({ counterRepeated: this.state.counterRepeated + 1 })
-        if (this.state.counterRepeated % 2 == 0) {
-            this.setState({
-                passwordRepeatedHidden: false
-            })
-        } else { this.setState({ passwordRepeatedHidden: true }) }
+        this.setState({ passwordRepeatedHidden: !this.state.passwordRepeatedHidden }) 
     };
 
     render() {

@@ -50,12 +50,7 @@ class LoggingForm extends React.Component {
     }
 
     showPassword = () => {
-        this.setState({ counter: this.state.counter + 1 })
-        if (this.state.counter % 2 == 0) {
-            this.setState({
-                passwordHidden: false
-            })
-        } else { this.setState({ passwordHidden: true }) }
+        this.setState({ passwordHidden: !this.state.passwordHidden })
     }
 
     async componentWillMount() {
