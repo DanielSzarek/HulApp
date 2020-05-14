@@ -220,8 +220,13 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
             }
 
             this.setOnMarkerClickListener { marker ->
-                toast(marker.snippet)
-                true
+                val mapPointId = marker?.snippet?.toLongOrNull()
+                if (mapPointId != null) {
+                    navigateToMapPointDetailsFragment(marker.snippet.toLong())
+                    true
+                } else {
+                    false
+                }
             }
         }
 
@@ -240,6 +245,11 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun navigateToAddMapPointFragment(latLng: LatLng) {
         val direction = TrackingFragmentDirections.actionTrackingFragmentToAddMapPointFragment(latLng)
+        navigateTo(direction)
+    }
+
+    private fun navigateToMapPointDetailsFragment(mapPointId: Long) {
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToMapPointDetailsFragment(mapPointId)
         navigateTo(direction)
     }
 }

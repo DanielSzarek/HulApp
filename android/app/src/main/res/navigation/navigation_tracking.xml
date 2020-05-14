@@ -31,6 +31,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_trackingFragment_to_mapPointDetailsFragment"
+            app:destination="@id/mapPointDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/trackDetailsFragment"
@@ -62,5 +69,14 @@
         <argument
             android:name="latLng"
             app:argType="com.google.android.gms.maps.model.LatLng" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapPointDetailsFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.point.details.MapPointDetailsFragment"
+        android:label="Szczegóły punktu"
+        tools:layout="@layout/fragment_map_point_details" >
+        <argument
+            android:name="mapPointId"
+            app:argType="long" />
     </fragment>
 </navigation>
