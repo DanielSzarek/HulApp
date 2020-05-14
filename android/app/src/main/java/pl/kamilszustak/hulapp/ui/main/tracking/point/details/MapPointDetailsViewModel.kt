@@ -25,6 +25,10 @@ class MapPointDetailsViewModel @Inject constructor(
         }
     }
 
+    fun onRefresh() {
+        mapPointResource.refresh()
+    }
+
     fun onDeleteButtonClick(mapPointId: Long) {
         performAction(R.string.deleting_map_point_error_message) {
             deleteMapPointById(mapPointId)

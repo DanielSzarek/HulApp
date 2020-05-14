@@ -41,8 +41,8 @@
                 android:src="@drawable/icon_map_dark"
                 android:background="?actionBarItemBackground"
                 android:padding="@dimen/default_padding"
-                app:layout_constraintStart_toStartOf="@id/mapFragment"
-                app:layout_constraintTop_toTopOf="@id/mapFragment" />
+                app:layout_constraintEnd_toEndOf="@id/mapFragment"
+                app:layout_constraintBottom_toBottomOf="@id/mapFragment" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"

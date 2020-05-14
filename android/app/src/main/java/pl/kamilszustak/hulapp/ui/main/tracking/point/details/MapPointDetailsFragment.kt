@@ -67,6 +67,7 @@ class MapPointDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        setListeners()
         observeViewModel()
         viewModel.loadData(args.mapPointId)
     }
@@ -77,6 +78,12 @@ class MapPointDetailsFragment : BaseFragment() {
             message(R.string.delete_map_point_dialog_message)
             positiveButton(R.string.yes) { viewModel.onDeleteButtonClick(args.mapPointId) }
             negativeButton(R.string.no) { it.dismiss() }
+        }
+    }
+
+    private fun setListeners() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
         }
     }
 
