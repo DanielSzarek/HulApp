@@ -27,6 +27,7 @@ import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryViewModel
 import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryViewModel
+import pl.kamilszustak.hulapp.ui.main.tracking.point.add.AddMapPointViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -132,4 +133,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditCommentViewModel::class)
     abstract fun bindEditCommentViewModel(editCommentViewModel: EditCommentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddMapPointViewModel::class)
+    abstract fun bindAddMapPointViewModel(addMapPointViewModel: AddMapPointViewModel): ViewModel
 }

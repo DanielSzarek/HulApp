@@ -24,6 +24,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_trackingFragment_to_addMapPointFragment"
+            app:destination="@id/addMapPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/trackDetailsFragment"
@@ -46,5 +53,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMapPointFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.tracking.point.add.AddMapPointFragment"
+        android:label="Dodaj punkt na mapie"
+        tools:layout="@layout/fragment_add_map_point" >
+        <argument
+            android:name="latLng"
+            app:argType="com.google.android.gms.maps.model.LatLng" />
     </fragment>
 </navigation>

@@ -14,10 +14,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
+import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.navigateTo
@@ -26,10 +28,8 @@ import pl.kamilszustak.hulapp.util.toLocationPoint
 import javax.inject.Inject
 
 class TrackingFragment : BaseFragment(), OnMapReadyCallback {
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: TrackingViewModel by viewModels {
         viewModelFactory
     }
@@ -195,6 +195,14 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
         this.googleMap = map?.apply {
             this.mapType = viewModel.getCurrentMapType()
             this.isMyLocationEnabled = true
+
+            this.setOnMapLongClickListener { latLng ->
+                if (latLng != null) {
+                    navigateToAddMapPointFragment(latLng)
+                } else {
+                    toast("Wystąpił błąd z wybraną lokalizacją na mapie")
+                }
+            }
         }
     }
 
@@ -205,6 +213,11 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun navigateToTrackingHistoryBottomSheet() {
         val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToAddMapPointFragment(latLng: LatLng) {
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToAddMapPointFragment(latLng)
         navigateTo(direction)
     }
 }

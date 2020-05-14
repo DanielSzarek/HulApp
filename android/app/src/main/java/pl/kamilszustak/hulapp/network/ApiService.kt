@@ -8,6 +8,7 @@ import pl.kamilszustak.hulapp.domain.model.Track
 import pl.kamilszustak.hulapp.domain.model.User
 import pl.kamilszustak.hulapp.domain.model.comment.CommentJson
 import pl.kamilszustak.hulapp.domain.model.network.*
+import pl.kamilszustak.hulapp.domain.model.point.MapPointJson
 import pl.kamilszustak.hulapp.domain.model.post.PostJson
 import pl.kamilszustak.hulapp.domain.model.track.TrackJson
 import retrofit2.Call
@@ -134,4 +135,16 @@ interface ApiService {
     @DELETE("/api/comment/{id}")
     @Authorize
     suspend fun deleteCommentById(@Path("id") id: Long): Response<Unit>
+
+    @GET("/api/point/")
+    @Authorize
+    suspend fun getAllMapPoints(): Response<List<MapPointJson>>
+
+    @GET("/api/point/{id}")
+    @Authorize
+    suspend fun getMapPointById(@Path("id") id: Long): Response<MapPointJson>
+
+    @POST("/api/point/")
+    @Authorize
+    suspend fun addMapPoint(@Body requestBody: AddMapPointRequestBody): Response<MapPointJson>
 }
