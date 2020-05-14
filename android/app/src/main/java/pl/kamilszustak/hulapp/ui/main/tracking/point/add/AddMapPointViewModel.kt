@@ -21,6 +21,7 @@ class AddMapPointViewModel @Inject constructor(
     fun onAddButtonClick(latLng: LatLng) {
         val name = pointName.value?.trim()
         val description = pointDescription.value?.trim()
+        val rating = pointRating.value?.toInt()
 
         if (name.isNullOrBlank()) {
             _errorEvent.value = R.string.empty_map_point_name_error_message
@@ -32,9 +33,15 @@ class AddMapPointViewModel @Inject constructor(
             return
         }
 
+        if (rating == null) {
+            _errorEvent.value = R.string.empty_map_point_rating_error_message
+            return
+        }
+
         val requestBody = AddMapPointRequestBody(
             name = name,
             description = description,
+            rating = rating,
             latitude = latLng.latitude,
             longitude = latLng.longitude
         )

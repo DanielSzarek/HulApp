@@ -2,24 +2,25 @@ package pl.kamilszustak.hulapp.ui.main.tracking
 
 import android.app.Application
 import android.location.Location
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.MarkerOptions
 import com.yashovardhan99.timeit.Stopwatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
 import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
 import pl.kamilszustak.hulapp.data.repository.TrackRepository
 import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.domain.model.Track
+import pl.kamilszustak.hulapp.domain.model.point.MapPoint
 import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
+import pl.kamilszustak.hulapp.domain.usecase.point.GetAllMapPointsUseCase
 import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import pl.kamilszustak.hulapp.util.round
 import pl.kamilszustak.hulapp.util.toLocationPoint
@@ -30,7 +31,8 @@ import javax.inject.Inject
 
 class TrackingViewModel @Inject constructor(
     application: Application,
-    private val trackRepository: TrackRepository
+    private val trackRepository: TrackRepository,
+    private val getAllMapPoints: GetAllMapPointsUseCase
 ) : StateViewModel(application) {
 
     val location: LocationLiveData = LocationLiveData.create(
@@ -78,10 +80,38 @@ class TrackingViewModel @Inject constructor(
     private val _trackSaved: SingleLiveData<TrackEntity> = SingleLiveData()
     val trackSaved: LiveData<TrackEntity> = _trackSaved
 
+    private val mapPointsResource: ResourceDataSource<List<MapPoint>> = ResourceDataSource()
+    val mapPointsMarkers: LiveData<List<MarkerOptions>> = mapPointsResource.data.map { points ->
+        createMarkers(points)
+    }
+
     init {
         initializeTracking()
         initializeDistance()
         initializeStopwatch()
+
+        mapPointsResource.setFlowSource {
+            getAllMapPoints()
+        }
+    }
+
+    fun onRefresh() {
+        mapPointsResource.refresh()
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun createMarkers(points: List<MapPoint>): List<MarkerOptions> {
+        val markers = buildList<MarkerOptions> {
+            points.forEach { point ->
+                val marker = MarkerOptions()
+                    .snippet(point.id.toString())
+                    .position(point.location)
+
+                this.add(marker)
+            }
+        }
+
+        return markers
     }
 
     private fun getOnErrorCallback(): LocationLiveData.OnErrorCallback {

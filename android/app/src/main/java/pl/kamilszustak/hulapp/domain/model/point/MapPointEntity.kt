@@ -17,6 +17,9 @@ data class MapPointEntity(
     @ColumnInfo(name = "description")
     val description: String,
 
+    @ColumnInfo(name = "rating")
+    val rating: Int,
+
     @ColumnInfo(name = "latitude")
     val latitude: Double,
 

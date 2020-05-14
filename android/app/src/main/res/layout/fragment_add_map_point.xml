@@ -65,7 +65,7 @@
                         android:id="@+id/ratingBar"
                         android:numStars="5"
                         android:stepSize="1"
-                        android:rating="@{viewModel.pointRating}"
+                        android:rating="@={viewModel.pointRating}"
                         android:layout_centerInParent="true" />
                 </RelativeLayout>
 
