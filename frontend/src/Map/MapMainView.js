@@ -5,6 +5,11 @@ import AuthService from '../User/AuthService'
 import { Redirect } from 'react-router-dom'
 import StarIcon from '@material-ui/icons/Star'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import point4 from '../Images/markers/redYellow.png'
+import point2 from '../Images/markers/greenYellow.png'
+import point5 from '../Images/markers/green.png'
+import point3 from '../Images/markers/yellow.png'
+import point1 from '../Images/markers/red.png'
 
 const mapStyles = {
   width: '100%',
@@ -25,7 +30,7 @@ export class MapMainView extends Component {
       authorName: '',
       authorSurname: '',
       authorProfileImg: '',
-      pointById: []
+      pointById: [],
     }
     this.Auth = new AuthService()
   }
@@ -84,6 +89,7 @@ export class MapMainView extends Component {
   }
 
   render () {
+    const imgArray = [point1, point2, point3, point4,point5]
     return (
       <div>
         <Navbarex />
@@ -100,7 +106,9 @@ export class MapMainView extends Component {
           {this.state.points.map(point => (
             <Marker
               name={point.description}
+              icon={imgArray[point.rating - 1]}
               label={String(point.id)}
+              labelVisible={false}
               title={point.name}
               description={point.description}
               onClick={this.onMarkerClick}
@@ -127,20 +135,6 @@ export class MapMainView extends Component {
                   <h5 style={{ display: 'inline' }}>/ 5</h5>
                 </div>
               </div>
-              {/* <div>
-                {' '}
-                <button
-                  style={{
-                    backgroundColor: 'red',
-                    border: 'none',
-                    fontWeight: 'bold',
-                    marginLeft: '30%',
-                    marginTop: '10px'
-                  }}
-                >
-                  <NavigateNextIcon /> Zobacz
-                </button>{' '}
-              </div> */}
             </InfoWindow>
           )}
         </Map>
