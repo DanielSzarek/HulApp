@@ -57,15 +57,6 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setHasOptionsMenu(true)
-        getPermission()
-        setListeners()
-        observeViewModel()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_tracking_fragment, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -73,6 +64,11 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.refreshItem -> {
+                viewModel.onRefresh()
+                true
+            }
+
             R.id.trackingHistoryItem -> {
                 navigateToTrackingHistoryBottomSheet()
                 true
@@ -82,6 +78,15 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
+        getPermission()
+        setListeners()
+        observeViewModel()
     }
 
     private fun initializeMap() {
@@ -178,6 +183,17 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
+    private fun observeMarkers() {
+        viewModel.mapPointsMarkers.observe(viewLifecycleOwner) { markers ->
+            markers.forEach { marker ->
+                val addedMarker = googleMap?.addMarker(marker)
+                if (addedMarker != null) {
+                    viewModel.onMarkerAdded(addedMarker)
+                }
+            }
+        }
+    }
+
     private fun moveTo(locationPoint: LocationPoint) {
         val position = locationPoint.toLatLng()
         val cameraLocation = CameraUpdateFactory.newLatLngZoom(position, mapZoomLevel)
@@ -203,7 +219,19 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
                     toast("Wystąpił błąd z wybraną lokalizacją na mapie")
                 }
             }
+
+            this.setOnMarkerClickListener { marker ->
+                val mapPointId = marker?.snippet?.toLongOrNull()
+                if (mapPointId != null) {
+                    navigateToMapPointDetailsFragment(marker.snippet.toLong())
+                    true
+                } else {
+                    false
+                }
+            }
         }
+
+        observeMarkers()
     }
 
     private fun navigateToTrackDetailsFragment(trackId: Long) {
@@ -218,6 +246,12 @@ class TrackingFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun navigateToAddMapPointFragment(latLng: LatLng) {
         val direction = TrackingFragmentDirections.actionTrackingFragmentToAddMapPointFragment(latLng)
+        navigateTo(direction)
+    }
+
+    private fun navigateToMapPointDetailsFragment(mapPointId: Long) {
+        val isMine = viewModel.isMapPointMine(mapPointId)
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToMapPointDetailsFragment(mapPointId, isMine)
         navigateTo(direction)
     }
 }

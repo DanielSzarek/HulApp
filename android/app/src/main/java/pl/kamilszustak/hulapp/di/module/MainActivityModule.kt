@@ -24,6 +24,7 @@ import pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFrag
 import pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.point.add.AddMapPointFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.point.details.MapPointDetailsFragment
 
 @Module
 abstract class MainActivityModule {
@@ -110,4 +111,8 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeAddMapPointFragment(): AddMapPointFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeMapPointDetailsFragment(): MapPointDetailsFragment
 }

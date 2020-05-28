@@ -34,6 +34,7 @@
     <string name="delete">Usuń</string>
     <string name="name">Nazwa</string>
     <string name="description">Opis</string>
+    <string name="author">Autor</string>
 
     <!-- LoginFragment -->
     <string name="authentication_failed_error_message">Nie udało się zalogować</string>
@@ -104,5 +105,11 @@
     <string name="add_point_button_text">Dodaj punkt</string>
     <string name="empty_map_point_name_error_message">Pusta nazwa punktu</string>
     <string name="empty_map_point_description_error_message">Pusty opis punktu</string>
+    <string name="empty_map_point_rating_error_message">Pusta ocena punktu</string>
     <string name="adding_map_point_error_message">Wystąpił błąd podczas dodawania punktu</string>
+
+    <!-- MapPointDetailsFragment -->
+    <string name="deleting_map_point_error_message">Wystąpił błąd podczas usuwania punktu</string>
+    <string name="delete_map_point_dialog_title">Usuwanie punktu</string>
+    <string name="delete_map_point_dialog_message">Czy na pewno chcesz usunąć ten punkt?</string>
 </resources>

@@ -16,8 +16,8 @@ data class MapPointJson(
     @Json(name = "description")
     val description: String,
 
-//    @Json(name = "rating")
-//    val rating: Int,
+    @Json(name = "rating")
+    val rating: Int,
 
     @Json(name = "latitude")
     val latitude: Double,

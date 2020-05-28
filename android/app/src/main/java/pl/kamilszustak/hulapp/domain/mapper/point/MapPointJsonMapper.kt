@@ -13,6 +13,7 @@ class MapPointJsonMapper @Inject constructor() : Mapper<MapPointJson, MapPointEn
             authorId = model.author.id,
             name = model.name,
             description = model.description,
+            rating = model.rating,
             latitude = model.latitude,
             longitude = model.longitude
         ).apply {

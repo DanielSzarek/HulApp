@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/refreshItem"
+        android:title="Odśwież"
+        android:icon="@drawable/icon_sync_light"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/trackingHistoryItem"
         android:title="Historia tras"
         android:icon="@drawable/icon_history_light"
