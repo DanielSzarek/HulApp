@@ -124,3 +124,16 @@ inline fun <S, T> MediatorLiveData<T>.addSources(
         }
     }
 }
+
+inline fun <T> MutableLiveData<T>.update(transform: (T?) -> T?) {
+    val updated = transform(this.value)
+    this.value = updated
+}
+
+inline fun <T> MutableLiveData<T>.updateNotNull(transform: (T) -> T?) {
+    val value = this.value
+    if (value != null) {
+        val updated = transform(value)
+        this.value = updated
+    }
+}
