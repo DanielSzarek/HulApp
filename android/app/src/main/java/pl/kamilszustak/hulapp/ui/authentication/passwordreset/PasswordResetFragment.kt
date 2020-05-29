@@ -16,10 +16,8 @@ import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
 class PasswordResetFragment : BaseFragment() {
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: PasswordResetViewModel by viewModels {
         viewModelFactory
     }
@@ -60,22 +58,6 @@ class PasswordResetFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
             view?.snackbar(message)
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                with(binding) {
-                    motionLayout.transitionToEnd()
-                    passwordResetButton.isEnabled = false
-                    progressBar.show()
-                }
-            } else {
-                with(binding) {
-                    motionLayout.transitionToStart()
-                    passwordResetButton.isEnabled = true
-                    progressBar.hide()
-                }
-            }
         }
 
         viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
