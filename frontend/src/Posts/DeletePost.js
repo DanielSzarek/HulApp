@@ -13,6 +13,8 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 class DeletePost extends React.Component {
   constructor (props) {
@@ -33,10 +35,11 @@ class DeletePost extends React.Component {
       content: '',
       postAuthorEmail: '',
       redirectToPost: false,
-      published: ''
+      published: '',
+      waiter: true,
+      alertSuccessVisible: false
     }
     this.Auth = new AuthService()
-    // this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -55,7 +58,8 @@ class DeletePost extends React.Component {
             postAuthorId: response.author.id,
             progressBarDisplayState: 'none',
             postAuthorEmail: response.author.username,
-            published: response.published
+            published: response.published,
+            waiter: false
           })
           console.log('publish value: ' + this.state.published)
         })
@@ -72,7 +76,6 @@ class DeletePost extends React.Component {
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
   }
 
-
   handleSubmit = event => {
     event.preventDefault()
     this.Auth.fetch(
@@ -81,8 +84,7 @@ class DeletePost extends React.Component {
         method: 'DELETE',
 
         body: JSON.stringify({
-          id: this.props.match.params.postId,
- 
+          id: this.props.match.params.postId
         })
       }
     )
@@ -92,14 +94,8 @@ class DeletePost extends React.Component {
           return response.json()
         }
       })
-      .then(alert('Twój post został usunięty'))
-    {
-      setTimeout(() => {
-        // window.location.reload()
-        return <Redirect to={'/posts/' + this.props.match.params.usersId} />
-      }, 3500)
-      //   this.setState({redirectToPost: true})
-    }
+      .then(this.setState({ alertSuccessVisible: true }))
+      .then(setTimeout(() => this.setState({ success: true }), 2000))
   }
 
   publishHandler = event => {
@@ -107,85 +103,94 @@ class DeletePost extends React.Component {
   }
 
   render () {
+    if (this.state.success) {
+      return <Redirect to={'/posts/' + this.state.postAuthorId} />
+    }
     return (
       <div>
         {this.state.auth ? '' : <Redirect to='/' />}
-        {/* {!(this.state.redirectToPost) ? '' : <Redirect to={'/posts/'+this.props.match.params.usersId} />} */}
         <Navbarex />
-        <CircularProgress
-          style={{
-            display: this.state.progressBarDisplayState,
-            position: 'absolute',
-            marginLeft: '50%',
-            marginTop: '100px'
-          }}
-        />
 
-        <div>
-        <h1> CZY NAPEWNO CHCESZ USUNĄĆ TEN POST? </h1>
-          <Card style={{ width: '60%', marginLeft: '20%' }}>
-            {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-            <Card.Body>
-              <Card.Title>
-                <div style={{ display: 'inline-block' }}>
-                  <Avatar
-                    src={this.state.postAuthorProfPic}
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      display: 'inline-block',
-                      marginTop: '20px'
-                    }}
-                  />
-                  {this.state.postAuthorName} {this.state.postAuthorSurname}
-                  <div>
-                    {this.formatDateTime(this.state.post.add_date)}{' '}
-                    Opublikowano:{' '}
-                    {this.state.published === true ? 'tak' : 'nie'}
-                  </div>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        icon={<FavoriteBorder />}
-                        checkedIcon={<Favorite />}
-                        // onClick={this.publishHandler}
-                        name='checkedH'
-                        // checked={(this.state.published===true) ? false : true}
-                        checked={this.state.published}
-                      />
-                    }
-                    label='Opublikuj'
-                  />
-                </div>
-              </Card.Title>
-              <Card.Text>
-                {' '}
-                <form onSubmit={this.handleSubmit}>
-                  <Form.Group>
-                    <Form.Control
-                      name='content'
-                      type='text'
-                      value={this.state.content}
-                    //   onChange={this.handleChange}
-                      required
+        {this.state.waiter ? (
+          <LinearProgress
+            color='secondary'
+            style={{ marginTop: '20px', height: '15px' }}
+          />
+        ) : (
+          <div>
+            <h1> CZY NAPEWNO CHCESZ USUNĄĆ TEN POST? </h1>
+            <Card style={{ width: '60%', marginLeft: '20%' }}>
+              {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+              <Card.Body>
+                <Card.Title>
+                  <div style={{ display: 'inline-block' }}>
+                    <Avatar
+                      src={this.state.postAuthorProfPic}
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        display: 'inline-block',
+                        marginTop: '20px'
+                      }}
                     />
-                  </Form.Group>
-                  <button
-                    style={{
-                      backgroundColor: 'red',
-                      border: '0px',
-                      color: 'white',
-                      height: '35px',
-                      marginLeft: '40%'
-                    }}
-                  >
-                    usuń
-                  </button>
-                </form>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
+                    {this.state.postAuthorName} {this.state.postAuthorSurname}
+                    <div>
+                      {this.formatDateTime(this.state.post.add_date)}{' '}
+                      Opublikowano:{' '}
+                      {this.state.published === true ? 'tak' : 'nie'}
+                    </div>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          icon={<FavoriteBorder />}
+                          checkedIcon={<Favorite />}
+                          name='checkedH'
+                          checked={this.state.published}
+                        />
+                      }
+                      label='Opublikuj'
+                    />
+                  </div>
+                </Card.Title>
+                <Card.Text>
+                  {' '}
+                  <form onSubmit={this.handleSubmit}>
+                    <Form.Group>
+                      <Form.Control
+                        name='content'
+                        type='text'
+                        value={this.state.content}
+                        required
+                      />
+                    </Form.Group>
+                    {!this.state.alertSuccessVisible ? (
+                      ''
+                    ) : (
+                      <div id='comment-add-alert'>
+                        <Alert severity='info'>
+                          <AlertTitle>
+                            <strong>Twój post został usunięty </strong>
+                          </AlertTitle>
+                        </Alert>
+                      </div>
+                    )}
+                    <button
+                      style={{
+                        backgroundColor: 'red',
+                        border: '0px',
+                        color: 'white',
+                        height: '35px',
+                        marginLeft: '40%'
+                      }}
+                    >
+                      usuń
+                    </button>
+                  </form>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        )}
       </div>
     )
   }

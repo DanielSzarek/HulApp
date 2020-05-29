@@ -15,7 +15,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import ModeCommentIcon from '@material-ui/icons/ModeComment'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -53,8 +54,7 @@ export default function SinglePost (props) {
     date: props.data.add_date,
     id: props.data.author.id,
     postId: props.data.id,
-    modDate: props.data.mod_date,
-    // usersId: props.data.usersId,
+    modDate: props.data.mod_date
   })
 
   const [usersId, setUsersId] = useState(props.usersId)
@@ -63,9 +63,19 @@ export default function SinglePost (props) {
     setExpanded(!expanded)
   }
 
-  const formatDateTime = dateString => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
+  const longDate = post.date
+  const additionDate = longDate.substr(0, 10)
+  const additionTime = longDate.substr(11, 12)
+  const additionTimeFormatted = additionTime.substr(0, 5)
+  const longModDateTime = post.modDate
+  let modificationDate = ''
+  let modificationTime = ''
+  let modificationTimeFormatted = ''
+
+  if (longModDateTime !== null) {
+    modificationDate = longModDateTime.substr(0, 10)
+    modificationTime = longModDateTime.substr(11, 12)
+    modificationTimeFormatted = modificationTime.substr(0, 5)
   }
 
   return (
@@ -79,20 +89,28 @@ export default function SinglePost (props) {
               src={post.src}
             ></Avatar>
           }
-          action={
-            <IconButton aria-label='settings'>
-              <MoreVertIcon />
-            </IconButton>
-          }
+          // action={
+          //   <IconButton aria-label='settings'>
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
           title={
-            <div>
+            <div style={{ color: 'red', fontWeight: 'bold' }}>
               {post.name} {post.surname}
             </div>
           }
-          // subheader={<div> {formatDateTime(post.date)} </div>}
-          // subheader={(post.modDate==null && post.modDate==='')?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
-        subheader={(post.modDate==null)?<div> {formatDateTime(post.date)} </div> : <div>Edytowano:  {formatDateTime(post.modDate)} </div> }
-
+          subheader={
+            post.modDate == null ? (
+              <div>
+                {' '}
+                {additionDate} {additionTimeFormatted}{' '}
+              </div>
+            ) : (
+              <div>
+                Edytowano: {modificationDate} {modificationTimeFormatted}
+              </div>
+            )
+          }
         />
         {/* <CardMedia
         className={classes.media}
@@ -101,8 +119,8 @@ export default function SinglePost (props) {
       /> */}
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
-            <p style={{maxWidth:'900px'}}>
-            <b>{post.text}</b>              
+            <p style={{ maxWidth: '900px' }}>
+              <b>{post.text}</b>
             </p>
           </Typography>
         </CardContent>
@@ -111,8 +129,14 @@ export default function SinglePost (props) {
             <FavoriteIcon />
           </IconButton>
 
-          <Link to={"/simple/personal/post/" + usersId +"/" +post.postId}>
-          {(post.id === usersId) ?  "" : <text>Pokaż </text>}
+          <Link to={'/simple/personal/post/' + usersId + '/' + post.postId}>
+            {post.id === usersId ? (
+              ''
+            ) : (
+              <IconButton aria-label='share'>
+                <ModeCommentIcon />
+              </IconButton>
+            )}
           </Link>
           {/* <text>Pokaż </text> */}
           {/* <IconButton aria-label="share">

@@ -6,12 +6,13 @@ import { Link, Redirect } from 'react-router-dom'
 import { CircularProgress } from '@material-ui/core'
 import '../Styles/PostView.css'
 import SinglePost from './SinglePost.js'
+import '../Styles/SinglePost.css'
+
 
 class PostsView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      // posts: [],
       posts: [],
 
       usersId: this.props.match.params.usersId,
@@ -26,16 +27,11 @@ class PostsView extends React.Component {
       this.Auth.fetch('http://hulapp.pythonanywhere.com/api/post')
         .then(response => {
           this.setState({
-            // posts: [...response ,this.state.usersId],
-            // posts: response,
             posts:  response,
             progressBarDisplayState: 'none'
           })
           this.state.posts.push(this.state.usersId);
           console.log(this.props.match.params.usersId)
-          //  this.setState({
-          //   posts: [...this.state.posts, this.state.usersId],
-          // })
         })
         .catch(error => {
           console.log({ message: 'ERROR ' + error })
