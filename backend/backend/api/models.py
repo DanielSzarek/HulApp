@@ -10,6 +10,9 @@ class Country(models.Model):
 
     class Meta:
         verbose_name_plural = "Countries"
+        indexes = [
+            models.Index(fields=['name'], name='country_name_idx')
+        ]
 
     def __str__(self):
         return self.name
@@ -23,6 +26,9 @@ class Province(models.Model):
 
     class Meta:
         verbose_name_plural = "Provinces"
+        indexes = [
+            models.Index(fields=['name'], name='province_name_idx')
+        ]
 
     def __str__(self):
         return self.name
@@ -36,6 +42,9 @@ class City(models.Model):
 
     class Meta:
         verbose_name_plural = "Cities"
+        indexes = [
+            models.Index(fields=['name'], name='city_name_idx')
+        ]
 
     def __str__(self):
         return self.name

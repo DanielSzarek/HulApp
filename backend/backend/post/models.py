@@ -11,6 +11,9 @@ class Post(models.Model):
 
     class Meta:
         verbose_name_plural = "Posts"
+        indexes = [
+            models.Index(fields=['author', 'published', 'text'], name='post_idx')
+        ]
 
     def __str__(self):
         return f"Post: {self.text} written by {self.author}"
