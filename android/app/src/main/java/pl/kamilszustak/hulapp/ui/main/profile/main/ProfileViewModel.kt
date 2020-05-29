@@ -13,7 +13,8 @@ class ProfileViewModel @Inject constructor(
     cityRepository: CityRepository,
     countryRepository: CountryRepository,
     trackRepository: TrackRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val userDetailsRepository: UserDetailsRepository
 ) : BaseProfileViewModel(
     application,
     userRepository,
@@ -41,6 +42,7 @@ class ProfileViewModel @Inject constructor(
         settingsRepository.setValue(
             SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to false
         )
+        userDetailsRepository.restoreDefaultValues()
         _logoutEvent.call()
     }
 

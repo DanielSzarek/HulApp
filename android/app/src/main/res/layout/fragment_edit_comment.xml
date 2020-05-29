@@ -14,65 +14,69 @@
         android:enabled="false"
         app:refreshing="@{viewModel.isLoading}">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:id="@+id/authorProfilePhotoImageView"
-                app:imageUrl="@{viewModel.commentWithAuthor.author.profilePhotoUrl}"
-                tools:src="@drawable/ic_launcher_background"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                style="@style/TextInputLayoutStyle"
-                android:id="@+id/commentInputLayout"
-                app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/authorProfilePhotoImageView"
-                android:layout_marginHorizontal="@dimen/default_margin">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id="@+id/authorProfilePhotoImageView"
+                    app:imageUrl="@{viewModel.commentWithAuthor.author.profilePhotoUrl}"
+                    tools:src="@drawable/ic_launcher_background"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/commentEditText"
-                    android:text="@={viewModel.commentContentField.data}"
-                    tools:text="Test comment"
-                    android:inputType="textCapSentences" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    style="@style/TextInputLayoutStyle"
+                    android:id="@+id/commentInputLayout"
+                    app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/authorProfilePhotoImageView"
+                    android:layout_marginHorizontal="@dimen/default_margin">
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/deleteCommentButton"
-                android:text="@string/delete"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/editCommentButton"
-                app:layout_constraintTop_toTopOf="@id/editCommentButton"
-                app:layout_constraintBottom_toBottomOf="@id/editCommentButton"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_half_margin" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/commentEditText"
+                        android:text="@={viewModel.commentContentField.data}"
+                        tools:text="Test comment"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/editCommentButton"
-                android:text="@string/edit"
-                app:layout_constraintStart_toEndOf="@id/deleteCommentButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/commentInputLayout"
-                android:layout_marginStart="@dimen/default_half_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deleteCommentButton"
+                    android:text="@string/delete"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/editCommentButton"
+                    app:layout_constraintTop_toTopOf="@id/editCommentButton"
+                    app:layout_constraintBottom_toBottomOf="@id/editCommentButton"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_half_margin" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editCommentButton"
+                    android:text="@string/edit"
+                    app:layout_constraintStart_toEndOf="@id/deleteCommentButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/commentInputLayout"
+                    android:layout_marginStart="@dimen/default_half_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

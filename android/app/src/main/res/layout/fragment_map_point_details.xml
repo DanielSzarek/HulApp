@@ -80,7 +80,7 @@
                         android:numStars="5"
                         android:stepSize="1"
                         android:isIndicator="true"
-                        android:rating="@{viewModel.mapPointResource.data.rating}"
+                        android:rating="@{viewModel.mapPointResource.data.rating.value}"
                         android:layout_centerInParent="true" />
                 </RelativeLayout>
             </LinearLayout>

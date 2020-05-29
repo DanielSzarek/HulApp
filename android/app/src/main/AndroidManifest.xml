@@ -44,6 +44,7 @@
             android:exported="true" />
 
         <activity android:name="pl.kamilszustak.hulapp.ui.main.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
     </application>
 
