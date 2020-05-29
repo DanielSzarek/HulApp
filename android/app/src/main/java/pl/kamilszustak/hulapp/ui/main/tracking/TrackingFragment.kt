@@ -14,11 +14,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.fragment_tracking.*
+import com.google.android.gms.maps.model.LatLng
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.toast
 import pl.kamilszustak.hulapp.R
-import pl.kamilszustak.hulapp.data.model.LocationPoint
 import pl.kamilszustak.hulapp.databinding.FragmentTrackingBinding
+import pl.kamilszustak.hulapp.domain.model.LocationPoint
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.dialog
 import pl.kamilszustak.hulapp.util.navigateTo
@@ -26,14 +27,14 @@ import pl.kamilszustak.hulapp.util.polylineOptions
 import pl.kamilszustak.hulapp.util.toLocationPoint
 import javax.inject.Inject
 
-class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
-
+class TrackingFragment : BaseFragment(), OnMapReadyCallback {
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: TrackingViewModel by viewModels {
         viewModelFactory
     }
+
+    private lateinit var binding: FragmentTrackingBinding
 
     private var googleMap: GoogleMap? = null
     private val mapZoomLevel: Float = 15F
@@ -43,7 +44,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentTrackingBinding>(
+        binding = DataBindingUtil.inflate<FragmentTrackingBinding>(
             inflater,
             R.layout.fragment_tracking,
             container,
@@ -53,16 +54,7 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setHasOptionsMenu(true)
-        getPermission()
-        setListeners()
-        observeViewModel()
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,6 +64,11 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.refreshItem -> {
+                viewModel.onRefresh()
+                true
+            }
+
             R.id.trackingHistoryItem -> {
                 navigateToTrackingHistoryBottomSheet()
                 true
@@ -83,9 +80,18 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
+        getPermission()
+        setListeners()
+        observeViewModel()
+    }
+
     private fun initializeMap() {
         val fragment = childFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment
-        fragment?.getMapAsync(getOnMapReadyCallback())
+        fragment?.getMapAsync(this)
     }
 
     private fun getPermission() {
@@ -94,8 +100,8 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             Permission.ACCESS_COARSE_LOCATION
         )
 
-        askForPermissions(*permissions) {
-            val allGranted = it.isAllGranted(*permissions)
+        askForPermissions(*permissions) { result ->
+            val allGranted = result.isAllGranted(*permissions)
             if (allGranted) {
                 observeLocation()
                 initializeMap()
@@ -106,11 +112,11 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     }
 
     private fun setListeners() {
-        startTrackingButton.setOnClickListener {
+        binding.startTrackingButton.setOnClickListener {
             viewModel.onStartTrackingButtonClick()
         }
 
-        endTrackingButton.setOnClickListener {
+        binding.endTrackingButton.setOnClickListener {
             dialog {
                 title(R.string.tracking_end_title)
                 message(R.string.tracking_end_message)
@@ -123,33 +129,33 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             }
         }
 
-        mapTypeButton.setOnClickListener {
+        binding.mapTypeButton.setOnClickListener {
             viewModel.onMapTypeButtonClick()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.trackingState.observe(this) {
-            when (it) {
+        viewModel.trackingState.observe(viewLifecycleOwner) { state ->
+            when (state) {
                 is TrackingState.Started -> {
-                    motionLayout.transitionToEnd()
+                    binding.motionLayout.transitionToEnd()
                 }
 
                 is TrackingState.Paused -> {
                 }
 
                 is TrackingState.Ended -> {
-                    motionLayout.transitionToStart()
+                    binding.motionLayout.transitionToStart()
                 }
             }
         }
 
-        viewModel.mapType.observe(this) {
-            googleMap?.mapType = it
+        viewModel.mapType.observe(viewLifecycleOwner) { type ->
+            googleMap?.mapType = type
         }
 
-        viewModel.locationPoints.observe(this) {
-            val points = it.map { point ->
+        viewModel.locationPoints.observe(viewLifecycleOwner) { locations ->
+            val points = locations.map { point ->
                 point.toLatLng()
             }
 
@@ -161,18 +167,30 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
             googleMap?.addPolyline(polyline)
         }
 
-        viewModel.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.trackSaved.observe(this) {
-            navigateToTrackDetailsFragment(it.id)
+        viewModel.trackSaved.observe(viewLifecycleOwner) { track ->
+            googleMap?.clear()
+            navigateToTrackDetailsFragment(track.id)
         }
     }
 
     private fun observeLocation() {
-        viewModel.location.observe(this) {
-            moveTo(it)
+        viewModel.location.observe(viewLifecycleOwner) { location ->
+            moveTo(location)
+        }
+    }
+
+    private fun observeMarkers() {
+        viewModel.mapPointsMarkers.observe(viewLifecycleOwner) { markers ->
+            markers.forEach { marker ->
+                val addedMarker = googleMap?.addMarker(marker)
+                if (addedMarker != null) {
+                    viewModel.onMarkerAdded(addedMarker)
+                }
+            }
         }
     }
 
@@ -189,13 +207,31 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
         moveTo(location.toLocationPoint())
     }
 
-    private fun getOnMapReadyCallback(): OnMapReadyCallback {
-        return OnMapReadyCallback {
-            this.googleMap = it.apply {
-                this.mapType = viewModel.getCurrentMapType()
-                this.isMyLocationEnabled = true
+    override fun onMapReady(map: GoogleMap?) {
+        this.googleMap = map?.apply {
+            this.mapType = viewModel.getCurrentMapType()
+            this.isMyLocationEnabled = true
+
+            this.setOnMapLongClickListener { latLng ->
+                if (latLng != null) {
+                    navigateToAddMapPointFragment(latLng)
+                } else {
+                    toast("Wystąpił błąd z wybraną lokalizacją na mapie")
+                }
+            }
+
+            this.setOnMarkerClickListener { marker ->
+                val mapPointId = marker?.snippet?.toLongOrNull()
+                if (mapPointId != null) {
+                    navigateToMapPointDetailsFragment(marker.snippet.toLong())
+                    true
+                } else {
+                    false
+                }
             }
         }
+
+        observeMarkers()
     }
 
     private fun navigateToTrackDetailsFragment(trackId: Long) {
@@ -204,7 +240,18 @@ class TrackingFragment : BaseFragment(R.layout.fragment_tracking) {
     }
 
     private fun navigateToTrackingHistoryBottomSheet() {
-        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryBottomSheet()
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToTrackingHistoryFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToAddMapPointFragment(latLng: LatLng) {
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToAddMapPointFragment(latLng)
+        navigateTo(direction)
+    }
+
+    private fun navigateToMapPointDetailsFragment(mapPointId: Long) {
+        val isMine = viewModel.isMapPointMine(mapPointId)
+        val direction = TrackingFragmentDirections.actionTrackingFragmentToMapPointDetailsFragment(mapPointId, isMine)
         navigateTo(direction)
     }
 }

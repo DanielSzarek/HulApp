@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/copyContentItem"
+        android:title="Kopiuj treść"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/editPostItem"
+        android:title="Edytuj post"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/deletePostItem"
+        android:title="Usuń post"
+        app:showAsAction="always" />
+</menu>

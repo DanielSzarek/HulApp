@@ -1,19 +1,33 @@
 package pl.kamilszustak.hulapp.data.database
 
 import android.app.Application
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.security.crypto.MasterKeys
 import com.commonsware.cwac.saferoom.SafeHelperFactory
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.data.database.dao.*
-import pl.kamilszustak.hulapp.data.model.*
+import pl.kamilszustak.hulapp.domain.model.City
+import pl.kamilszustak.hulapp.domain.model.Country
+import pl.kamilszustak.hulapp.domain.model.SearchPrompt
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.comment.CommentEntity
+import pl.kamilszustak.hulapp.domain.model.point.MapPointEntity
+import pl.kamilszustak.hulapp.domain.model.post.PostEntity
+import pl.kamilszustak.hulapp.domain.model.track.TrackEntity
 
 @Database(
     entities = [
         User::class,
         City::class,
         Country::class,
-        Track::class
+        TrackEntity::class,
+        SearchPrompt::class,
+        PostEntity::class,
+        CommentEntity::class,
+        MapPointEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -22,12 +36,13 @@ import pl.kamilszustak.hulapp.data.model.*
 abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
-
     abstract fun getCityDao(): CityDao
-
     abstract fun getCountryDao(): CountryDao
-
     abstract fun getTrackDao(): TrackDao
+    abstract fun getSearchPromptDao(): SearchPromptDao
+    abstract fun getPostDao(): PostDao
+    abstract fun getCommentDao(): CommentDao
+    abstract fun getMapPointDao(): MapPointDao
 
     companion object {
         private var INSTANCE: ApplicationDatabase? = null

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="pl.kamilszustak.hulapp.common.date.DateFormats" />
+        <variable
+            name="commentWithAuthor"
+            type="pl.kamilszustak.hulapp.domain.model.comment.CommentWithAuthor" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/authorProfilePhotoImageView"
+            app:imageUrl="@{commentWithAuthor.author.profilePhotoUrl}"
+            tools:src="@drawable/ic_launcher_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/authorFullNameTextView"
+            android:text="@{commentWithAuthor.author.fullName}"
+            tools:text="Jan Kowalski"
+            android:textAppearance="?textAppearanceSubtitle2"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/authorProfilePhotoImageView"
+            android:layout_marginStart="@dimen/default_margin" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/contentTextView"
+            android:text="@{commentWithAuthor.content}"
+            tools:text="@string/lorem_ipsum"
+            android:textAppearance="?textAppearanceBody2"
+            app:layout_constraintStart_toStartOf="@id/authorFullNameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/authorFullNameTextView" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTextView"
+            android:text='@{commentWithAuthor.isEdited ? @string/post_comment_edit_date(DateFormats.INSTANCE.dateFormat.format(commentWithAuthor.editDate)) : commentWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(commentWithAuthor.creationDate) : ""}'
+            tools:text="2020-01-01 10:15"
+            android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintStart_toStartOf="@id/contentTextView"
+            app:layout_constraintEnd_toEndOf="@id/contentTextView"
+            app:layout_constraintTop_toBottomOf="@id/contentTextView"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

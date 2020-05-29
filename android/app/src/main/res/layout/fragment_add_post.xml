@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.feed.post.add.AddPostViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipeRefreshLayout"
+        android:enabled="false"
+        app:refreshing="@{viewModel.isLoading}"
+        android:padding="@dimen/default_padding">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/inputLayout"
+            style="@style/TextInputLayoutStyle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editText"
+                android:text="@={viewModel.postContentField.data}"
+                android:inputType="textMultiLine|textCapSentences"
+                android:hint="Treść"
+                android:gravity="start|top"
+                android:minLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

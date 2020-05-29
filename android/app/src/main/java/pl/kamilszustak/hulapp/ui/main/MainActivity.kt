@@ -5,17 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.binding.view.viewBinding
+import pl.kamilszustak.hulapp.databinding.ActivityMainBinding
 import pl.kamilszustak.hulapp.ui.base.BaseActivity
 import pl.kamilszustak.hulapp.util.setupWithNavController
 
-class MainActivity : BaseActivity(R.layout.activity_main) {
+class MainActivity : BaseActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
+    private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -39,7 +42,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             R.navigation.navigation_profile
         )
 
-        val controller = mainBottomNavigationView.setupWithNavController(
+        val controller = binding.mainBottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.mainNavHostFragment,

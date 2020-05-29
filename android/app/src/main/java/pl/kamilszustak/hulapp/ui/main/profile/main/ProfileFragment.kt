@@ -6,33 +6,37 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import kotlinx.android.synthetic.main.fragment_profile.*
+import com.mikepenz.fastadapter.ClickListener
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
+import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentProfileBinding
-import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
-import pl.kamilszustak.hulapp.ui.base.BaseFragment
-import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
+import pl.kamilszustak.hulapp.domain.item.TrackItem
+import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
+import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileFragment
 import pl.kamilszustak.hulapp.util.navigateTo
+import pl.kamilszustak.hulapp.util.updateModels
+import timber.log.Timber
 import javax.inject.Inject
 
-class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
-
+class ProfileFragment : BaseProfileFragment() {
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: ProfileViewModel by viewModels {
         viewModelFactory
     }
+
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentProfileBinding>(
+        binding = DataBindingUtil.inflate<FragmentProfileBinding>(
             inflater,
             R.layout.fragment_profile,
             container,
@@ -42,13 +46,14 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        initializeRecyclerView()
         setListeners()
         observeViewModel()
     }
@@ -60,6 +65,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.searchItem -> {
+                navigateToSearchFragment()
+                true
+            }
+
             R.id.editProfileItem -> {
                 navigateToEditProfileFragment()
                 true
@@ -81,37 +91,72 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
+    private fun initializeRecyclerView() {
+        val fastAdapter = FastAdapter.with(trackModelAdapter).apply {
+            this.onClickListener = object : ClickListener<TrackItem> {
+                override fun invoke(
+                    v: View?,
+                    adapter: IAdapter<TrackItem>,
+                    item: TrackItem,
+                    position: Int
+                ): Boolean {
+                    navigateToTrackDetailsFragment(item.model.id)
+                    return true
+                }
+            }
+        }
+
+        binding.tracksRecyclerView.apply {
+            this.adapter = fastAdapter
+            this.itemAnimator = FadeInAnimator()
+        }
+    }
+
     private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
 
-        profilePhotoImageView.setOnClickListener {
+        binding.profilePhotoImageView.setOnClickListener {
             viewModel.openProfilePhoto()
         }
 
-        profilePhotoImageView.setOnLongClickListener {
-            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
-            navigateTo(direction)
+        binding.addPhotoButton.setOnClickListener {
+            navigateToProfilePhotoOptionsBottomSheet()
+        }
 
-            true
+        binding.editProfileButton.setOnClickListener {
+            navigateToEditProfileFragment()
+        }
+
+        binding.showAllTracksButton.setOnClickListener {
+            navigateToTrackingHistoryFragment()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.logoutEvent.observe(this) {
-            startActivity<AuthorizationActivity>()
+        viewModel.logoutEvent.observe(viewLifecycleOwner) {
+            startActivity<AuthenticationActivity>()
             requireActivity().finish()
         }
 
-        viewModel.userResource.error.observe(this) {
+        viewModel.userResource.error.observe(viewLifecycleOwner) { message ->
             view?.snackbar("Wystąpił błąd podczas ładowania profilu użytkownika")
         }
 
-        viewModel.openProfilePhoto.observe(this) {
-            val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(it)
-            navigateTo(direction)
+        viewModel.openProfilePhoto.observe(viewLifecycleOwner) { url ->
+            navigateToProfilePhotoFullscreenDialog(url)
         }
+
+        viewModel.tracksResource.data.observe(viewLifecycleOwner) { tracks ->
+            Timber.i(tracks.toString())
+            trackModelAdapter.updateModels(tracks)
+        }
+    }
+
+    private fun navigateToSearchFragment() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToSearchFragment()
+        navigateTo(direction)
     }
 
     private fun navigateToEditProfileFragment() {
@@ -121,6 +166,26 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private fun navigateToChangePasswordFragment() {
         val direction = ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment()
+        navigateTo(direction)
+    }
+
+    private fun navigateToProfilePhotoOptionsBottomSheet() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoOptionsBottomSheet()
+        navigateTo(direction)
+    }
+
+    private fun navigateToProfilePhotoFullscreenDialog(url: String) {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToProfilePhotoFullscreenDialog(url)
+        navigateTo(direction)
+    }
+
+    private fun navigateToTrackDetailsFragment(trackId: Long) {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToTrackDetailsFragment(trackId)
+        navigateTo(direction)
+    }
+
+    private fun navigateToTrackingHistoryFragment() {
+        val direction = ProfileFragmentDirections.actionProfileFragmentToTrackingHistoryFragment()
         navigateTo(direction)
     }
 }

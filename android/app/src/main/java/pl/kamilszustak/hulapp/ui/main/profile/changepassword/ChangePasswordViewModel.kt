@@ -5,26 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.common.exception.NoInternetConnectionException
 import pl.kamilszustak.hulapp.common.form.FormField
 import pl.kamilszustak.hulapp.common.form.FormValidator
 import pl.kamilszustak.hulapp.common.form.Rule
 import pl.kamilszustak.hulapp.common.form.formField
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
-import pl.kamilszustak.hulapp.common.livedata.UniqueLiveData
-import pl.kamilszustak.hulapp.data.form.Password
-import pl.kamilszustak.hulapp.data.repository.SettingsRepository
-import pl.kamilszustak.hulapp.data.repository.UserRepository
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
-import pl.kamilszustak.hulapp.util.withIoContext
-import timber.log.Timber
+import pl.kamilszustak.hulapp.domain.form.Password
+import pl.kamilszustak.hulapp.manager.AuthorizationManager
+import pl.kamilszustak.hulapp.ui.base.viewmodel.StateViewModel
 import javax.inject.Inject
 
 class ChangePasswordViewModel @Inject constructor(
     application: Application,
-    private val userRepository: UserRepository,
-    private val settingsRepository: SettingsRepository,
-    private val validator: FormValidator
-) : BaseViewModel(application) {
+    private val validator: FormValidator,
+    private val authorizationManager: AuthorizationManager
+) : StateViewModel(application) {
 
     val currentPasswordField: FormField<String> = formField {
         +Rule<String>("Hasło musi posiadać min. 8 znaków, 1 cyfrę oraz 1 znak specjalny") {
@@ -44,24 +40,13 @@ class ChangePasswordViewModel @Inject constructor(
         }
     }
 
-    val isPasswordChangeEnabled = FormField.validateFields(
+    val isPasswordChangeEnabled: LiveData<Boolean> = FormField.validateFields(
         currentPasswordField,
         newPasswordField,
         newRetypedPasswordField
     )
 
-    private val _passwordChangeCompleted: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val passwordChangeCompleted: LiveData<Unit> = _passwordChangeCompleted
-
-    private val _isPasswordChanging: UniqueLiveData<Boolean> = UniqueLiveData()
-    val isPasswordChanging: LiveData<Boolean> = _isPasswordChanging
-
-    private val _passwordChangeError: SingleLiveEvent<String> = SingleLiveEvent()
-    val passwordChangeError: LiveData<String> = _passwordChangeError
-
     fun onChangePasswordButtonClick() {
-        _isPasswordChanging.setValue(true)
-
         val currentPassword = currentPasswordField.data.value
         val newPassword = newPasswordField.data.value
 
@@ -70,25 +55,20 @@ class ChangePasswordViewModel @Inject constructor(
         }
 
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withIoContext {
-                userRepository.changePassword(currentPassword, newPassword)
+            _isLoading.value = true
+
+            val result = authorizationManager.changePassword(currentPassword, newPassword)
+            result.onSuccess {
+                authorizationManager.logout()
+                _actionCompletedEvent.call()
+            }.onFailure { throwable ->
+                _errorEvent.value = when (throwable) {
+                    is NoInternetConnectionException -> R.string.no_internet_connection_error_message
+                    else -> R.string.password_change_error_message
+                }
             }
 
-            if (result.isSuccess) {
-                logoutUser()
-                _passwordChangeCompleted.call()
-            } else {
-                _passwordChangeError.value = "Wystąpił błąd podczas zmiany hasła"
-            }
-
-            _isPasswordChanging.setValue(false)
+            _isLoading.value = false
         }
-    }
-
-
-    private fun logoutUser() {
-        settingsRepository.setValue(
-            SettingsRepository.SettingsKey.IS_USER_LOGGED_IN to false
-        )
     }
 }

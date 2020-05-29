@@ -12,25 +12,26 @@ import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentTrackDetailsBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import pl.kamilszustak.hulapp.util.navigateUp
+import pl.kamilszustak.hulapp.util.share
 import javax.inject.Inject
 
-class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
-
+class TrackDetailsFragment : BaseFragment() {
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: TrackDetailsViewModel by viewModels {
         viewModelFactory
     }
 
     private val args: TrackDetailsFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentTrackDetailsBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentTrackDetailsBinding>(
+        binding = DataBindingUtil.inflate<FragmentTrackDetailsBinding>(
             inflater,
             R.layout.fragment_track_details,
             container,
@@ -40,15 +41,16 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        setListeners()
         observeViewModel()
-        viewModel.loadTrack(args.trackId)
+        viewModel.loadData(args.trackId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,8 +60,13 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.shareTrackItem -> {
+                viewModel.onShareTrackButtonClick(args.trackId)
+                true
+            }
+
             R.id.deleteTrackItem -> {
-                viewModel.onDeleteTrackButtonClick()
+                viewModel.onDeleteTrackButtonClick(args.trackId)
                 true
             }
 
@@ -69,17 +76,27 @@ class TrackDetailsFragment : BaseFragment(R.layout.fragment_track_details) {
         }
     }
 
+    private fun setListeners() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
+    }
+
     private fun observeViewModel() {
-        viewModel.deletingCompleted.observe(this) {
+        viewModel.deletingCompleted.observe(viewLifecycleOwner) {
             navigateUp()
         }
 
-        viewModel.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.trackResource.error.observe(this) {
-            view?.snackbar(it)
+        viewModel.trackResource.error.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
+        }
+
+        viewModel.sharedTrack.observe(viewLifecycleOwner) { event ->
+            share(event.content, event.subject, event.chooserTitle)
         }
     }
 }

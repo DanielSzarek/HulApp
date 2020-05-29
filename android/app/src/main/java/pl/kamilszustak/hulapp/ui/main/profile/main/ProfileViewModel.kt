@@ -1,58 +1,35 @@
 package pl.kamilszustak.hulapp.ui.main.profile.main
 
 import android.app.Application
-import androidx.lifecycle.*
-import pl.kamilszustak.hulapp.common.livedata.ResourceDataSource
-import pl.kamilszustak.hulapp.common.livedata.SingleLiveEvent
-import pl.kamilszustak.hulapp.data.model.City
-import pl.kamilszustak.hulapp.data.model.Country
-import pl.kamilszustak.hulapp.data.model.User
+import androidx.lifecycle.LiveData
+import pl.kamilszustak.hulapp.common.livedata.SingleLiveData
 import pl.kamilszustak.hulapp.data.repository.*
-import pl.kamilszustak.hulapp.ui.base.BaseViewModel
+import pl.kamilszustak.hulapp.ui.main.profile.BaseProfileViewModel
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     application: Application,
-    private val userRepository: UserRepository,
-    private val userDetailsRepository: UserDetailsRepository,
-    private val settingsRepository: SettingsRepository,
-    private val cityRepository: CityRepository,
-    private val countryRepository: CountryRepository
-) : BaseViewModel(application) {
-
-    val userResource: ResourceDataSource<User> = ResourceDataSource()
-
-    val cityResource: ResourceDataSource<City> = ResourceDataSource()
-
-    val countryResource: ResourceDataSource<Country> = ResourceDataSource()
-
-    private val _logoutEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
+    userRepository: UserRepository,
+    cityRepository: CityRepository,
+    countryRepository: CountryRepository,
+    trackRepository: TrackRepository,
+    private val settingsRepository: SettingsRepository
+) : BaseProfileViewModel(
+    application,
+    userRepository,
+    cityRepository,
+    countryRepository,
+    trackRepository
+) {
+    private val _logoutEvent: SingleLiveData<Unit> = SingleLiveData()
     val logoutEvent: LiveData<Unit> = _logoutEvent
 
-    private val _openProfilePhoto: SingleLiveEvent<String> = SingleLiveEvent()
+    private val _openProfilePhoto: SingleLiveData<String> = SingleLiveData()
     val openProfilePhoto: LiveData<String> = _openProfilePhoto
 
     init {
-        userResource.changeFlowSource {
-            userRepository.getOne()
-        }
-
-        cityResource.result.addSource(userResource.data) {
-            val cityId = it.cityId
-            if (cityId != null) {
-                cityResource.changeFlowSource {
-                    cityRepository.getById(cityId)
-                }
-            }
-        }
-
-        countryResource.result.addSource(userResource.data) {
-            val countryId = it.countryId
-            if (countryId != null) {
-                countryResource.changeFlowSource {
-                    countryRepository.getById(countryId)
-                }
-            }
+        userResource.setFlowSource {
+            userRepository.getLoggedIn()
         }
     }
 

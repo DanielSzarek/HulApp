@@ -34,4 +34,24 @@ class DatabaseModule {
     @Singleton
     fun provideTrackDao(applicationDatabase: ApplicationDatabase): TrackDao =
         applicationDatabase.getTrackDao()
+
+    @Provides
+    @Singleton
+    fun provideSearchPromptDao(applicationDatabase: ApplicationDatabase): SearchPromptDao =
+        applicationDatabase.getSearchPromptDao()
+
+    @Provides
+    @Singleton
+    fun providePostDao(applicationDatabase: ApplicationDatabase): PostDao =
+        applicationDatabase.getPostDao()
+
+    @Provides
+    @Singleton
+    fun provideCommentdao(applicationDatabase: ApplicationDatabase): CommentDao =
+        applicationDatabase.getCommentDao()
+
+    @Provides
+    @Singleton
+    fun provideMapPointDao(applicationDatabase: ApplicationDatabase): MapPointDao =
+        applicationDatabase.getMapPointDao()
 }

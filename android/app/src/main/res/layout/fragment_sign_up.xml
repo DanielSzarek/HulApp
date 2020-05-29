@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="pl.kamilszustak.hulapp.ui.authorization.signup.SignUpViewModel" />
+            type="pl.kamilszustak.hulapp.ui.authentication.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout

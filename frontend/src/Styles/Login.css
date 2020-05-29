@@ -1,10 +1,18 @@
 .logging-container {
-    padding: 0 10%;
+    padding: 0 5%;
+}
+
+.logging-form {
+    margin-top: 25px;
+}
+
+.logging-form-buttons {
+    margin-top: 20px;
 }
 
 .button-forgotten-pwd {
     margin-bottom: 10px;
-    margin-top:10px;
+    /* margin-top:10px; */
 }
 
 .forgotPwd {
@@ -15,4 +23,12 @@
 .mailSend {
     padding-bottom: 30px;
     text-align: center;
+}
+
+
+.results {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: red;
 }

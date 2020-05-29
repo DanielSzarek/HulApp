@@ -1,0 +1,100 @@
+#linear-progress {
+    margin-top: 20px;
+    height: 15px;
+}
+
+#post-avatar {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin-top: 20px;     
+}
+
+#post-author-name {
+    font-size: 30px;
+    display: inline-block;
+    margin-left: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+#post-card {
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 30px;
+}
+
+.post-buttons {
+    background-color: red;
+    border: 0px;
+    color: white;
+    height: 35px;
+}
+
+.comment-buttons {
+    background-color: red;
+    color: white;
+    border: 0px;
+    margin-left: 40%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 30px;
+}
+
+#comment-add-alert {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 40px;
+}
+
+#comments-paper {
+    padding: 20px 20px;
+    margin-top: 10px;
+    width: 60%;
+    margin-left: 20%;
+}
+
+#comments-author-names {
+    margin: 0px;
+    text-align: left;
+    color: red;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#comments-text-container {
+    max-width: 900px;
+    display: inline-block;
+    padding-left: 20px;
+}
+
+#comments-text-paragraph {
+    text-align: left;
+    max-width: 900px;
+    /* MAX LENGTH  */
+}
+
+#comments-edit-ref {
+    display: inline;
+    margin-left: 10px;
+    color: gray;
+    cursor: pointer;
+}
+
+#comments-edit-textarea {
+    width: 100%;
+    margin-top: 10px;
+    height: 40px;
+}
+
+#comments-edit-button {
+    background-color: red;
+    border: 0px;
+    color: white;
+    margin-left: 40%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 30px;
+}

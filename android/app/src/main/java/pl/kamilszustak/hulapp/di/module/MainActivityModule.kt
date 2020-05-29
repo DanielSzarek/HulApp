@@ -7,19 +7,27 @@ import pl.kamilszustak.hulapp.ui.dialog.city.CityChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.dialog.country.CountryChoiceBottomSheet
 import pl.kamilszustak.hulapp.ui.main.event.EventsFragment
 import pl.kamilszustak.hulapp.ui.main.feed.FeedFragment
+import pl.kamilszustak.hulapp.ui.main.feed.post.add.AddPostFragment
+import pl.kamilszustak.hulapp.ui.main.feed.post.details.PostDetailsFragment
+import pl.kamilszustak.hulapp.ui.main.feed.post.details.comment.EditCommentFragment
 import pl.kamilszustak.hulapp.ui.main.message.MessagesFragment
 import pl.kamilszustak.hulapp.ui.main.profile.changepassword.ChangePasswordFragment
 import pl.kamilszustak.hulapp.ui.main.profile.edit.EditProfileFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.ProfileFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.fullscreen.ProfilePhotoFullscreenDialogFragment
 import pl.kamilszustak.hulapp.ui.main.profile.main.photo.options.ProfilePhotoOptionsBottomSheet
+import pl.kamilszustak.hulapp.ui.main.profile.search.SearchFragment
+import pl.kamilszustak.hulapp.ui.main.profile.user.UserProfileFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.TrackingFragment
 import pl.kamilszustak.hulapp.ui.main.tracking.details.TrackDetailsFragment
-import pl.kamilszustak.hulapp.ui.main.tracking.history.TrackingHistoryBottomSheet
+import pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.point.add.AddMapPointFragment
+import pl.kamilszustak.hulapp.ui.main.tracking.point.details.MapPointDetailsFragment
 
 @Module
 abstract class MainActivityModule {
-
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
@@ -66,9 +74,45 @@ abstract class MainActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun contributeTrackingHistoryBottomSheet(): TrackingHistoryBottomSheet
+    abstract fun contributeTrackingHistoryFragment(): TrackingHistoryFragment
 
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeMessagesFragment(): MessagesFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeSearchFragment(): SearchFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserProfileFragment(): UserProfileFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserTrackDetailsFragment(): UserTrackDetailsFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeUserTrackingHistoryFragment(): UserTrackingHistoryFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeAddPostFragment(): AddPostFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributePostDetailsFragment(): PostDetailsFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeEditCommentFragment(): EditCommentFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeAddMapPointFragment(): AddMapPointFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun contributeMapPointDetailsFragment(): MapPointDetailsFragment
 }

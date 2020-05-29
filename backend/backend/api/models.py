@@ -8,6 +8,15 @@ class Country(models.Model):
     mod_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=75, unique=True)
 
+    class Meta:
+        verbose_name_plural = "Countries"
+        indexes = [
+            models.Index(fields=['name'], name='country_name_idx')
+        ]
+
+    def __str__(self):
+        return self.name
+
 
 class Province(models.Model):
     id_country = models.ForeignKey(Country, on_delete=models.PROTECT)
@@ -15,12 +24,30 @@ class Province(models.Model):
     mod_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=75, unique=True)
 
+    class Meta:
+        verbose_name_plural = "Provinces"
+        indexes = [
+            models.Index(fields=['name'], name='province_name_idx')
+        ]
+
+    def __str__(self):
+        return self.name
+
 
 class City(models.Model):
     id_province = models.ForeignKey(Province, on_delete=models.PROTECT)
     add_date = models.DateTimeField(auto_now_add=True)
     mod_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=75)
+
+    class Meta:
+        verbose_name_plural = "Cities"
+        indexes = [
+            models.Index(fields=['name'], name='city_name_idx')
+        ]
+
+    def __str__(self):
+        return self.name
 
 
 class User(AbstractUser):
@@ -30,10 +57,13 @@ class User(AbstractUser):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     add_date = models.DateTimeField(auto_now_add=True)
     mod_date = models.DateTimeField(auto_now_add=True)
-    profile_img = models.ImageField(upload_to='images')
+    profile_img = models.ImageField(upload_to='images', default='images/default.png')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    class Meta:
+        verbose_name_plural = "Users"
 
     def __str__(self):
         return "{}".format(self.email)

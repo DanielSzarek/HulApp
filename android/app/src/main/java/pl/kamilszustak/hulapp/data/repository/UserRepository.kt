@@ -2,19 +2,18 @@ package pl.kamilszustak.hulapp.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
-import pl.kamilszustak.hulapp.data.model.User
-import pl.kamilszustak.hulapp.data.model.network.ChangePasswordRequest
+import pl.kamilszustak.hulapp.domain.model.User
+import pl.kamilszustak.hulapp.domain.model.network.UpdateUserRequest
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
-import okhttp3.RequestBody.Companion.asRequestBody
-import pl.kamilszustak.hulapp.data.model.network.UpdateUserRequest
 
 @Singleton
 class UserRepository @Inject constructor(
@@ -22,11 +21,6 @@ class UserRepository @Inject constructor(
     private val apiService: ApiService,
     private val userDetailsRepository: UserDetailsRepository
 ) {
-
-    suspend fun insert(item: User) {
-        userDao.insert(item)
-    }
-
     suspend fun uploadProfilePhoto(file: File): Result<Unit> {
         return object : NetworkCall<User, Unit>() {
             override suspend fun makeCall(): Response<User> {
@@ -57,13 +51,15 @@ class UserRepository @Inject constructor(
             }
 
             override suspend fun mapResponse(response: User): Unit = Unit
-        }.call()
+        }.callForResponse()
     }
 
-    fun getOne(shouldFetch: Boolean = true): Flow<Resource<User>> {
+    fun getLoggedIn(shouldFetch: Boolean = true): Flow<Resource<User>> {
+        val userId = userDetailsRepository.getValue<Long>(UserDetailsRepository.UserDetailsKey.USER_ID)
+
         return object : NetworkBoundResource<User, User>() {
             override fun loadFromDatabase(): Flow<User> =
-                userDao.getOne()
+                userDao.getById(userId)
 
             override fun shouldFetch(data: User?): Boolean = shouldFetch
 
@@ -71,27 +67,43 @@ class UserRepository @Inject constructor(
                 apiService.login()
 
             override suspend fun saveFetchResult(result: User) {
-                userDao.deleteAll()
                 userDao.insert(result)
+                userDetailsRepository.setValue(
+                    UserDetailsRepository.UserDetailsKey.USER_ID to result.id
+                )
             }
         }.asFlow()
     }
 
-    suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit> {
-        return object : NetworkCall<ChangePasswordRequest, Unit>() {
-            override suspend fun makeCall(): Response<ChangePasswordRequest> {
-                val request = ChangePasswordRequest(currentPassword, newPassword)
+    fun searchFor(text: String, shouldFetch: Boolean = true): Flow<Resource<List<User>>> {
+        return object : NetworkBoundResource<List<User>, List<User>>() {
+            override fun loadFromDatabase(): Flow<List<User>> =
+                userDao.getAllByNameOrSurnameContaining(text)
 
-                return apiService.changePassword(request)
+            override fun shouldFetch(data: List<User>?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<List<User>> =
+                apiService.searchForUsers(text)
+
+            override suspend fun saveFetchResult(result: List<User>) {
+                userDao.insertAll(result)
             }
+        }.asFlow()
+    }
 
-            override suspend fun saveCallResult(result: ChangePasswordRequest) {
-                userDetailsRepository.setValue(
-                    UserDetailsRepository.UserDetailsKey.USER_PASSWORD to result.newPassword
-                )
+    fun getById(id: Long, shouldFetch: Boolean = true): Flow<Resource<User>> {
+        return object : NetworkBoundResource<User, User>() {
+            override fun loadFromDatabase(): Flow<User> =
+                userDao.getById(id)
+
+            override fun shouldFetch(data: User?): Boolean = shouldFetch
+
+            override suspend fun fetchFromNetwork(): Response<User> =
+                apiService.getUserById(id)
+
+            override suspend fun saveFetchResult(result: User) {
+                userDao.insert(result)
             }
-
-            override suspend fun mapResponse(response: ChangePasswordRequest): Unit = Unit
-        }.call()
+        }.asFlow()
     }
 }

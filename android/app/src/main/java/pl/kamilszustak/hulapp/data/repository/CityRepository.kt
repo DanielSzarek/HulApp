@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.CityDao
-import pl.kamilszustak.hulapp.data.model.City
+import pl.kamilszustak.hulapp.domain.model.City
 import pl.kamilszustak.hulapp.network.ApiService
 import retrofit2.Response
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class CityRepository @Inject constructor(
     fun getByName(name: String, shouldFetch: Boolean = true): Flow<Resource<List<City>>> {
         return object : NetworkBoundResource<List<City>, List<City>>() {
             override fun loadFromDatabase(): Flow<List<City>> =
-                cityDao.getByName(name)
+                cityDao.getByNameContaining(name)
 
             override fun shouldFetch(data: List<City>?): Boolean = shouldFetch
 

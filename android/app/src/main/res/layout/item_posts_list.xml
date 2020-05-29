@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="pl.kamilszustak.hulapp.common.date.DateFormats" />
+
+        <variable
+            name="postWithAuthor"
+            type="pl.kamilszustak.hulapp.domain.model.post.PostWithAuthor" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView"
+        app:cardElevation="@dimen/default_half_elevation"
+        app:cardCornerRadius="@dimen/default_half_radius"
+        app:contentPadding="@dimen/default_padding"
+        app:cardUseCompatPadding="true"
+        tools:cardUseCompatPadding="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/authorProfilePhotoImageView"
+                app:imageUrl="@{postWithAuthor.author.profilePhotoUrl}"
+                tools:src="@drawable/ic_launcher_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorFullNameTextView"
+                android:text="@{postWithAuthor.author.fullName}"
+                tools:text="Jan Kowalski"
+                android:textAppearance="?textAppearanceSubtitle2"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/authorProfilePhotoImageView"
+                app:layout_constraintEnd_toStartOf="@id/menuButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dateTextView"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/dateTextView"
+                android:text='@{postWithAuthor.isEdited ? @string/post_comment_edit_date(DateFormats.INSTANCE.dateFormat.format(postWithAuthor.editDate)) : postWithAuthor.creationDate != null ? DateFormats.INSTANCE.dateFormat.format(postWithAuthor.creationDate) : ""}'
+                tools:text="2020-01-01 15:20"
+                android:textAppearance="?textAppearanceCaption"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="@id/authorFullNameTextView"
+                app:layout_constraintEnd_toEndOf="@id/authorFullNameTextView"
+                app:layout_constraintTop_toBottomOf="@id/authorFullNameTextView"
+                app:layout_constraintBottom_toBottomOf="@id/authorProfilePhotoImageView" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/menuButton"
+                android:src="@drawable/icon_more_dark"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/authorProfilePhotoImageView"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contentTextView"
+                android:text="@{postWithAuthor.content}"
+                tools:text="@string/lorem_ipsum"
+                android:textAppearance="?textAppearanceBody2"
+                app:layout_constraintTop_toBottomOf="@id/authorProfilePhotoImageView"
+                android:layout_marginTop="@dimen/default_half_margin" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/likeButton"
+                android:src="@drawable/icon_heart_outlined_dark"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/commentButton"
+                app:layout_constraintTop_toBottomOf="@id/contentTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:layout_marginTop="@dimen/default_margin" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/commentButton"
+                android:src="@drawable/icon_comment_outlined_dark"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toEndOf="@id/likeButton"
+                app:layout_constraintEnd_toStartOf="@id/shareButton"
+                app:layout_constraintTop_toTopOf="@id/likeButton"
+                app:layout_constraintBottom_toBottomOf="@id/likeButton" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shareButton"
+                android:src="@drawable/icon_share_dark"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toEndOf="@id/commentButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/likeButton"
+                app:layout_constraintBottom_toBottomOf="@id/likeButton" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

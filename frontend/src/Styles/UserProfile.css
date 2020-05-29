@@ -11,3 +11,80 @@ h1 {
     text-shadow: black;
     text-transform: uppercase;
 }
+
+.name {
+    padding-bottom: 10px;
+}
+
+.nameMiasto {
+    padding-bottom: 10px;
+    margin-top: 15px;
+}
+
+.edytuj {
+    margin-top: 20px;
+}
+
+
+.new-button {
+    display: inline-block;
+    padding: 8px 10px; 
+    cursor: pointer;
+    border-radius: 0px;
+    background-color: #FF0000;
+    font-size: 16px;
+    color: #fff;
+    width: 300px;
+    /* width: 31%; */
+
+    text-align: center;
+}
+
+.submit-photo-button {
+    background-color: #FF0000;
+    font-size: 16px;
+    color: #fff;
+    width: 110px;
+    border: 0px;
+    padding: 8px 10px; 
+    margin-top: 20px;
+    text-align: center;
+    margin-left: 90px;
+
+}
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  top: 6px;
+  left: 0;
+  font-size: 15px;
+  color: rgb(153,153,153);
+}
+.button-photo-wrapper {
+  position: relative;
+}
+
+  .spinner {
+      margin: 30%;
+  }
+
+  .searchAvatar {
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+
+  .icon-prepend{
+	position:absolute;
+	height:100%;
+}
+
+.autocomplete-group{
+	position:relative;
+}
+
+.result {
+    color: black;
+    /* font-size: 500; */
+    /* font-style: italic; */
+    font-size: xx-large;
+}

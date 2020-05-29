@@ -1,7 +1,6 @@
 package pl.kamilszustak.hulapp.util
 
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.provider.Settings
@@ -28,16 +27,45 @@ fun Context.isInternetConnected(): Boolean {
     val connectivityManager = this.getSystemService<ConnectivityManager>()
     val network = connectivityManager?.activeNetwork
 
-    if (connectivityManager != null && network != null) {
-        val connection = connectivityManager.getNetworkCapabilities(network)
-
-        return (connection != null && (
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                )
-        )
-
+    if (connectivityManager == null || network == null) {
+        return false
     }
-    return false
+
+    val connection = connectivityManager.getNetworkCapabilities(network)
+    val hasCellularTransport = connection?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
+    val hasWifiTransport = connection?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
+
+    return (connection != null && (hasCellularTransport || hasWifiTransport))
 }
 
+fun Context.copyToClipboard(label: CharSequence, text: CharSequence): Boolean {
+    val clipboardManager = this.getSystemService<ClipboardManager>()
+    val clip = ClipData.newPlainText(label, text)
+    clipboardManager?.setPrimaryClip(clip)
+
+    return clipboardManager != null
+}
+
+fun Context.share(
+    text: CharSequence,
+    subject: CharSequence = "",
+    chooserTitle: CharSequence = ""
+): Boolean {
+    return try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        val chooser = Intent.createChooser(intent, chooserTitle)
+        if (chooser != null) {
+            startActivity(chooser)
+            true
+        } else {
+            false
+        }
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+        false
+    }
+}

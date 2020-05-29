@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="fastadapter_country_item_id" type="id" />
-    <item name="fastadapter_city_item_id" type="id" />
-    <item name="fastadapter_track_item_id" type="id" />
+    <item name="fastadapter_country_item" type="id" />
+    <item name="fastadapter_city_item" type="id" />
+    <item name="fastadapter_track_item" type="id" />
+    <item name="fastadapter_user_search_item" type="id" />
+    <item name="fastadapter_search_prompt_item" type="id" />
+    <item name="fastadapter_post_item" type="id" />
+    <item name="fastadapter_comment_item" type="id" />
 </resources>

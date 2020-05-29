@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+  
+  .sticky-button-container {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    margin-top: 32px;
+    /* align-self: flex-end; */
+    background-color: red;
+  }
+
+  .sticky-button {
+      background-color: red;
+      border: 0px;
+      color: white;
+      width: 150px;
+      height: 50px;
+  }
+
+  .MuiPaper-root.MuiCard-root.makeStyles-card-186.MuiPaper-elevation1.MuiPaper-rounded {
+    width: 100% !important;
+}
+
+.makeStyles-card-22 {
+  max-width: 100%;
+}
+  
+ 

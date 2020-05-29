@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="pl.kamilszustak.hulapp.util.NumberExtKt" />
+
+        <variable
+            name="viewModel"
+            type="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipeRefreshLayout"
+        app:refreshing="@{viewModel.trackResource.isLoading}">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:padding="@dimen/default_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Czas trwania"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{NumberExtKt.asTimeString(viewModel.trackResource.data.duration)}"
+                    tools:text="00:30:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Przebyty dystans"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/track_distance_value(viewModel.trackResource.data.distance)}"
+                    tools:text="12.35 km"
+                    android:textAppearance="?textAppearanceHeadline5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data rozpoczęcia"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.trackResource.data.startDate}"
+                    tools:text="2020-01-10 12:30:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data zakończenia"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.trackResource.data.endDate}"
+                    tools:text="2020-01-10 13:00:45"
+                    android:textAppearance="?textAppearanceHeadline5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Niewyemitowane spaliny"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="@dimen/default_margin" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/exhaust_emission_value(viewModel.exhaustEmission)}"
+                    tools:text="525 g"
+                    android:textAppearance="?textAppearanceHeadline5" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

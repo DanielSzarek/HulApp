@@ -16,7 +16,7 @@ suspend inline fun <T> withDefaultContext(crossinline block: suspend CoroutineSc
     }
 }
 
-suspend inline fun <T> withIoContext(crossinline block: suspend CoroutineScope.() -> T): T {
+suspend inline fun <T> withIOContext(crossinline block: suspend CoroutineScope.() -> T): T {
     return withContext(Dispatchers.IO) {
         block()
     }

@@ -16,32 +16,31 @@ open class RefreshableDataSource<T>(
 ) {
 
     val result: MediatorLiveData<T> = MediatorLiveData()
-
     private var data: LiveData<T> = UniqueLiveData()
 
     init {
-        getDataFromSource()
+        getSourceData()
     }
 
     fun refresh() {
         result.removeSource(data)
-        getDataFromSource()
+        getSourceData()
     }
 
-    private fun getDataFromSource() {
+    private fun getSourceData() {
         data = block()
         result.addSource(data) {
             result.value = it
         }
     }
 
-    fun changeLiveDataSource(block: () -> LiveData<T>) {
+    fun setLiveDataSource(block: () -> LiveData<T>) {
         this.block = block
         refresh()
     }
 
-    fun changeFlowSource(block: () -> Flow<T>) {
-        changeLiveDataSource {
+    fun setFlowSource(block: () -> Flow<T>) {
+        setLiveDataSource {
             block().asLiveData()
         }
     }

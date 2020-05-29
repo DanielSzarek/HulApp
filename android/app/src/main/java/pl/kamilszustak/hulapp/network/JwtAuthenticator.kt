@@ -4,13 +4,12 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import pl.kamilszustak.hulapp.data.model.network.ApiServiceHolder
-import pl.kamilszustak.hulapp.data.model.network.CreateJwtRequest
-import pl.kamilszustak.hulapp.data.model.network.RefreshJwtRequest
+import pl.kamilszustak.hulapp.domain.model.network.ApiServiceHolder
+import pl.kamilszustak.hulapp.domain.model.network.CreateJwtRequest
+import pl.kamilszustak.hulapp.domain.model.network.RefreshJwtRequest
 import pl.kamilszustak.hulapp.data.repository.JwtTokenRepository
 import pl.kamilszustak.hulapp.data.repository.UserDetailsRepository
 import pl.kamilszustak.hulapp.util.today
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -45,9 +44,7 @@ class JwtAuthenticator @Inject constructor(
         }
 
         val nowTimestamp = Date().time
-        val expirationDateTimestamp: Long = JwtTokenRepository.JwtTokenKey.TOKEN_EXPIRATION_DATE_TIMESTAMP.let {
-            jwtTokenRepository.getValue(it, it.getDefaultValue())
-        }
+        val expirationDateTimestamp: Long = jwtTokenRepository.getValue(JwtTokenRepository.JwtTokenKey.TOKEN_EXPIRATION_DATE_TIMESTAMP)
 
         val accessToken = if (nowTimestamp > expirationDateTimestamp) {
             val request = getCreateJwtRequest()
@@ -104,29 +101,20 @@ class JwtAuthenticator @Inject constructor(
     }
 
     private fun getEmailHashCode(): Int {
-        val email: String = UserDetailsRepository.UserDetailsKey.USER_EMAIL.let {
-            userDetailsRepository.getValue(it, it.getDefaultValue())
-        }
+        val email: String = userDetailsRepository.getValue(UserDetailsRepository.UserDetailsKey.USER_EMAIL)
 
         return email.hashCode()
     }
 
     private fun getCreateJwtRequest(): CreateJwtRequest {
-        val email: String = UserDetailsRepository.UserDetailsKey.USER_EMAIL.let {
-            userDetailsRepository.getValue(it, it.getDefaultValue())
-        }
-
-        val password: String = UserDetailsRepository.UserDetailsKey.USER_PASSWORD.let {
-            userDetailsRepository.getValue(it, it.getDefaultValue())
-        }
+        val email: String = userDetailsRepository.getValue(UserDetailsRepository.UserDetailsKey.USER_EMAIL)
+        val password: String = userDetailsRepository.getValue(UserDetailsRepository.UserDetailsKey.USER_PASSWORD)
 
         return CreateJwtRequest(email, password)
     }
 
     private fun getRefreshJwtRequest(): RefreshJwtRequest {
-        val refreshToken: String = JwtTokenRepository.JwtTokenKey.REFRESH_TOKEN.let {
-            jwtTokenRepository.getValue(it, it.getDefaultValue())
-        }
+        val refreshToken: String = jwtTokenRepository.getValue(JwtTokenRepository.JwtTokenKey.REFRESH_TOKEN)
 
         return RefreshJwtRequest(refreshToken)
     }

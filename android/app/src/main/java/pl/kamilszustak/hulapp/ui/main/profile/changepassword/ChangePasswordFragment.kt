@@ -8,16 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import kotlinx.android.synthetic.main.fragment_change_password.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentChangePasswordBinding
-import pl.kamilszustak.hulapp.ui.authorization.AuthorizationActivity
+import pl.kamilszustak.hulapp.ui.authentication.AuthenticationActivity
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
 import javax.inject.Inject
 
-class ChangePasswordFragment : BaseFragment(R.layout.fragment_change_password) {
+class ChangePasswordFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
@@ -26,12 +25,14 @@ class ChangePasswordFragment : BaseFragment(R.layout.fragment_change_password) {
         viewModelFactory
     }
 
+    private lateinit var binding: FragmentChangePasswordBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = DataBindingUtil.inflate<FragmentChangePasswordBinding>(
+        binding = DataBindingUtil.inflate<FragmentChangePasswordBinding>(
             inflater,
             R.layout.fragment_change_password,
             container,
@@ -41,7 +42,7 @@ class ChangePasswordFragment : BaseFragment(R.layout.fragment_change_password) {
             this.lifecycleOwner = viewLifecycleOwner
         }
 
-        return dataBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,26 +53,18 @@ class ChangePasswordFragment : BaseFragment(R.layout.fragment_change_password) {
     }
 
     private fun setListeners() {
-        changePasswordButton.setOnClickListener {
+        binding.changePasswordButton.setOnClickListener {
             viewModel.onChangePasswordButtonClick()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.isPasswordChanging.observe(this) {
-            if (it) {
-                progressBar.show()
-            } else {
-                progressBar.hide()
-            }
+        viewModel.errorEvent.observe(viewLifecycleOwner) { message ->
+            view?.snackbar(message)
         }
 
-        viewModel.passwordChangeError.observe(this) {
-            view?.snackbar(it)
-        }
-
-        viewModel.passwordChangeCompleted.observe(this) {
-            startActivity<AuthorizationActivity>()
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
+            startActivity<AuthenticationActivity>()
             requireActivity().finish()
         }
     }

@@ -24,7 +24,7 @@
             android:id="@+id/motionLayout"
             app:layoutDescription="@xml/motion_scene_tracking_fragment">
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/mapFragment"
@@ -41,8 +41,8 @@
                 android:src="@drawable/icon_map_dark"
                 android:background="?actionBarItemBackground"
                 android:padding="@dimen/default_padding"
-                app:layout_constraintStart_toStartOf="@id/mapFragment"
-                app:layout_constraintTop_toTopOf="@id/mapFragment" />
+                app:layout_constraintEnd_toEndOf="@id/mapFragment"
+                app:layout_constraintBottom_toBottomOf="@id/mapFragment" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
@@ -70,6 +70,13 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Czas trwania"
+                        android:textAppearance="?textAppearanceBody2"
+                        android:textColor="@color/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/durationTextView"
                         android:text="@{NumberExtKt.asTimeString(viewModel.duration)}"
                         tools:text="00:00:00"
@@ -78,25 +85,18 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Czas trwania"
+                        android:text="Przebyty dystans"
                         android:textAppearance="?textAppearanceBody2"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginTop="@dimen/default_margin" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/distanceTextView"
+                        android:id="@+id/distanceAndTimeTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
                         android:text="@{@string/track_distance_value(viewModel.distance)}"
                         tools:text="0.0 km"
                         android:textAppearance="?textAppearanceHeadline5" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Przebyty dystans"
-                        android:textAppearance="?textAppearanceBody2"
-                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

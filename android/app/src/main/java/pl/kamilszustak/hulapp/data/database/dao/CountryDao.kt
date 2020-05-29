@@ -2,23 +2,10 @@ package pl.kamilszustak.hulapp.data.database.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import pl.kamilszustak.hulapp.data.model.Country
+import pl.kamilszustak.hulapp.domain.model.Country
 
 @Dao
-interface CountryDao {
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(country: Country)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(countries: List<Country>)
-
-    @Update
-    suspend fun update(country: Country)
-
-    @Delete
-    suspend fun delete(country: Country)
-
+interface CountryDao : BaseDao<Country> {
     @Query("SELECT * FROM countries")
     fun getAll(): Flow<List<Country>>
 
@@ -26,9 +13,9 @@ interface CountryDao {
     fun getById(id: Long): Flow<Country>
 
     @Query(
-        "SELECT * FROM countries WHERE name LIKE :name || '%'" +
-                "OR name LIKE '% ' || :name || '%'" +
-                "OR name LIKE '%-' || :name || '%'"
+        "SELECT * FROM countries WHERE LOWER(name) LIKE LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '% ' || LOWER(:text) || '%'" +
+                "OR LOWER(name) LIKE '%-' || LOWER(:text) || '%'"
     )
-    fun getByName(name: String): Flow<List<Country>>
+    fun getByNameContaining(text: String): Flow<List<Country>>
 }

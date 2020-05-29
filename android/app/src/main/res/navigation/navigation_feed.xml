@@ -8,6 +8,67 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.feed.FeedFragment"
-        android:label="FeedFragment"
-        tools:layout="@layout/fragment_feed" />
+        android:label="Posty"
+        tools:layout="@layout/fragment_feed" >
+        <action
+            android:id="@+id/action_feedFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_feedFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.post.add.AddPostFragment"
+        android:label="Nowy post"
+        tools:layout="@layout/fragment_add_post">
+        <argument
+            android:name="postId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.post.details.PostDetailsFragment"
+        android:label="Szczegóły posta"
+        tools:layout="@layout/fragment_post_details">
+        <argument
+            android:name="postId"
+            app:argType="long" />
+        <argument
+            android:name="showKeyboard"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_editCommentFragment"
+            app:destination="@id/editCommentFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCommentFragment"
+        android:name="pl.kamilszustak.hulapp.ui.main.feed.post.details.comment.EditCommentFragment"
+        android:label="Edytuj komentarz"
+        tools:layout="@layout/fragment_edit_comment">
+        <argument
+            android:name="commentId"
+            app:argType="long" />
+    </fragment>
 </navigation>
