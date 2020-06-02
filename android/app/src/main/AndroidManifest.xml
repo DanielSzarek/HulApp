@@ -28,6 +28,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            android:exported="false"
+            tools:node="remove" />
+        
         <activity
             android:name="pl.kamilszustak.hulapp.ui.splashscreen.SplashScreenActivity"
             android:theme="@style/AppTheme.SplashScreen">
@@ -46,5 +52,4 @@
         <activity android:name="pl.kamilszustak.hulapp.ui.main.MainActivity"
             android:exported="true" />
     </application>
-
 </manifest>

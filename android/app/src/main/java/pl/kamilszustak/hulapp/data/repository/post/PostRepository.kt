@@ -1,11 +1,15 @@
 package pl.kamilszustak.hulapp.data.repository.post
 
+import android.app.Application
+import androidx.work.OneTimeWorkRequestBuilder
 import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.PostDao
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
+import pl.kamilszustak.hulapp.data.repository.WorkManagerRepository
+import pl.kamilszustak.hulapp.data.worker.post.AddPostWorker
 import pl.kamilszustak.hulapp.domain.mapper.post.PostJsonMapper
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
 import pl.kamilszustak.hulapp.domain.model.network.EditPostRequestBody
@@ -18,11 +22,13 @@ import javax.inject.Singleton
 
 @Singleton
 class PostRepository @Inject constructor(
+    application: Application,
     private val postDao: PostDao,
     private val userDao: UserDao,
     private val apiService: ApiService,
     private val postJsonMapper: PostJsonMapper
-) {
+) : WorkManagerRepository(application) {
+
     fun getAllWithAuthors(
         sortOrder: PostsSortOrder,
         shouldFetch: Boolean = true
@@ -76,6 +82,11 @@ class PostRepository @Inject constructor(
     }
 
     suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
+        val request = OneTimeWorkRequestBuilder<AddPostWorker>()
+            .build()
+        
+        workManager.enqueue(request)
+
         return object : NetworkCall<PostJson, Unit>() {
             override suspend fun makeCall(): Response<PostJson> =
                 apiService.addPost(requestBody)
