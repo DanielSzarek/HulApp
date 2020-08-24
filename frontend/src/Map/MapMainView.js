@@ -144,5 +144,5 @@ export class MapMainView extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'xxx'
+  apiKey: 'AIzaSyDznXeWa0G95r1WgZd2YLgBCIt0hJoS8UQ'
 })(MapMainView)
