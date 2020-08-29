@@ -61,6 +61,9 @@ class AddPostView extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
+    if(this.state.content<=0){
+      alert("nie możesz dodać pustego posta!")
+     } else {
     this.Auth.fetch('http://hulapp.pythonanywhere.com/api/post/', {
       method: 'POST',
 
@@ -78,6 +81,7 @@ class AddPostView extends React.Component {
       })
       .then(this.setState({ alertSuccessVisible: true }))
       .then(setTimeout(() => this.setState({ success: true }), 2000))
+    }
   }
 
   render () {
