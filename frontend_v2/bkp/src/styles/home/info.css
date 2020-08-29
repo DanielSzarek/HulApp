@@ -1,0 +1,31 @@
+#container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr [col-start] 1fr [col-start];
+  grid-template-rows: 25% 100px auto;
+}
+
+#item-container {
+  position: relative;
+  width: 100%;
+}
+
+#item {
+  grid-column-start: col-start 0;
+  font-size: 25px;
+  font-weight: bolder;
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-35%, -50%);
+  text-align: justify;
+}
+
+#item-logo {
+  grid-column-start: col-start 1;
+}
+
+#info-title {
+  line-height: 35px;
+}
