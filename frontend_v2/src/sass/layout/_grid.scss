@@ -1,0 +1,27 @@
+@import '../abstracts/variables';
+
+.grid-row {
+  max-width: 100%;
+  margin: 0 auto;
+
+  @include clearfix;
+
+  &--col-1-of-2 {
+    width: calc((100% - #{$grid-vertical-gutter}) / 2);
+    float: left;
+  }
+
+  &--col-1-of-3 {
+    width: calc((100% - 2 * #{$grid-vertical-gutter}) / 3);
+    float: left;
+
+    @include respond(tab-port) {
+      float: none;
+      width: 100%;
+    }
+
+    &:not(:last-child) {
+      margin-right: $grid-vertical-gutter;
+    }
+  }
+}

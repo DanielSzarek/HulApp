@@ -1,0 +1,76 @@
+@import '../abstracts/variables';
+
+.footer {
+  height: 70vh;
+  @include photoFilter(
+    '../assets/groupInGer.jpg',
+    (0 20%, 100% 0%, 100% 100%, 0 100%)
+  );
+
+  &__text--small-screen-email {
+    display: none;
+    @include respond(tab-port) {
+      display: inline;
+      position: absolute;
+      width: 100%;
+      top: 25%;
+      font-family: $font-lato-bold;
+    }
+  }
+
+  &__text-left {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    left: 10%;
+
+    @include respond(tab-port) {
+      padding: 0 10% 0 10%;
+      left: 0%;
+    }
+
+    &--info {
+      @include respond(tab-port) {
+        display: none;
+      }
+      display: inline-block;
+    }
+
+    &--icons {
+      display: inline-block;
+    }
+  }
+
+  &__text-right {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    left: 50%;
+
+    &--mail {
+      font-family: $font-lato-bold;
+
+      @include respond(tab-port) {
+        display: none;
+      }
+    }
+  }
+}
+
+.brand {
+  position: absolute;
+  width: 100%;
+  top: 92%;
+
+  &__text {
+    top: 90;
+    position: absolute;
+    padding: 0.5rem 0 0.5rem 1rem;
+
+    &--link:link,
+    &--link:visited {
+      text-decoration: none;
+      color: $color-white;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import '../abstracts/variables';
+
+//component of info section in start page
+.info-container {
+  padding: 0 #{$grid-vertical-gutter} 0 #{$grid-vertical-gutter};
+
+  @include respond(tab-port) {
+    padding: 0 2rem 0rem 2rem;
+  }
+
+  &__text {
+    color: $text-color-light;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__grid {
+    transform: all .2s;
+    &--card {
+      position: relative;
+      border-radius: 1rem;
+      height: 65vh;
+      box-shadow: $normal-shadow;
+
+      &:hover {
+        transform:  translateY(-0.3rem) scale(1.01);
+        box-shadow: $normal-shadow-hover;
+      }
+
+      @include respond(tab-port) {
+        height: 50vh;
+        &:not(:last-child) {
+          margin: 0 0 3rem 0;
+        }
+      }
+
+      &--text {
+        background-color: $color-light-grey;
+        border-radius: 1rem;
+        position: absolute;
+        height: 90%;
+        width: 85%;
+        top: 5%;
+        left: 7.5%;
+        opacity: 0.8;
+        padding: 30px 30px 30px 30px;
+        overflow: hidden;
+        color: $text-color-light;
+        box-shadow: $normal-shadow;
+
+        @include respond(tab-port) {
+          font-family: $font-lato-bold;
+        }
+
+        &--sub {
+          font-size: 1.3rem;
+        }
+      }
+
+      // 3 images gallery
+      @include photoFilter(
+        '../assets/compIIPhoto.jpg',
+        (0 0, 100 0, 100 100, 0 100)
+      );
+
+      &:first-child {
+        @include photoFilter(
+          '../assets/compIPhoto.jpg',
+          (0 0, 100 0, 100 100, 0 100)
+        );
+      }
+
+      &:last-child {
+        @include photoFilter(
+          '../assets/compIIIPhoto.jpg',
+          (0 0, 100 0, 100 100, 0 100)
+        );
+      }
+    }
+  }
+}

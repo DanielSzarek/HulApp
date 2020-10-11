@@ -1,0 +1,52 @@
+.navbar-header {
+  @include respond(tab-port) {
+    display: none;
+  }
+
+  position: relative;
+  min-height: 7rem;
+  width: 100%;
+  background-color: $color-white;
+
+  &__logo {
+    height: 7rem;
+    width: 15rem;
+    background-size: cover;
+    background-image: url('../assets/logo.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &--text {
+      visibility: hidden;
+    }
+  }
+
+  &__link {
+    position: absolute;
+    text-decoration: none;
+    text-transform: uppercase;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    left: 85%;
+
+    &--login:link,
+    &--login:visited {
+      color: $color-red;
+      font-family: $font-lato-regular;
+    }
+
+    &--register:link,
+    &--register:visited {
+      color: $text-color-light;
+      margin: 0 5rem 0 0;
+    }
+  }
+}
+
+.scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
