@@ -10,7 +10,7 @@ class Navbar extends React.Component {
           </div>
           <div className='navbar-header__link'>
             <a href='#!' className='navbar-header__link--register'>zarejestruj</a>
-            <a href='#!' className='navbar-header__link--login above'>zaloguj</a>
+            <a href='/signin' className='navbar-header__link--login above'>zaloguj</a>
           </div>
         </div>
       </div>
