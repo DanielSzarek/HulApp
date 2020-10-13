@@ -6,8 +6,8 @@ import com.google.android.material.textfield.TextInputLayout
 import pl.kamilszustak.hulapp.util.load
 
 object DataBindingAdapter {
-    private const val IMAGE_URL_PROPERTY: String = "app:imageUrl"
-    private const val ERROR_TEXT_PROPERTY: String = "app:errorText"
+    private const val IMAGE_URL_PROPERTY: String = "imageUrl"
+    private const val ERROR_TEXT_PROPERTY: String = "errorText"
 
     @BindingAdapter(IMAGE_URL_PROPERTY)
     @JvmStatic

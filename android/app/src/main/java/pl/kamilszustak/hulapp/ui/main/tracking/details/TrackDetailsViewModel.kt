@@ -22,7 +22,7 @@ class TrackDetailsViewModel @Inject constructor(
 
     fun onShareTrackButtonClick(trackId: Long) {
         val event = ShareEvent(
-            "http://hulapp.com/track/$trackId",
+            "https://hulapp.com/track/$trackId",
             "Udostępniona trasa",
             "Udostępnij trasę"
         )

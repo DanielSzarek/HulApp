@@ -63,7 +63,7 @@ class PostDetailsViewModel @Inject constructor(
 
     fun onShareButtonClick(postId: Long) {
         _sharePostEvent.value = ShareEvent(
-            "http://hulapp.com/posts/$postId",
+            "https://hulapp.com/posts/$postId",
             "Shared post",
             "Udostępnij post"
         )
