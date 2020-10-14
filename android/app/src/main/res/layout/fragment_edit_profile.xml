@@ -14,10 +14,9 @@
         android:enabled="false"
         app:refreshing="@{viewModel.isLoading}">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/motionLayout">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:layout_width="0dp"
@@ -152,7 +151,7 @@
                                 android:src="@drawable/icon_close_dark"
                                 android:background="@android:color/transparent"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"/>
+                                android:layout_centerVertical="true" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -171,6 +170,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

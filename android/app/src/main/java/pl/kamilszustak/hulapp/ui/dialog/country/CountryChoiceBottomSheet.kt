@@ -12,11 +12,10 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.domain.item.CountryItem
 import pl.kamilszustak.hulapp.domain.model.Country
-import pl.kamilszustak.hulapp.databinding.BottomSheetCountryChoiceBinding
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
-import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -77,7 +76,7 @@ class CountryChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
     private fun setListeners() {
         binding.closeButton.setOnClickListener {
-            navigateUp()
+            dismiss()
         }
     }
 

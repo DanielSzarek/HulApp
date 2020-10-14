@@ -12,11 +12,10 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import pl.kamilszustak.hulapp.R
+import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.domain.item.CityItem
 import pl.kamilszustak.hulapp.domain.model.City
-import pl.kamilszustak.hulapp.databinding.BottomSheetCityChoiceBinding
 import pl.kamilszustak.hulapp.ui.base.BaseBottomSheetDialogFragment
-import pl.kamilszustak.hulapp.util.navigateUp
 import pl.kamilszustak.hulapp.util.updateModels
 import javax.inject.Inject
 
@@ -24,7 +23,6 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: CityChoiceViewModel by viewModels {
         viewModelFactory
     }
@@ -77,7 +75,7 @@ class CityChoiceBottomSheet : BaseBottomSheetDialogFragment() {
 
     private fun setListeners() {
         binding.closeButton.setOnClickListener {
-            navigateUp()
+            dismiss()
         }
     }
 
