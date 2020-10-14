@@ -11,7 +11,7 @@ data class MapPoint(
     val author: User,
     val name: String,
     val description: String,
-    val rating: Int,
+    val rating: MapPointRating,
     val isMine: Boolean,
     val location: LatLng
 ) : Parcelable

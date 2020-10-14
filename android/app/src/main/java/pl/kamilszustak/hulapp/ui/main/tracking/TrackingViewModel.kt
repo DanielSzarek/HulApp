@@ -7,6 +7,7 @@ import com.emreeran.locationlivedata.LocationLiveData
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yashovardhan99.timeit.Stopwatch
@@ -110,7 +111,9 @@ class TrackingViewModel @Inject constructor(
 
         return buildList {
             points.forEach { point ->
+                val icon = BitmapDescriptorFactory.fromResource(point.rating.markerIconResource)
                 val marker = MarkerOptions()
+                    .icon(icon)
                     .snippet(point.id.toString())
                     .position(point.location)
 

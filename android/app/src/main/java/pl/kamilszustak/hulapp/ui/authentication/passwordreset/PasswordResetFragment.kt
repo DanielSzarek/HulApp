@@ -16,10 +16,8 @@ import pl.kamilszustak.hulapp.util.navigateTo
 import javax.inject.Inject
 
 class PasswordResetFragment : BaseFragment() {
-
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
-
     private val viewModel: PasswordResetViewModel by viewModels {
         viewModelFactory
     }
