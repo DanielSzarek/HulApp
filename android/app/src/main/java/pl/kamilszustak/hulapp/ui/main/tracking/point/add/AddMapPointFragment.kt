@@ -52,6 +52,10 @@ class AddMapPointFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            viewModel.onRatingChanged(rating)
+        }
+
         binding.addPointButton.setOnClickListener {
             viewModel.onAddButtonClick(args.latLng)
         }
