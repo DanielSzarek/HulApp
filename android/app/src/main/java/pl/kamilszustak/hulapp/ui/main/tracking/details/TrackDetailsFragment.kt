@@ -83,7 +83,7 @@ class TrackDetailsFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.deletingCompleted.observe(viewLifecycleOwner) {
+        viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateUp()
         }
 

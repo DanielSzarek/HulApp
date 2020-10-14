@@ -163,7 +163,15 @@ class PostDetailsFragment : BaseFragment() {
                         }
 
                         R.id.deletePostItem -> {
-                            viewModel.onDeleteButtonClick(args.postId)
+                            dialog {
+                                title(R.string.delete_post_dialog_title)
+                                message(R.string.delete_post_dialog_message)
+                                positiveButton(R.string.yes) {
+                                    viewModel.onDeleteButtonClick(args.postId)                                }
+                                negativeButton(R.string.no) {
+                                    this.dismiss()
+                                }
+                            }
                             true
                         }
 

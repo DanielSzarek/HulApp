@@ -14,9 +14,6 @@ class TrackDetailsViewModel @Inject constructor(
     trackRepository: TrackRepository
 ) : BaseTrackDetailsViewModel(application, trackRepository) {
 
-    private val _deletingCompleted: SingleLiveData<Unit> = SingleLiveData()
-    val deletingCompleted: LiveData<Unit> = _deletingCompleted
-
     private val _sharedTrack: SingleLiveData<ShareEvent> = SingleLiveData()
     val sharedTrack: LiveData<ShareEvent> = _sharedTrack
 

@@ -76,4 +76,17 @@ class MapPointRepository @Inject constructor(
             }
         }.callForResponse()
     }
+
+    suspend fun deleteById(id: Long): Result<Unit> {
+        return object : NetworkCall<MapPointJson, Unit>() {
+            override suspend fun makeCall(): Response<MapPointJson> =
+                apiService.deleteMapPointById(id)
+
+            override suspend fun mapResponse(response: MapPointJson) = Unit
+
+            override suspend fun onResponseSuccess() {
+                mapPointDao.deleteById(id)
+            }
+        }.call()
+    }
 }

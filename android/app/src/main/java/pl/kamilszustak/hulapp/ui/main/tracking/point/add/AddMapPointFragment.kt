@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import org.jetbrains.anko.design.snackbar
 import pl.kamilszustak.hulapp.R
 import pl.kamilszustak.hulapp.databinding.FragmentAddMapPointBinding
 import pl.kamilszustak.hulapp.ui.base.BaseFragment
@@ -64,6 +65,11 @@ class AddMapPointFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel.actionCompletedEvent.observe(viewLifecycleOwner) {
             navigateUp()
+        }
+
+        viewModel.errorEvent.observe(viewLifecycleOwner) { messageResource ->
+            val message = getString(messageResource)
+            view?.snackbar(message)
         }
     }
 }

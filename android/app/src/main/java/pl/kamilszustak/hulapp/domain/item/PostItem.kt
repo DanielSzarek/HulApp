@@ -27,8 +27,6 @@ class PostItem(postWithAuthor: PostWithAuthor) : ModelAbstractBindingItem<PostWi
             postWithAuthor = null
             executePendingBindings()
         }
-        binding.postWithAuthor = null
-        binding.executePendingBindings()
     }
 
     override fun getViewHolder(viewBinding: ItemPostsListBinding): BindingViewHolder<ItemPostsListBinding> =

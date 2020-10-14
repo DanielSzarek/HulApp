@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
             name="viewModel"
@@ -65,7 +66,7 @@
                         android:id="@+id/ratingBar"
                         android:numStars="5"
                         android:stepSize="1"
-                        android:rating="@{viewModel.pointRating}"
+                        android:rating="@={viewModel.pointRating}"
                         android:layout_centerInParent="true" />
                 </RelativeLayout>
 

@@ -31,4 +31,7 @@ interface MapPointDao : BaseDao<MapPointEntity> {
 
     @Query("DELETE FROM map_points")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM map_points WHERE id = :id")
+    suspend fun deleteById(id: Long)
 }
