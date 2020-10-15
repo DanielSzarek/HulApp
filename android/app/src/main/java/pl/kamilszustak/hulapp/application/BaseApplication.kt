@@ -4,7 +4,6 @@ import androidx.work.Configuration
 import androidx.work.WorkManager
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import leakcanary.AppWatcher
 import pl.kamilszustak.hulapp.di.component.ApplicationComponent
 import pl.kamilszustak.hulapp.di.component.DaggerApplicationComponent
 import pl.kamilszustak.hulapp.di.factory.WorkerFactory
@@ -24,17 +23,12 @@ class BaseApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        initializeAppWatcher()
         initializeTimber()
         initializeWorkManager()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
         applicationComponent
-
-    private fun initializeAppWatcher() {
-        AppWatcher.config = AppWatcher.config.copy(watchFragmentViews = true)
-    }
 
     private fun initializeTimber() {
         Timber.plant(Timber.DebugTree())
