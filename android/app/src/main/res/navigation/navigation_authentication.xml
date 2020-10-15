@@ -53,9 +53,9 @@
     <fragment
         android:id="@+id/signUpCompleted"
         android:name="pl.kamilszustak.hulapp.ui.authentication.signup.SignUpCompletedFragment"
-        android:label="SignUpCompleted" />
+        android:label="Rejestracja zakończona" />
     <fragment
         android:id="@+id/passwordResetCompletedFragment"
         android:name="pl.kamilszustak.hulapp.ui.authentication.passwordreset.PasswordResetCompletedFragment"
-        android:label="PasswordResetCompletedFragment" />
+        android:label="Hasło zresetowane" />
 </navigation>

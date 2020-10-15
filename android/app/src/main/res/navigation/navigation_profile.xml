@@ -141,7 +141,7 @@
     <fragment
         android:id="@+id/userTrackDetailsFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment"
-        android:label="UserTrackDetailsFragment"
+        android:label="Szczegóły trasy użytkownika"
         tools:layout="@layout/fragment_user_track_details">
         <argument
             android:name="trackId"
@@ -150,7 +150,7 @@
     <fragment
         android:id="@+id/userTrackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment"
-        android:label="UserTrackingHistoryFragment"
+        android:label="Historia tras użytkownika"
         tools:layout="@layout/fragment_user_tracking_history">
         <action
             android:id="@+id/action_userTrackingHistoryFragment_to_userTrackDetailsFragment"

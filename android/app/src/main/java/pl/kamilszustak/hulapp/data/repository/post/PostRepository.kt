@@ -55,7 +55,7 @@ class PostRepository @Inject constructor(
                 }
 
                 postJsonMapper.onMapAll(result) { posts ->
-                    postDao.insertAll(posts)
+                    postDao.replaceAll(posts)
                 }
             }
         }.asFlow()
@@ -84,7 +84,7 @@ class PostRepository @Inject constructor(
         }.asFlow()
     }
 
-    suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
+    fun add(requestBody: AddPostRequstBody): Result<Unit> {
         val moshiAdapter = Moshi.Builder()
             .build()
             .adapter<AddPostRequstBody>()
