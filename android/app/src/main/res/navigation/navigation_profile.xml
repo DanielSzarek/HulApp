@@ -128,7 +128,7 @@
     <fragment
         android:id="@+id/trackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
-        android:label="TrackingHistoryFragment"
+        android:label="Historia tras"
         tools:layout="@layout/fragment_tracking_history" >
         <action
             android:id="@+id/action_trackingHistoryFragment_to_trackDetailsFragment"
