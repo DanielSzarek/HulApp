@@ -113,7 +113,17 @@ class FeedFragment : BaseFragment() {
                                 }
 
                                 R.id.deletePostItem -> {
-                                    viewModel.onDeleteButtonClick(item.model.id)
+                                    dialog {
+                                        title(R.string.delete_post_dialog_title)
+                                        message(R.string.delete_post_dialog_message)
+                                        positiveButton(R.string.yes) {
+                                            viewModel.onDeleteButtonClick(item.model.id)
+                                        }
+                                        negativeButton(R.string.no) {
+                                            this.dismiss()
+                                        }
+                                    }
+
                                     true
                                 }
 

@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@color/colorPrimaryDark"/>
+        android:drawable="@android:color/white" />
 
-<!--    <item>-->
-<!--        <bitmap-->
-<!--            android:gravity="center"-->
-<!--            android:src="@drawable/hulapp_logo"-->
-<!--            android:antialias="true" />-->
-<!--    </item>-->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/icon_hulapp"
+            android:antialias="true" />
+    </item>
 </layer-list>

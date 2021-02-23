@@ -13,46 +13,48 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_profilePhotoOptionsBottomSheet"
             app:destination="@id/profilePhotoOptionsBottomSheet" />
         <action
             android:id="@+id/action_profileFragment_to_profilePhotoFullscreenDialog"
             app:destination="@id/profilePhotoFullscreenDialog"
-            app:enterAnim="@anim/popup_in"
-            app:popExitAnim="@anim/popup_out" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_searchFragment"
             app:destination="@id/searchFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_trackDetailsFragment"
             app:destination="@id/trackDetailsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_profileFragment_to_trackingHistoryFragment"
             app:destination="@id/trackingHistoryFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -86,10 +88,10 @@
         <action
             android:id="@+id/action_searchFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
@@ -102,17 +104,17 @@
         <action
             android:id="@+id/action_userProfileFragment_to_userTrackingHistoryFragment"
             app:destination="@id/userTrackingHistoryFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <action
             android:id="@+id/action_userProfileFragment_to_userTrackDetailsFragment"
             app:destination="@id/userTrackDetailsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/trackDetailsFragment"
@@ -126,20 +128,20 @@
     <fragment
         android:id="@+id/trackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.main.TrackingHistoryFragment"
-        android:label="TrackingHistoryFragment"
+        android:label="Historia tras"
         tools:layout="@layout/fragment_tracking_history" >
         <action
             android:id="@+id/action_trackingHistoryFragment_to_trackDetailsFragment"
             app:destination="@id/trackDetailsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/userTrackDetailsFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.details.user.UserTrackDetailsFragment"
-        android:label="UserTrackDetailsFragment"
+        android:label="Szczegóły trasy użytkownika"
         tools:layout="@layout/fragment_user_track_details">
         <argument
             android:name="trackId"
@@ -148,15 +150,15 @@
     <fragment
         android:id="@+id/userTrackingHistoryFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.tracking.history.user.UserTrackingHistoryFragment"
-        android:label="UserTrackingHistoryFragment"
+        android:label="Historia tras użytkownika"
         tools:layout="@layout/fragment_user_tracking_history">
         <action
             android:id="@+id/action_userTrackingHistoryFragment_to_userTrackDetailsFragment"
             app:destination="@id/userTrackDetailsFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@anim/zoom_in_enter"
+            app:exitAnim="@anim/zoom_out_exit"
+            app:popEnterAnim="@anim/zoom_in_pop_enter"
+            app:popExitAnim="@anim/zoom_out_pop_exit" />
         <argument
             android:name="userId"
             app:argType="long" />

@@ -35,9 +35,9 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     val newRetypedPasswordField: FormField<String> = formField {
-        +Rule<String>("Podane hasła nie są jednakowe") {
-            newPasswordField.data.value == this.data.value
-        }
+//        +Rule<String>("Podane hasła nie są jednakowe") {
+//            newPasswordField.data.value == this.data.value
+//        }
     }
 
     val isPasswordChangeEnabled: LiveData<Boolean> = FormField.validateFields(

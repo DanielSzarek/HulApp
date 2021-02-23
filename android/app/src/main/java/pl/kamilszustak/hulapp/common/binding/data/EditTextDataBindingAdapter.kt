@@ -13,8 +13,8 @@ import androidx.databinding.adapters.TextViewBindingAdapter
 import pl.kamilszustak.hulapp.R
 
 object EditTextDataBindingAdapter {
-    private const val DELAYED_TEXT_ATTRIBUTE: String = "app:delayedText"
-    private const val DELAYED_TEXT_ATTRIBUTE_CHANGED: String = "app:delayedTextAttrChanged"
+    private const val DELAYED_TEXT_ATTRIBUTE: String = "delayedText"
+    private const val DELAYED_TEXT_ATTRIBUTE_CHANGED: String = "delayedTextAttrChanged"
 
     private const val BEFORE_TEXT_CHANGED_ATTRIBUTE: String = "android:beforeTextChanged"
     private const val ON_TEXT_CHANGED_ATTRIBUTE: String = "android:onTextChanged"

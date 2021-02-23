@@ -35,9 +35,9 @@ class SignUpViewModel @Inject constructor(
     }
 
     val retypedUserPasswordField: FormField<String> = formField {
-        +Rule<String>("Podane hasła nie sa jednakowe") {
-            this.data.value == userPasswordField.data.value
-        }
+//        +Rule<String>("Podane hasła nie sa jednakowe") {
+//            this.data.value == userPasswordField.data.value
+//        }
     }
 
     val userNameField: FormField<String> = formField {

@@ -79,6 +79,8 @@
 
     <!-- FeedFragment -->
     <string name="deleting_post_error_message">Wystąpił błąd podczas usuwania posta</string>
+    <string name="delete_post_dialog_title">Usuń post</string>
+    <string name="delete_post_dialog_message">Czy na pewno chcesz usunąć ten post?</string>
 
     <!-- PostItem -->
     <string name="post_comment_edit_date">Edytowany %1$s</string>

@@ -13,12 +13,14 @@ interface MapPointDao : BaseDao<MapPointEntity> {
     fun getAll(): Flow<List<MapPointEntity>>
 
     @Query("SELECT * FROM map_points")
+    @Transaction
     fun getAllWithAuthors(): Flow<List<MapPointWithAuthor>>
 
     @Query("SELECT * FROM map_points WHERE id = :id")
     fun getById(id: Long): Flow<MapPointEntity>
 
     @Query("SELECT * FROM map_points WHERE id = :id")
+    @Transaction
     fun getByIdWithAuthor(id: Long): Flow<MapPointWithAuthor>
 
     @Transaction

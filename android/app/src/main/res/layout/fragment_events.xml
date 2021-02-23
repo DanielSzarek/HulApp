@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Events"
+        android:text="Wydarzenia"
         android:textSize="64sp"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"

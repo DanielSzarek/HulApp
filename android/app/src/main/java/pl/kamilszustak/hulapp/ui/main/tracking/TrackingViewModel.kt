@@ -109,7 +109,7 @@ class TrackingViewModel @Inject constructor(
             clear()
         }
 
-        val markers = buildList<MarkerOptions> {
+        return buildList {
             points.forEach { point ->
                 val icon = BitmapDescriptorFactory.fromResource(point.rating.markerIconResource)
                 val marker = MarkerOptions()
@@ -117,11 +117,9 @@ class TrackingViewModel @Inject constructor(
                     .snippet(point.id.toString())
                     .position(point.location)
 
-                this.add(marker)
+                add(marker)
             }
         }
-
-        return markers
     }
 
     fun onMarkerAdded(marker: Marker) {

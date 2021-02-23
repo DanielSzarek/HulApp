@@ -1,28 +1,37 @@
 package pl.kamilszustak.hulapp.data.repository.post
 
+import android.app.Application
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.workDataOf
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.flow.Flow
 import pl.kamilszustak.hulapp.common.data.NetworkBoundResource
 import pl.kamilszustak.hulapp.common.data.NetworkCall
 import pl.kamilszustak.hulapp.common.data.Resource
 import pl.kamilszustak.hulapp.data.database.dao.PostDao
 import pl.kamilszustak.hulapp.data.database.dao.UserDao
+import pl.kamilszustak.hulapp.data.repository.WorkManagerRepository
+import pl.kamilszustak.hulapp.data.worker.post.AddPostWorker
 import pl.kamilszustak.hulapp.domain.mapper.post.PostJsonMapper
 import pl.kamilszustak.hulapp.domain.model.network.AddPostRequstBody
 import pl.kamilszustak.hulapp.domain.model.network.EditPostRequestBody
 import pl.kamilszustak.hulapp.domain.model.post.PostJson
 import pl.kamilszustak.hulapp.domain.model.post.PostWithAuthorEntity
 import pl.kamilszustak.hulapp.network.ApiService
+import pl.kamilszustak.hulapp.util.adapter
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PostRepository @Inject constructor(
+    application: Application,
     private val postDao: PostDao,
     private val userDao: UserDao,
     private val apiService: ApiService,
     private val postJsonMapper: PostJsonMapper
-) {
+) : WorkManagerRepository(application) {
+
     fun getAllWithAuthors(
         sortOrder: PostsSortOrder,
         shouldFetch: Boolean = true
@@ -46,7 +55,7 @@ class PostRepository @Inject constructor(
                 }
 
                 postJsonMapper.onMapAll(result) { posts ->
-                    postDao.insertAll(posts)
+                    postDao.replaceAll(posts)
                 }
             }
         }.asFlow()
@@ -75,20 +84,21 @@ class PostRepository @Inject constructor(
         }.asFlow()
     }
 
-    suspend fun add(requestBody: AddPostRequstBody): Result<Unit> {
-        return object : NetworkCall<PostJson, Unit>() {
-            override suspend fun makeCall(): Response<PostJson> =
-                apiService.addPost(requestBody)
+    fun add(requestBody: AddPostRequstBody): Result<Unit> {
+        val moshiAdapter = Moshi.Builder()
+            .build()
+            .adapter<AddPostRequstBody>()
 
-            override suspend fun mapResponse(response: PostJson): Unit = Unit
+        val json = moshiAdapter.toJson(requestBody)
+        val data = workDataOf(AddPostWorker.REQUEST_BODY_KEY to json)
 
-            override suspend fun saveCallResult(result: PostJson) {
-                userDao.insert(result.author)
-                postJsonMapper.onMap(result) { post ->
-                    postDao.insert(post)
-                }
-            }
-        }.callForResponse()
+        val request = OneTimeWorkRequestBuilder<AddPostWorker>()
+            .setInputData(data)
+            .build()
+        
+        workManager.enqueue(request)
+
+        return Result.success(Unit)
     }
 
     suspend fun editById(id: Long, requestBody: EditPostRequestBody): Result<Unit> {

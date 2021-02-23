@@ -1,4 +1,4 @@
-package pl.kamilszustak.hulapp.common
+package pl.kamilszustak.hulapp.di.factory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

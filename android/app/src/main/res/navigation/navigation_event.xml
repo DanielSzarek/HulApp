@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/eventsFragment"
         android:name="pl.kamilszustak.hulapp.ui.main.event.EventsFragment"
-        android:label="EventsFragment"
+        android:label="Wydarzenia"
         tools:layout="@layout/fragment_events" />
 </navigation>
