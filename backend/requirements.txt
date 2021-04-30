@@ -33,5 +33,5 @@ six==1.13.0
 sqlparse==0.3.0
 swagger-spec-validator==2.4.3
 uritemplate==3.0.0
-urllib3==1.25.7
+urllib3==1.25.8
 zipp==0.6.0
